@@ -1,0 +1,303 @@
+body {
+    font-family: Helvetica;
+    background: #ebf1f5;
+    margin: 0;
+}
+
+/* header */
+.header{
+    width: 100%;
+    height: 80px;
+    background: #fff;
+}
+.head-main,.main{
+    width: 1180px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+.logo{
+    width: 110px;
+    height: 28px;
+    float: left;
+    margin: 26px 0 0 0;
+}
+.get-balance{
+    width: auto;
+    float: right;
+    font-size: 16px;
+    color: #666;
+    margin: 26px 0 0 0;
+}
+.get-balance span:nth-child(2){
+    font-size: 30px;
+    color: #2c9ae3;
+    margin: 0 10px 0 20px;
+}
+
+/* account */
+#accountlist {
+    width: 100%;
+    float: left;
+    margin: 0px 0 0 20px;
+}
+#tabs-1 h1,#tabs-1 h1{
+    font-size: 24px;
+    color: #333;
+    padding: 0 0 0 20px;
+}
+#tabs-1 .accountFor {
+    width: 33%;
+    float: left;
+    margin-top: 40px;
+}
+
+#tabs-1 .accountImg img {
+    width: 60px;
+    height: 60px;
+    float: left;
+    border-radius: 50px;
+}
+
+#tabs-1 .accountFor ul {
+    width: calc(100% - 90px);
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0 15px;
+}
+
+#tabs-1 .accountFor ul li {
+    width: 100%;
+    float: left;
+    height: unset;
+    background: none;
+    font-family: Helvetica;
+}
+
+#tabs-1 .accountFor ul li:nth-child(1) {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+#tabs-1 .accountFor ul li:nth-child(2) {
+    font-size: 16px;
+    color: #606060;
+    margin-top: 3px;
+    margin-left: unset;
+    font-weight: unset;
+}
+
+#tabs-1 .accountFor ul li:nth-child(3) {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: unset;
+}
+
+
+/* send */
+#tabs-2{
+    padding: 20px 0px 0 20px;
+    color: #666;
+}
+form{
+    display: block;
+    float: left;
+    padding: 0 0 50px 0;
+}
+#tab ul.send-list li:nth-child(1),#tab ul.send-list li:nth-child(2){
+    margin-left: unset;
+    background: unset;
+}
+.send-title{
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+}
+#tabs-2 .send-list{
+    font-size: 14px;
+    color: #666;
+}
+#tabs-2 .send-list li{
+    width: 510px;
+    float: left;
+    display: inline-table;
+}
+#tabs-2 .send-list li:nth-child(odd){
+    margin-right: 80px;
+    margin-bottom: 15px;
+}
+#tabs-2 .send-list li input{
+    width: 498px;
+    height: 30px;
+    padding-left: 10px;
+    border: 1px solid rgba(153,153,153,1);
+    background:#FAFAFA;
+    border-radius: 2px;
+    margin-top: 10px;
+}
+#tabs-2 .send-list li:nth-child(5){
+    width: 100%;
+    margin: 0;
+    height: 21px;
+    line-height: 21px;
+}
+#tabs-2 .send-list li:nth-child(5) span,#tabs-2 .send-list li:nth-child(5) img{
+    float: left;
+}
+#tabs-2 .send-list li:nth-child(5) span{
+    width: 348px;
+    padding: 0 10px 15px 10px;
+    line-height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+#tabs-2 .send-list li:nth-child(6){
+    width: calc(100% - 40px);
+    height: 21px;
+    line-height: 21px;
+    margin-right: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #DCDFE6;
+}
+#tabs-2 .send-list li:nth-child(6) span{
+    color: #1973AF;
+}
+.progress-title{
+    font-size: 16px;
+}
+.progress{
+    width: 500px;
+    float: left;
+    background: #DEDEDE;
+    height: 8px;
+    border: none;
+    margin: 25px 0 0 10px;
+}
+#tabs-2 .progress ul{
+    width: 100%;
+    float: left;
+    margin-top: 30px;
+}
+#tabs-2 .progress ul li{
+    width: auto;
+    font-size: 14px;
+}
+#tabs-2 .progress ul li:nth-child(1){
+    float: left;
+    margin-left: unset;
+    background: unset;
+}
+#tabs-2 .progress ul li:nth-child(2){
+    float: right;
+    margin-left: unset;
+    background: unset;
+    text-align: right;
+}
+.progress-info{
+    width: 445px;
+    font-size: 16px;
+    float: right;
+    line-height: 30px;
+    margin: 0;
+}
+.progress-info span{
+    color: #4A91C0;
+}
+.total{
+    width: calc(100% - 40px);
+    float: left;
+    padding-bottom: 15px;
+    margin-right: 40px;
+    font-weight: bold;
+    border-top: 1px solid #DCDFE6;
+    border-bottom: 1px solid #DCDFE6;
+}
+.total dt{
+    width: 100%;
+    padding: 15px 0;
+}
+.total dd{
+    width: 100%;
+    margin: 0;
+}
+.send{
+    width: 170px;
+    height: 40px;
+    background: #1973AF;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    float: left;
+    line-height: 40px;
+    margin-top: 15px;
+}
+
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    width: 20px;
+    height: 20px;
+    background: #666;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+}
+.ui-state-focus,.ui-widget-content .ui-state-focus{
+    width: 20px;
+    height: 20px;
+    background: #0073ea;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+}
+#tabs-1 h1.note{
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+    float: left;
+    font-weight: bold;
+    margin: 0;
+    padding: 80px 0 0 60px;
+}
+#tabs-1 p.info {
+    width: calc(100% - 60px);
+    float: left;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0;
+    padding: 30px 0px 50px 60px;
+    color: #999;
+}
+#tabs-1 p.info span{
+    color: #2eb3f3;
+}
+
+/* dl */
+.icon-list{
+    width: 100%;
+    float: left;
+    margin: 80px 0 0 55px;
+}
+.icon-list dl{
+    width: 120px;
+    float: left;
+    margin-left: 80px;
+    font-size: 14px;
+    color: #76a6d2;
+}
+.icon-list dl dt{
+    width: 50px;
+    height: 50px;
+    padding: 0 25px 12px 25px;
+}
+.icon-list dl dd{
+    text-align: left;
+    margin: 0;
+    white-space: nowrap;
+}
