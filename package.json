@@ -1,6 +1,7 @@
 {
-    "name": "electron-quick-start",
+    "name": "SeeleMist",
     "version": "1.0.0",
+    "icon": "seeleMist.icns",
     "description": "A minimal Electron application",
     "main": "main.js",
     "scripts": {
@@ -10,9 +11,20 @@
     },
     "build": {
         "appId": "seeleMist",
+        "dmg": {
+            "title": "SeeleMist",
+            "icon": "seeleMist.icns"
+        },
         "mac": {
-            "category": "your.app.category.type"
+            "asar": true,
+            "target": "dmg",
+            "icon": "seeleMist.icns"
+        },
+        "extraResources": {
+            "from": "./cmd/",
+            "to": "../"
         }
+
     },
     "repository": "https://github.com/qqtou/electron-quick-start",
     "keywords": [
@@ -22,7 +34,7 @@
         "tutorial",
         "demo"
     ],
-    "author": "GitHub",
+    "author": "Seeleteam",
     "license": "CC0-1.0",
     "devDependencies": {
         "electron": "^3.0.4"
