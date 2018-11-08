@@ -36,7 +36,8 @@
     "author": "Seeleteam",
     "license": "CC0-1.0",
     "devDependencies": {
-        "electron": "^3.0.4"
+        "electron": "^3.0.4",
+        "electron-builder": "^20.31.2"
     },
     "dependencies": {
         "bluebird": "^3.5.2",
