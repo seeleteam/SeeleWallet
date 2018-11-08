@@ -24,7 +24,6 @@
             "from": "./cmd/",
             "to": "../"
         }
-
     },
     "repository": "https://github.com/qqtou/electron-quick-start",
     "keywords": [
