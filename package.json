@@ -41,6 +41,6 @@
     },
     "dependencies": {
         "bluebird": "^3.5.2",
-        "seele.js": "^1.5.1"
+        "seele.js": "^1.5.2"
     }
 }

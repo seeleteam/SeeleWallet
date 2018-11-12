@@ -17,6 +17,11 @@
         <div class="header">
             <div class="head-main">
                 <div class="logo"><img src="./src/img/logo-head.png"></div>
+
+                <div><span id="isListening">Disconnected</span></div>
+                <div><span id="netWork">private</span></div>
+                <div><span id="blockheight">0</span></div>
+
                 <div class="get-balance"><span>BALANCE</span><span id="span_balance">0.00</span><span>Seele</span></div>
             </div>
         </div>
@@ -94,6 +99,7 @@
             require('./src/js/getBalance.js')
             require('./src/js/createAccount.js')
             require('./src/js/sendtx.js')
+            require('./src/js/walletConnect.js')
         </script>
 </body>
 <script src="./src/js/jQuery.js"></script>

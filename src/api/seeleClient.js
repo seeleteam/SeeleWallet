@@ -232,6 +232,21 @@ function seeleClient() {
             return ""
         }
     };
+
+    //TODO need check the shard
+    this.getblock = function (hash, height, fulltx, callBack) {
+        this.client1.getBlock(hash, height, fulltx, callBack);
+    };
+
+    //TODO need check the shard
+    this.getblockheight = function (callBack) {
+        this.client1.getBlockHeight(callBack);
+    };
+
+    //TODO need check the shard
+    this.isListening = function (callBack) {
+        this.client1.isListening(callBack);
+    };
 }
 
 module.exports = seeleClient;
