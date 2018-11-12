@@ -24,7 +24,6 @@
             "from": "./cmd/",
             "to": "../"
         }
-
     },
     "repository": "https://github.com/qqtou/electron-quick-start",
     "keywords": [
@@ -41,6 +40,6 @@
     },
     "dependencies": {
         "bluebird": "^3.5.2",
-        "seele.js": "^1.5.1"
+        "seele.js": "^1.5.2"
     }
 }
