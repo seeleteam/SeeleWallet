@@ -168,7 +168,7 @@ function seeleClient() {
         }
     }
 
-    this.sendtx = function(publicKey, passWord, to, amount, price, callBack) {
+    this.sendtx = function(publicKey, passWord, to, amount, price, payload, callBack) {
         var client
         var numberInfo = this.getshardnum(publicKey)
         if (numberInfo == "1") {
@@ -190,7 +190,7 @@ function seeleClient() {
             "GasPrice": parseInt(price),
             "GasLimit": 3000000,
             "Timestamp": 0,
-            "Payload": ""
+            "Payload": payload
         }
 
         this.DecKeyFile(publicKey, passWord).then((data) => {
@@ -233,19 +233,28 @@ function seeleClient() {
         }
     };
 
-    //TODO need check the shard
-    this.getblock = function (hash, height, fulltx, callBack) {
-        this.client1.getBlock(hash, height, fulltx, callBack);
+    this.getblock = function (shard, hash, height, fulltx, callBack) {
+        if shard == 1 {
+            this.client1.getBlock(hash, height, fulltx, callBack);
+        }else if shard == 2 {
+            this.client2.getBlock(hash, height, fulltx, callBack);
+        }
     };
 
-    //TODO need check the shard
-    this.getblockheight = function (callBack) {
-        this.client1.getBlockHeight(callBack);
+    this.getblockheight = function (shard, callBack) {
+        if shard == 1 {
+            this.client1.getBlockHeight(callBack);
+        }else if shard == 2 {
+            this.client2.getBlockHeight(callBack);
+        }
     };
 
-    //TODO need check the shard
-    this.isListening = function (callBack) {
-        this.client1.isListening(callBack);
+    this.isListening = function (shard, callBack) {
+        if shard == 1 {
+            this.client1.isListening(callBack);
+        } else if shard == 2 {
+            this.client2.isListening(callBack);
+        }
     };
 }
 
