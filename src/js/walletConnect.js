@@ -29,6 +29,7 @@ function firstLoad() {
 
 function getShard() {
     shard = document.getElementById("shard");
+    return shard
 }
 
 function connect() {
@@ -60,6 +61,7 @@ function getNetWork() {
 
 function getBlockHeight() {
     var blockheight = document.getElementById("blockheight");
+    console.log(shard)
     seeleClient.getblockheight(shard, function (err, height) {
         if (err) {
             blockheight.innerText = 0;

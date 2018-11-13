@@ -10,8 +10,10 @@ const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    this.client1 = new seelejs("http://106.75.86.211:8037");
-    this.client2 = new seelejs("http://106.75.86.211:8038");
+    // this.client1 = new seelejs("http://106.75.86.211:8037");
+    // this.client2 = new seelejs("http://106.75.86.211:8038");
+    this.client1 = new seelejs();
+    this.client2 = new seelejs();
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
 
@@ -234,25 +236,25 @@ function seeleClient() {
     };
 
     this.getblock = function (shard, hash, height, fulltx, callBack) {
-        if shard == 1 {
+        if (shard == 1) {
             this.client1.getBlock(hash, height, fulltx, callBack);
-        }else if shard == 2 {
+        }else if (shard == 2) {
             this.client2.getBlock(hash, height, fulltx, callBack);
         }
     };
 
     this.getblockheight = function (shard, callBack) {
-        if shard == 1 {
+        if (shard == 1) {
             this.client1.getBlockHeight(callBack);
-        }else if shard == 2 {
+        }else if (shard == 2) {
             this.client2.getBlockHeight(callBack);
         }
     };
 
     this.isListening = function (shard, callBack) {
-        if shard == 1 {
+        if (shard == 1) {
             this.client1.isListening(callBack);
-        } else if shard == 2 {
+        }else if (shard == 2) {
             this.client2.isListening(callBack);
         }
     };
