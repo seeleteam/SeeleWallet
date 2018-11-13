@@ -4,7 +4,7 @@
 var SeeleClient = require('../api/seeleClient');
 
 seeleClient = new SeeleClient();
-
+var payload
 // onload = function() {
 //     document.getElementById("sendtx").addEventListener("click", sendtx);
 //     document.getElementById("btn_gettx").addEventListener("click", gettxbyhash);
@@ -21,11 +21,17 @@ function addLoadEvent(func) {
     }
 }
 addLoadEvent(function() {
-    document.getElementById("sendtx").addEventListener("click", sendtx);
-    //document.getElementById("btn_gettx").addEventListener("click", gettxbyhash);
+    document.getElementById("depoly").addEventListener("click", depolyContract);
 })
 
-function sendtx() {
+function compileContract() {
+    var payloadContract = document.getElementById("payload")
+    if payload != null {
+
+    }
+}
+
+function depolyContract() {
     var publicKey = document.getElementById("txpublicKey");
     var to = document.getElementById("to");
     var amount = document.getElementById("amount");
@@ -34,7 +40,7 @@ function sendtx() {
 
     layer.load(0, { shade: false });
 
-    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "2000", "", function(err, result, hash) {
+    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "2000", payload, function(err, result, hash) {
         layer.closeAll();
         if (err) {
             alert(err)
@@ -44,16 +50,4 @@ function sendtx() {
                 //txresult.innerHTML = hash
         }
     });
-}
-
-function gettxbyhash() {
-    var txresult = document.getElementById("txresult")
-    var publicKey = document.getElementById("txpublicKey");
-    seeleClient.gettxbyhash(txresult.innerHTML, publicKey.value, function(err, info) {
-        if (err) {
-            alert(err)
-        } else {
-            tx.innerHTML = JSON.stringify(info, "\t")
-        }
-    })
 }
