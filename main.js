@@ -13,11 +13,10 @@ let mainWindow
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 1280, height: 950, icon: './seeleMist.ico' })
+    mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './seeleMist.ico'})
 
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
-
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()

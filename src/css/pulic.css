@@ -40,7 +40,38 @@ body {
     color: #2c9ae3;
     margin: 0 10px 0 20px;
 }
-
+.quick-link{
+    width: 490px;
+    margin: 0 auto;
+}
+.quick-link li{
+    color: #666;
+    font-size: 14px;
+    line-height: 80px;
+    list-style: none;
+    float: left;
+    padding-left: 25px;
+    padding-right: 15px;
+}
+.quick-link li:nth-child(1){
+    background: url(../img/internet.png) left center no-repeat;
+}
+.quick-link li:nth-child(2){
+    background: url(../img/signal.png) left center no-repeat;
+}
+.quick-link li:nth-child(3){
+    background: url(../img/block.png) left center no-repeat;
+}
+.quick-link li:nth-child(4){
+    padding-left: 5px;
+    padding-right: 0;
+}
+.quick-link li:nth-child(4) select{
+    width: 40px;
+    height: 23px;
+    border: 1px solid #999;
+    color: #999;
+}
 
 /* account */
 
@@ -96,7 +127,7 @@ body {
     font-size: 16px;
     color: #606060;
     margin-top: 3px;
-    margin-left: unset;
+    margin-left: 35px;
     font-weight: unset;
 }
 
@@ -108,8 +139,95 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: unset;
+    margin-left: 0px;
 }
 
+
+/* lastest-transactions */
+.lastest-title{
+    width: 180px;
+    height: 32px;
+    line-height: 32px;
+    background: #dae4e9;
+    color: #333;
+    font-size: 16px;
+    margin-left: 40px;
+    display: table;
+    text-align: center;
+}
+.account-contact{
+    width: calc(100% - 40px);
+    height: 80px;
+    margin-left: 40px;
+    margin-top: 8px;
+}
+.contact-left{
+    line-height: 80px;
+    height: 80px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 120px;
+    text-align: center;
+    background: #dae4e9;
+    display: inline-block;
+    color: #55788a;
+}
+.contact-left span:nth-child(1){
+    font-size: 14px;
+}
+.contact-left span:nth-child(2){
+    font-size: 24px;
+    font-weight: bold;
+}
+#tab .contact-right{
+    width: calc(100% - 220px);
+    height: 60px;
+    background: #f5f8fa;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 0;
+}
+#tab .contact-right li{
+    line-height: 30px;
+    width: 100%;
+    display: inline-block;
+    background-size:unset;
+    background: unset;
+    height: unset;
+    font-weight: unset;
+}
+#tab .contact-right li:nth-child(1){
+    color: #333;
+    font-size: 16px;
+    font-family: 'Helvetica-Bold';
+}
+#tab .contact-right li:nth-child(2){
+    color: #999;
+    font-size: 14px;
+}
+#tab .contact-right li:nth-child(2) span{
+    width: calc(50% - 30px);
+    min-width: 415px;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(1){
+    margin-left: 30px; 
+    float: left;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(2){
+    display: inline-grid;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(2) a{
+    background: unset;
+    color: #28a7f0;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: unset;
+    word-break: break-all;
+    padding: unset;
+}
 
 /* send */
 
@@ -303,6 +421,11 @@ form {
     line-height: 40px;
     margin-top: 15px;
     cursor: pointer;
+}
+.Query{
+    background: #F2F2F2;
+    color:#1973AF;
+    margin-left: 40px;
 }
 
 .ui-state-default,

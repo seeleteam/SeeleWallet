@@ -17,12 +17,18 @@
         <div class="header">
             <div class="head-main">
                 <div class="logo"><img src="./src/img/logo-head.png"></div>
-
-                <div><span id="isListening">Disconnected</span></div>
-                <div><span id="netWork">private</span></div>
-                <div><span id="blockheight">0</span></div>
-                <div><span id="shard">1</span></div>
-
+                <ul class="quick-link">
+                    <li>Private-net</li>
+                    <li>Connecting...</li>
+                    <li>10,557</li>
+                    <li><select>
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                            <option value="">5</option>
+                        </select></li>
+                </ul>
                 <div class="get-balance"><span>BALANCE</span><span id="span_balance">0.00</span><span>Seele</span></div>
             </div>
         </div>
@@ -52,6 +58,28 @@
                         </button>
                         <p class="info">Accounts are password protected keys that can hold seele. They can control
                             contracts, but can't display incoming transactions.</p>
+
+                        <h3 class="lastest-title">Lastest Transactions</h3>
+                        <div class="account-contact">
+                            <p class="contact-left">
+                                <span>Nov.</span>
+                                <span>13</span>
+                            </p>
+                            <ul class="contact-right">
+                                <li>Created Contact</li>
+                                <li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>
+                            </ul>
+                        </div>
+                        <div class="account-contact">
+                            <p class="contact-left">
+                                <span>Nov.</span>
+                                <span>13</span>
+                            </p>
+                            <ul class="contact-right">
+                                <li>Transfer Between Accounts</li>
+                                <li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>
+                            </ul>
+                        </div>
                     </div>
                     <div id="tabs-2">
                         <h1 class="send-title">Send funds</h1>
@@ -127,7 +155,8 @@
                                 <dt>TOTAL</dt>
                                 <dd>0.006 SEELE</dd>
                             </dl>
-                            <input id="sendtx" class="send" value="SEND" type="button">
+                            <input id="sendtx" class="send" value="Deploy" type="button">
+                            <input id="Query" class="send Query" value="Query" type="button">
                         </form>
                     </div>
                 </div>
@@ -147,6 +176,22 @@
             <span id="address"></span>
             <span id="filepath"></span>
         </div>
+        <div class="search-hash">
+            <h3>Query Contract</h3>
+            <div class="search">
+                <input type="text" placeholder="Hash:">
+                <button><span><img src="./src/img/search.png"></span></button>
+            </div>
+            <ul>
+                <li>contract: ”0x”</li>
+                <li>failed: false</li>
+                <li>result: “0x”</li>
+                <li>tota1Fee: 210000</li>
+                <li>usedGas: 210000</li>
+            </ul>
+            <button class="ok-search">OK</button>
+        </div>
+        <!--<script src="bundle.js"></script>-->
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
@@ -155,7 +200,7 @@
             require('./src/js/createAccount.js')
             require('./src/js/sendtx.js')
             require('./src/js/walletConnect.js')
-            require('./src/js/contractTest.js')
+            // require('./src/js/contractTest.js')
         </script>
 </body>
 <script src="./src/js/jQuery.js"></script>
