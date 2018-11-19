@@ -178,7 +178,7 @@ function seeleClient() {
         } else if (numberInfo == "2") {
             client = this.client2;
         } else {
-            alert(numberInfo)
+            // alert(numberInfo)
             return
         }
 
@@ -236,25 +236,25 @@ function seeleClient() {
     };
 
     this.getblock = function (shard, hash, height, fulltx, callBack) {
-        if (shard == 1) {
+        if (shard == "1") {
             this.client1.getBlock(hash, height, fulltx, callBack);
-        }else if (shard == 2) {
+        }else if (shard == "2") {
             this.client2.getBlock(hash, height, fulltx, callBack);
         }
     };
 
     this.getblockheight = function (shard, callBack) {
-        if (shard == 1) {
+        if (shard == "1") {
             this.client1.getBlockHeight(callBack);
-        }else if (shard == 2) {
+        }else if (shard == "2") {
             this.client2.getBlockHeight(callBack);
         }
     };
 
     this.isListening = function (shard, callBack) {
-        if (shard == 1) {
+        if (shard == "1") {
             this.client1.isListening(callBack);
-        }else if (shard == 2) {
+        }else if (shard == "2") {
             this.client2.isListening(callBack);
         }
     };

@@ -28,7 +28,7 @@ function firstLoad() {
 }
 
 function getShard() {
-    shard = document.getElementById("shard");
+    shard = document.getElementById("shard").innerText;
     return shard
 }
 
