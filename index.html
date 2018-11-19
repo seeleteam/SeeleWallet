@@ -50,7 +50,8 @@
                             <span><img src="./src/img/add.png"></span>
                             <span>ADD ACCOUNT</span>
                         </button>
-                        <p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>
+                        <p class="info">Accounts are password protected keys that can hold seele. They can control
+                            contracts, but can't display incoming transactions.</p>
                     </div>
                     <div id="tabs-2">
                         <h1 class="send-title">Send funds</h1>
@@ -70,7 +71,8 @@
                                     <li>Faster</li>
                                 </ul>
                             </div>
-                            <p class="progress-info">This is the most amount of money that might be used to process this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
+                            <p class="progress-info">This is the most amount of money that might be used to process
+                                this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
                             <dl class="total">
                                 <dt>TOTAL</dt>
                                 <dd>0.006 SEELE</dd>
@@ -79,6 +81,54 @@
                         </form>
                     </div>
                     <div id="tabs-3">
+                        <h1 class="send-title">Deploy contract</h1>
+                        <form>
+                            <ul class="send-list">
+                                <li>From<input type="text" placeholder="" id="txpublicKey" readonly="readonly"></li>
+                                <li>Password<input type="password" placeholder="press key file password" id="accountpassWord"></li>
+                                <li>Amount<input type="text" placeholder="0.0" id="amount"></li>
+                                <li><img src="./src/img/sendIcon.png"><span>0.00</span>SEELE</li>
+                                <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
+                                    <label for="sendEvery">Send everything</label></li>
+                                <li>You want to send <span>0 SEELE</span></li>
+                            </ul>
+                            <div class="solc">
+                                <div class="tab-code">
+                                    <ul>
+                                        <li class="code-default cur">SOLIDITY CONTRACT SOURCE CODE</li>
+                                        <li class="code-after">CONTRACT BYTE CODE</li>
+                                    </ul>
+                                    <div class="code_container">
+                                        <textarea></textarea>
+                                    </div>
+                                </div>
+                                <button class="compile">Compile</button>
+                                <div class="success-result">
+                                    <span class="success">Success</span>
+                                </div>
+                                <div class="fail-result">
+                                    <span class="fail">Could not compile cource code.</span>
+                                    <button>Compile Again</button>
+                                    <div class="code_container">
+                                        <textarea></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="progress-title">Seele Fee</h2>
+                            <div class="progress">
+                                <ul>
+                                    <li>Cheaper</li>
+                                    <li>Faster</li>
+                                </ul>
+                            </div>
+                            <p class="progress-info">This is the most amount of money that might be used to process
+                                this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
+                            <dl class="total">
+                                <dt>TOTAL</dt>
+                                <dd>0.006 SEELE</dd>
+                            </dl>
+                            <input id="sendtx" class="send" value="SEND" type="button">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -100,11 +150,12 @@
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
+            require('./src/api/seeleClient.js')
             require('./src/js/getBalance.js')
             require('./src/js/createAccount.js')
             require('./src/js/sendtx.js')
             require('./src/js/walletConnect.js')
-            // require('./src/js/contractTest.js')
+            require('./src/js/contractTest.js')
         </script>
 </body>
 <script src="./src/js/jQuery.js"></script>

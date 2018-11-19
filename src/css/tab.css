@@ -17,7 +17,8 @@ a:focus {
 }
 
 #tabs-1,
-#tabs-2 {
+#tabs-2,
+#tabs-3 {
     width: calc(100% - 40px);
     position: absolute;
 }
@@ -51,11 +52,16 @@ a:focus {
     padding: 5px 0 0 42px;
 }
 #tab ul li:nth-child(1){
-    background: url(../img/wallets-hui.png) left bottom no-repeat;  
+    /* background: url(../img/wallets-hui.png) left bottom no-repeat;   */
 }
 #tab ul li:nth-child(2){
     margin-left: -32px;
-    background: url(../img/SEND-hui.png) left bottom no-repeat;
+    /* background: url(../img/SEND-hui.png) left bottom no-repeat; */
+}
+#tab ul li:nth-child(3){
+    margin-left: -32px;
+    /* background: #e1e8ec; */
+    /* background: url(../img/contact-hui.png) left bottom no-repeat; */
 }
 #tab ul li:nth-child(1) a{
     background: url(../img/wallets-iconhui.png) left center no-repeat;
@@ -64,10 +70,14 @@ a:focus {
     background: url(../img/SEND-iconbai.png) left center no-repeat;
     margin: 19px 0 0 55px;
 }
+#tab ul li:nth-child(3) a{
+    background: url(../img/contact-icon.png) left center no-repeat;
+    margin: 19px 0 0 34px;
+}
 #tabs_container {
     padding: 20px;
+    min-height: 500px;
     overflow: hidden;
-    min-height: 102px;
     position: relative;
     background: #fff;
 }
@@ -238,6 +248,10 @@ a:focus {
     background: url(../img/SEND-lan.png) left center no-repeat;
     margin: 17px 35px 12px 60px;
 }
+#tab ul li:nth-child(3) .tabulous_active{
+    background: url(../img/contact-lan.png) left center no-repeat;
+    margin: 17px 35px 12px 34px;
+}
 #tab ul li.tabli_active{
     height: 60px;
     background-size: 210px 60px;
@@ -248,6 +262,11 @@ a:focus {
 #tab ul li:nth-child(2).tabli_active{
     margin-left: -40px;
     background: url(../img/SEND-bai.png) left top no-repeat;
+    
+}
+#tab ul li:nth-child(3).tabli_active{
+    margin-left: -40px;
+    background: url(../img/contact-bai.png) left top no-repeat;
     
 }
 .tabulousclear {
