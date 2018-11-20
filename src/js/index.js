@@ -27,9 +27,21 @@ $(function($) {
     //     $('.dask').show()
     // })
 
+    // search-hash
+    $('.Query').click(function() {
+        $('.search-hash').show()
+        $('.dask').show()
+    })
+    // ok  cancel
+    $('.ok-search').click(function() {
+        $('.search-hash').hide()
+        $('.dask').hide()
+    })
+
     // cancel account
     $('#cancel').click(function() {
         $('.create-account').hide()
+        $('.search-hash').hide()
         $('.dask').hide()
     })
 })

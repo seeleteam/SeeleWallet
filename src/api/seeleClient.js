@@ -10,10 +10,10 @@ const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    // this.client1 = new seelejs("http://106.75.86.211:8037");
-    // this.client2 = new seelejs("http://106.75.86.211:8038");
-    this.client1 = new seelejs();
-    this.client2 = new seelejs();
+    this.client1 = new seelejs("http://106.75.86.211:8037");
+    this.client2 = new seelejs("http://106.75.86.211:8038");
+    // this.client1 = new seelejs();
+    // this.client2 = new seelejs();
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
 
