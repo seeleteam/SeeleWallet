@@ -26,6 +26,58 @@ function seeleClient() {
         }
     };
 
+    this.solcPath = function() {
+        var clientpath = `${__dirname}`;
+        if (clientpath.indexOf("app.asar") > 0) {
+            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
+        } else {
+            return "./cmd/win32/solc"
+        }
+    };
+
+    this.compileContract = function (input) {
+        if (input != '') {
+
+            return new Q((resolve, reject) => {
+                try {
+                    var args = [
+                        '--combined-json',
+                    ];
+                    args.push("bin,abi,userdoc,devdoc")
+                    args.push('--optimize')
+                    args.push('--')
+                    args.push('-')
+
+                    const proc = spawn(this.solcPath(), args);
+                    proc.stdin.write(input);
+                    proc.stdin.end();
+
+                    proc.stdout.on('data', data => {
+                        var output = `${data}`
+                        var contractBinaryCode = this.ParseContractBinaryCode(output)
+                        resolve(contractBinaryCode)
+                    });
+
+                    proc.stderr.on('data', data => {
+                        reject(data)
+                    });
+                } catch (e) {
+                        return reject(e)
+                    }
+                });
+        }
+    };
+
+    this.ParseContractBinaryCode = function(input) {
+        try {
+            input = JSON.parse(input)
+            var contract = input.contracts['<stdin>:validUintContractTest'].bin
+            return contract
+        } catch (e) {
+            return ""
+        }
+    };
+
     this.accountArray = [];
 
     this.init = function() {
