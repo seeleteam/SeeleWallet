@@ -20,5 +20,21 @@ function addLoadEvent(func) {
 addLoadEvent(startNode)
 
 function startNode() {
-    seeleClient.startNode()
+    seeleClient.startNode().then((outdata) => {
+        console.log("1111111111111")
+        console.log(outdata)
+        if (outdata) {
+            load()
+        }
+    }).catch(err => {
+        startNode()
+    });
+}
+
+function load() {
+    require('./getBalance.js')
+    require('./createAccount.js')
+    require('./sendtx.js')
+    require('./walletConnect.js')
+    require('./contract.js')
 }

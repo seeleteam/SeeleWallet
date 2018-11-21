@@ -28,6 +28,7 @@ function firstLoad() {
         loadAccount();
     });
     loadAccount()
+    console.log("222222222222222")
     
 }
 function loadAccount() {

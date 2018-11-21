@@ -4,7 +4,7 @@
 var seelejs = require('seele.js');
 var fs = require('fs');
 var os = require("os")
-
+var path = require('path');
 
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
@@ -17,6 +17,7 @@ function seeleClient() {
     this.client2 = new seelejs();
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
+    this.txPath = os.homedir() + "/.seeleMist/tx/"
 
     this.binPath = function () {
         var clientpath = `${__dirname}`;
@@ -50,16 +51,18 @@ function seeleClient() {
                 const proc = spawn(this.nodePath(), args);
 
                 proc.stdout.on('data', data => {
-                    resolve(data)
+                    console.log("6666666666666666666")
+                    resolve(true)
                 });
 
                 proc.stderr.on('data', data => {
-                    reject(data)
+                    console.log("88888888888888888888888")
+                    reject(false)
                     alert(data.toString())
-            });
+                });
             } catch (e) {
-                return reject(e)
                 alert(e)
+                return reject(false)
             }
         });
     }
@@ -356,6 +359,14 @@ function seeleClient() {
             this.client2.isListening(callBack);
         }
     };
+    
+    this.saveFile = function (isTx, hash) {
+        var _path = this.txPath + hash
+        fs.writeFile(_path, hash, function (err) {
+            if (!err)
+                console.log("写入成功！")
+        })
+    }
 }
 
 module.exports = seeleClient;

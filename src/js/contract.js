@@ -56,8 +56,7 @@ function depolyContract() {
             if (err) {
                 alert(err)
             } else {
-                console.info(hash)
-                alert(hash)
+                sessionStorage.setItem('contract', hash)
             }
         });
     } else {
