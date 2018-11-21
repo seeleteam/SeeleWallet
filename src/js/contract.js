@@ -28,18 +28,13 @@ function compileContract() {
     seeleClient.compileContract(input.value).then((outdata) => {
         var getPayload = document.getElementById("getPayload");
         getPayload.innerText = outdata
-        sessionStorage.setItem('payload', outdata)
         var output = document.getElementById("compileSuccess")
         output.innerText = "Success"
         output.style.display = 'block'
     }).catch(err => {
-        // var output = document.getElementById("compileFail")
-        // var button = document.getElementById("compileContract")
-        // var again = document.getElementById("compileAgain")
-        // output.innerText = err.toString()
-        // output.style.display = 'block'
-        // button.style.display = 'none'
-        // again.style.display = 'block'
+        var output = document.getElementById("compileSuccess");
+        output.innerText = err.toString();
+        output.style.display = 'block'
     });
 }
 

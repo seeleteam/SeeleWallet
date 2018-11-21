@@ -27,6 +27,43 @@ function seeleClient() {
         }
     };
 
+    this.nodePath = function() {
+        var clientpath = `${__dirname}`;
+        if (clientpath.indexOf("app.asar") > 0) {
+            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
+        } else {
+            return "./cmd/win32/node"
+        }
+    };
+
+    this.startNode = function () {
+        return new Q((resolve, reject) => {
+            try {
+                var args = [
+                    'start',
+                ];
+                args.push('-c')
+                args.push('config\\node1.json')
+                args.push('--accounts')
+                args.push('config\\accounts.json')
+
+                const proc = spawn(this.nodePath(), args);
+
+                proc.stdout.on('data', data => {
+                    resolve(data)
+                });
+
+                proc.stderr.on('data', data => {
+                    reject(data)
+                    alert(data.toString())
+            });
+            } catch (e) {
+                return reject(e)
+                alert(e)
+            }
+        });
+    }
+
     this.solcPath = function() {
         var clientpath = `${__dirname}`;
         if (clientpath.indexOf("app.asar") > 0) {
@@ -65,11 +102,11 @@ function seeleClient() {
                         output.innerText = data.toString()
                         console.log(data.toString())
                         output.style.display = 'block'
-        });
+                     });
                 } catch (e) {
-                        return reject(e)
-                    }
-                });
+                    return reject(e)
+                }
+            });
         }
     };
 
@@ -235,7 +272,7 @@ function seeleClient() {
         } else if (numberInfo == "2") {
             client = this.client2;
         } else {
-            // alert(numberInfo)
+            alert(numberInfo)
             return
         }
 
