@@ -44,6 +44,18 @@ $(function($) {
         $('.search-hash').hide()
         $('.dask').hide()
     })
+
+    $('.tab-code ul li').click(function () {
+        let getPayload = $('#getPayload').text()
+        $(this).addClass('cur').siblings().removeClass('cur')
+        if($(this).text() == 'CONTRACT BYTE CODE'){
+            console.log(getPayload)
+            $('#contractInput').val(getPayload)
+        } else {
+            var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
+            $('#contractInput').val(str)
+        }
+    })
 })
 
 function addAccount() {

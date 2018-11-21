@@ -18,7 +18,7 @@ function seeleClient() {
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
 
-    this.binPath = function() {
+    this.binPath = function () {
         var clientpath = `${__dirname}`;
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
@@ -27,7 +27,7 @@ function seeleClient() {
         }
     };
 
-    this.solcPath = function() {
+    this.solcPath = function () {
         var clientpath = `${__dirname}`;
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
@@ -65,15 +65,15 @@ function seeleClient() {
                         output.innerText = data.toString()
                         console.log(data.toString())
                         output.style.display = 'block'
-        });
+                    });
                 } catch (e) {
-                        return reject(e)
-                    }
-                });
+                    return reject(e)
+                }
+            });
         }
     };
 
-    this.ParseContractBinaryCode = function(input) {
+    this.ParseContractBinaryCode = function (input) {
         try {
             input = JSON.parse(input)
             var contract = input.contracts['<stdin>:validUintContractTest'].bin
@@ -85,14 +85,14 @@ function seeleClient() {
 
     this.accountArray = [];
 
-    this.init = function() {
+    this.init = function () {
         if (!fs.existsSync(this.accountPath)) {
             fs.mkdirSync(os.homedir() + "/.seeleMist/")
             fs.mkdirSync(this.accountPath)
         }
     };
 
-    this.generateKey = function(shardnum, passWord) {
+    this.generateKey = function (shardnum, passWord) {
         this.init();
         return new Q((resolve, reject) => {
             try {
@@ -122,7 +122,7 @@ function seeleClient() {
         });
     };
 
-    this.getshardnum = function(publicKey) {
+    this.getshardnum = function (publicKey) {
         var args = [
             'getshardnum',
         ];
@@ -137,7 +137,7 @@ function seeleClient() {
         return info.replace("shard number:", "").trim()
     };
 
-    this.keyStore = function(fileName, privatekey, passWord) {
+    this.keyStore = function (fileName, privatekey, passWord) {
         return new Q((resolve, reject) => {
             var args = [
                 'savekey',
@@ -163,7 +163,7 @@ function seeleClient() {
         });
     };
 
-    this.DecKeyFile = function(fileName, passWord) {
+    this.DecKeyFile = function (fileName, passWord) {
         return new Q((resolve, reject) => {
             var args = [
                 'deckeyfile',
@@ -189,7 +189,7 @@ function seeleClient() {
         });
     };
 
-    this.accountList = function() {
+    this.accountList = function () {
         if (fs.existsSync(this.accountPath)) {
             this.accountArray = fs.readdirSync(this.accountPath)
         } else {
@@ -197,7 +197,7 @@ function seeleClient() {
         }
     };
 
-    this.getBalance = function(publicKey, callBack) {
+    this.getBalance = function (publicKey, callBack) {
         try {
             var numberInfo = this.getshardnum(publicKey)
             if (numberInfo == "1") {
@@ -212,7 +212,7 @@ function seeleClient() {
         }
     };
 
-    this.getBalanceSync = function(publicKey) {
+    this.getBalanceSync = function (publicKey) {
         try {
             var numberInfo = this.getshardnum(publicKey)
             if (numberInfo == "1") {
@@ -227,7 +227,7 @@ function seeleClient() {
         }
     }
 
-    this.sendtx = function(publicKey, passWord, to, amount, price, payload, callBack) {
+    this.sendtx = function (publicKey, passWord, to, amount, price, payload, callBack) {
         var client
         var numberInfo = this.getshardnum(publicKey)
         if (numberInfo == "1") {
@@ -260,13 +260,13 @@ function seeleClient() {
             var privatekey = this.ParsePrivateKey(output);
             var tx = client.generateTx(privatekey, rawTx);
             console.log(tx)
-            client.addTx(tx, function(err, info) {
+            client.addTx(tx, function (err, info) {
                 callBack(err, info, tx.Hash);
             });
         });
     };
 
-    this.gettxbyhash = function(hash, publickey, callBack) {
+    this.gettxbyhash = function (hash, publickey, callBack) {
         var client
         var numberInfo = this.getshardnum(publickey)
         if (numberInfo == "1") {
@@ -280,7 +280,7 @@ function seeleClient() {
         client.getTransactionByHash(hash, callBack);
     }
 
-    this.ParsePublicKey = function(input) {
+    this.ParsePublicKey = function (input) {
         try {
             return input.substring(input.indexOf("publick key:") + 12, input.indexOf("private key:")).trim()
         } catch (e) {
@@ -288,7 +288,7 @@ function seeleClient() {
         }
     };
 
-    this.ParsePrivateKey = function(input) {
+    this.ParsePrivateKey = function (input) {
         try {
             return input.substring(input.indexOf("private key:") + 12).trim()
         } catch (e) {
@@ -299,7 +299,7 @@ function seeleClient() {
     this.getblock = function (shard, hash, height, fulltx, callBack) {
         if (shard == "1") {
             this.client1.getBlock(hash, height, fulltx, callBack);
-        }else if (shard == "2") {
+        } else if (shard == "2") {
             this.client2.getBlock(hash, height, fulltx, callBack);
         }
     };
@@ -307,7 +307,7 @@ function seeleClient() {
     this.getblockheight = function (shard, callBack) {
         if (shard == "1") {
             this.client1.getBlockHeight(callBack);
-        }else if (shard == "2") {
+        } else if (shard == "2") {
             this.client2.getBlockHeight(callBack);
         }
     };
@@ -315,7 +315,7 @@ function seeleClient() {
     this.isListening = function (shard, callBack) {
         if (shard == "1") {
             this.client1.isListening(callBack);
-        }else if (shard == "2") {
+        } else if (shard == "2") {
             this.client2.isListening(callBack);
         }
     };

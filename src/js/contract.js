@@ -10,14 +10,14 @@ function addLoadEvent(func) {
     if (typeof window.onload != 'function') {
         window.onload = func;
     } else {
-        window.onload = function() {
+        window.onload = function () {
             oldonload();
             func();
         }
     }
 }
 
-addLoadEvent(function() {
+addLoadEvent(function () {
     //TODO need to check the button
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("deployContract").addEventListener("click", depolyContract);
@@ -46,15 +46,17 @@ function compileContract() {
 function depolyContract() {
     var payload = sessionStorage.getItem("payload");
     console.log(payload)
-    if (payload != null && payload != "" && payload != undefined){
+    if (payload != null && payload != "" && payload != undefined) {
         var publicKey = document.getElementById("contractPublicKey");
         var amount = document.getElementById("contractAmount");
         //var price = document.getElementById("price");
         var accountpassWord = document.getElementById("contractAccountpassWord")
 
-        layer.load(0, { shade: false });
+        layer.load(0, {
+            shade: false
+        });
 
-        seeleClient.sendtx(publicKey.value, accountpassWord.value, "0x0000000000000000000000000000000000000000", amount.value, "6000", "0x" + payload, function(err, result, hash) {
+        seeleClient.sendtx(publicKey.value, accountpassWord.value, "0x0000000000000000000000000000000000000000", amount.value, "6000", "0x" + payload, function (err, result, hash) {
             layer.closeAll();
             if (err) {
                 alert(err)
@@ -63,7 +65,7 @@ function depolyContract() {
                 alert(hash)
             }
         });
-    }else{
+    } else {
         alert("please compile the contract first!")
     }
 }
