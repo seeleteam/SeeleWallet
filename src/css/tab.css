@@ -76,7 +76,7 @@ a:focus {
 }
 #tabs_container {
     padding: 20px;
-    min-height: 500px;
+    min-height: 630px;
     overflow: hidden;
     position: relative;
     background: #fff;

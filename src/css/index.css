@@ -24,11 +24,12 @@
     font-size: 40px;
 }
 p.info {
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     float: left;
     font-size: 14px;
     line-height: 25px;
-    padding: 100px 0px 50px 20px;
+    padding: 100px 0px 50px 0px;
+    text-align: left;
 }
 
 

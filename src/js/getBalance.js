@@ -15,7 +15,7 @@ function addLoadEvent(func) {
     if (typeof window.onload != 'function') {
         window.onload = func;
     } else {
-        window.onload = function() {
+        window.onload = function () {
             oldonload();
             func();
         }
@@ -24,17 +24,19 @@ function addLoadEvent(func) {
 addLoadEvent(firstLoad)
 
 function firstLoad() {
-    $('#tab ul li:eq(0)').click(function() {
+    $('#tab ul li:eq(0)').click(async function () {
         loadAccount();
     });
-    loadAccount();
+    loadAccount()
+    
 }
-
 function loadAccount() {
     seeleClient.accountList();
 
     if (seeleClient.accountArray.length > 0) {
-        layer.load(0, { shade: false });
+        layer.load(0, {
+            shade: false
+        });
     }
 
     var count = 0;
@@ -48,12 +50,26 @@ function loadAccount() {
     tabs1HTML += `<span>ADD ACCOUNT</span>`
     tabs1HTML += `</button>`
     tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
+    tabs1HTML += `<h3 class="lastest-title">Lastest Transactions</h3><div class="account-contact"><p class="contact-left">`
+    tabs1HTML += `<span>Nov.</span><span>13</span>`
+    tabs1HTML += `</p>`
+    tabs1HTML += `<ul class="contact-right"><li>Created Contact</li>`
+    tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
+    tabs1HTML += `</ul>`
+    tabs1HTML += `</div>`
+    tabs1HTML += `<div class="account-contact"><p class="contact-left">`
+    tabs1HTML += `<span>Nov.</span><span>13</span>`
+    tabs1HTML += `</p>`
+    tabs1HTML += `<ul class="contact-right"><li>Transfer Between Accounts</li>`
+    tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
+    tabs1HTML += `</ul>`
+    tabs1HTML += `</div>`
 
     tabs1.innerHTML = tabs1HTML
 
 
     for (var item in seeleClient.accountArray) {
-        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function(err, info) {
+        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (err, info) {
             if (err) {
                 try {
                     var msg = JSON.parse(err.message);
@@ -88,7 +104,7 @@ function loadAccount() {
 
 function getBalance() {
     var publicKey = document.getElementById("publicKey");
-    seeleClient.getBalance(publicKey.value.trim(), function(err, info) {
+    seeleClient.getBalance(publicKey.value.trim(), function (err, info) {
         var balance = document.getElementById("balance");
         if (err) {
             try {

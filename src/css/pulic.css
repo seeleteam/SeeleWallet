@@ -151,14 +151,18 @@ body {
     background: #dae4e9;
     color: #333;
     font-size: 16px;
-    margin-left: 40px;
+    margin-left: 20px;
     display: table;
     text-align: center;
 }
+.overflow{
+    max-height: 178px;
+    overflow-y: auto;
+}
 .account-contact{
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     height: 80px;
-    margin-left: 40px;
+    margin-left: 20px;
     margin-top: 8px;
 }
 .contact-left{
