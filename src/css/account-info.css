@@ -266,12 +266,12 @@ form{
     padding: 80px 0 0 60px;
 }
 #tabs-1 p.info {
-    width: calc(100% - 60px);
+    width: calc(100% - 20px);
     float: left;
     font-size: 14px;
     line-height: 25px;
     margin: 0;
-    padding: 30px 0px 50px 60px;
+    padding: 30px 0px 50px 20px;
     color: #999;
 }
 #tabs-1 p.info span{
