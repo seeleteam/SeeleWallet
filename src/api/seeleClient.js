@@ -11,13 +11,13 @@ const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    // this.client1 = new seelejs("http://106.75.86.211:8037");
-    // this.client2 = new seelejs("http://106.75.86.211:8038");
-    this.client1 = new seelejs();
-    this.client2 = new seelejs();
+    this.client1 = new seelejs("http://106.75.86.211:8037");
+    this.client2 = new seelejs("http://106.75.86.211:8038");
 
-    this.accountPath = os.homedir() + "/.seeleMist/account/"
-    this.txPath = os.homedir() + "/.seeleMist/tx/"
+    this.accountArray = [];
+    this.accountPath = os.homedir() + "/.seeleMist/account/";
+    this.txPath = os.homedir() + "/.seeleMist/tx/";
+    this.txArray = [];
 
     this.binPath = function () {
         var clientpath = `${__dirname}`;
@@ -51,12 +51,10 @@ function seeleClient() {
                 const proc = spawn(this.nodePath(), args);
 
                 proc.stdout.on('data', data => {
-                    console.log("6666666666666666666")
                     resolve(true)
                 });
 
                 proc.stderr.on('data', data => {
-                    console.log("88888888888888888888888")
                     reject(false)
                     alert(data.toString())
                 });
@@ -122,8 +120,6 @@ function seeleClient() {
             return ""
         }
     };
-
-    this.accountArray = [];
 
     this.init = function () {
         if (!fs.existsSync(this.accountPath)) {
@@ -281,9 +277,6 @@ function seeleClient() {
 
         var nonce = client.sendSync("getAccountNonce", publicKey);
 
-        console.log("000000000000000000000000000")
-        console.log(nonce)
-        console.log(amount)
         var rawTx = {
             "From": publicKey,
             "To": to,
@@ -294,12 +287,10 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
-        console.log(rawTx)
         this.DecKeyFile(publicKey, passWord).then((data) => {
             var output = `${data}`
             var privatekey = this.ParsePrivateKey(output);
             var tx = client.generateTx(privatekey, rawTx);
-            console.log(tx)
             client.addTx(tx, function (err, info) {
                 callBack(err, info, tx.Hash);
             });
@@ -361,11 +352,22 @@ function seeleClient() {
     };
     
     this.saveFile = function (isTx, hash) {
+        if (!fs.existsSync(this.txPath)) {
+            fs.mkdirSync(this.txPath)
+        }
         var _path = this.txPath + hash
         fs.writeFile(_path, hash, function (err) {
-            if (!err)
-                console.log("写入成功！")
+            if (err)
+                console.log(err.message)
         })
+    }
+    
+    this.readFile = function () {
+        if (fs.existsSync(this.txPath)) {
+            this.txArray = fs.readdirSync(this.txPath)
+        } else {
+            console.log(this.txPath + "  Not Found!");
+        }
     }
 }
 

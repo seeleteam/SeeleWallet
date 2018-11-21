@@ -39,7 +39,7 @@ function compileContract() {
 }
 
 function depolyContract() {
-    var payload = sessionStorage.getItem("payload");
+    let payload = $('#getPayload').text()
     console.log(payload)
     if (payload != null && payload != "" && payload != undefined) {
         var publicKey = document.getElementById("contractPublicKey");
@@ -56,7 +56,8 @@ function depolyContract() {
             if (err) {
                 alert(err)
             } else {
-                sessionStorage.setItem('contract', hash)
+                seeleClient.txArray.push(hash)
+                seeleClient.saveFile(false, hash)
             }
         });
     } else {

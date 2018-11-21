@@ -39,7 +39,9 @@ function sendtx() {
         if (err) {
             alert(err)
         } else {
-            sessionStorage.setItem('transaction', hash)
+            console.log(seeleClient.txArray)
+            seeleClient.txArray.push(hash)
+            seeleClient.saveFile(false, hash)
         }
     });
 }
