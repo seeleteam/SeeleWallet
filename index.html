@@ -18,10 +18,10 @@
             <div class="head-main">
                 <div class="logo"><img src="./src/img/logo-head.png"></div>
                 <ul class="quick-link">
-                    <li>Private-net</li>
-                    <li>Connecting...</li>
-                    <li>10,557</li>
-                    <li><select>
+                    <li id="netWork">Private-net</li>
+                    <li id="isListening">Disconnected</li>
+                    <li id="blockheight">0</li>
+                    <li><select id="shard">
                             <option value="">1</option>
                             <option value="">2</option>
                             <option value="">3</option>
@@ -112,9 +112,9 @@
                         <h1 class="send-title">Deploy contract</h1>
                         <form>
                             <ul class="send-list">
-                                <li>From<input type="text" placeholder="" id="txpublicKey" readonly="readonly"></li>
-                                <li>Password<input type="password" placeholder="press key file password" id="accountpassWord"></li>
-                                <li>Amount<input type="text" placeholder="0.0" id="amount"></li>
+                                <li>From<input type="text" placeholder="" id="contractPublicKey"></li>
+                                <li>Password<input type="password" placeholder="press key file password" id="contractAccountpassWord"></li>
+                                <li>Amount<input type="text" placeholder="0.0" id="contractAmount" value="0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span>0.00</span>SEELE</li>
                                 <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
                                     <label for="sendEvery">Send everything</label></li>
@@ -126,21 +126,26 @@
                                         <li class="code-default cur">SOLIDITY CONTRACT SOURCE CODE</li>
                                         <li class="code-after">CONTRACT BYTE CODE</li>
                                     </ul>
+                                    <div id="getPayload" style="display:none"></div>
                                     <div class="code_container">
-                                        <textarea></textarea>
+                                        <textarea id="contractInput">pragma solidity ^0.5.0;
+contract validUintContractTest {
+    function test() public pure {
+    }
+}</textarea>
                                     </div>
                                 </div>
-                                <button class="compile">Compile</button>
-                                <div class="success-result">
-                                    <span class="success">Success</span>
+                                <input type="button" class="compile" id="compileContract" value="Compile"/>
+                                <div id="compileSuccess" class="success-result">
+                                    <span class="success"></span>
                                 </div>
-                                <div class="fail-result">
+                                <!--<div id="compileFail" class="fail-result">
                                     <span class="fail">Could not compile cource code.</span>
-                                    <button>Compile Again</button>
+                                    <input type="button" class="compile" id="compileAgain" value="Compile Again"/>
                                     <div class="code_container">
                                         <textarea></textarea>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <h2 class="progress-title">Seele Fee</h2>
                             <div class="progress">
@@ -155,7 +160,7 @@
                                 <dt>TOTAL</dt>
                                 <dd>0.006 SEELE</dd>
                             </dl>
-                            <input id="sendtx" class="send" value="Deploy" type="button">
+                            <input id="deployContract" class="send" value="Deploy" type="button">
                             <input id="Query" class="send Query" value="Query" type="button">
                         </form>
                     </div>
@@ -200,9 +205,7 @@
             require('./src/js/createAccount.js')
             require('./src/js/sendtx.js')
             require('./src/js/walletConnect.js')
-            // require('./src/js/contract.js')
-            require('./src/test/contractTest.js')
-
+            require('./src/js/contract.js')
         </script>
 </body>
 <script src="./src/js/jQuery.js"></script>

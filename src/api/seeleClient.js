@@ -5,15 +5,16 @@ var seelejs = require('seele.js');
 var fs = require('fs');
 var os = require("os")
 
+
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    this.client1 = new seelejs("http://106.75.86.211:8037");
-    this.client2 = new seelejs("http://106.75.86.211:8038");
-    // this.client1 = new seelejs();
-    // this.client2 = new seelejs();
+    // this.client1 = new seelejs("http://106.75.86.211:8037");
+    // this.client2 = new seelejs("http://106.75.86.211:8038");
+    this.client1 = new seelejs();
+    this.client2 = new seelejs();
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
 
@@ -60,7 +61,11 @@ function seeleClient() {
 
                     proc.stderr.on('data', data => {
                         reject(data)
-                    });
+                        var output = document.getElementById("compileSuccess")
+                        output.innerText = data.toString()
+                        console.log(data.toString())
+                        output.style.display = 'block'
+        });
                 } catch (e) {
                         return reject(e)
                     }
@@ -236,6 +241,9 @@ function seeleClient() {
 
         var nonce = client.sendSync("getAccountNonce", publicKey);
 
+        console.log("000000000000000000000000000")
+        console.log(nonce)
+        console.log(amount)
         var rawTx = {
             "From": publicKey,
             "To": to,
@@ -246,11 +254,12 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
-
+        console.log(rawTx)
         this.DecKeyFile(publicKey, passWord).then((data) => {
             var output = `${data}`
             var privatekey = this.ParsePrivateKey(output);
             var tx = client.generateTx(privatekey, rawTx);
+            console.log(tx)
             client.addTx(tx, function(err, info) {
                 callBack(err, info, tx.Hash);
             });

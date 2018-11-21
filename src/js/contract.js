@@ -2,10 +2,8 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 var SeeleClient = require('../api/seeleClient');
-var compiler = require('../api/soljson.js');
 
 seeleClient = new SeeleClient();
-var payload
 
 function addLoadEvent(func) {
     var oldonload = window.onload;
@@ -26,21 +24,37 @@ addLoadEvent(function() {
 })
 
 function compileContract() {
-    //TODO need to compile the contract
-    payload = ''
+    var input = document.getElementById("contractInput")
+    seeleClient.compileContract(input.value).then((outdata) => {
+        var getPayload = document.getElementById("getPayload");
+        getPayload.innerText = outdata
+        sessionStorage.setItem('payload', outdata)
+        var output = document.getElementById("compileSuccess")
+        output.innerText = "Success"
+        output.style.display = 'block'
+    }).catch(err => {
+        // var output = document.getElementById("compileFail")
+        // var button = document.getElementById("compileContract")
+        // var again = document.getElementById("compileAgain")
+        // output.innerText = err.toString()
+        // output.style.display = 'block'
+        // button.style.display = 'none'
+        // again.style.display = 'block'
+    });
 }
 
 function depolyContract() {
-    if (payload != null){
-        var publicKey = document.getElementById("txpublicKey");
-        var to = document.getElementById("to");
-        var amount = document.getElementById("amount");
+    var payload = sessionStorage.getItem("payload");
+    console.log(payload)
+    if (payload != null && payload != "" && payload != undefined){
+        var publicKey = document.getElementById("contractPublicKey");
+        var amount = document.getElementById("contractAmount");
         //var price = document.getElementById("price");
-        var accountpassWord = document.getElementById("accountpassWord")
+        var accountpassWord = document.getElementById("contractAccountpassWord")
 
         layer.load(0, { shade: false });
 
-        seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "20000", payload, function(err, result, hash) {
+        seeleClient.sendtx(publicKey.value, accountpassWord.value, "0x0000000000000000000000000000000000000000", amount.value, "6000", "0x" + payload, function(err, result, hash) {
             layer.closeAll();
             if (err) {
                 alert(err)
@@ -49,5 +63,7 @@ function depolyContract() {
                 alert(hash)
             }
         });
+    }else{
+        alert("please compile the contract first!")
     }
 }
