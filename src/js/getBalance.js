@@ -28,8 +28,8 @@ function firstLoad() {
         loadAccount();
     });
     loadAccount()
-    
 }
+
 function loadAccount() {
     seeleClient.accountList();
 
@@ -67,7 +67,7 @@ function loadAccount() {
 
     tabs1.innerHTML = tabs1HTML
 
-
+    var balanceArray = new Array()
     for (var item in seeleClient.accountArray) {
         seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (err, info) {
             if (err) {
@@ -84,7 +84,7 @@ function loadAccount() {
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
                 accountHTML += `<li>Account</li>`;
-                accountHTML += `<li><span>` + info.Balance / 100000000 + `</span> seele</li>`;
+                accountHTML += `<li><span class="accountBalance">` + info.Balance / 100000000 + `</span> seele</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
@@ -97,8 +97,26 @@ function loadAccount() {
                     layer.closeAll();
                 }
                 count += 1;
+                balanceArray.push(info.Balance)
             }
-        });
+            var sum = 0;
+            var balanceSum = document.getElementById('span_balance')
+            if (balanceArray.length == 0) {
+                balanceSum.innerText = '0'
+                console.log('数组为0')
+            } else if (balanceArray.length == 1) {
+                balanceSum.innerText = balanceArray[0] / 100000000
+                console.log('数组为1')
+            } else {
+                for (var i = 0; i < balanceArray.length; i++) {
+                    sum += balanceArray[i];
+                    console.log(balanceArray[i] + '数组各值')
+                }
+                console.log('数组为sum')
+                balanceSum.innerText = sum / 100000000
+            }
+        })
+       
     }
 }
 
@@ -114,7 +132,7 @@ function getBalance() {
                 balance.innerText = err.message;
             }
         } else {
-            balance.innerText = "余额：" + info.Balance;
+            balance.innerText = "Balance：" + info.Balance;
         }
     });
 }

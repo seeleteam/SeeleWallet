@@ -2,7 +2,7 @@
 author: Miya_yang
 date:2018.10.30
 */
-$(function($) {
+$(function ($) {
     // tab
     $('#tab').tabulous({
         effect: 'slideLeft'
@@ -13,7 +13,7 @@ $(function($) {
         el: '.hideShowPassword-toggle'
     })
 
-    $('.hideShowPassword-toggle').click(function() {
+    $('.hideShowPassword-toggle').click(function () {
         if ($(this).hasClass('hideShowPassword-toggle-hide')) {
             $(this).removeClass('hideShowPassword-toggle-hide')
         } else {
@@ -28,28 +28,27 @@ $(function($) {
     // })
 
     // search-hash
-    $('.Query').click(function() {
+    $('.Query').click(function () {
         $('.search-hash').show()
         $('.dask').show()
     })
     // ok  cancel
-    $('.ok-search').click(function() {
+    $('.ok-search').click(function () {
         $('.search-hash').hide()
         $('.dask').hide()
     })
 
     // cancel account
-    $('#cancel').click(function() {
+    $('#cancel').click(function () {
         $('.create-account').hide()
         $('.search-hash').hide()
         $('.dask').hide()
     })
-
+    // click contract CONTRACT BYTE CODE
     $('.tab-code ul li').click(function () {
         let getPayload = $('#getPayload').text()
         $(this).addClass('cur').siblings().removeClass('cur')
-        if($(this).text() == 'CONTRACT BYTE CODE'){
-            console.log(getPayload)
+        if ($(this).text() == 'CONTRACT BYTE CODE') {
             $('#contractInput').val(getPayload)
         } else {
             var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
@@ -117,7 +116,7 @@ function ToAccountInfo(publickey, balance) {
 
 function transfer(publickey) {
     var lis = $("#tab ul li")
-    lis.each(function(i) {
+    lis.each(function (i) {
         if ($(this).hasClass('tabli_active')) {
             $(this).removeClass('tabli_active')
             $(this).find('a').removeClass('tabulous_active')
