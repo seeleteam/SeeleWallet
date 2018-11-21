@@ -5,15 +5,16 @@ var seelejs = require('seele.js');
 var fs = require('fs');
 var os = require("os")
 
+
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    this.client1 = new seelejs("http://106.75.86.211:8037");
-    this.client2 = new seelejs("http://106.75.86.211:8038");
-    // this.client1 = new seelejs();
-    // this.client2 = new seelejs();
+    // this.client1 = new seelejs("http://106.75.86.211:8037");
+    // this.client2 = new seelejs("http://106.75.86.211:8038");
+    this.client1 = new seelejs();
+    this.client2 = new seelejs();
 
     this.accountPath = os.homedir() + "/.seeleMist/account/"
 
@@ -23,6 +24,62 @@ function seeleClient() {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
         } else {
             return "./cmd/win32/client"
+        }
+    };
+
+    this.solcPath = function() {
+        var clientpath = `${__dirname}`;
+        if (clientpath.indexOf("app.asar") > 0) {
+            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
+        } else {
+            return "./cmd/win32/solc"
+        }
+    };
+
+    this.compileContract = function (input) {
+        if (input != '') {
+
+            return new Q((resolve, reject) => {
+                try {
+                    var args = [
+                        '--combined-json',
+                    ];
+                    args.push("bin,abi,userdoc,devdoc")
+                    args.push('--optimize')
+                    args.push('--')
+                    args.push('-')
+
+                    const proc = spawn(this.solcPath(), args);
+                    proc.stdin.write(input);
+                    proc.stdin.end();
+
+                    proc.stdout.on('data', data => {
+                        var output = `${data}`
+                        var contractBinaryCode = this.ParseContractBinaryCode(output)
+                        resolve(contractBinaryCode)
+                    });
+
+                    proc.stderr.on('data', data => {
+                        reject(data)
+                        var output = document.getElementById("compileSuccess")
+                        output.innerText = data.toString()
+                        console.log(data.toString())
+                        output.style.display = 'block'
+        });
+                } catch (e) {
+                        return reject(e)
+                    }
+                });
+        }
+    };
+
+    this.ParseContractBinaryCode = function(input) {
+        try {
+            input = JSON.parse(input)
+            var contract = input.contracts['<stdin>:validUintContractTest'].bin
+            return contract
+        } catch (e) {
+            return ""
         }
     };
 
@@ -184,6 +241,9 @@ function seeleClient() {
 
         var nonce = client.sendSync("getAccountNonce", publicKey);
 
+        console.log("000000000000000000000000000")
+        console.log(nonce)
+        console.log(amount)
         var rawTx = {
             "From": publicKey,
             "To": to,
@@ -194,11 +254,12 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
-
+        console.log(rawTx)
         this.DecKeyFile(publicKey, passWord).then((data) => {
             var output = `${data}`
             var privatekey = this.ParsePrivateKey(output);
             var tx = client.generateTx(privatekey, rawTx);
+            console.log(tx)
             client.addTx(tx, function(err, info) {
                 callBack(err, info, tx.Hash);
             });

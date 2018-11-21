@@ -549,10 +549,17 @@ form {
 }
 .compile{
     width: 80px;
+    height: 34px;
+    background: #1973AF;
+    font-family: 'Helvetica-Bold';
+    border: none;
+    color: #fff;
+    margin-left: 80px;
+    margin-top: 10px;
 }
 .success-result{
     width: 479px;
-    height: 42px;
+    min-height: 158px;
     float: left;
     margin: 10px 0 0 80px;
     padding-left: 20px;

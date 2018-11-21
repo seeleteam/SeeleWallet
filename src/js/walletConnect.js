@@ -29,6 +29,9 @@ function firstLoad() {
 
 function getShard() {
     shard = document.getElementById("shard").innerText;
+    if (shard == "") {
+        shard = "1"
+    }
     return shard
 }
 
