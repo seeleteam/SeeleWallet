@@ -39,9 +39,9 @@ function sendtx() {
         if (err) {
             alert(err)
         } else {
-            console.info(hash)
-            alert(hash)
-                //txresult.innerHTML = hash
+            console.log(seeleClient.txArray)
+            seeleClient.txArray.push(hash)
+            seeleClient.saveFile(false, hash)
         }
     });
 }

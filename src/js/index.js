@@ -95,20 +95,25 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
     divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
-    divhtml += `<h3 class="lastest-title">Lastest Transactions</h3><div class="account-contact"><p class="contact-left">`
-    divhtml += `<span>Nov.</span><span>13</span>`
-    divhtml += `</p>`
-    divhtml += `<ul class="contact-right"><li>Created Contact</li>`
-    divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    divhtml += `</ul>`
-    divhtml += `</div>`
-    divhtml += `<div class="account-contact"><p class="contact-left">`
-    divhtml += `<span>Nov.</span><span>13</span>`
-    divhtml += `</p>`
-    divhtml += `<ul class="contact-right"><li>Transfer Between Accounts</li>`
-    divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    divhtml += `</ul>`
-    divhtml += `</div>`
+    divhtml += `<h3 class="lastest-title">Lastest Transactions</h3>`
+
+    // divhtml += `<div class="account-contact"><p class="contact-left">`
+    // divhtml += `<span>Nov.</span><span>13</span>`
+    // divhtml += `</p>`
+    // divhtml += `<ul class="contact-right"><li>Created Contact</li>`
+    // divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
+    // divhtml += `</ul>`
+    // divhtml += `</div>`
+    //
+    // divhtml += `<div class="account-contact"><p class="contact-left">`
+    // divhtml += `<span>Nov.</span><span>13</span>`
+    // divhtml += `</p>`
+    // divhtml += `<ul class="contact-right"><li>Transfer Between Accounts</li>`
+    // divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
+    // divhtml += `</ul>`
+    // divhtml += `</div>`
+
+
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
     $('#tabs-1').html(divhtml)
