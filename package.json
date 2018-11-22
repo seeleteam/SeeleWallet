@@ -6,7 +6,7 @@
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "packager": "electron-packager . seeleMist --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=seeleMist.ico",
+        "package": "electron-packager . seeleMist --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=seeleMist.ico",
         "dist": "electron-builder"
     },
     "build": {
@@ -37,7 +37,7 @@
     "license": "CC0-1.0",
     "devDependencies": {
         "electron": "^3.0.4",
-        "electron-builder": "^20.31.2"
+        "electron-builder": "^20.36.2"
     },
     "dependencies": {
         "bluebird": "^3.5.2",
