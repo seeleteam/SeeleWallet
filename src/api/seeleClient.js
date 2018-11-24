@@ -11,8 +11,11 @@ const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    this.client1 = new seelejs("http://106.75.86.211:8037");
-    this.client2 = new seelejs("http://106.75.86.211:8038");
+    // this.client1 = new seelejs("http://106.75.86.211:8037");
+    // this.client2 = new seelejs("http://106.75.86.211:8038");
+
+    this.client1 = new seelejs();
+    this.client2 = new seelejs();
 
     this.accountArray = [];
     this.accountPath = os.homedir() + "/.seeleMist/account/";
@@ -367,6 +370,19 @@ function seeleClient() {
             this.txArray = fs.readdirSync(this.txPath)
         } else {
             console.log(this.txPath + "  Not Found!");
+        }
+    }
+    
+    this.queryContract = function (callBack) {
+        let hash = $('#QueryHash').text()
+        if (hash != null && hash != "" && hash != undefined) {
+            var send = document.getElementById("contractPublicKey").value
+            var numberInfo = this.getshardnum(send)
+            if (numberInfo == "1") {
+                return this.client1.getReceiptByTxHash(hash, "", callBack);
+            } else if (numberInfo == "2") {
+                return this.client2.getReceiptByTxHash(hash, "", callBack);
+            }
         }
     }
 }
