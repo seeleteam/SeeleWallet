@@ -21,6 +21,7 @@ addLoadEvent(function () {
     //TODO need to check the button
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("deployContract").addEventListener("click", depolyContract);
+    document.getElementById("QueryContract").addEventListener("click", queryContract);
 })
 
 function compileContract() {
@@ -56,6 +57,9 @@ function depolyContract() {
             if (err) {
                 alert(err)
             } else {
+                var QueryHash = document.getElementById("QueryHash")
+                alert(hash)
+                QueryHash.innerText = hash
                 seeleClient.txArray.push(hash)
                 seeleClient.saveFile(false, hash)
             }
@@ -63,4 +67,33 @@ function depolyContract() {
     } else {
         alert("please compile the contract first!")
     }
+}
+
+function queryContract() {
+    seeleClient.queryContract(function (err, result) {
+        if (err) {
+            alert(err.message)
+        }else {
+            var contractHash = document.getElementById("contractHash")
+            contractHash.innerText = "contract:" + result.contract
+
+            var contractDeployFailedOrNo = document.getElementById("contractDeployFailedOrNo")
+            contractDeployFailedOrNo.innerText = "failed:" + result.failed
+
+            var contractPoststate = document.getElementById("contractPoststate")
+            contractPoststate.innerText = "poststate:" + result.poststate
+
+            var contractResult = document.getElementById("contractResult")
+            contractResult.innerText = "result:" + result.result
+
+            var contractTota1Fee = document.getElementById("contractTota1Fee")
+            contractTota1Fee.innerText = "tota1Fee:" + result.tota1Fee
+
+            var contractTxhash = document.getElementById("contractTxhash")
+            contractTxhash.innerText = "txhash:" + result.txhash
+
+            var contractUsedGas = document.getElementById("contractUsedGas")
+            contractUsedGas.innerText = "usedGas:" + result.usedGas
+        }
+    })
 }

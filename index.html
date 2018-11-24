@@ -164,8 +164,9 @@ contract validUintContractTest {
                                 <dt>TOTAL</dt>
                                 <dd>0.006 SEELE</dd>
                             </dl>
+                            <div id="QueryHash" style="display:none"></div>
                             <input id="deployContract" class="send" value="Deploy" type="button">
-                            <input id="Query" class="send Query" value="Query" type="button">
+                            <input id="QueryContract" class="send Query" value="Query" type="button">
                         </form>
                     </div>
                 </div>
@@ -192,11 +193,13 @@ contract validUintContractTest {
                 <button><span><img src="./src/img/search.png"></span></button>
             </div>
             <ul>
-                <li>contract: ”0x”</li>
-                <li>failed: false</li>
-                <li>result: “0x”</li>
-                <li>tota1Fee: 210000</li>
-                <li>usedGas: 210000</li>
+                <li id="contractHash">contract: ”0x”</li>
+                <li id="contractDeployFailedOrNo">failed: false</li>
+                <li id="contractPoststate">poststate: “0x”</li>
+                <li id="contractResult">result: “0x”</li>
+                <li id="contractTota1Fee">tota1Fee: 210000</li>
+                <li id="contractTxhash">txhash: “0x”</li>
+                <li id="contractUsedGas">usedGas: 210000</li>
             </ul>
             <button class="ok-search">OK</button>
         </div>
@@ -221,6 +224,5 @@ contract validUintContractTest {
 <script src="./src/js/progress.js"></script>
 <script src="./src/js/index.js"></script>
 <script src="./src/js/layer.js"></script>
-
 
 </html>
