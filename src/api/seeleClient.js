@@ -27,7 +27,9 @@ function seeleClient() {
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
         } else {
+            //TODO this works for dev environment, need to check path validity for packed exe
             return "./cmd/win32/client"
+            return clientpath + "/../../cmd/win32/client"
         }
     };
 
@@ -240,8 +242,10 @@ function seeleClient() {
         try {
             var numberInfo = this.getshardnum(publicKey)
             if (numberInfo == "1") {
+                this.client1.getBalance(publicKey, "", -1, callBack);
                 this.client1.getBalance(publicKey, callBack);
             } else if (numberInfo == "2") {
+                this.client2.getBalance(publicKey, "", -1, callBack);
                 this.client2.getBalance(publicKey, callBack);
             } else {
                 alert(numberInfo)

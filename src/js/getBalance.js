@@ -85,7 +85,7 @@ function loadAccount() {
 
     var balanceArray = new Array()
     for (var item in seeleClient.accountArray) {
-        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (err, info) {
+        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (info, err) {
             if (err) {
                 try {
                     var msg = JSON.parse(err.message);
