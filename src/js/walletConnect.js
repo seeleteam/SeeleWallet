@@ -46,7 +46,7 @@ function getNetWork() {
     var netWork = document.getElementById("netWork");
     //TODO need check the genesis hash of main netWork
     var mainNetWork = '0xc2c26507a9a7418c4cd4d1b405285397891d30f4d5be65af3be8b4c8e7c28d63'
-    seeleClient.getblock(shard, "", 0, false, function (err, block) {
+    seeleClient.getblock(shard, "", 0, false, function (block,err) {
         if (err) {
             netWork.innerText = "private";
         } else {
@@ -65,7 +65,7 @@ function getNetWork() {
 function getBlockHeight() {
     var blockheight = document.getElementById("blockheight");
     console.log(shard)
-    seeleClient.getblockheight(shard, function (err, height) {
+    seeleClient.getblockheight(shard, function (height,err) {
         if (err) {
             blockheight.innerText = 0;
         } else {
@@ -76,7 +76,7 @@ function getBlockHeight() {
 
 function isListening() {
     var isListening = document.getElementById("isListening");
-    seeleClient.isListening(shard, function (err, isListen) {
+    seeleClient.isListening(shard, function (isListen,err) {
         if (err) {
             isListening.innerText = "Disconnected";
         } else {
