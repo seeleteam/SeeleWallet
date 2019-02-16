@@ -14,8 +14,12 @@ function seeleClient() {
     // this.client1 = new seelejs("http://106.75.86.211:8037");
     // this.client2 = new seelejs("http://106.75.86.211:8038");
 
+    // shardCount = 4
     this.client1 = new seelejs();
     this.client2 = new seelejs();
+    this.client3 = new seelejs();
+    this.client4 = new seelejs();
+
 
     this.accountArray = [];
     this.accountPath = os.homedir() + "/.seeleMist/account/";
@@ -28,7 +32,7 @@ function seeleClient() {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
         } else {
             //TODO this works for dev environment, need to check path validity for packed exe
-            return "./cmd/win32/client"
+           // return "./cmd/win32/client"
             return clientpath + "/../../cmd/win32/client"
         }
     };
@@ -241,12 +245,19 @@ function seeleClient() {
     this.getBalance = function (publicKey, callBack) {
         try {
             var numberInfo = this.getshardnum(publicKey)
+            // shardCount = 4
             if (numberInfo == "1") {
                 this.client1.getBalance(publicKey, "", -1, callBack);
                 this.client1.getBalance(publicKey, callBack);
             } else if (numberInfo == "2") {
                 this.client2.getBalance(publicKey, "", -1, callBack);
                 this.client2.getBalance(publicKey, callBack);
+            } else if (numberInfo == "3") {
+                this.client3.getBalance(publicKey, "", -1, callBack);
+                this.client3.getBalance(publicKey, callBack);
+            } else if (numberInfo == "4") {
+                this.client4.getBalance(publicKey, "", -1, callBack);
+                this.client4.getBalance(publicKey, callBack);
             } else {
                 alert(numberInfo)
             }
@@ -262,6 +273,10 @@ function seeleClient() {
                 return this.client1.sendSync("getBalance", publicKey);
             } else if (numberInfo == "2") {
                 return this.client2.sendSync("getBalance", publicKey);
+            } else if (numberInfo == "3") {
+                return this.client3.sendSync("getBalance", publicKey);
+            } else if (numberInfo == "4") {
+                return this.client4.sendSync("getBalance", publicKey);
             } else {
                 alert(numberInfo)
             }
@@ -277,6 +292,10 @@ function seeleClient() {
             client = this.client1;
         } else if (numberInfo == "2") {
             client = this.client2;
+        } else if (numberInfo == "3") {
+            client = this.client3;
+        } else if (numberInfo == "4") {
+            client = this.client4;
         } else {
             alert(numberInfo)
             return
@@ -311,6 +330,10 @@ function seeleClient() {
             client = this.client1;
         } else if (numberInfo == "2") {
             client = this.client2;
+        } else if (numberInfo == "3") {
+            client = this.client3;
+        } else if (numberInfo == "4") {
+            client = this.client4;
         } else {
             alert(numberInfo)
             return
@@ -339,6 +362,10 @@ function seeleClient() {
             this.client1.getBlock(hash, height, fulltx, callBack);
         } else if (shard == "2") {
             this.client2.getBlock(hash, height, fulltx, callBack);
+        } else if (shard == "3") {
+            this.client3.getBlock(hash, height, fulltx, callBack);
+        } else if (shard == "4") {
+            this.client4.getBlock(hash, height, fulltx, callBack);
         }
     };
 
@@ -347,6 +374,10 @@ function seeleClient() {
             this.client1.getBlockHeight(callBack);
         } else if (shard == "2") {
             this.client2.getBlockHeight(callBack);
+        } else if (shard == "3") {
+            this.client3.getBlockHeight(callBack);
+        } else if (shard == "4") {
+            this.client4.getBlockHeight(callBack);
         }
     };
 
@@ -355,6 +386,10 @@ function seeleClient() {
             this.client1.isListening(callBack);
         } else if (shard == "2") {
             this.client2.isListening(callBack);
+        } else if (shard == "3") {
+            this.client3.isListening(callBack);
+        } else if (shard == "4") {
+            this.client4.isListening(callBack);
         }
     };
     
@@ -386,6 +421,10 @@ function seeleClient() {
                 return this.client1.getReceiptByTxHash(hash, "", callBack);
             } else if (numberInfo == "2") {
                 return this.client2.getReceiptByTxHash(hash, "", callBack);
+            } else if (numberInfo == "3") {
+                return this.client3.getReceiptByTxHash(hash, "", callBack);
+            } else if (numberInfo == "4") {
+                return this.client4.getReceiptByTxHash(hash, "", callBack);
             }
         }
     }
