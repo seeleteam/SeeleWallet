@@ -29,12 +29,12 @@ function sendtx() {
     var publicKey = document.getElementById("txpublicKey");
     var to = document.getElementById("to");
     var amount = document.getElementById("amount");
-    //var price = document.getElementById("price");
+    // var price = document.getElementById("price");
     var accountpassWord = document.getElementById("accountpassWord")
 
     layer.load(0, { shade: false });
 
-    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "2000", "", function(err, result, hash) {
+    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "10", "", function(result, err, hash) {
         layer.closeAll();
         if (err) {
             alert(err)
