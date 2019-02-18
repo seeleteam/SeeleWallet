@@ -1,6 +1,8 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
+const electron = require('electron');
+
 var SeeleClient = require('../api/seeleClient');
 
 seeleClient = new SeeleClient();
@@ -77,7 +79,7 @@ function loadAccount() {
         tabs1HTML += `<span>Nov.</span><span>13</span>`
         tabs1HTML += `</p>`
         tabs1HTML += `<ul class="contact-right"><li>Created </li>`
-        tabs1HTML += `<li><span>` + seeleClient.txArray[item].trim() + `</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=` + seeleClient.txArray[item].trim() + `</a></span></li>`
+        tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].trim() +`')">`+ seeleClient.txArray[item].trim() + `</span></li>`
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
     }
