@@ -1,6 +1,8 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
+const electron = require('electron');
+
 var SeeleClient = require('../api/seeleClient');
 
 seeleClient = new SeeleClient();
@@ -54,7 +56,7 @@ function loadAccount() {
     tabs1HTML += `<span>ADD ACCOUNT</span>`
     tabs1HTML += `</button>`
     tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
-    tabs1HTML += `<h3 class="lastest-title">Lastest Transactions</h3>`
+    tabs1HTML += `<h3 class="latest-title">Latest Transactions</h3>`
 
     // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
     // tabs1HTML += `<span>Nov.</span><span>13</span>`
@@ -77,7 +79,7 @@ function loadAccount() {
         tabs1HTML += `<span>Nov.</span><span>13</span>`
         tabs1HTML += `</p>`
         tabs1HTML += `<ul class="contact-right"><li>Created </li>`
-        tabs1HTML += `<li><span>` + seeleClient.txArray[item].trim() + `</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=` + seeleClient.txArray[item].trim() + `</a></span></li>`
+        tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].trim() +`')">`+ seeleClient.txArray[item].trim() + `</span></li>`
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
     }
