@@ -95,7 +95,7 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
     divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
-    divhtml += `<h3 class="lastest-title">Lastest Transactions</h3>`
+    divhtml += `<h3 class="latest-title">Latest Transactions</h3>`
 
     // divhtml += `<div class="account-contact"><p class="contact-left">`
     // divhtml += `<span>Nov.</span><span>13</span>`

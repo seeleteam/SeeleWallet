@@ -54,7 +54,7 @@ function loadAccount() {
     tabs1HTML += `<span>ADD ACCOUNT</span>`
     tabs1HTML += `</button>`
     tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
-    tabs1HTML += `<h3 class="lastest-title">Lastest Transactions</h3>`
+    tabs1HTML += `<h3 class="latest-title">Latest Transactions</h3>`
 
     // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
     // tabs1HTML += `<span>Nov.</span><span>13</span>`
