@@ -248,16 +248,12 @@ function seeleClient() {
             // shardCount = 4
             if (numberInfo == "1") {
                 this.client1.getBalance(publicKey, "", -1, callBack);
-                this.client1.getBalance(publicKey, callBack);
             } else if (numberInfo == "2") {
                 this.client2.getBalance(publicKey, "", -1, callBack);
-                this.client2.getBalance(publicKey, callBack);
             } else if (numberInfo == "3") {
                 this.client3.getBalance(publicKey, "", -1, callBack);
-                this.client3.getBalance(publicKey, callBack);
             } else if (numberInfo == "4") {
                 this.client4.getBalance(publicKey, "", -1, callBack);
-                this.client4.getBalance(publicKey, callBack);
             } else {
                 alert(numberInfo)
             }
@@ -301,12 +297,13 @@ function seeleClient() {
             return
         }
 
-        var nonce = client.sendSync("getAccountNonce", publicKey);
+        var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
 
         var rawTx = {
+            "Type":0,
             "From": publicKey,
             "To": to,
-            "Amount": parseInt(amount),
+            "Amount": parseInt(amount*Math.pow(10,8)),
             "AccountNonce": nonce,
             "GasPrice": parseInt(price),
             "GasLimit": 3000000,
@@ -317,8 +314,8 @@ function seeleClient() {
             var output = `${data}`
             var privatekey = this.ParsePrivateKey(output);
             var tx = client.generateTx(privatekey, rawTx);
-            client.addTx(tx, function (err, info) {
-                callBack(err, info, tx.Hash);
+            client.addTx(tx, function (info, err) {
+                callBack(info, err, tx.Hash);
             });
         });
     };
