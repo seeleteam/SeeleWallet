@@ -26,14 +26,39 @@ function seeleClient() {
     this.txPath = os.homedir() + "/.seeleMist/tx/";
     this.txArray = [];
 
+
+    this.getOS = function () {
+        var  osName="Unknown OS";
+        if (navigator.appVersion.indexOf("Win")!=-1)  osName="Windows";
+        if (navigator.appVersion.indexOf("Mac")!=-1)  osName="MacOS";
+        if (navigator.appVersion.indexOf("X11")!=-1)  osName="UNIX";
+        if (navigator.appVersion.indexOf("Linux")!=-1)  osName="Linux";
+        if (navigator.appVersion.indexOf("Android")!=-1)  osName="Android";
+        if (navigator.appVersion.indexOf("iPhone")!=-1)  osName="iPhone";
+        console.log(osName);
+        return osName;
+    }
+
     this.binPath = function () {
         var clientpath = `${__dirname}`;
+        // app.asar : An asar archive is a simple tar-like format that concatenates files into a single file.
+        // Electron can read arbitrary files from it without unpacking the whole file.
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
         } else {
             //TODO this works for dev environment, need to check path validity for packed exe
-           // return "./cmd/win32/client"
-            return clientpath + "/../../cmd/win32/client"
+            // return "./cmd/win32/client"
+            //console.log(this.getOS());
+            if(this.getOS() === "MacOS") {
+                return clientpath + "/../../cmd/mac/client";
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
+                return clientpath + "/../../cmd/win32/client";
+            } else if(this.getOS() === "Linux") { 
+                return clientpath + "/../../cmd/linux/client";
+            } else {
+                alert("the operation system may not be supported");
+                return null;
+            }
         }
     };
 
@@ -42,7 +67,17 @@ function seeleClient() {
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
         } else {
-            return "./cmd/win32/node"
+            //return "./cmd/win32/node";
+            if(this.getOS === "MacOS") {
+                return clientpath + "/../../cmd/mac/node";
+            } else if(this.getOS === "Windows") { //so far, we only provide win32
+                return clientpath + "/../../cmd/win32/node";
+            } else if(this.getOS === "Linux") { 
+                return clientpath + "/../../cmd/linux/node";
+            } else {
+                alert("the operation system may not be supported");
+                return null;
+            }
         }
     };
 
