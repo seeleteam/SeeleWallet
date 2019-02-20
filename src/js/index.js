@@ -88,9 +88,9 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `<dt><img src="./src/img/copy.png"></dt>`;
     divhtml += `<dd>Copy Address</dd>`;
     divhtml += `</dl>`;
-    divhtml += `<dl>`;
+    divhtml += `<dl id="qr" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
-    divhtml += `<dd>Show QR Code</dd>`;
+    divhtml += `<dd>Show QR Code</dd></br>`;
     divhtml += `</dl>`;
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
@@ -117,6 +117,19 @@ function ToAccountInfo(publickey, balance) {
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
     $('#tabs-1').html(divhtml)
+}
+
+var clicked = false;
+
+function showQR (publickey) {
+    if( clicked === false) {
+        var qrcode = new QRCode(document.getElementById("qr"), {
+            width : 120,
+            height : 120
+        })
+        qrcode.makeCode(publickey);
+        clicked = true;
+    }  
 }
 
 function transfer(publickey) {
