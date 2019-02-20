@@ -65,7 +65,7 @@ function addAccount() {
 
 function ToAccountInfo(publickey, balance) {
     var divhtml = ""
-    divhtml += `<div id="accountlist">`;
+    divhtml += `<div id="accountlist" onload="resetGlobal()">`;
     divhtml += `<div class="accountFor">`;
     divhtml += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
     divhtml += `<ul>`;
@@ -88,10 +88,12 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `<dt><img src="./src/img/copy.png"></dt>`;
     divhtml += `<dd>Copy Address</dd>`;
     divhtml += `</dl>`;
-    divhtml += `<dl id="qr" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
+    divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
-    divhtml += `<dd>Show QR Code</dd></br>`;
+    divhtml += `<dd id="qr_request">Show QR Code</dd></br>`;
     divhtml += `</dl>`;
+    divhtml += `<dl id="qr_result" class="qr_result" align="left">`
+    divhtml += `</dl>`
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
     divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
@@ -119,17 +121,23 @@ function ToAccountInfo(publickey, balance) {
     $('#tabs-1').html(divhtml)
 }
 
-var clicked = false;
-
 function showQR (publickey) {
-    if( clicked === false) {
-        var qrcode = new QRCode(document.getElementById("qr"), {
+    var result = document.getElementById("qr_result"); //mylink
+    var request = document.getElementById("qr_request");//btnlink
+
+    if(result.style.display !== 'flex') {
+        var qrcode = new QRCode(document.getElementById("qr_result"), {
             width : 120,
-            height : 120
-        })
+            height : 120,
+        });
         qrcode.makeCode(publickey);
-        clicked = true;
-    }  
+        result.style.display = 'flex';
+        request.innerText = "Hide QR Code";
+    } else {
+        result.style.display = 'none';
+        request.innerText = "Show QR Code";
+        result.innerHTML = "";
+    }
 }
 
 function transfer(publickey) {
