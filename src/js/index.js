@@ -80,7 +80,7 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
     divhtml += `</dl>`;
-    divhtml += `<dl>`;
+    divhtml += `<dl style="cursor: pointer;" onclick="viewOnSeelescan('` + publickey + `')">`;
     divhtml += `<dt><a href="#"><img src="./src/img/ViewonSeelescan.png"></a></dt>`;
     divhtml += `<dd>View On Seelescan</dd>`;
     divhtml += `</dl>`;
@@ -168,4 +168,8 @@ function copy() {
 
     selection.removeAllRanges();
     layer.msg("copy success")
+}
+
+function viewOnSeelescan(publickey) {   
+    require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
 }
