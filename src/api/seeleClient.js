@@ -16,9 +16,9 @@ function seeleClient() {
 
     // shardCount = 4
     this.client1 = new seelejs();
-    this.client2 = new seelejs();
-    this.client3 = new seelejs();
-    this.client4 = new seelejs();
+    this.client2 = new seelejs("http://localhost:8038");
+    this.client3 = new seelejs("http://localhost:8039");
+    this.client4 = new seelejs("http://localhost:8036");
 
 
     this.accountArray = [];
@@ -35,7 +35,7 @@ function seeleClient() {
         if (navigator.appVersion.indexOf("Linux")!=-1)  osName="Linux";
         if (navigator.appVersion.indexOf("Android")!=-1)  osName="Android";
         if (navigator.appVersion.indexOf("iPhone")!=-1)  osName="iPhone";
-        console.log(osName);
+        // console.log(osName);
         return osName;
     }
 
@@ -460,6 +460,28 @@ function seeleClient() {
             }
         }
     }
+
+    this.estimateGas = function(from,to,callBack) {
+        var txData = {};
+        txData.From = from;
+        txData.To = to;
+        txData.Amount = 0;
+        txData.GasPrice = 0;
+        txData.GasLimit = 63000;
+        var tx = {};
+        tx.Data = txData;
+        var numberInfo = this.getshardnum(from);
+        if (numberInfo == "1") {
+            return this.client1.estimateGas(tx, callBack);
+        } else if (numberInfo == "2") {
+            return this.client2.estimateGas(tx, callBack);
+        } else if (numberInfo == "3") {
+            return this.client3.estimateGas(tx, callBack);
+        } else if (numberInfo == "4") {
+            return this.client4.estimateGas(tx, callBack);
+        }
+    }
+
 }
 
 module.exports = seeleClient;
