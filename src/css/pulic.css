@@ -412,7 +412,12 @@ form {
     width: 100%;
     margin: 0;
 }
-
+.gas-limit {
+    width: calc(100% - 40px);
+    float: left;
+    margin-right: 40px;
+    display: none
+}
 .send {
     width: 170px;
     height: 40px;
