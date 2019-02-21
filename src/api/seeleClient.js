@@ -462,13 +462,15 @@ function seeleClient() {
     }
 
     this.estimateGas = function(from,to,callBack) {
+        var txData = {};
+        txData.From = from;
+        txData.To = to;
+        txData.Amount = 0;
+        txData.GasPrice = 0;
+        txData.GasLimit = 63000;
         var tx = {};
-        tx.From = from;
-        tx.To = to;
-        tx.Amount = 0;
-        tx.GasPrice = 0;
-        tx.GasLimit = Number.MAX_VALUE;
-        var numberInfo = this.getshardnum(send);
+        tx.Data = txData;
+        var numberInfo = this.getshardnum(from);
         if (numberInfo == "1") {
             return this.client1.estimateGas(tx, callBack);
         } else if (numberInfo == "2") {

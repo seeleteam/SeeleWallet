@@ -23,6 +23,11 @@ function addLoadEvent(func) {
 addLoadEvent(function() {
     document.getElementById("sendtx").addEventListener("click", sendtx);
     //document.getElementById("btn_gettx").addEventListener("click", gettxbyhash);
+    $('#to').on('change',function(e){
+        var from = document.getElementById("txpublicKey").value;
+        var to = this.value;
+        getEstimateGas(from,to);        
+    });
     $('#amount').on('input',function(e){
         document.getElementById("txamount1").innerText=this.value;
         document.getElementById("txamount2").innerText=this.value;
@@ -66,7 +71,7 @@ function sendtx() {
 function gettxbyhash() {
     var txresult = document.getElementById("txresult")
     var publicKey = document.getElementById("txpublicKey");
-    seeleClient.gettxbyhash(txresult.innerHTML, publicKey.value, function(err, info) {
+    seeleClient.gettxbyhash(txresult.innerHTML, publicKey.value, function(info, err) {
         if (err) {
             alert(err)
         } else {
@@ -75,14 +80,12 @@ function gettxbyhash() {
     })
 }
 
-function getEstimateGas(){
-    var from = document.getElementById("txpublicKey").value;
-    var to = document.getElementById("to").value;
-    seeleClient.estimateGas(from, to, function(err,info){
+function getEstimateGas(from,to){
+    seeleClient.estimateGas(from, to, function(info,err){
         if (err) {
             alert(err)
         } else {
-            return info.result;
+            document.getElementById("estimatedgas").innerText=info;
         }
     })
 }
