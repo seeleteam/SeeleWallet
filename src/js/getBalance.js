@@ -95,6 +95,21 @@ function loadAccount() {
                 } catch (e) {
                     alert(err.message);
                 }
+                var accountlist = document.getElementById("accountlist");
+                var accountHTML = ""
+                accountHTML += `<div class="accountFor" >`;
+                accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
+                accountHTML += `<ul>`;
+                accountHTML += `<li>Account</li>`;
+                accountHTML += `<li><span class="accountBalance">` + "NaN" + `</span> seele</li>`;
+                accountHTML += `<li>` + seeleClient.accountArray[item].trim() + `</li>`;
+                accountHTML += `</ul>`;
+                accountHTML += `</div>`;
+                accountlist.innerHTML += accountHTML;
+                if (count == seeleClient.accountArray.length - 1) {
+                    layer.closeAll();
+                }
+                count += 1;
             } else {
                 var accountlist = document.getElementById("accountlist");
                 var accountHTML = ""
