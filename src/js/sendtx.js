@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 var SeeleClient = require('../api/seeleClient');
-
+const BigNumber = require('bignumber.js');
 seeleClient = new SeeleClient();
 
 // onload = function() {
@@ -27,8 +27,9 @@ addLoadEvent(function() {
         document.getElementById("txamount1").innerText=this.value;
         document.getElementById("txamount2").innerText=this.value;
         var estimatedgas = document.getElementById("estimatedgas").innerText;
-        document.getElementById("totalamount").innerText=
-            parseFloat(this.value) + $('.progress').slider("value")*parseInt(estimatedgas)/Math.pow(10,8);
+        var gasPrice = $('.progress').slider("value");
+        var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
+        document.getElementById("totalamount").innerText=total;
     });
     $( ".progress" ).on( "slidestop", function( event, ui ) {
         var amount = document.getElementById("amount").value;
@@ -36,8 +37,8 @@ addLoadEvent(function() {
             amount= "0.0";
         }
         var estimatedgas = document.getElementById("estimatedgas").innerText;
-        document.getElementById("totalamount").innerText=
-            parseFloat(amount) +ui.value/Math.pow(10,8)*parseInt(estimatedgas);
+        var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
+        document.getElementById("totalamount").innerText=total;
     } );
 })
 
