@@ -186,3 +186,7 @@ input,select{
     margin: 5px 0 0 200px;
     cursor: pointer;
 }
+
+.qr_result {
+    display: none;
+}
