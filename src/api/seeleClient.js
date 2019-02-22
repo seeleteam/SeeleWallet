@@ -352,6 +352,8 @@ function seeleClient() {
             client.addTx(tx, function (info, err) {
                 callBack(info, err, tx.Hash);
             });
+        }).catch((data) => {
+            callBack("", new Error(data.toString()), "");
         });
     };
 
