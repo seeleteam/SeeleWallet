@@ -20,46 +20,92 @@ function addLoadEvent(func) {
         }
     }
 }
+var validator;
 addLoadEvent(function() {
     document.getElementById("sendtx").addEventListener("click", sendtx);
     //document.getElementById("btn_gettx").addEventListener("click", gettxbyhash);
     $('#to').on('change',function(e){
-        var from = document.getElementById("txpublicKey").value;
-        var to = this.value;
-        getEstimateGas(from,to);        
+        if(validator.element("#to")){
+            var from = document.getElementById("txpublicKey").value;
+            var to = this.value;
+            getEstimateGas(from,to);  
+        }             
     });
     $('#amount').on('input',function(e){
-        document.getElementById("txamount1").innerText=this.value;
-        document.getElementById("txamount2").innerText=this.value;
-        var estimatedgas = document.getElementById("estimatedgas").innerText;
-        var gasPrice = $('.progress').slider("value");
-        var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
-        document.getElementById("totalamount").innerText=total;
+        if(validator.element("#amount")){
+            document.getElementById("txamount1").innerText=this.value;
+            document.getElementById("txamount2").innerText=this.value;
+            var estimatedgas = document.getElementById("estimatedgas").innerText;
+            var gasPrice = $('.progress').slider("value");
+            var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
+            document.getElementById("totalamount").innerText=total;
+        }       
     });
     $( ".progress" ).on( "slidestop", function( event, ui ) {
-        var amount = document.getElementById("amount").value;
-        if(amount == "undefined" || amount==""){
+        if(validator.element("#amount")){
+            amount = document.getElementById("amount").value;
+        }else{
             amount= "0.0";
-        }
+        }        
         var estimatedgas = document.getElementById("estimatedgas").innerText;
         var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
         document.getElementById("totalamount").innerText=total;
     } );
+    validator =   $('form[id="txform"]').validate({
+        // Specify validation rules
+        rules: {
+          // The key name on the left side is the name attribute
+          // of an input field. Validation rules are defined
+          // on the right side
+          txpublicKey: "required",
+          to: {
+              required:true,
+              rangelength:[42,42]
+          },
+          accountpassword: {
+              required:true
+          },
+          amount:{
+              required:true,
+              number:true,
+              fixedPrecision:8
+          }
+        },
+        // Specify validation error messages
+        messages: {
+            txpublicKey: "Please enter your account address",
+            to: {
+                required:"Please enter a valid to address",
+                rangelength:"Not a valid address"
+            },
+            accountpassword:{
+                required:"Please enter your account password"
+            },
+            amount:{
+                required:"Please enter the transfer amount",
+                number:"Amount should be a valid number",
+                fixedPrecision:"The max precision is 8"
+            }
+        }
+      });
 })
 
 function sendtx() {
+   
+    if(!validator.form()){
+        return;
+    }
+    
     var publicKey = document.getElementById("txpublicKey");
     var to = document.getElementById("to");
     var amount = document.getElementById("amount");
     // var price = document.getElementById("price");
     var accountpassWord = document.getElementById("accountpassWord")
-
     layer.load(0, { shade: false });
-
     seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "10", "", function(result, err, hash) {
         layer.closeAll();
         if (err) {
-            alert(err)
+            layer.alert(err.message);
         } else {
             console.log(seeleClient.txArray)
             seeleClient.txArray.push(hash)

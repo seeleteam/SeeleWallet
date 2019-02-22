@@ -55,6 +55,14 @@ $(function ($) {
             $('#contractInput').val(str)
         }
     })
+    $('.numbersOnly').keyup(function () {
+        if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+           this.value = this.value.replace(/[^0-9\.]/g, '');
+        }        
+    });
+    jQuery.validator.addMethod("fixedPrecision", function(value, element,param) {
+        return this.optional(element) || value.substring(value.indexOf(".")).length<=param;
+      }, "Please specify the correct precision for your value");
 })
 
 function addAccount() {
@@ -181,3 +189,4 @@ function copy() {
 function viewOnSeelescan(publickey) {   
     require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
 }
+
