@@ -129,6 +129,7 @@ function loadAccount() {
                 accountlist.innerHTML += accountHTML;
                 if (count == 0) {
                     document.getElementById("txpublicKey").value = info.Account;
+                    document.getElementById("contractPublicKey").value = info.Account;                    
                     span_balance.innerText = info.Balance / 100000000;
                 }
                 if (count == seeleClient.accountArray.length - 1) {
