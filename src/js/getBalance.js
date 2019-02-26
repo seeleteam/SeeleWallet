@@ -24,15 +24,19 @@ function addLoadEvent(func) {
     }
 }
 addLoadEvent(firstLoad)
-
+var loaddingAccount = true;
 function firstLoad() {
     $('#tab ul li:eq(0)').click(async function () {
-        loadAccount();
+        if(loaddingAccount){
+            loadAccount();
+        }
+        
     });
     loadAccount()
 }
 
 function loadAccount() {
+    loaddingAccount = false;
     seeleClient.accountList();
 
     if (seeleClient.txArray == null || seeleClient.txArray.length <= 0) {
@@ -108,6 +112,7 @@ function loadAccount() {
                 accountlist.innerHTML += accountHTML;
                 if (count == seeleClient.accountArray.length - 1) {
                     layer.closeAll();
+                    loaddingAccount = true;
                 }
                 count += 1;
             } else {
