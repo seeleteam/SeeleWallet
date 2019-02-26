@@ -352,6 +352,8 @@ function seeleClient() {
             client.addTx(tx, function (info, err) {
                 callBack(info, err, tx.Hash);
             });
+        }).catch((data) => {
+            callBack("", new Error(data.toString()), "");
         });
     };
 
@@ -468,6 +470,7 @@ function seeleClient() {
         txData.Amount = 0;
         txData.GasPrice = 0;
         txData.GasLimit = 63000;
+        txData.AccountNonce = 9999999999;
         var tx = {};
         tx.Data = txData;
         var numberInfo = this.getshardnum(from);

@@ -101,8 +101,8 @@ function loadAccount() {
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
                 accountHTML += `<li>Account</li>`;
-                accountHTML += `<li><span class="accountBalance">` + "NaN" + `</span> seele</li>`;
-                accountHTML += `<li>` + seeleClient.accountArray[item].trim() + `</li>`;
+                accountHTML += `<li><span class="accountBalance">` + "0" + `</span> seele</li>`;
+                accountHTML += `<li>` + info[0] + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;
