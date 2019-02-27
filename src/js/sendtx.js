@@ -101,14 +101,18 @@ function sendtx() {
     var amount = document.getElementById("amount");
     // var price = document.getElementById("price");
     var accountpassWord = document.getElementById("accountpassWord")
+    var estimatedgas = document.getElementById("estimatedgas").innerText;
+    var gasPrice = $('.progress').slider("value");
+
     layer.load(0, { shade: false });
-    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, "10", "", function(result, err, hash) {
+    seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, gasPrice,estimatedgas, "", function(result, err, hash) {
         layer.closeAll();
         if (err) {
             layer.alert(err.message);
         } else {
             console.log(seeleClient.txArray)
-            seeleClient.txArray.push(hash)
+            // seeleClient.txArray.push(hash)
+            seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
         }
     });
@@ -127,7 +131,7 @@ function gettxbyhash() {
 }
 
 function getEstimateGas(from,to){
-    seeleClient.estimateGas(from, to, function(info,err){
+    seeleClient.estimateGas(from, to, "",function(info,err){
         if (err) {
             alert(err)
         } else {

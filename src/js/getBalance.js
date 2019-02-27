@@ -79,11 +79,13 @@ function loadAccount() {
     // tabs1HTML += `</div>`
 
     for(var item in seeleClient.txArray) {
+        var time = new Date(seeleClient.txArray[item].time)
+        
         tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-        tabs1HTML += `<span>Nov.</span><span>13</span>`
+        tabs1HTML += `<span>`+time.toDateString().split(" ")[1]+`</span><span>`+time.getDate()+`</span>`
         tabs1HTML += `</p>`
         tabs1HTML += `<ul class="contact-right"><li>Created </li>`
-        tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].trim() +`')">`+ seeleClient.txArray[item].trim() + `</span></li>`
+        tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
     }
@@ -134,6 +136,7 @@ function loadAccount() {
                 }
                 if (count == seeleClient.accountArray.length - 1) {
                     layer.closeAll();
+                    loaddingAccount = true;
                 }
                 count += 1;
                 balanceArray.push(info.Balance)

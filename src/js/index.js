@@ -51,10 +51,20 @@ $(function ($) {
         if ($(this).text() == 'CONTRACT BYTE CODE') {
             $('#contractInput').val(getPayload)
         } else {
-            var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
-            $('#contractInput').val(str)
+            // var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
+            // $('#contractInput').val($('#contractSourceCode').text())
+            document.getElementById("contractInput").value = document.getElementById("contractSourceCode").innerText;
+
         }
     })
+    //save contractInput content
+    $('#contractInput').on('input',function(e){
+        if($('.cur').text() == 'SOLIDITY CONTRACT SOURCE CODE'){
+            document.getElementById("contractSourceCode").innerText = this.value;
+        }        
+    });
+
+
     $('.numbersOnly').keyup(function () {
         if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
            this.value = this.value.replace(/[^0-9\.]/g, '');
