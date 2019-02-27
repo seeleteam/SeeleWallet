@@ -68,11 +68,11 @@ function seeleClient() {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
         } else {
             //return "./cmd/win32/node";
-            if(this.getOS === "MacOS") {
+            if(this.getOS() === "MacOS") {
                 return clientpath + "/../../cmd/mac/node";
-            } else if(this.getOS === "Windows") { //so far, we only provide win32
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath + "/../../cmd/win32/node";
-            } else if(this.getOS === "Linux") { 
+            } else if(this.getOS() === "Linux") { 
                 return clientpath + "/../../cmd/linux/node";
             } else {
                 alert("the operation system may not be supported");
@@ -114,15 +114,25 @@ function seeleClient() {
         if (clientpath.indexOf("app.asar") > 0) {
             return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
         } else {
-            return "./cmd/win32/solc"
+            // return "./cmd/win32/solc"
+            if(this.getOS() === "MacOS") {
+                return clientpath + "/../../cmd/mac/solc";
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
+                return clientpath + "/../../cmd/win32/solc";
+            } else if(this.getOS() === "Linux") { 
+                return clientpath + "/../../cmd/linux/solc";
+            } else {
+                alert("the operation system may not be supported");
+                return null;
+            }
         }
     };
 
     this.compileContract = function (input) {
-        if (input != '') {
+        // if (input != '') {
 
             return new Q((resolve, reject) => {
-                try {
+                // try {
                     var args = [
                         '--combined-json',
                     ];
@@ -148,20 +158,25 @@ function seeleClient() {
                         console.log(data.toString())
                         output.style.display = 'block'
                      });
-                } catch (e) {
-                    return reject(e)
-                }
+                // } catch (e) {
+                //     return reject(e)
+                // }
             });
-        }
+        // }
     };
 
     this.ParseContractBinaryCode = function (input) {
         try {
             input = JSON.parse(input)
-            var contract = input.contracts['<stdin>:validUintContractTest'].bin
-            return contract
+            // var contract = input.contracts['<stdin>:validUintContractTest'].bin
+            var contracts = input.contracts;
+            var contract;
+            for(var key in contracts){
+               contract =  contracts[key].bin;
+            }
+            return contract ;
         } catch (e) {
-            return ""
+            return e.toString
         }
     };
 
@@ -264,6 +279,7 @@ function seeleClient() {
             });
 
             proc.stderr.on('data', data => {
+                console.log(data.toString());
                 reject(data)
             });
         });
@@ -316,7 +332,7 @@ function seeleClient() {
 //         }
 //     }
 
-    this.sendtx = function (publicKey, passWord, to, amount, price, payload, callBack) {
+    this.sendtx = function (publicKey, passWord, to, amount, price, gaslimit,payload, callBack) {
         var client
         var numberInfo = this.getshardnum(publicKey)
         if (numberInfo == "1") {
@@ -341,7 +357,7 @@ function seeleClient() {
             "Amount": parseInt(amount*Math.pow(10,8)),
             "AccountNonce": nonce,
             "GasPrice": parseInt(price),
-            "GasLimit": 3000000,
+            "GasLimit": parseInt(gaslimit),//3000000,
             "Timestamp": 0,
             "Payload": payload
         }
@@ -440,7 +456,16 @@ function seeleClient() {
     
     this.readFile = function () {
         if (fs.existsSync(this.txPath)) {
-            this.txArray = fs.readdirSync(this.txPath)
+            // this.txArray = fs.readdirSync(this.txPath)
+            var dir = this.txPath;
+            this.txArray = fs.readdirSync(dir)
+              .map(function(v) { 
+                  return { name:v,
+                           time:fs.statSync(dir + v).mtime.getTime()
+                         }; 
+               })
+               .sort(function(a, b) { return b.time - a.time; })
+               .map(function(v) { return v; });
         } else {
             console.log(this.txPath + "  Not Found!");
         }
@@ -463,7 +488,7 @@ function seeleClient() {
         }
     }
 
-    this.estimateGas = function(from,to,callBack) {
+    this.estimateGas = function(from,to,payload,callBack) {
         var txData = {};
         txData.From = from;
         txData.To = to;
@@ -471,6 +496,7 @@ function seeleClient() {
         txData.GasPrice = 0;
         txData.GasLimit = 63000;
         txData.AccountNonce = 9999999999;
+        txData.Payload = payload;
         var tx = {};
         tx.Data = txData;
         var numberInfo = this.getshardnum(from);

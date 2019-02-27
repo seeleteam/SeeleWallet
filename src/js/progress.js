@@ -8,6 +8,8 @@
             }
         })
         $('.progress').slider().slider({
+            min: 1,
+            max:100,
             stop: function (event, ui) {
                 console.log(ui.value) // Gets the value of the current progress bar
             }
