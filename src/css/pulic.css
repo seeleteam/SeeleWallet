@@ -588,3 +588,7 @@ form {
     width: 110px;
     float: right;
 }
+.error {
+    color: red;
+    /* background-color: #acf; */
+ }

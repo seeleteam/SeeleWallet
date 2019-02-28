@@ -471,8 +471,8 @@ function seeleClient() {
         }
     }
     
-    this.queryContract = function (callBack) {
-        let hash = $('#QueryHash').text()
+    this.queryContract = function (hash,callBack) {
+        // let hash = $('#QueryHash').text()
         if (hash != null && hash != "" && hash != undefined) {
             var send = document.getElementById("contractPublicKey").value
             var numberInfo = this.getshardnum(send)

@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 var SeeleClient = require('../api/seeleClient');
-
+const BigNumber = require('bignumber.js');
 seeleClient = new SeeleClient();
 const contractToAddress = "0x0000000000000000000000000000000000000000";
 function addLoadEvent(func) {
@@ -16,13 +16,67 @@ function addLoadEvent(func) {
         }
     }
 }
-
+var ctxvalidator;
 addLoadEvent(function () {
     //TODO need to check the button
     document.getElementById("contractSourceCode").innerText = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("deployContract").addEventListener("click", depolyContract);
-    document.getElementById("QueryContract").addEventListener("click", queryContract);
+    document.getElementById("QueryContract").addEventListener("click", queryContract(""));
+    $('#contractAmount').on('input',function(e){
+        if(ctxvalidator.element("#contractAmount")){
+            document.getElementById("ctxamount1").innerText=this.value;
+            document.getElementById("ctxamount2").innerText=this.value;
+            var estimatedgas = document.getElementById("ctx-estimatedgas").innerText;
+            var gasPrice = $('#contractGasPrice').slider("value");
+            var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
+            document.getElementById("ctx-totalamount").innerText=total;
+        }       
+    });
+    $("#contractGasPrice" ).on( "slidestop", function( event, ui ) {
+        if(ctxvalidator.element("#contractAmount")){
+            amount = document.getElementById("contractAmount").value;
+        }else{
+            amount= "0.0";
+        }        
+        var estimatedgas = document.getElementById("ctx-estimatedgas").innerText;
+        var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
+        document.getElementById("ctx-totalamount").innerText=total;
+    } );
+
+    ctxvalidator =   $('form[id="contractForm"]').validate({
+        ignore: [],
+        rules: {
+            contractPublicKey: "required",
+            contractAccountpassWord: {
+                required:true
+            },
+            contractAmount:{
+                required:true,
+                number:true,
+                fixedPrecision:8
+            }
+        },
+        messages: {
+            contractPublicKey: "Please enter your account address",
+            contractAccountpassWord:{
+                required:"Please enter your account password"
+            },
+            contractAmount:{
+                required:"Please enter the transfer amount",
+                number:"Amount should be a valid number",
+                fixedPrecision:"The max precision is 8"
+            }
+        }
+        // ,
+        // errorPlacement: function(error, element) {
+        //     error.insertAfter($(element).parent());
+        // }
+      });
+      // add search contract event 
+      $('#searchImg').on('click',function(e){        
+        queryContract(document.getElementById("ctxHash").value);
+    });
 })
 
 function compileContract() {
@@ -36,6 +90,24 @@ function compileContract() {
         if($('.cur').text() == 'CONTRACT BYTE CODE'){
             $('#contractInput').val(outdata)
         }
+        // update estimated gas and total fee 
+        var publicKey = document.getElementById("contractPublicKey");
+        seeleClient.estimateGas(publicKey.value,contractToAddress,"0x" + outdata,function(result,err){
+            if(err){
+                alert("Get estimated gas error:" + err);
+            }else{
+                document.getElementById("ctx-estimatedgas").innerText=result;
+                //update total fee
+                if(ctxvalidator.element("#contractAmount")){
+                    amount = document.getElementById("contractAmount").value;
+                }else{
+                    amount= "0.0";
+                } 
+                var gasPrice = $('#contractGasPrice').slider("value");
+                var total = BigNumber(gasPrice).times(parseFloat(result)).div(100000000).plus(parseFloat(amount));
+                document.getElementById("ctx-totalamount").innerText=total;
+            }
+        });
     }).catch((err) => {
         var output = document.getElementById("compileSuccess");
         output.innerText = err.toString();
@@ -44,6 +116,9 @@ function compileContract() {
 }
 
 function depolyContract() {
+    if(!ctxvalidator.form()){
+        return;
+    }
     let payload = $('#getPayload').text()
     console.log(payload)
     if (payload != null && payload != "" && payload != undefined) {
@@ -70,7 +145,7 @@ function depolyContract() {
                         layer.alert(err.message)
                     } else {
                         var QueryHash = document.getElementById("QueryHash")
-                        alert(hash)
+                        layer.alert("Deploy contract transaction Hash:"+ hash)
                         QueryHash.innerText = hash
                         // seeleClient.txArray.push(hash)
                         seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
@@ -87,8 +162,11 @@ function depolyContract() {
     }
 }
 
-function queryContract() {
-    seeleClient.queryContract(function (err, result) {
+function queryContract(hash) {
+    if(hash == ""){
+        hash = $('#QueryHash').text();
+    }
+    seeleClient.queryContract(hash,function (result, err) {
         if (err) {
             alert(err.message)
         }else {
@@ -105,7 +183,7 @@ function queryContract() {
             contractResult.innerText = "result:" + result.result
 
             var contractTota1Fee = document.getElementById("contractTota1Fee")
-            contractTota1Fee.innerText = "tota1Fee:" + result.tota1Fee
+            contractTota1Fee.innerText = "totalFee:" + result.totalFee
 
             var contractTxhash = document.getElementById("contractTxhash")
             contractTxhash.innerText = "txhash:" + result.txhash
