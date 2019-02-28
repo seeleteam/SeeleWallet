@@ -180,6 +180,7 @@ function transfer(publickey) {
     $("#tabs-2").addClass('showleft')
 
     $("#txpublicKey").val(publickey)
+    $("#contractPublicKey").val(publickey)
 }
 
 function copy() {

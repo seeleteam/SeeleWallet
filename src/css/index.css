@@ -176,6 +176,7 @@ input,select{
 .search-hash ul li{
     list-style: none;
     line-height: 30px;
+    word-wrap: break-word; 
 }
 .ok-search{
     width: 110px;
