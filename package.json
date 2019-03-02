@@ -40,8 +40,8 @@
         "electron-builder": "^20.36.2"
     },
     "dependencies": {
+        "bignumber.js": "^8.0.1",
         "bluebird": "^3.5.2",
-        "seele.js": "^1.6.5",
-        "bignumber.js": "^8.0.1"
+        "seeleteam.js": "^1.6.8"
     }
 }
