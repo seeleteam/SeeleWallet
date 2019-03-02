@@ -1,7 +1,7 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-var seelejs = require('seele.js');
+var seelejs = require('seeleteam.js');
 var fs = require('fs');
 var os = require("os")
 var path = require('path');
