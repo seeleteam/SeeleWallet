@@ -61,6 +61,8 @@ $(function ($) {
     $('#contractInput').on('input',function(e){
         if($('.cur').text() == 'SOLIDITY CONTRACT SOURCE CODE'){
             document.getElementById("contractSourceCode").innerText = this.value;
+        }else if($('.cur').text() == 'CONTRACT BYTE CODE'){
+            document.getElementById("getPayload").innerText = this.value;
         }        
     });
 
