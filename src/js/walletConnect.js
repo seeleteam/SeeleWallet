@@ -20,15 +20,14 @@ function addLoadEvent(func) {
 addLoadEvent(firstLoad)
 
 function firstLoad() {
-    //TODO need check event
-    $('#tab ul li:eq(0)').click(function() {
+    $('#shard').click(function() {
         connect();
     });
     connect();
 }
 
 function getShard() {
-    shard = document.getElementById("shard").innerText;
+    shard = document.getElementById("shard").value;
     if (shard == "") {
         shard = "1"
     }
