@@ -28,7 +28,8 @@ addLoadEvent(function() {
         if(validator.element("#to")){
             var from = document.getElementById("txpublicKey").value;
             var to = this.value;
-            getEstimateGas(from,to);  
+            getEstimateGas(from,to); 
+            detectShards(from,to); 
         }             
     });
     $('#amount').on('input',function(e){
@@ -138,4 +139,16 @@ function getEstimateGas(from,to){
             document.getElementById("estimatedgas").innerText=info;
         }
     })
+}
+
+function detectShards(from, to) {
+    var shardFrom = seeleClient.getShardNum(from);
+    var shardTo = seeleClient.getShardNum(to);
+    var alertText = "send funds from shard: " + shardFrom + " to shard: " + shardTo + "\n higher fee will be taken!";
+    // var detectshardfrom = document.getElementById("shardfrom");
+    // var fromchange = detectshardfrom.childNodes[0];
+    // fromchange.nodeValue = "From Shard: " + shardFrom;
+    if (shardFrom != shardTo) {
+        alert(alertText);
+    }
 }

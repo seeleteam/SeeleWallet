@@ -391,6 +391,11 @@ function seeleClient() {
         client.getTransactionByHash(hash, callBack);
     }
 
+    this.getShardNum = function(publickey) {
+            var numberInfo = this.getshardnum(publickey);
+            return numberInfo;
+    } 
+    
     this.ParsePublicKey = function (input) {
         try {
             return input.substring(input.indexOf("publick key:") + 12, input.indexOf("private key:")).trim()
