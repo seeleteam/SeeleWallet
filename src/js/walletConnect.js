@@ -63,24 +63,28 @@ function getNetWork() {
 }
 
 function getBlockHeight() {
-    var blockheight = document.getElementById("blockheight");
-    console.log(shard)
-    seeleClient.getblockheight(shard, function (height,err) {
-        if (err) {
-            blockheight.innerText = 0;
-        } else {
-            blockheight.innerText = height;
-        }
-    });
+    setInterval(function(){
+        var blockheight = document.getElementById("blockheight");
+        console.log(shard)
+        seeleClient.getblockheight(shard, function (height,err) {
+            if (err) {
+                blockheight.innerText = 0;
+            } else {
+                blockheight.innerText = height;
+            }
+        });
+    }, 1000);
 }
 
 function isListening() {
-    var isListening = document.getElementById("isListening");
-    seeleClient.isListening(shard, function (isListen,err) {
-        if (err) {
-            isListening.innerText = "Disconnected";
-        } else {
-            isListening.innerText = "Connecting";
-        }
-    });
+    setInterval(function(){
+        var isListening = document.getElementById("isListening");
+        seeleClient.isListening(shard, function (isListen,err) {
+            if (err) {
+                isListening.innerText = "Disconnected";
+            } else {
+                isListening.innerText = "Connecting";
+            }
+        });
+    }, 1000);
 }
