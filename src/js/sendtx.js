@@ -36,7 +36,7 @@ addLoadEvent(function() {
             document.getElementById("txamount1").innerText=this.value;
             document.getElementById("txamount2").innerText=this.value;
             var estimatedgas = document.getElementById("estimatedgas").innerText;
-            var gasPrice = $('"#gasPrice').slider("value");
+            var gasPrice = $('#gasPrice').slider("value");
             var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
             document.getElementById("totalamount").innerText=total;
         }       
