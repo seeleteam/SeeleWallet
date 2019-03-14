@@ -90,8 +90,8 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
     divhtml += `<ul>`;
     divhtml += `<li>Account</li>`;
-    divhtml += `<li class="publickey">` + publickey + `</li>`;
     divhtml += `<li><span>` + balance + `</span> Seele</li>`;
+    divhtml += `<li class="publickey">` + publickey + `</li>`;
     divhtml += `</ul>`;
     divhtml += `</div>`;
     divhtml += `</div>`;
