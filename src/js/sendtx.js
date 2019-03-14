@@ -28,7 +28,8 @@ addLoadEvent(function() {
         if(validator.element("#to")){
             var from = document.getElementById("txpublicKey").value;
             var to = this.value;
-            getEstimateGas(from,to);  
+            getEstimateGas(from,to); 
+            detectShards(from,to); 
         }             
     });
     $('#amount').on('input',function(e){
@@ -36,7 +37,7 @@ addLoadEvent(function() {
             document.getElementById("txamount1").innerText=this.value;
             document.getElementById("txamount2").innerText=this.value;
             var estimatedgas = document.getElementById("estimatedgas").innerText;
-            var gasPrice = $('"#gasPrice').slider("value");
+            var gasPrice = $('#gasPrice').slider("value");
             var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
             document.getElementById("totalamount").innerText=total;
         }       
@@ -138,4 +139,16 @@ function getEstimateGas(from,to){
             document.getElementById("estimatedgas").innerText=info;
         }
     })
+}
+
+function detectShards(from, to) {
+    var shardFrom = seeleClient.getShardNum(from);
+    var shardTo = seeleClient.getShardNum(to);
+    var alertText = "send funds from shard: " + shardFrom + " to shard: " + shardTo + "\n higher fee will be taken!";
+    // var detectshardfrom = document.getElementById("shardfrom");
+    // var fromchange = detectshardfrom.childNodes[0];
+    // fromchange.nodeValue = "From Shard: " + shardFrom;
+    if (shardFrom != shardTo) {
+        alert(alertText);
+    }
 }

@@ -26,6 +26,7 @@ function firstLoad() {
     connect();
 }
 
+// get the shard from GUI
 function getShard() {
     shard = document.getElementById("shard").value;
     if (shard == "") {
@@ -62,24 +63,28 @@ function getNetWork() {
 }
 
 function getBlockHeight() {
-    var blockheight = document.getElementById("blockheight");
-    console.log(shard)
-    seeleClient.getblockheight(shard, function (height,err) {
-        if (err) {
-            blockheight.innerText = 0;
-        } else {
-            blockheight.innerText = height;
-        }
-    });
+    setInterval(function(){
+        var blockheight = document.getElementById("blockheight");
+        // console.log(shard)
+        seeleClient.getblockheight(shard, function (height,err) {
+            if (err) {
+                blockheight.innerText = 0;
+            } else {
+                blockheight.innerText = height;
+            }
+        });
+    }, 5000);
 }
 
 function isListening() {
-    var isListening = document.getElementById("isListening");
-    seeleClient.isListening(shard, function (isListen,err) {
-        if (err) {
-            isListening.innerText = "Disconnected";
-        } else {
-            isListening.innerText = "Connecting";
-        }
-    });
+    setInterval(function(){
+        var isListening = document.getElementById("isListening");
+        seeleClient.isListening(shard, function (isListen,err) {
+            if (err) {
+                isListening.innerText = "Disconnected";
+            } else {
+                isListening.innerText = "Connecting";
+            }
+        });
+    }, 5000);
 }
