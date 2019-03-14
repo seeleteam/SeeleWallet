@@ -86,11 +86,11 @@
 
                     </div>
                     <div id="tabs-2">
-                        <h1 class="send-title">Send funds</h1>
+                        <h1 id="send-title" class="send-title">Send funds</h1>
                         <form id="txform">
                             <ul class="send-list">
-                                <li>From<input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
-                                <li>To<input type="text" placeholder="0x000..." id="to" name="to" ></li>
+                                <li id="shardfrom">From<input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
+                                <li id="shardto">To<input type="text" placeholder="0x000..." id="to" name="to" ></li>
                                 <li>Password<input type="password" placeholder="press key file password" id="accountpassWord" name="accountpassword"></li>
                                 <li>Amount<input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span id="txamount1">0.00</span>SEELE</li>
