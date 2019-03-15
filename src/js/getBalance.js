@@ -33,6 +33,9 @@ function firstLoad() {
         
     });
     loadAccount()
+    var interval = setInterval(function(){
+        refreshBalance();
+    }, 5000);
 }
 
 function loadAccount() {
@@ -184,4 +187,62 @@ function getBalance() {
             balance.innerText = "Balance：" + info.Balance;
         }
     });
+}
+
+function refreshBalance(){
+    if(loaddingAccount){
+        loaddingAccount = false
+    }else{
+        return
+    }
+    var count = 0;
+    var balanceArray = new Array()
+    var accountBalanceInfo=[];
+    for (var item in seeleClient.accountArray) {
+        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (info, err) {
+            if (err) {
+                try {
+                    var msg = JSON.parse(err.message);
+                    console.log(msg.error.message);
+                } catch (e) {
+                    console.log(err.message);
+                }
+                if (count == seeleClient.accountArray.length - 1) {
+                    loaddingAccount = true;
+                }
+                count += 1;
+                accountBalanceInfo[info[0]] = 0; 
+            } else {
+                if (count == seeleClient.accountArray.length - 1) {
+                    loaddingAccount = true;
+
+                }
+                count += 1;
+                balanceArray.push(info.Balance)
+                accountBalanceInfo[info.Account]=info.Balance
+            }
+            if(count == seeleClient.accountArray.length){
+                var accountlist = document.getElementById("accountlist");
+                for(var i=0 ;i< accountlist.childElementCount;i++){
+                   var accountAddress = accountlist.children[i].children[1].children[2].innerText;
+                   if(accountBalanceInfo[accountAddress]!="undefined"){
+                    accountlist.children[i].children[1].children[1].children[0].innerText = accountBalanceInfo[accountAddress]/ 100000000
+                   }
+                }
+            }
+            var sum = 0;
+            var balanceSum = document.getElementById('span_balance')
+            if (balanceArray.length == 0) {
+                balanceSum.innerText = '0'
+            } else if (balanceArray.length == 1) {
+                balanceSum.innerText = balanceArray[0] / 100000000
+            } else {
+                for (var i = 0; i < balanceArray.length; i++) {
+                    sum += balanceArray[i];
+                }
+                balanceSum.innerText = sum / 100000000
+            }
+        })
+       
+    }
 }
