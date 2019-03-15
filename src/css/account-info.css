@@ -303,13 +303,17 @@ form{
 }
 
 .export-account{
-    width: 38px;
-    height: 35px;
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
     padding: 0;
     border: none;
-    background: unset;
+    background:RGB(236,241,245);
     outline: none;
     cursor: pointer;
+    margin: 10px;
+    font-size: 12px;
+    border-radius: 8px;
     /* background: #2c9ae3; */
 }
 .export-account img {
@@ -318,14 +322,18 @@ form{
 }
 
 .import-account{
-    width: 38px;
-    height: 35px;
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
     padding: 0;
     border: none;
-    background: unset;
+    background:RGB(236,241,245);
     outline: none;
     right: 0px;
     cursor: pointer;
+    /* margin: 10px; */
+    font-size: 12px;
+    border-radius: 8px;
     /* background: #2c9ae3; */
 }
 
@@ -341,5 +349,6 @@ form{
     justify-content: space-between; /* switched from default (flex-start, see below) */
 }
   /* #main-container > div {
-    border: 2px dashed red;
+    display: flex;
+    flex-direction: column;
   } */
