@@ -87,7 +87,8 @@ function importAccounts(){
 
   const fs = require('fs')
   const srcpath = dialog.showOpenDialog(
-    { properties: ['multiSelections'],
+    { properties: ['openFile', 'multiSelections'],
+    // { properties: ['multiSelections'],
       buttonLabel: 'Import from'}
   )
   dstpath = seeleClient.accountPath
@@ -101,7 +102,7 @@ function importAccounts(){
       //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
     });
   }
-
+  window.location.reload();
 }
 
 function exportAccounts() {
