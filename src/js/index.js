@@ -1,4 +1,4 @@
-/* 
+/*
 author: Miya_yang
 date:2018.10.30
 */
@@ -63,14 +63,14 @@ $(function ($) {
             document.getElementById("contractSourceCode").innerText = this.value;
         }else if($('.cur').text() == 'CONTRACT BYTE CODE'){
             document.getElementById("getPayload").innerText = this.value;
-        }        
+        }
     });
 
 
     $('.numbersOnly').keyup(function () {
         if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
            this.value = this.value.replace(/[^0-9\.]/g, '');
-        }        
+        }
     });
     jQuery.validator.addMethod("fixedPrecision", function(value, element,param) {
         return this.optional(element) || value.substring(value.indexOf(".")).length<=param;
@@ -82,6 +82,60 @@ function addAccount() {
     $('.dask').show()
 }
 
+function importAccounts(){
+  const { dialog } = require('electron').remote
+
+  const fs = require('fs')
+  const srcpath = dialog.showOpenDialog(
+    { properties: ['multiSelections'],
+      buttonLabel: 'Import from'}
+  )
+  dstpath = seeleClient.accountPath
+
+  for (var item in srcpath) {
+    //console.log(srcpath[item])
+    var tempfilename = srcpath[item].split("/")
+    //console.log(dstpath+tempfilename[tempfilename.length-1])
+    fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
+      if (err) throw err;
+      //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
+    });
+  }
+
+}
+
+function exportAccounts() {
+  //Get destination path
+  const { dialog } = require('electron').remote
+  const dstpath = dialog.showOpenDialog(
+    { properties: ['openDirectory'],
+      buttonLabel: 'Export To'}
+  )
+
+  //Get account file names and source paths
+  const fs = require('fs')
+  const srcpath = seeleClient.accountPath
+
+  //create directory
+  //var existingDirNames = fs.readdirSync(dstpath)
+  //var dirname = 'account'
+  //var i = 0
+  //
+  //while ( (dirname+i) in existingDirNames ) {i++}
+  //dirname = dirname + i
+  //
+  //fs.mkdir(dstpath+'/'+dirname, err => {
+  //  if (err && err.code != 'EEXIST') throw 'up'})
+
+  //loop to copy
+  seeleClient.accountList();
+  for (var item in seeleClient.accountArray) {
+    fs.copyFile(srcpath + seeleClient.accountArray[item], dstpath + '/' + seeleClient.accountArray[item], (err) => {
+      if (err) throw err;
+      console.log('export sucess for ' + seeleClient.accountArray[item]);
+    });
+  }
+}
 
 function ToAccountInfo(publickey, balance) {
     var divhtml = ""
@@ -199,7 +253,6 @@ function copy() {
     layer.msg("copy success")
 }
 
-function viewOnSeelescan(publickey) {   
+function viewOnSeelescan(publickey) {
     require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
 }
-
