@@ -301,3 +301,45 @@ form{
     margin: 0;
     white-space: nowrap;
 }
+
+.export-account{
+    width: 38px;
+    height: 35px;
+    padding: 0;
+    border: none;
+    background: unset;
+    outline: none;
+    cursor: pointer;
+    /* background: #2c9ae3; */
+}
+.export-account img {
+    width: 35px;
+    height: 35px;
+}
+
+.import-account{
+    width: 38px;
+    height: 35px;
+    padding: 0;
+    border: none;
+    background: unset;
+    outline: none;
+    right: 0px;
+    cursor: pointer;
+    /* background: #2c9ae3; */
+}
+
+.import-account img {
+    width: 35px;
+    height: 35px;
+}
+
+#main-container {
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;              /* default value; can be omitted */
+    justify-content: space-between; /* switched from default (flex-start, see below) */
+}
+  /* #main-container > div {
+    border: 2px dashed red;
+  } */

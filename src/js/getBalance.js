@@ -56,7 +56,17 @@ function loadAccount() {
     var tabs1 = document.getElementById("tabs-1");
     tabs1.innerHTML = "";
 
-    var tabs1HTML = `<h1>Accounts Overview</h1>`
+    var tabs1HTML =`<div id="main-container">`
+    tabs1HTML +=`<div><h1>Accounts Overview</h1></div>`
+    tabs1HTML += `<div><button class="export-account" title="EXPORT ACCOUNTS" onclick="exportaccount()">`
+    tabs1HTML += `<span><img src="./src/img/export.png"></span>`
+    // tabs1HTML += `<span>EXPORT ACCOUNTS</span>`
+    tabs1HTML += `</button>`
+    tabs1HTML += `<button class="import-account" title="IMPORT ACCOUNTS" onclick="import()">`
+    tabs1HTML += `<span><img src="./src/img/import.png"></span>`
+    // tabs1HTML += `<span>IMPORT ACCOUNTS</span>`
+    tabs1HTML += `</button></div>`
+    tabs1HTML += `</div>`
     tabs1HTML += `<div id="accountlist"></div>`
     tabs1HTML += `<button class="add-account" onclick="addAccount()">`
     tabs1HTML += `<span><img src="./src/img/add.png"></span>`

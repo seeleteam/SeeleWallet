@@ -73,7 +73,7 @@ function getBlockHeight() {
                 blockheight.innerText = height;
             }
         });
-    }, 5000);
+    }, 2000);
 }
 
 function isListening() {
@@ -86,5 +86,5 @@ function isListening() {
                 isListening.innerText = "Connecting";
             }
         });
-    }, 5000);
+    }, 2000);
 }
