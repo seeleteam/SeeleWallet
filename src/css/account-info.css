@@ -301,3 +301,54 @@ form{
     margin: 0;
     white-space: nowrap;
 }
+
+.export-account{
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background:RGB(236,241,245);
+    outline: none;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    /* background: #2c9ae3; */
+}
+.export-account img {
+    width: 35px;
+    height: 35px;
+}
+
+.import-account{
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background:RGB(236,241,245);
+    outline: none;
+    right: 0px;
+    cursor: pointer;
+    /* margin: 10px; */
+    font-size: 12px;
+    border-radius: 8px;
+    /* background: #2c9ae3; */
+}
+
+.import-account img {
+    width: 35px;
+    height: 35px;
+}
+
+#main-container {
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;              /* default value; can be omitted */
+    justify-content: space-between; /* switched from default (flex-start, see below) */
+}
+  /* #main-container > div {
+    display: flex;
+    flex-direction: column;
+  } */
