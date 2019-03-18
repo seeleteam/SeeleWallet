@@ -92,10 +92,10 @@ function importAccounts(){
       buttonLabel: 'Import from'}
   )
   dstpath = seeleClient.accountPath
-
+  const path = require('path')
   for (var item in srcpath) {
     //console.log(srcpath[item])
-    var tempfilename = srcpath[item].split("/")
+    var tempfilename = srcpath[item].split(path.sep)
     //console.log(dstpath+tempfilename[tempfilename.length-1])
     fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
       if (err) throw err;
