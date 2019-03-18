@@ -31,8 +31,8 @@ function seeleClient() {
         var  osName="Unknown OS";
         if (navigator.appVersion.indexOf("Win")!=-1)  osName="Windows";
         if (navigator.appVersion.indexOf("Mac")!=-1)  osName="MacOS";
-        if (navigator.appVersion.indexOf("X11")!=-1)  osName="UNIX";
         if (navigator.appVersion.indexOf("Linux")!=-1)  osName="Linux";
+        if (navigator.appVersion.indexOf("X11")!=-1)  osName="UNIX";
         if (navigator.appVersion.indexOf("Android")!=-1)  osName="Android";
         if (navigator.appVersion.indexOf("iPhone")!=-1)  osName="iPhone";
         // console.log(osName);
