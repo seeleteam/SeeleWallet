@@ -21,6 +21,8 @@ a:focus {
 #tabs-3 {
     width: calc(100% - 40px);
     position: absolute;
+    height : 100%;
+    overflow : auto;
 }
 
 #tab {
@@ -265,9 +267,8 @@ a:focus {
     
 }
 #tab ul li:nth-child(3).tabli_active{
-    margin-left: -40px;
+    margin-left: 0px;
     background: url(../img/contact-bai.png) left top no-repeat;
-    
 }
 .tabulousclear {
     display: block;

@@ -33,6 +33,9 @@ function firstLoad() {
         
     });
     loadAccount()
+    var interval = setInterval(function(){
+        refreshBalance();
+    }, 5000);
 }
 
 function loadAccount() {
@@ -53,7 +56,25 @@ function loadAccount() {
     var tabs1 = document.getElementById("tabs-1");
     tabs1.innerHTML = "";
 
-    var tabs1HTML = `<h1>Accounts Overview</h1>`
+    var tabs1HTML =`<div id="main-container">`
+    tabs1HTML +=`<div><h1>Accounts Overview</h1></div>`
+
+    // tabs1HTML += `<div><button class="export-account" title="EXPORT ACCOUNTS" onclick="exportAccounts()">`
+    // tabs1HTML += `<span><img src="./src/img/export.png"></span>`
+    // // tabs1HTML += `<span>EXPORT ACCOUNTS</span>`
+    // tabs1HTML += `</button>`
+    // tabs1HTML += `<button class="import-account" title="IMPORT ACCOUNTS" onclick="importAccounts()">`
+    // tabs1HTML += `<span><img src="./src/img/import.png"></span>`
+    // // tabs1HTML += `<span>IMPORT ACCOUNTS</span>`
+    // tabs1HTML += `</button></div>`
+
+    tabs1HTML += `<div><button class="export-account" title="EXPORT ACCOUNTS" onclick="exportAccounts()">`
+    // tabs1HTML += `<span><img src="./src/img/export.png"></span>`
+    tabs1HTML += `EXPORT`
+    tabs1HTML += `</button>`
+    tabs1HTML += `<button class="import-account" title="IMPORT ACCOUNTS" onclick="importAccounts()">IMPORT</button></div>`
+
+    tabs1HTML += `</div>`
     tabs1HTML += `<div id="accountlist"></div>`
     tabs1HTML += `<button class="add-account" onclick="addAccount()">`
     tabs1HTML += `<span><img src="./src/img/add.png"></span>`
@@ -174,4 +195,62 @@ function getBalance() {
             balance.innerText = "Balance：" + info.Balance;
         }
     });
+}
+
+function refreshBalance(){
+    if(loaddingAccount){
+        loaddingAccount = false
+    }else{
+        return
+    }
+    var count = 0;
+    var balanceArray = new Array()
+    var accountBalanceInfo=[];
+    for (var item in seeleClient.accountArray) {
+        seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (info, err) {
+            if (err) {
+                try {
+                    var msg = JSON.parse(err.message);
+                    console.log(msg.error.message);
+                } catch (e) {
+                    console.log(err.message);
+                }
+                if (count == seeleClient.accountArray.length - 1) {
+                    loaddingAccount = true;
+                }
+                count += 1;
+                accountBalanceInfo[info[0]] = 0; 
+            } else {
+                if (count == seeleClient.accountArray.length - 1) {
+                    loaddingAccount = true;
+
+                }
+                count += 1;
+                balanceArray.push(info.Balance)
+                accountBalanceInfo[info.Account]=info.Balance
+            }
+            if(count == seeleClient.accountArray.length){
+                var accountlist = document.getElementById("accountlist");
+                for(var i=0 ;i< accountlist.childElementCount;i++){
+                   var accountAddress = accountlist.children[i].children[1].children[2].innerText;
+                   if(accountBalanceInfo[accountAddress]!="undefined"){
+                    accountlist.children[i].children[1].children[1].children[0].innerText = accountBalanceInfo[accountAddress]/ 100000000
+                   }
+                }
+            }
+            var sum = 0;
+            var balanceSum = document.getElementById('span_balance')
+            if (balanceArray.length == 0) {
+                balanceSum.innerText = '0'
+            } else if (balanceArray.length == 1) {
+                balanceSum.innerText = balanceArray[0] / 100000000
+            } else {
+                for (var i = 0; i < balanceArray.length; i++) {
+                    sum += balanceArray[i];
+                }
+                balanceSum.innerText = sum / 100000000
+            }
+        })
+       
+    }
 }
