@@ -29,12 +29,13 @@ function seeleClient() {
 
     this.getOS = function () {
         var  osName="Unknown OS";
-        if (navigator.appVersion.indexOf("Win")!=-1)  osName="Windows";
-        if (navigator.appVersion.indexOf("Mac")!=-1)  osName="MacOS";
-        if (navigator.appVersion.indexOf("X11")!=-1)  osName="UNIX";
-        if (navigator.appVersion.indexOf("Linux")!=-1)  osName="Linux";
-        if (navigator.appVersion.indexOf("Android")!=-1)  osName="Android";
-        if (navigator.appVersion.indexOf("iPhone")!=-1)  osName="iPhone";
+        
+        if (os.type().indexOf("Win")!=-1)  osName="Windows";
+        if (os.type().indexOf("Mac")!=-1)  osName="MacOS";
+        if (os.type().indexOf("X11")!=-1)  osName="UNIX";
+        if (os.type().indexOf("Linux")!=-1)  osName="Linux";
+        if (os.type().indexOf("Android")!=-1)  osName="Android";
+        if (os.type().indexOf("iPhone")!=-1)  osName="iPhone";
         // console.log(osName);
         return osName;
     }
@@ -56,7 +57,7 @@ function seeleClient() {
             } else if(this.getOS() === "Linux") { 
                 return clientpath + "/../../cmd/linux/client";
             } else {
-                alert("the operation system may not be supported");
+                console.log("the operation system may not be supported");
                 return null;
             }
         }
@@ -81,29 +82,30 @@ function seeleClient() {
         }
     };
 
-    this.startNode = function () {
+    this.StartNode = function (shardNum) {
         return new Q((resolve, reject) => {
             try {
                 var args = [
                     'start',
                 ];
                 args.push('-c')
-                args.push('config\\node1.json')
+                args.push(this.nodePath()+'\\..\\config\\node'+shardNum+'.json')
                 args.push('--accounts')
-                args.push('config\\accounts.json')
-
+                args.push(this.nodePath()+'\\..\\config\\accounts.json')
+                args.push('-m')
+                args.push('stop')
                 const proc = spawn(this.nodePath(), args);
 
                 proc.stdout.on('data', data => {
-                    resolve(true)
+                    resolve(data.toString())
                 });
-
                 proc.stderr.on('data', data => {
-                    reject(false)
-                    alert(data.toString())
+                    reject(data.toString())
+                    // alert(data.toString())
                 });
             } catch (e) {
-                alert(e)
+                // alert(e)
+                console.log(e.toString())
                 return reject(false)
             }
         });
