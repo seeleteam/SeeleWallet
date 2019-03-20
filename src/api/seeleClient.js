@@ -22,8 +22,8 @@ function seeleClient() {
 
 
     this.accountArray = [];
-    this.accountPath = os.homedir() + "/.seeleMist/account/";
-    this.txPath = os.homedir() + "/.seeleMist/tx/";
+    this.accountPath = os.homedir() + "/.SeeleWallet/account/";
+    this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
 
 
@@ -184,7 +184,7 @@ function seeleClient() {
 
     this.init = function () {
         if (!fs.existsSync(this.accountPath)) {
-            fs.mkdirSync(os.homedir() + "/.seeleMist/")
+            fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
         }
     };
