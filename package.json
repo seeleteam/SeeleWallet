@@ -1,31 +1,31 @@
 {
-    "name": "SeeleMist",
+    "name": "SeeleWallet",
     "version": "1.0.0",
-    "icon": "seeleMist.icns",
+    "icon": "SeeleWallet.icns",
     "description": "A minimal Electron application",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "package": "electron-packager . seeleMist --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=seeleMist.ico",
+        "package": "electron-packager . SeeleWallet --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet.ico",
         "dist": "electron-builder"
     },
     "build": {
-        "appId": "seeleMist",
+        "appId": "SeeleWallet",
         "dmg": {
-            "title": "SeeleMist",
-            "icon": "seeleMist.icns"
+            "title": "SeeleWallet",
+            "icon": "SeeleWallet.icns"
         },
         "mac": {
             "asar": true,
             "target": "dmg",
-            "icon": "seeleMist.icns"
+            "icon": "SeeleWallet.icns"
         },
         "extraResources": {
             "from": "./cmd/",
             "to": "../"
         }
     },
-    "repository": "https://github.com/seeleteam/SeeleMist",
+    "repository": "https://github.com/seeleteam/SeeleWallet",
     "keywords": [
         "Electron",
         "quick",
