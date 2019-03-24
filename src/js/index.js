@@ -3,6 +3,8 @@ author: Miya_yang
 date:2018.10.30
 */
 $(function ($) {
+
+
     // tab
     $('#tab').tabulous({
         effect: 'slideLeft'
@@ -72,6 +74,7 @@ $(function ($) {
            this.value = this.value.replace(/[^0-9\.]/g, '');
         }
     });
+
     jQuery.validator.addMethod("fixedPrecision", function(value, element,param) {
         return this.optional(element) || value.substring(value.indexOf(".")).length<=param;
       }, "Please specify the correct precision for your value");
@@ -92,10 +95,10 @@ function importAccounts(){
       buttonLabel: 'Import from'}
   )
   dstpath = seeleClient.accountPath
-
+  const path = require('path')
   for (var item in srcpath) {
     //console.log(srcpath[item])
-    var tempfilename = srcpath[item].split("/")
+    var tempfilename = srcpath[item].split(path.sep)
     //console.log(dstpath+tempfilename[tempfilename.length-1])
     fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
       if (err) throw err;
@@ -133,7 +136,7 @@ function exportAccounts() {
   for (var item in seeleClient.accountArray) {
     fs.copyFile(srcpath + seeleClient.accountArray[item], dstpath + '/' + seeleClient.accountArray[item], (err) => {
       if (err) throw err;
-      console.log('export sucess for ' + seeleClient.accountArray[item]);
+      console.log('export success for ' + seeleClient.accountArray[item]);
     });
   }
 }
