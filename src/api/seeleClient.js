@@ -31,7 +31,7 @@ function seeleClient() {
         var  osName="Unknown OS";
         
         if (os.type().indexOf("Win")!=-1)  osName="Windows";
-        if (os.type().indexOf("Mac")!=-1)  osName="MacOS";
+        if (os.type().indexOf("Darwin")!=-1)  osName="MacOS";
         if (os.type().indexOf("Linux")!=-1)  osName="Linux";
         if (os.type().indexOf("X11")!=-1)  osName="UNIX";
         if (os.type().indexOf("Android")!=-1)  osName="Android";
@@ -46,7 +46,17 @@ function seeleClient() {
         // app.asar : An asar archive is a simple tar-like format that concatenates files into a single file.
         // Electron can read arbitrary files from it without unpacking the whole file.
         if (clientpath.indexOf("app.asar") > 0) {
-            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
+            // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
+            if(this.getOS() === "MacOS") {
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/client";
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/client";
+            } else if(this.getOS() === "Linux") { 
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/client";
+            } else {
+                console.log("the operation system may not be supported");
+                return null;
+            }
         } else {
             //TODO this works for dev environment, need to check path validity for packed exe
             // return "./cmd/win32/client"
@@ -67,7 +77,17 @@ function seeleClient() {
     this.nodePath = function() {
         var clientpath = `${__dirname}`;
         if (clientpath.indexOf("app.asar") > 0) {
-            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
+            // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
+            if(this.getOS() === "MacOS") {
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/node";
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/node";
+            } else if(this.getOS() === "Linux") { 
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/node";
+            } else {
+                console.log("the operation system may not be supported");
+                return null;
+            }
         } else {
             //return "./cmd/win32/node";
             if(this.getOS() === "MacOS") {
@@ -115,7 +135,17 @@ function seeleClient() {
     this.solcPath = function() {
         var clientpath = `${__dirname}`;
         if (clientpath.indexOf("app.asar") > 0) {
-            return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
+            // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
+            if(this.getOS() === "MacOS") {
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/solc";
+            } else if(this.getOS() === "Windows") { //so far, we only provide win32
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/solc";
+            } else if(this.getOS() === "Linux") { 
+                return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/solc";
+            } else {
+                console.log("the operation system may not be supported");
+                return null;
+            }
         } else {
             // return "./cmd/win32/solc"
             if(this.getOS() === "MacOS") {
