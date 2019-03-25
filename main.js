@@ -34,7 +34,7 @@ function createWindow() {
     //Menu.setApplicationMenu(menu)
 
     sc = new SeeleClient();
-    // sc.init()
+    sc.init()
     
     sc.StartNode(1).then((data)=>{
         console.log(data);

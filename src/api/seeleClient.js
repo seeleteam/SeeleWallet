@@ -32,8 +32,8 @@ function seeleClient() {
         
         if (os.type().indexOf("Win")!=-1)  osName="Windows";
         if (os.type().indexOf("Mac")!=-1)  osName="MacOS";
-        if (os.type().indexOf("X11")!=-1)  osName="UNIX";
         if (os.type().indexOf("Linux")!=-1)  osName="Linux";
+        if (os.type().indexOf("X11")!=-1)  osName="UNIX";
         if (os.type().indexOf("Android")!=-1)  osName="Android";
         if (os.type().indexOf("iPhone")!=-1)  osName="iPhone";
 

@@ -112,6 +112,7 @@ function sendtx() {
             layer.alert(err.message);
         } else {
             console.log(seeleClient.txArray)
+            layer.alert("Transaction send!\n Tx Hash:"+hash)
             // seeleClient.txArray.push(hash)
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
