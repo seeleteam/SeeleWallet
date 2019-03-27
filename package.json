@@ -1,24 +1,28 @@
 {
     "name": "SeeleWallet",
     "version": "1.0.0",
-    "icon": "SeeleWallet.icns",
+    "icon": "SeeleWallet_256.icns",
     "description": "A minimal Electron application",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "package": "electron-packager . SeeleWallet --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet.ico",
+        "package": "electron-packager . SeeleWallet --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet_48.ico",
         "dist": "electron-builder"
     },
     "build": {
         "appId": "SeeleWallet",
         "dmg": {
             "title": "SeeleWallet",
-            "icon": "SeeleWallet.icns"
+            "icon": "SeeleWallet_256.icns"
         },
         "mac": {
             "asar": true,
             "target": "dmg",
-            "icon": "SeeleWallet.icns"
+            "icon": "SeeleWallet_256.icns"
+        },
+        "win":{
+            "target":["nsis","zip"],
+            "icon":"SeeleWallet_256.ico"
         },
         "extraResources": {
             "from": "./cmd/",

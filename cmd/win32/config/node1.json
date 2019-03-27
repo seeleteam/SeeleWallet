@@ -5,16 +5,16 @@
     "dataDir": "node1",
     "address": "0.0.0.0:8027",
     "coinbase": "0x4c10f2cd2159bb432094e3be7e17904c2b4aeb21",
-    "algorithm": "sha256"
+    "algorithm": "spow"
   },
   "p2p": {
-    "privateKey": "0xf65e40c6809643b25ce4df33153da2f3338876f181f83d2281c6ac4a987b1479",
-    "staticNodes": [],
+    "privateKey": "0xf6a670c9a6e29e2564876a1017cc046c44f8164125471c7f205337ac07ba0961",
+    "staticNodes": ["104.218.164.169:8057","106.75.85.9:8058","106.75.90.237:8059","117.50.38.29:8056"],
     "address": "0.0.0.0:8057",
     "networkID": "seele"
   },
   "log": {
-    "isDebug": true,
+    "isDebug": false,
     "printLog": true
   },
   "httpServer": {
@@ -43,7 +43,7 @@
     "password": "test123"
   },
   "genesis": {
-    "difficult":6000000,
+    "difficult":5200000,
     "shard":1,
     "timestamp":1539742676
   }
