@@ -118,6 +118,11 @@ function sendtx() {
             seeleClient.saveFile(false, hash)
         }
     });
+    // reset everything
+    document.getElementById("accountpassWord").value='';
+    document.getElementById("amount").value='';
+    document.getElementById("to").value='';
+
 }
 
 function gettxbyhash() {
