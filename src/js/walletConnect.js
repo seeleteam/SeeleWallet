@@ -20,7 +20,7 @@ function addLoadEvent(func) {
 addLoadEvent(firstLoad)
 
 function firstLoad() {
-    $('#shard').click(function() {
+    $('#shard').change(function() {
         connect();
     });
     connect();
@@ -44,8 +44,9 @@ function connect() {
 
 function getNetWork() {
     var netWork = document.getElementById("netWork");
-    //TODO need check the genesis hash of main netWork
-    var mainNetWork = '0xc2c26507a9a7418c4cd4d1b405285397891d30f4d5be65af3be8b4c8e7c28d63'
+    //TODO change to hash from "./client getblock --height 0", which return genesis block hash
+    // var mainNetWork = '0xc2c26507a9a7418c4cd4d1b405285397891d30f4d5be65af3be8b4c8e7c28d63'
+    var mainNetWork = '0x93990984a6ca4414e798e9dd52578f300e493434d008f4dd7e7f1e313b22f95a'
     seeleClient.getblock(shard, "", 0, false, function (block,err) {
         if (err) {
             netWork.innerText = "private";
