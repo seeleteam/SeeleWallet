@@ -112,7 +112,7 @@ function seeleClient() {
                 args.push('-c')
                 args.push(this.nodePath()+'\\..\\config\\node'+shardNum+'.json')
                 args.push('--accounts')
-                args.push(this.nodePath()+'\\..\\config\\accounts.json')
+                args.push(this.nodePath()+'\\..\\config\\accounts1.json')
                 args.push('-m')
                 args.push('stop')
                 const proc = spawn(this.nodePath(), args);
