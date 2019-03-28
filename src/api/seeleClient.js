@@ -114,6 +114,7 @@ function seeleClient() {
                 configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'mac'+path.sep+'config'+path.sep
                 console.log(configpath)
                 args.push(configpath + 'node'+shardNum+'.json')
+                //@TODO remove this config after release
                 args.push('--accounts')
                 args.push(configpath + "accounts1.json")
                 // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
