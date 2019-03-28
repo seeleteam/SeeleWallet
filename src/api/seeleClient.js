@@ -111,7 +111,7 @@ function seeleClient() {
                 ];
                 args.push('-c')
                 // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-                configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'mac'+path.sep+'config'+path.sep
+                configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
                 console.log(configpath)
                 args.push(configpath + 'node'+shardNum+'.json')
                 //@TODO remove this config after release
