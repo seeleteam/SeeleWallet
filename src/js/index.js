@@ -141,7 +141,7 @@ function exportAccounts() {
   }
 }
 
-function ToAccountInfo(publickey, balance) {
+function ToAccountInfo(publickey, balance, shard) {
     var divhtml = ""
     divhtml += `<div id="accountlist" onload="resetGlobal()">`;
     divhtml += `<div class="accountFor">`;
@@ -150,6 +150,7 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `<li>Account</li>`;
     divhtml += `<li><span>` + balance + `</span> Seele</li>`;
     divhtml += `<li class="publickey">` + publickey + `</li>`;
+    divhtml += `<li class="shard">` + "shard-" + shard + `</li>`;
     divhtml += `</ul>`;
     divhtml += `</div>`;
     divhtml += `</div>`;
@@ -175,7 +176,7 @@ function ToAccountInfo(publickey, balance) {
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
     divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
-    divhtml += `<h3 class="latest-title">Latest Transactions</h3>`
+    // divhtml += `<h3 class="latest-title">Latest Transactions</h3>`
 
     // divhtml += `<div class="account-contact"><p class="contact-left">`
     // divhtml += `<span>Nov.</span><span>13</span>`

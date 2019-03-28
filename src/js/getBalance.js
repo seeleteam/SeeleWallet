@@ -141,12 +141,13 @@ function loadAccount() {
             } else {
                 var accountlist = document.getElementById("accountlist");
                 var accountHTML = ""
-                accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + info.Balance / 100000000 + `)">`;
+                accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + info.Balance / 100000000 + `,` + seeleClient.getShardNum(info.Account) + `)">`;
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
                 accountHTML += `<li>Account</li>`;
                 accountHTML += `<li><span class="accountBalance">` + info.Balance / 100000000 + `</span> seele</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
+                accountHTML += `<li>` + "Shard-" + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;
