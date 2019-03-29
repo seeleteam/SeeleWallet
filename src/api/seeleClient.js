@@ -5,6 +5,8 @@ var seelejs = require('seeleteam.js');
 var fs = require('fs');
 var os = require("os")
 var path = require('path');
+var shell = require('shelljs');
+var editFile = require("edit-json-file");
 
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
@@ -23,6 +25,7 @@ function seeleClient() {
 
     this.accountArray = [];
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
+    this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
 
@@ -104,6 +107,8 @@ function seeleClient() {
     };
 
     this.StartNode = function (shardNum) {
+        //@TODO change to publickey
+        // this.killMiningNodeProcess(shardNum);
         return new Q((resolve, reject) => {
             try {
                 var args = [
@@ -134,7 +139,135 @@ function seeleClient() {
                 console.log(e.toString())
                 return reject(false)
             }
+            // this.startMine(shardNum)
+            // this.makeNodeFile(shardNum,shardNum)
         });
+    }
+
+    this.startMine = function(account) {
+        var shardNum = this.getShardNum(account);
+        //kill this shard node first
+        this.killNonminingNodeProcess(shardNum);
+        //make the file and save it as "node+account.json"
+        this.makeNodeFile(account, shard);
+        //start the mining node
+        return new Q((resolve, reject) => {
+            var thread = 16
+            try {
+                var args = [
+                    'start',
+                ];
+                args.push('-c')
+                // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
+                configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
+                console.log(configpath)
+                args.push(configpath + 'node-'+account+'.json')
+                //@TODO remove this config after release
+                args.push('--accounts')
+                args.push(configpath + "accounts1.json")
+                args.push('--threads')
+                args.push(thread)
+                const proc = spawn(this.nodePath(), args);
+                console.log(proc)
+                proc.stdout.on('data', data => {
+                    resolve(data.toString())
+                });
+                proc.stderr.on('data', data => {
+                    reject(data.toString())
+                    // alert(data.toString())
+                });
+            } catch (e) {
+                // alert(e)
+                console.log(e.toString())
+                return reject(false)
+            }
+        });
+    }
+
+    this.makeNodeFile = function(account, shard) {
+    // this.makeNodeFile = function (account, privatekey, shard) {
+        // cp file and save into nodepath
+        var configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
+        var nodefile = configpath + 'node'+shard+'.json'
+        // var dstfile = this.nodeConfigPath+path.sep+'node-'+shard+'-'+account+'.json'
+        var dstfile = this.nodeConfigPath+'node-'+account+'.json'
+        if (!fs.existsSync(this.nodeConfigPath)) {
+            fs.mkdirSync(this.nodeConfigPath)
+        }
+        shell.cp('-f', nodefile, dstfile);        
+        //replace files with right configs
+        this.setUpNodeFile(dstfile, account)
+    } 
+
+    this.setUpNodeFile = function(dstfile, account){
+
+        const editJsonFile = require("edit-json-file");
+        let file = editJsonFile(dstfile);
+         
+        // Set a couple of fields
+        file.set("basic.coinbase", ''+account);
+        file.set("basic.datadir", 'account-'+account);
+        // file.set("p2p.privateKey", ''+privatekey);
+         
+        // Output the content
+        // console.log(file.get());
+        // { planet: 'Earth',
+        //   name: { first: 'Johnny', last: 'B.' },
+        //   is_student: false }
+         
+        // Save the data to the disk
+        file.save();
+         
+        // Reload it from the disk
+        file = editJsonFile(dstfile, {
+            autosave: true
+        });
+         
+        // Get one field
+        // console.log(file.get("basic.coinbase"));
+        // => Johnny 
+    }
+    
+    this.killNonminingNodeProcess = function (shardNum) {
+        var args = [
+            'start',
+        ];
+        args.push('-c')
+        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
+        configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
+        console.log(configpath)
+        args.push(configpath + 'node'+shardNum+'.json')
+        //@TODO remove this config after release
+        args.push('--accounts')
+        args.push(configpath + "accounts1.json")
+        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
+        args.push('-m')
+        args.push('stop')
+        const proc = spawn(this.nodePath(), args);
+        proc.kill();
+        console.log("Nonmining PID: " + proc.pid + " killed")
+        console.log(proc)
+    }
+//@TODO change input param to publickey
+    // this.killMiningNodeProcess = function (publickey) {
+    this.killMiningNodeProcess = function (shardNum) {
+        var args = [
+            'start',
+        ];
+        args.push('-c')
+        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
+        configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
+        console.log(configpath)
+        args.push(configpath + 'node'+shardNum+'.json')
+        //@TODO remove this config after release
+        args.push('--accounts')
+        args.push(configpath + "accounts1.json")
+        args.push('--threads')
+        args.push(thread)
+        const proc = spawn(this.nodePath(), args);
+        proc.kill();
+        console.log("Miner PID: " + proc.pid + " killed")
+        console.log(proc)
     }
 
     this.solcPath = function() {

@@ -20,9 +20,12 @@
             "target": "dmg",
             "icon": "SeeleWallet_256.icns"
         },
-        "win":{
-            "target":["nsis","zip"],
-            "icon":"SeeleWallet_256.ico"
+        "win": {
+            "target": [
+                "nsis",
+                "zip"
+            ],
+            "icon": "SeeleWallet_256.ico"
         },
         "extraResources": {
             "from": "./cmd/",
@@ -46,6 +49,8 @@
     "dependencies": {
         "bignumber.js": "^8.0.1",
         "bluebird": "^3.5.2",
-        "seeleteam.js": "^1.6.8"
+        "edit-json-file": "^1.2.1",
+        "seeleteam.js": "^1.6.8",
+        "shelljs": "^0.8.3"
     }
 }

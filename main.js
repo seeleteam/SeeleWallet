@@ -35,7 +35,9 @@ function createWindow() {
 
     sc = new SeeleClient();
     sc.init()
-    
+
+    // sc.makeNodeFile(1)
+
     sc.StartNode(1).then((data)=>{
         console.log(data);
     }).catch((data) => {
