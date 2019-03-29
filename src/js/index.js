@@ -284,4 +284,5 @@ function changeMingingStatus(publickey) {
     } else if (mineStatus === "Stop Mining"){
         this.stopMining(shard);
     }
+    // seeleClient.killNonminingNodeProcess(shard);
 }

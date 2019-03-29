@@ -7,17 +7,21 @@ var os = require("os")
 var path = require('path');
 var shell = require('shelljs');
 var editFile = require("edit-json-file");
+var process = require('process');
 
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
-    // this.client1 = new seelejs("http://106.75.86.211:8037");
-    // this.client2 = new seelejs("http://106.75.86.211:8038");
+
+    // this.client1 = new seelejs("http://104.218.164.27:8037");
+    // this.client2 = new seelejs("http://104.218.164.193:8038");
+    // this.client3 = new seelejs("http://104.218.164.27:8039");
+    // this.client4 = new seelejs("http://104.218.164.27:8036");
 
     // shardCount = 4
-    this.client1 = new seelejs();
+    this.client1 = new seelejs("http://localhost:8037");
     this.client2 = new seelejs("http://localhost:8038");
     this.client3 = new seelejs("http://localhost:8039");
     this.client4 = new seelejs("http://localhost:8036");
@@ -109,22 +113,24 @@ function seeleClient() {
     this.StartNode = function (shardNum) {
         //@TODO change to publickey
         // this.killMiningNodeProcess(shardNum);
+        
         return new Q((resolve, reject) => {
             try {
-                var args = [
-                    'start',
-                ];
-                args.push('-c')
-                // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-                configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
-                console.log(configpath)
-                args.push(configpath + 'node'+shardNum+'.json')
-                //@TODO remove this config after release
-                args.push('--accounts')
-                args.push(configpath + "accounts1.json")
-                // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
-                args.push('-m')
-                args.push('stop')
+                // var args = [
+                //     'start',
+                // ];
+                // args.push('-c')
+                // // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
+                // configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
+                // console.log(configpath)
+                // args.push(configpath + 'node'+shardNum+'.json')
+                // //@TODO remove this config after release
+                // args.push('--accounts')
+                // args.push(configpath + "accounts1.json")
+                // // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
+                // args.push('-m')
+                // args.push('stop')
+                var args = this.nonMiningArgs(shardNum)
                 const proc = spawn(this.nodePath(), args);
 
                 proc.stdout.on('data', data => {
@@ -146,27 +152,16 @@ function seeleClient() {
 
     this.startMine = function(account) {
         var shardNum = this.getShardNum(account);
-        //kill this shard node first
-        this.killNonminingNodeProcess(shardNum);
         //make the file and save it as "node+account.json"
-        this.makeNodeFile(account, shard);
+        this.makeNodeFile(account, shardNum);
+        //kill this shard node first
+        // console.log("PIDs" + process.pid)
+        this.killNonminingNodeProcess(shardNum);
+        
         //start the mining node
         return new Q((resolve, reject) => {
-            var thread = 16
             try {
-                var args = [
-                    'start',
-                ];
-                args.push('-c')
-                // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-                configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
-                console.log(configpath)
-                args.push(configpath + 'node-'+account+'.json')
-                //@TODO remove this config after release
-                args.push('--accounts')
-                args.push(configpath + "accounts1.json")
-                args.push('--threads')
-                args.push(thread)
+                var args = this.miningArgs(account)
                 const proc = spawn(this.nodePath(), args);
                 console.log(proc)
                 proc.stdout.on('data', data => {
@@ -190,45 +185,46 @@ function seeleClient() {
         var configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
         var nodefile = configpath + 'node'+shard+'.json'
         // var dstfile = this.nodeConfigPath+path.sep+'node-'+shard+'-'+account+'.json'
-        var dstfile = this.nodeConfigPath+'node-'+account+'.json'
+        var dstfile = this.nodeConfigPath+'node-'+shard+'.json'
         if (!fs.existsSync(this.nodeConfigPath)) {
             fs.mkdirSync(this.nodeConfigPath)
         }
         shell.cp('-f', nodefile, dstfile);        
         //replace files with right configs
-        this.setUpNodeFile(dstfile, account)
+        this.setUpNodeFile(dstfile, account, shard)
     } 
 
-    this.setUpNodeFile = function(dstfile, account){
-
+    this.setUpNodeFile = function(dstfile, account, shard){
         const editJsonFile = require("edit-json-file");
-        let file = editJsonFile(dstfile);
-         
+        let file = editJsonFile(dstfile);   
         // Set a couple of fields
         file.set("basic.coinbase", ''+account);
-        file.set("basic.datadir", 'account-'+account);
+        //p2p privatekey
+        var args = [
+            'key',
+        ];
+        if (shardnum != "") {
+            args.push('--shard', shard)
+        }
+
+        const proc = spawn(this.nodePath(), args);
+
+        proc.stdout.on('data', data => {
+            var output = `${data}`
+            var privatekey = this.ParsePrivateKey(output)
+            file.set("p2p.privateKey", ''+privatekey)
+        });
         // file.set("p2p.privateKey", ''+privatekey);
-         
-        // Output the content
-        // console.log(file.get());
-        // { planet: 'Earth',
-        //   name: { first: 'Johnny', last: 'B.' },
-        //   is_student: false }
-         
+
         // Save the data to the disk
         file.save();
-         
         // Reload it from the disk
         file = editJsonFile(dstfile, {
             autosave: true
         });
-         
-        // Get one field
-        // console.log(file.get("basic.coinbase"));
-        // => Johnny 
     }
     
-    this.killNonminingNodeProcess = function (shardNum) {
+    this.nonMiningArgs = function(shardNum){
         var args = [
             'start',
         ];
@@ -243,10 +239,29 @@ function seeleClient() {
         // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
         args.push('-m')
         args.push('stop')
-        const proc = spawn(this.nodePath(), args);
+        return args
+    }
+
+    this.killNonminingNodeProcess = function (shardNum) {
+        const proc = spawn(this.nodePath(), this.nonMiningArgs(shardNum));
         proc.kill();
-        console.log("Nonmining PID: " + proc.pid + " killed")
-        console.log(proc)
+        console.log("non-mining PID: " + proc.pid + " killed")
+    }
+
+    this.miningArgs = function(account){
+        var shard = this.getShardNum(account)
+        var thread = 16
+        var args = [
+            'start',
+        ];
+        args.push('-c')
+        args.push(this.nodeConfigPath+'node-'+shard+'.json')
+        //@TODO remove this config after release
+        args.push('--accounts')
+        args.push(this.nodeConfigPath + "accounts1.json")
+        args.push('--threads')
+        args.push(thread)
+        return args
     }
 //@TODO change input param to publickey
     // this.killMiningNodeProcess = function (publickey) {
@@ -375,6 +390,7 @@ function seeleClient() {
                     var output = `${data}`
                     var privatekey = this.ParsePrivateKey(output)
                     var publickey = this.ParsePublicKey(output)
+                    // seeleClient.makeNodeFile(publickey,shardnum)
                     this.keyStore(publickey, privatekey, passWord)
                     resolve(publickey)
                 });
