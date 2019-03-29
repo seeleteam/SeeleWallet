@@ -15,6 +15,8 @@ const spawnSync = require('child_process').spawnSync;
 
 function seeleClient() {
 
+    var shardCount = 4;
+
     // this.client1 = new seelejs("http://104.218.164.27:8037");
     // this.client2 = new seelejs("http://104.218.164.193:8038");
     // this.client3 = new seelejs("http://104.218.164.27:8039");
@@ -111,25 +113,15 @@ function seeleClient() {
     };
 
     this.StartNode = function (shardNum) {
+        var i;
+        for(i = 1; i <= 4; i++) {
+            this.initateNodeConfig(i);
+        }
         //@TODO change to publickey
         // this.killMiningNodeProcess(shardNum);
         
         return new Q((resolve, reject) => {
             try {
-                // var args = [
-                //     'start',
-                // ];
-                // args.push('-c')
-                // // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-                // configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
-                // console.log(configpath)
-                // args.push(configpath + 'node'+shardNum+'.json')
-                // //@TODO remove this config after release
-                // args.push('--accounts')
-                // args.push(configpath + "accounts1.json")
-                // // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
-                // args.push('-m')
-                // args.push('stop')
                 var args = this.nonMiningArgs(shardNum)
                 const proc = spawn(this.nodePath(), args);
 
@@ -203,10 +195,7 @@ function seeleClient() {
         var args = [
             'key',
         ];
-        if (shardnum != "") {
-            args.push('--shard', shard)
-        }
-
+        args.push('--shard', shard)
         const proc = spawn(this.nodePath(), args);
 
         proc.stdout.on('data', data => {
@@ -224,18 +213,15 @@ function seeleClient() {
         });
     }
     
-    this.nonMiningArgs = function(shardNum){
+    this.nonMiningArgs = function(shard){
         var args = [
             'start',
         ];
         args.push('-c')
-        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-        configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
-        console.log(configpath)
-        args.push(configpath + 'node'+shardNum+'.json')
+        args.push(this.nodeConfigPath+'node-'+shard+'.json')
         //@TODO remove this config after release
         args.push('--accounts')
-        args.push(configpath + "accounts1.json")
+        args.push(this.nodeConfigPath + "accounts1.json")
         // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
         args.push('-m')
         args.push('stop')
@@ -283,6 +269,20 @@ function seeleClient() {
         proc.kill();
         console.log("Miner PID: " + proc.pid + " killed")
         console.log(proc)
+    }
+
+    this.initateNodeConfig = function(shard) {
+        var args = [
+            'key',
+        ];
+        args.push('--shard', shard)
+        const proc = spawn(this.nodePath(), args);
+
+        proc.stdout.on('data', data => {
+            var output = `${data}`
+            var publickey = this.ParsePublicKey(output)
+            this.makeNodeFile(publickey, shard)
+        });
     }
 
     this.solcPath = function() {
