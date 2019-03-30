@@ -292,22 +292,24 @@ form{
 .icon-list{
     width: 100%;
     float: left;
-    margin: 80px 0 0 55px;
+    margin: 50px 0 0 55px;
 }
 .icon-list dl{
-    width: 120px;
+    width: 130px;
     float: left;
-    margin-left: 80px;
+    margin-left: 50px;
     font-size: 14px;
     color: #76a6d2;
+    /* border-style: solid;
+    border-width: 5px; */
 }
 .icon-list dl dt{
     width: 50px;
     height: 50px;
-    padding: 0 25px 12px 25px;
+    padding: 0 25px 12px 40px;
 }
 .icon-list dl dd{
-    text-align: left;
+    text-align: center;
     margin: 0;
     white-space: nowrap;
 }

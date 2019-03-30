@@ -141,11 +141,11 @@ function loadAccount() {
             } else {
                 var accountlist = document.getElementById("accountlist");
                 var accountHTML = ""
-                accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + info.Balance / 100000000 + `,` + seeleClient.getShardNum(info.Account) + `)">`;
+                accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + (info.Balance / 100000000).toFixed(3) + `,` + seeleClient.getShardNum(info.Account) + `)">`;
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
                 accountHTML += `<li>Account</li>`;
-                accountHTML += `<li><span class="accountBalance">` + info.Balance / 100000000 + `</span> seele</li>`;
+                accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> seele</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
                 accountHTML += `<li>` + "Shard-" + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
@@ -154,7 +154,7 @@ function loadAccount() {
                 if (count == 0) {
                     document.getElementById("txpublicKey").value = info.Account;
                     document.getElementById("contractPublicKey").value = info.Account;                    
-                    span_balance.innerText = info.Balance / 100000000;
+                    span_balance.innerText = (info.Balance / 100000000).toFixed(3);
                 }
                 if (count == seeleClient.accountArray.length - 1) {
                     layer.closeAll();
@@ -168,12 +168,12 @@ function loadAccount() {
             if (balanceArray.length == 0) {
                 balanceSum.innerText = '0'
             } else if (balanceArray.length == 1) {
-                balanceSum.innerText = balanceArray[0] / 100000000
+                balanceSum.innerText = (balanceArray[0] / 100000000).toFixed(3)
             } else {
                 for (var i = 0; i < balanceArray.length; i++) {
                     sum += balanceArray[i];
                 }
-                balanceSum.innerText = sum / 100000000
+                balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
         })
        
@@ -235,7 +235,7 @@ function refreshBalance(){
                 for(var i=0 ;i< accountlist.childElementCount;i++){
                    var accountAddress = accountlist.children[i].children[1].children[2].innerText;
                    if(accountBalanceInfo[accountAddress]!="undefined"){
-                    accountlist.children[i].children[1].children[1].children[0].innerText = accountBalanceInfo[accountAddress]/ 100000000
+                    accountlist.children[i].children[1].children[1].children[0].innerText = (accountBalanceInfo[accountAddress]/ 100000000).toFixed(3)
                    }
                 }
             }
@@ -244,12 +244,12 @@ function refreshBalance(){
             if (balanceArray.length == 0) {
                 balanceSum.innerText = '0'
             } else if (balanceArray.length == 1) {
-                balanceSum.innerText = balanceArray[0] / 100000000
+                balanceSum.innerText = (balanceArray[0] / 100000000).toFixed(3)
             } else {
                 for (var i = 0; i < balanceArray.length; i++) {
                     sum += balanceArray[i];
                 }
-                balanceSum.innerText = sum / 100000000
+                balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
         })
        

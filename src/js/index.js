@@ -155,6 +155,10 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
+    // divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
+    // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
+    // divhtml += `<dd id="isMining">Start Mining</dd>`;
+    // divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
@@ -164,7 +168,7 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `<dd>View On Seelescan</dd>`;
     divhtml += `</dl>`;
     divhtml += `<dl class="dl_copy" style="cursor: pointer;" onclick="copy()">`;
-    divhtml += `<dt><img src="./src/img/copy.png"></dt>`;
+    divhtml += `<dt id="minePic"><img src="./src/img/copy.png"></dt>`;
     divhtml += `<dd>Copy Address</dd>`;
     divhtml += `</dl>`;
     divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
@@ -260,4 +264,26 @@ function copy() {
 
 function viewOnSeelescan(publickey) {
     require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
+}
+
+function startMining(publickey) {
+
+    seeleClient.startMine(publickey);
+    document.getElementById("isMining").innerText="Stop Mining";
+}
+
+function stopMining(shard) {
+    seeleClient.StartNode(shard);
+    document.getElementById("isMining").innerText="Start Mining";
+}
+
+function changeMingingStatus(publickey) {
+    var shard = seeleClient.getShardNum(publickey)
+    var mineStatus = document.getElementById("isMining").innerText;
+    if(mineStatus === "Start Mining") {
+        this.startMining(publickey);
+    } else if (mineStatus === "Stop Mining"){
+        this.stopMining(shard);
+    }
+    // seeleClient.killNonminingNodeProcess(shard);
 }
