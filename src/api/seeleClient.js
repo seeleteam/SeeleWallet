@@ -8,10 +8,13 @@ var path = require('path');
 var shell = require('shelljs');
 var editFile = require("edit-json-file");
 var process = require('process');
+var tkill = require('tree-kill');
+var ps = require('ps-node');
 
 const Q = require('bluebird');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
+const editJsonFile = require("edit-json-file");
 
 function seeleClient() {
 
@@ -113,13 +116,10 @@ function seeleClient() {
     };
 
     this.StartNode = function (shardNum) {
-        var i;
-        for(i = 1; i <= 4; i++) {
-            this.initateNodeConfig(i);
-        }
+        // this will create a brand-new account for user to initiate the non-mine node
+        this.initateNodeConfig(shardNum);
         //@TODO change to publickey
-        // this.killMiningNodeProcess(shardNum);
-        
+        // this.killnode(shardNum);
         return new Q((resolve, reject) => {
             try {
                 var args = this.nonMiningArgs(shardNum)
@@ -137,23 +137,20 @@ function seeleClient() {
                 console.log(e.toString())
                 return reject(false)
             }
-            // this.startMine(shardNum)
-            // this.makeNodeFile(shardNum,shardNum)
         });
     }
 
-    this.startMine = function(account) {
-        var shardNum = this.getShardNum(account);
+    this.startMine = function(publickey) {
+        var shardNum = this.getShardNum(publickey);
         //make the file and save it as "node+account.json"
-        this.makeNodeFile(account, shardNum);
+        this.makeNodeFile(publickey, shardNum, false);
         //kill this shard node first
-        // console.log("PIDs" + process.pid)
-        this.killNonminingNodeProcess(shardNum);
+        // this.killnode(shardNum);
         
         //start the mining node
         return new Q((resolve, reject) => {
             try {
-                var args = this.miningArgs(account)
+                var args = this.miningArgs(shardNum)
                 const proc = spawn(this.nodePath(), args);
                 console.log(proc)
                 proc.stdout.on('data', data => {
@@ -161,7 +158,7 @@ function seeleClient() {
                 });
                 proc.stderr.on('data', data => {
                     reject(data.toString())
-                    // alert(data.toString())
+                    alert(data.toString())
                 });
             } catch (e) {
                 // alert(e)
@@ -171,7 +168,8 @@ function seeleClient() {
         });
     }
 
-    this.makeNodeFile = function(account, shard) {
+  
+    this.makeNodeFile = function(account, shard, initiate) {
     // this.makeNodeFile = function (account, privatekey, shard) {
         // cp file and save into nodepath
         var configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
@@ -183,26 +181,28 @@ function seeleClient() {
         }
         shell.cp('-f', nodefile, dstfile);        
         //replace files with right configs
-        this.setUpNodeFile(dstfile, account, shard)
+        this.setUpNodeFile(dstfile, account, shard, initiate)
     } 
 
-    this.setUpNodeFile = function(dstfile, account, shard){
-        const editJsonFile = require("edit-json-file");
+    this.setUpNodeFile = function(dstfile, account, shard, initiate){
+        
         let file = editJsonFile(dstfile);   
         // Set a couple of fields
         file.set("basic.coinbase", ''+account);
         //p2p privatekey
-        var args = [
-            'key',
-        ];
-        args.push('--shard', shard)
-        const proc = spawn(this.nodePath(), args);
-
-        proc.stdout.on('data', data => {
-            var output = `${data}`
-            var privatekey = this.ParsePrivateKey(output)
-            file.set("p2p.privateKey", ''+privatekey)
-        });
+        if(initiate === true) {
+            var args = [
+                'key',
+            ];
+            args.push('--shard', shard)
+            const proc = spawn(this.nodePath(), args);
+    
+            proc.stdout.on('data', data => {
+                var output = `${data}`
+                var privatekey = this.ParsePrivateKey(output)
+                file.set("p2p.privateKey", ''+privatekey)
+            });
+        }
         // file.set("p2p.privateKey", ''+privatekey);
 
         // Save the data to the disk
@@ -227,15 +227,8 @@ function seeleClient() {
         args.push('stop')
         return args
     }
-
-    this.killNonminingNodeProcess = function (shardNum) {
-        const proc = spawn(this.nodePath(), this.nonMiningArgs(shardNum));
-        proc.kill();
-        console.log("non-mining PID: " + proc.pid + " killed")
-    }
-
-    this.miningArgs = function(account){
-        var shard = this.getShardNum(account)
+    this.miningArgs = function(shard){
+        // var shard = this.getShardNum(account)
         var thread = 16
         var args = [
             'start',
@@ -245,33 +238,36 @@ function seeleClient() {
         //@TODO remove this config after release
         args.push('--accounts')
         args.push(this.nodeConfigPath + "accounts1.json")
-        args.push('--threads')
-        args.push(thread)
+        // args.push('--threads')
+        // args.push(thread)
         return args
     }
-//@TODO change input param to publickey
-    // this.killMiningNodeProcess = function (publickey) {
-    this.killMiningNodeProcess = function (shardNum) {
-        var args = [
-            'start',
-        ];
-        args.push('-c')
-        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'node'+shardNum+'.json')
-        configpath = `${__dirname}`+path.sep+'..'+path.sep+'..'+path.sep+'cmd'+path.sep+'config'+path.sep
-        console.log(configpath)
-        args.push(configpath + 'node'+shardNum+'.json')
-        //@TODO remove this config after release
-        args.push('--accounts')
-        args.push(configpath + "accounts1.json")
-        args.push('--threads')
-        args.push(thread)
-        const proc = spawn(this.nodePath(), args);
-        proc.kill();
-        console.log("Miner PID: " + proc.pid + " killed")
-        console.log(proc)
+    this.killnode = function (shardNum) {
+
+        if (shardNum === '1'){     
+            this.execute('ps -ef | grep "node-1.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+            console.log("node-1 is killed");
+       } else if (shardNum === '2'){
+           this.execute('ps -ef | grep "node-2.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+           console.log("node-2 is killed");
+       } else if (shardNum === '3'){
+           this.execute('ps -ef | grep "node-3.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+           console.log("node-3 is killed");
+       } else if (shardNum === '4'){
+           this.execute('ps -ef | grep "node-4.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+           console.log("node-4 is killed");
+       } 
+    }
+
+    this.execute = function(command) {
+        const exec = require('child_process').exec
+        exec(command, (err, stdout, stderr) => {
+            process.stdout.write(stdout)
+        })
     }
 
     this.initateNodeConfig = function(shard) {
+        var initiate = true
         var args = [
             'key',
         ];
@@ -281,7 +277,7 @@ function seeleClient() {
         proc.stdout.on('data', data => {
             var output = `${data}`
             var publickey = this.ParsePublicKey(output)
-            this.makeNodeFile(publickey, shard)
+            this.makeNodeFile(publickey, shard, initiate)
         });
     }
 
@@ -704,5 +700,54 @@ function seeleClient() {
     }
 
 }
+
+  // this.stopMiner = function(publickey) {
+    //     var shardNum = this.getShardNum(publickey);    
+    //     var ip = [
+    //         '127.0.0.1:8027',
+    //         '127.0.0.1:8028',
+    //         '127.0.0.1:8029',
+    //         '127.0.0.1:8026',
+    //     ]
+    //     args.push(ip[shardNum-1]);
+    //     return new Q((resolve, reject) => {
+    //         try {
+    //             var args = [
+    //                 'miner',
+    //                 'stop',
+    //             ];
+    //             args.push('-a')
+    //             const proc = spawn(this.binPath(), args);
+    //             console.log(proc)
+    //             proc.stdout.on('data', data => {
+    //                 resolve(data.toString())
+    //             });
+    //             proc.stderr.on('data', data => {
+    //                 reject(data.toString())
+    //                 // alert(data.toString())
+    //             });
+    //         } catch (e) {
+    //             // alert(e)
+    //             console.log(e.toString())
+    //             return reject(false)
+    //         }
+    //     });
+    // }
+
+    // this.startMiner = function(publickey) {
+    //     var shardNum = this.getShardNum(publickey);
+    //     var args = [
+    //         'miner',
+    //         'start',
+    //     ];
+    //     args.push('-a')
+    //     var ip = [
+    //         '127.0.0.1:8027',
+    //         '127.0.0.1:8028',
+    //         '127.0.0.1:8029',
+    //         '127.0.0.1:8026',
+    //     ]
+    //     args.push(ip[shardNum-1]);
+    // }
 
 module.exports = seeleClient;
