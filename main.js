@@ -38,15 +38,22 @@ function createWindow() {
 
     // sc.makeNodeFile(1)
     
-    // var account = "0x0966932825ac22362965bab5a3680b417398ce61";
+    // var account1 = '0x0966932825ac22362965bab5a3680b417398ce61';
 
     // var publickey = 0x0966932825ac22362965bab5a3680b417398ce61;
-    // var account2 = publickey.value.trim()
-    // // var account2 = publickey.toString(16);
+    // // // var account = publickey.value.trim()
+    // // var account = hexToString(publickey);
+    // var account = ''+publickey;
   
-     
-    // console.log(account2);
-    // sc.startMine(account2).then((data)=>{
+    // function hexToString (hex) {
+    //     var string = '';
+    //     for (var i = 0; i < hex.length; i += 2) {
+    //       string += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    //     }
+    //     return string;
+    // }
+    // // console.log(account2);
+    // sc.startMine(account1).then((data)=>{
     //     console.log(data);
     // }).catch((data) => {
     //     console.log(data);
@@ -74,7 +81,6 @@ function createWindow() {
     });
     
 }
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

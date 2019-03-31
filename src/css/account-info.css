@@ -213,6 +213,7 @@ form{
     width: 445px;
     font-size: 16px;
     float: right;
+    padding-right:30px;
     line-height: 30px;
     margin: 0;
 }
@@ -352,6 +353,22 @@ form{
 .import-account img {
     width: 35px;
     height: 35px;
+}
+
+.mine-config{
+    width: 340px;
+    height: 164px;
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: calc(50% - 170px);
+    display: none;
+    background: #f8fafb;
+    padding: 54px 40px 42px 40px;
+    font-size: 14px;
+    font-family: 'SourceHansansCN-regular';
 }
 
 #main-container {
