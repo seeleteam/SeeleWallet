@@ -155,7 +155,8 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
-    // divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
+    // divhtml += `<dl onclick="mineConfig()">`;
+    // divhtml += `<dl id="miningAccount" onclick="changeMingingStatus('` + publickey + `')">`;
     // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
     // divhtml += `<dd id="isMining">Start Mining</dd>`;
     // divhtml += `</dl>`;
@@ -198,6 +199,13 @@ function ToAccountInfo(publickey, balance, shard) {
     // divhtml += `</ul>`
     // divhtml += `</div>`
 
+    // divhtml += `<div class="mine-config">`;
+    // divhtml += `<span style="font-size:15px; font-family: sans-serif; text-align: center; "> Choose "IP:PORT"s from Seelescan </span>`;
+    // divhtml += `<input type="image" src="./src/img/ViewonSeelescan.png" alt="Submit" width="18" height="18" style="cursor: pointer;" onclick="viewOnSeelescan('` + publickey + `')">`;
+    // divhtml += `<input style="margin:18px; width: 80%; height: 20px; text-align: center; padding: 0,0,20,0;">`;
+    // divhtml += `<input type="button" value="Cancel" id="mineConfigcancel" onclick="hidemineconfig()">`;
+    // divhtml += `<input type="button" value="Mine" id="createKey">`;
+    // divhtml += `</div>`;
 
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
@@ -248,6 +256,17 @@ function transfer(publickey) {
     $("#contractPublicKey").val(publickey)
 }
 
+function mineConfig(){
+    // console.log("how")
+    $('.mine-config').show()
+    $('.minedask').show()
+  }
+  
+  function hidemineconfig(){
+    $('.mine-config').hide()
+    $('.minedask').hide()
+  }
+
 function copy() {
     var copyTextarea = document.querySelector('li.publickey');
     var selection = window.getSelection();
@@ -272,8 +291,8 @@ function startMining(publickey) {
     document.getElementById("isMining").innerText="Stop Mining";
 }
 
-function stopMining(shard) {
-    seeleClient.StartNode(shard);
+function stopMining(publickey, shard) {
+    seeleClient.StartNode(publickey, shard);
     document.getElementById("isMining").innerText="Start Mining";
 }
 
@@ -281,9 +300,15 @@ function changeMingingStatus(publickey) {
     var shard = seeleClient.getShardNum(publickey)
     var mineStatus = document.getElementById("isMining").innerText;
     if(mineStatus === "Start Mining") {
-        this.startMining(publickey);
+        this.startMining(publickey, shard);
     } else if (mineStatus === "Stop Mining"){
         this.stopMining(shard);
     }
     // seeleClient.killNonminingNodeProcess(shard);
+  
+//@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh 
+function saveMineStatus (publickey) {
+
 }
+
+

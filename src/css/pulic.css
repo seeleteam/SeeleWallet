@@ -384,7 +384,8 @@ form {
 .progress-info {
     width: 445px;
     font-size: 16px;
-    float: right;
+    /* float: right; */
+    margin-right: 50px;
     line-height: 30px;
     margin: 0;
 }
