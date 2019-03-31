@@ -121,7 +121,7 @@ function seeleClient() {
         // this.killnode(shardNum);
         return new Q((resolve, reject) => {
             try {
-                var args = this.nonMiningArgs(shardNum)
+                var args = this.nonMiningArgs(shardNum);
                 const proc = spawn(this.nodePath(), args);
 
                 proc.stdout.on('data', data => {
