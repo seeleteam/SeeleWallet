@@ -282,6 +282,7 @@ function seeleClient() {
            console.log("node-4 is killed");
        } 
     }
+
     this.execute = function(command) {
         const exec = require('child_process').exec
         exec(command, (err, stdout, stderr) => {
@@ -732,6 +733,7 @@ function seeleClient() {
     //         '127.0.0.1:8029',
     //         '127.0.0.1:8026',
     //     ];
+
     //     args.push(ip[shardNum-1]);
     //     return new Q((resolve, reject) => {
     //         try {
@@ -770,6 +772,7 @@ function seeleClient() {
     //         '127.0.0.1:8029',
     //         '127.0.0.1:8026',
     //     ];
+
     //     args.push(ip[shardNum-1]);
     // }
 

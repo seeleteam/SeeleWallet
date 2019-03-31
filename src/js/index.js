@@ -305,7 +305,7 @@ function changeMingingStatus(publickey) {
         this.stopMining(shard);
     }
     // seeleClient.killNonminingNodeProcess(shard);
-}
+  
 //@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh 
 function saveMineStatus (publickey) {
 
