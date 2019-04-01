@@ -114,6 +114,22 @@ function seeleClient() {
         }
     };
 
+    // Wait for file to exist, checks every 2 seconds
+    this.getFile= function(path, timeout) {
+        const interval = setInterval(function() {
+            const file = path;
+            const fileExists = fs.existsSync(file);
+
+            console.log('Checking for: ', file);
+            console.log('Exists: ', fileExists);
+
+            if (fileExists) {
+                clearInterval(interval);
+            }
+        }, timeout);
+        return true;
+    }
+
     this.StartNode = function (shardNum) {
         // this will create a brand-new account for user to initiate the non-mine node
         this.initateNodeConfig(shardNum);
@@ -186,8 +202,8 @@ function seeleClient() {
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
         //@TODO remove this config after release
-        args.push('--accounts')
-        args.push(this.nodeConfigPath + "accounts1.json")
+        // args.push('--accounts')
+        // args.push(this.nodeConfigPath + "accounts1.json")
         // args.push('--threads')
         // args.push(thread)
         return args
@@ -244,8 +260,8 @@ function seeleClient() {
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
         //@TODO remove this config after release
-        args.push('--accounts')
-        args.push(this.nodeConfigPath + "accounts1.json")
+        // args.push('--accounts')
+        // args.push(this.nodeConfigPath + "accounts1.json")
         // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
         args.push('-m')
         args.push('stop')
@@ -387,7 +403,7 @@ function seeleClient() {
     };
 
     this.init = function () {
-        if (!fs.existsSync(this.accountPath)) {
+        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
             fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
         }
