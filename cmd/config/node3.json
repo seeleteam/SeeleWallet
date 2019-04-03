@@ -4,13 +4,13 @@
     "version": "1.0",
     "dataDir": "node3",
     "address": "0.0.0.0:8029",
-    "coinbase": "0x5b95dcf6b0b0c88d575c65340d85da016940f7d1",
+    "coinbase": "0xbc7811070fbceb1309f375f981bf344b1e1577d1",
     "algorithm": "spow"
   },
   "p2p": {
     "address": "0.0.0.0:8059",
-    "privateKey": "0xef4da2a762d411c7875c3d191e87fe8d9c5512fec2824447edf8487ee8d4b649",
-    "staticNodes": ["104.218.164.169:8057","106.75.85.9:8058","106.75.90.237:8059","107.150.103.125:8056"],
+    "privateKey": "0xef2035dba0d6edfc4ff5c60e409c5702b321e789fe9079074b3da8194d5e8719",
+    "staticNodes": ["104.218.164.169:8057","107.150.105.10:8058","107.150.103.125:8059","104.218.164.193:8056"],
     "networkID": "seele"
   },
   "log": {
@@ -45,6 +45,6 @@
   "genesis": {
     "difficult":5200000,
     "shard":3,
-    "timestamp":1539742676
+    "timestamp":1554099618
   }
 }

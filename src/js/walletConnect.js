@@ -46,10 +46,10 @@ function getNetWork() {
     var netWork = document.getElementById("netWork");
     //TODO change to hash from "./client getblock --height 0", which return genesis block hash
     // var mainNetWork = '0xc2c26507a9a7418c4cd4d1b405285397891d30f4d5be65af3be8b4c8e7c28d63'
-    var mainNetWork1 = '0x93990984a6ca4414e798e9dd52578f300e493434d008f4dd7e7f1e313b22f95a'
-    var mainNetWork2 = '0x2f1837f681618935bedb7cee045b6b5a610986bc1a9abc1f5e956950ef479b2b'
-    var mainNetWork3 = '0x8d9b960d09122047a836ee6fad4ae91d1000aa6f1b6ecd7117ae779d8b10c231'
-    var mainNetWork4 = '0xa6f046945a5e7a90fe7e7588d0a5b8607604c0aea25b9aa904737f1a3ed2152f'
+    var mainNetWork1 = '0x4f2df4a21621b18c71619239c398657a23f198a40a8deff701e340e6e34d0823'
+    var mainNetWork2 = '0x50dc657c1b2943d4d6d1ab23040e8cfdc7a3d34fa13bc95af1c569d1f07f66b8'
+    var mainNetWork3 = '0x9100dd797bb7dd309ce7f132d389f1c6a50c728956eff0c2f878c0e67b5ecd2a'
+    var mainNetWork4 = '0x17baaedc248777709511e9966719622fe11e4189825c5722f555bd292b6e84be'
     seeleClient.getblock(shard, "", 0, false, function (block,err) {
         if (err) {
             netWork.innerText = "private";

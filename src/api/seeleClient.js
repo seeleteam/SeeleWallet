@@ -115,11 +115,15 @@ function seeleClient() {
         }
     };
 
-    this.StartNode = function (shardNum) {
+    this.StartNode = function (shardNum, initiate) {
         // this will create a brand-new account for user to initiate the non-mine node
-        this.initateNodeConfig(shardNum);
+        if(initiate === true) {
+            this.initateNodeConfig(shardNum);
+        }
         //@TODO change to publickey
-        // this.killnode(shardNum);
+        this.killnode(shardNum);
+        // window.location.reload();
+
         return new Q((resolve, reject) => {
             try {
                 var args = this.nonMiningArgs(shardNum);
@@ -145,20 +149,27 @@ function seeleClient() {
         //make the file and save it as "node+account.json"
         this.makeNodeFile(publickey, shardNum, false);
         //kill this shard node first
-        // this.killnode(shardNum);
+        this.killnode(shardNum);
+        var nodeexc = this.nodeConfigPath
+        // shell.exec('echo test');
+        // shell.echo('hello world');
+        this.execute('echo ')
+        // this.execute('/Users/seele/go/src/github.com/seeleteam/SeeleWallet/cmd/mac/node start  -c /Users/seele/.SeeleWallet/node/node-1.json')
         
+        // this.execute('nodeexc start  -c /Users/seele/.SeeleWallet/node/node-1.json')
         //start the mining node
         return new Q((resolve, reject) => {
             try {
                 var args = this.miningArgs(shardNum)
                 const proc = spawn(this.nodePath(), args);
                 console.log(proc)
+                this.execute('echo "starting mine before proc on"')
                 proc.stdout.on('data', data => {
+                    console.log(data.toString())
                     resolve(data.toString())
                 });
                 proc.stderr.on('data', data => {
                     reject(data.toString())
-                    alert(data.toString())
                 });
             } catch (e) {
                 // alert(e)
@@ -189,6 +200,8 @@ function seeleClient() {
         let file = editJsonFile(dstfile);   
         // Set a couple of fields
         file.set("basic.coinbase", ''+account);
+        file.set("basic.dataDir", 'seeleWallet-node'+shard);
+        file.set("ipcconfig.name", 'seeleWallet'+shard+'.ipc');
         //p2p privatekey
         if(initiate === true) {
             var args = [
@@ -220,8 +233,6 @@ function seeleClient() {
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
         //@TODO remove this config after release
-        args.push('--accounts')
-        args.push(this.nodeConfigPath + "accounts1.json")
         // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
         args.push('-m')
         args.push('stop')
@@ -235,9 +246,6 @@ function seeleClient() {
         ];
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
-        //@TODO remove this config after release
-        args.push('--accounts')
-        args.push(this.nodeConfigPath + "accounts1.json")
         // args.push('--threads')
         // args.push(thread)
         return args
@@ -363,7 +371,7 @@ function seeleClient() {
     };
 
     this.init = function () {
-        if (!fs.existsSync(this.accountPath)) {
+        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
             fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
         }

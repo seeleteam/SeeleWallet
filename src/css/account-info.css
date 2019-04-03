@@ -28,6 +28,14 @@ body {
     color: #666;
     margin: 26px 0 0 0;
 }
+
+.balanceClaim{
+    width: auto;
+    float: right;
+    font-size: 11px;
+    color: #2c9ae3;
+    margin: 0px 0 0 0;
+}
 .get-balance span:nth-child(2){
     font-size: 30px;
     color: #2c9ae3;

@@ -155,10 +155,10 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
-    // divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
-    // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
-    // divhtml += `<dd id="isMining">Start Mining</dd>`;
-    // divhtml += `</dl>`;
+    divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
+    divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
+    divhtml += `<dd id="isMining">Start Mining</dd>`;
+    divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
@@ -268,12 +268,20 @@ function viewOnSeelescan(publickey) {
 
 function startMining(publickey) {
 
-    seeleClient.startMine(publickey);
+    seeleClient.startMine(publickey).then((data)=>{
+        console.log(data);
+    }).catch((err)=>{
+        console.log(err);
+    });
     document.getElementById("isMining").innerText="Stop Mining";
 }
 
 function stopMining(shard) {
-    seeleClient.StartNode(shard);
+    seeleClient.StartNode(shard,false).then(data=>{
+        console.log(data);
+    }).catch((err)=>{
+        console.log(err);
+    });
     document.getElementById("isMining").innerText="Start Mining";
 }
 
