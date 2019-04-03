@@ -52,22 +52,22 @@ function createWindow() {
     //     console.log(data);
     // });
 
-    sc.StartNode(1,false).then((data)=>{
+    sc.StartNode(1,true).then((data)=>{
         console.log(data);
     }).catch((data) => {
         console.log(data);
     });
-    sc.StartNode(2,false).then((data)=>{
+    sc.StartNode(2,true).then((data)=>{
         console.log(data);
     }).catch((data) => {
         console.log(data);
     });
-    sc.StartNode(3,false).then((data)=>{
+    sc.StartNode(3,true).then((data)=>{
         console.log(data);
     }).catch((data) => {
         console.log(data);
     });
-    sc.StartNode(4,false).then((data)=>{
+    sc.StartNode(4,true).then((data)=>{
         console.log(data);
     }).catch((data) => {
         console.log(data);
