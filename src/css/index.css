@@ -32,6 +32,14 @@ p.info {
     text-align: left;
 }
 
+.balanceClaim{
+    width: auto;
+    float: right;
+    font-size: 11px;
+    color: #2c9ae3;
+    margin: 0px 0 0 0;
+}
+
 
 /* add create account */
 input,select{
