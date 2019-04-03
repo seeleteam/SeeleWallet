@@ -122,7 +122,7 @@ function seeleClient() {
         }
         //@TODO change to publickey
         this.killnode(shardNum);
-        // window.location.reload();
+        // location.reload();
 
         return new Q((resolve, reject) => {
             try {
@@ -246,8 +246,8 @@ function seeleClient() {
         ];
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
-        // args.push('--threads')
-        // args.push(thread)
+        args.push('--threads')
+        args.push(thread)
         return args
     }
     this.killnode = function (shardNum) {
