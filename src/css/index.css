@@ -46,6 +46,15 @@ input,select{
     z-index: 1;
     background: rgb(0,0,0,.4)
 }
+.minedask{
+    width: 100%;
+    height: 130%;
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    background: rgb(0,0,0,.4)
+  }
 .create-account{
     width: 340px;
     height: 164px;
@@ -102,7 +111,16 @@ input,select{
     border-radius: 4px;
     margin: 40px 0px 0 0;
 }
-
+#mineConfigcancel{
+    width: 80px;
+    height: 32px;
+    background: #bdc7ce;
+    color: #fff;
+    border:none;
+    border-radius: 4px;
+    margin: 40px 25px 0 150px;
+    cursor: pointer;
+}
 .hideShowPassword-toggle {
     background-image: url(../img/eye.png);
     background-position: 0 center;
