@@ -224,16 +224,13 @@ function showQR (publickey) {
 }
 
 function transfer(publickey) {
-    var lis = $("#tab ul li")
-    lis.each(function (i) {
-        if ($(this).hasClass('tabli_active')) {
-            $(this).removeClass('tabli_active')
-            $(this).find('a').removeClass('tabulous_active')
-        } else {
-            $(this).addClass('tabli_active')
-            $(this).find('a').addClass('tabulous_active')
-        }
-    })
+    // var lis = $("#tab ul li")
+    $("#tab ul li:nth-child(1)").removeClass('tabli_active') 
+    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active') 
+    $("#tab ul li:nth-child(2)").addClass('tabli_active') 
+    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active') 
+    $("#tab ul li:nth-child(3)").removeClass('tabli_active') 
+    $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
 
     $("#tabs_container").height(627)
     $("#tabs-1").addClass('make_transist')
