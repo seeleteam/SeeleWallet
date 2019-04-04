@@ -5,12 +5,12 @@ Seele wallet 是一款基于Seele的数字货币钱包，主要提供了Seele账
 后续将说明如何下载和使用Seele wallet。
 
 ## 使用之前说明：
-   1. 如果节点无法连接任何节点会出现disconnected的错误，这个是属于现象。要么继续等待连接，或者重新启动SeeleWallet，尝试新的连接。
+   1. 如果节点无法连接任何节点会出现disconnected的错误，这个是属于正常现象。要么继续等待连接，或者重新启动SeeleWallet，尝试新的连接。
    2. SeeletWallet使用的端口分别为：</br>
-     ("http://localhost:8035");</br>
-     ("http://localhost:8032");</br>
-     ("http://localhost:8033");</br>
-     ("http://localhost:8034");</br>
+     shard1 ("http://localhost:8035");</br>
+     shard2 ("http://localhost:8032");</br>
+     shard3 ("http://localhost:8033");</br>
+     shard4 ("http://localhost:8034");</br>
 
 
 ## 下载和安装
@@ -53,10 +53,10 @@ Seele wallet启动时，会使用默认的配置自动启动Seele node服务。�
 在开始使用时，您可以忽略该步骤，这不会影响您后续的使用。
 
 ### 导出账户
-导出和导入功能方便您在不同设备间使用Seele wallet账户。导出账户功能，可以将您的账户文件导出到指定的目录。点击Wallets标签页内右上角的 `export` 按钮可以实现导出。
+导出和导入功能方便您在不同设备间使用Seele wallet账户。导出账户功能，可以将您的账户文件导出到指定的目录。点击Wallets标签页内右上角的 `export` 按钮可以实现导出。（注意不要修改文件名）
 
 ### 导入账户
-导入账户，可以将您之前导出的账户文件导入到Seele wallet中。点击Wallets标签页内右上角的 `import` 按钮，并选择对应的已导出账户文件即可实现账户导入。
+导入账户，可以将您之前导出的账户文件导入到Seele wallet中。点击Wallets标签页内右上角的 `import` 按钮，并选择对应的已导出账户文件即可实现账户导入。(注意：导入的文件的文件名必须为Account，而且没有任何后缀名，比如 0x31d37d048e985362ae13073d298447fdd06a9541，0x31d37d048e985362ae13073d298447fdd06a9541.xxx不能使用)
 
 ### 账户详情
 在Accounts Overview下显示的账户列表中，点击某个账户，可以进入到账户详情页面。
