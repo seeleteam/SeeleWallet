@@ -3,14 +3,14 @@
     "name": "seele node2",
     "version": "1.0",
     "dataDir": "node2",
-    "address": "0.0.0.0:8028",
-    "coinbase": "0x0ea2a45ab5a909c309439b0e004c61b7b2a3e831",
+    "address": "0.0.0.0:8022",
+    "coinbase": "0xe0af3232d80169061ccb25ec193783cf60690a31",
     "algorithm": "spow"
   },
   "p2p": {
-    "address": "0.0.0.0:8058",
-    "privateKey": "0xac6932c2e429e7f36a6b93979e2c28e11036c78c965e866151c21750bd5506ca",
-    "staticNodes": ["104.218.164.169:8057","106.75.85.9:8058","106.75.90.237:8059","107.150.103.125:8056"],
+    "address": "0.0.0.0:8052",
+    "privateKey": "0xbeea1a92553d67fea2b7348ca6a25de0cb9d1b43e6ba4bca09bf24f2bef44f9b",
+    "staticNodes": ["104.218.164.169:8057","107.150.105.10:8058","107.150.103.125:8059","104.218.164.193:8056"],
     "networkID": "seele"
   },
   "log": {
@@ -18,7 +18,7 @@
     "printLog": true
   },
   "httpServer": {
-    "address": "0.0.0.0:8038",
+    "address": "0.0.0.0:8032",
     "crossorigins": [
       "*"
     ],
@@ -27,7 +27,7 @@
     ]
   },
   "wsserver": {
-    "address": "0.0.0.0:8048",
+    "address": "0.0.0.0:8042",
     "crossorigins": [
       "*"
     ]
@@ -36,7 +36,7 @@
     "name": "seele2.ipc"
   },
   "metrics": {
-    "address": "0.0.0.0:8087",
+    "address": "0.0.0.0:8082",
     "duration": 10,
     "database": "influxdb",
     "username": "test",
@@ -45,6 +45,6 @@
   "genesis": {
     "difficult":5200000,
     "shard":2,
-    "timestamp":1539742676
+    "timestamp":1554099618
   }
 }
