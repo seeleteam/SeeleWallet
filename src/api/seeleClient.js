@@ -117,14 +117,7 @@ function seeleClient() {
     };
 
     this.StartNode = function (shardNum, initiate) {
-        // this will create a brand-new account for user to initiate the non-mine node
-        if(initiate === true) {
-            this.initateNodeConfig(shardNum);
-        }
-        //@TODO change to publickey
-        this.killnode(shardNum);
-        // location.reload();
-
+    
         return new Q((resolve, reject) => {
             try {
                 var args = this.nonMiningArgs(shardNum);
@@ -144,16 +137,42 @@ function seeleClient() {
             }
         });
     }
+    this.reStart = function(shardNum) {
+        return new Q((resolve, reject) => {
+            try {
+                var args = [
+                    'miner',
+                    'stop'
+                ];
+                if (shardNum === 1) {
+                    args.push('-a 127.0.0.1:8025');
+                } else if(shardNum === 2){
+                    args.push('-a 127.0.0.1:8022');
+                } else if(shardNum === 3) {
+                    args.push('-a 127.0.0.1:8023')
+                } else if(shardNum === 4) {
+                    args.push('-a 127.0.0.1:8024')
+                }
+
+                const proc = spawn(this.binPath(), args);
+
+                proc.stdout.on('data', data => {
+                    resolve(data);
+                });
+
+                proc.stderr.on('data', data => {
+                    reject(data)
+                });
+            } catch (e) {
+                return reject(e)
+            }
+        });
+    }
 
     this.startMine = function(publickey) {
         var shardNum = this.getShardNum(publickey);
-        //make the file and save it as "node+account.json"
-        this.makeNodeFile(publickey, shardNum, false);
-        //kill this shard node first
         this.killnode(shardNum);
-        var nodeexc = this.nodeConfigPath
-        // shell.exec('echo test');
-        // shell.echo('hello world');
+        this.makeNodeFile(publickey, shardNum, false);
         this.execute('echo ')
         // this.execute('/Users/seele/go/src/github.com/seeleteam/SeeleWallet/cmd/mac/node start  -c /Users/seele/.SeeleWallet/node/node-1.json')
         
@@ -233,23 +252,21 @@ function seeleClient() {
         ];
         args.push('-c')
         args.push(this.nodeConfigPath+'node-'+shard+'.json')
-        //@TODO remove this config after release
-        // args.push(this.nodePath()+path.sep+'..'+path.sep+'config'+path.sep+'accounts1.json')
         args.push('-m')
         args.push('stop')
         return args
     }
     this.miningArgs = function(shard){
         // var shard = this.getShardNum(account)
-        var thread = 16
+        var thread = 16;
         var args = [
             'start',
         ];
-        args.push('-c')
-        args.push(this.nodeConfigPath+'node-'+shard+'.json')
-        args.push('--threads')
-        args.push(thread)
-        return args
+        args.push('-c');
+        args.push(this.nodeConfigPath+'node-'+shard+'.json');
+        args.push('--threads');
+        args.push(thread);
+        return args;
     }
     this.killnode = function (shardNum) {
 

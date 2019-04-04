@@ -155,10 +155,10 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
-    // divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
-    // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
-    // divhtml += `<dd id="isMining">Start Mining</dd>`;
-    // divhtml += `</dl>`;
+    divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
+    divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
+    divhtml += `<dd id="isMining">Start Mining</dd>`;
+    divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
@@ -264,7 +264,6 @@ function viewOnSeelescan(publickey) {
 }
 
 function startMining(publickey) {
-
     seeleClient.startMine(publickey).then((data)=>{
         console.log(data);
     }).catch((err)=>{
@@ -273,26 +272,39 @@ function startMining(publickey) {
     document.getElementById("isMining").innerText="Stop Mining";
 }
 
-function stopMining(shard) {
-    seeleClient.StartNode(shard,false).then(data=>{
+function stopMining2(shard) {
+    seeleClient.StartNode(shard).then(data=>{
         console.log(data);
     }).catch((err)=>{
         console.log(err);
     });
-    document.getElementById("isMining").innerText="Start Mining";
+    document.getElementById("isMining").innerText="Start Mining";   
+}
+
+function stopMining(shard) {
+    seeleClient.reStart(shard).then(data=>{
+        console.log(data);
+    }).catch((err)=>{
+        console.log(err);
+    });
+    document.getElementById("isMining").innerText="Start Mining";   
 }
 
 function changeMingingStatus(publickey) {
-    var shard = seeleClient.getShardNum(publickey)
+    var shard = seeleClient.getShardNum(publickey);
     var mineStatus = document.getElementById("isMining").innerText;
     if(mineStatus === "Start Mining") {
         this.startMining(publickey);
-        this.stopMining(shard);
+        this.stopMining2(shard);
         this.startMining(publickey);
-        this.stopMining(shard);
+        this.stopMining2(shard);
         this.startMining(publickey);
     } else if (mineStatus === "Stop Mining"){
         this.stopMining(shard);
+        // this.startMining(publickey);
+        // this.stopMining(shard);
+        // this.startMining(publickey);
+        // this.stopMining(shard);
     }
     // seeleClient.killNonminingNodeProcess(shard);
 }

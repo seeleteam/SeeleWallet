@@ -17,6 +17,11 @@ function createWindow() {
 
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
+    sc = new SeeleClient();
+    sc.initateNodeConfig(1);
+    sc.initateNodeConfig(2);
+    sc.initateNodeConfig(3);
+    sc.initateNodeConfig(4);
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()
@@ -33,24 +38,7 @@ function createWindow() {
     //mainWindow.webContents.openDevTools();
     //Menu.setApplicationMenu(menu)
 
-    sc = new SeeleClient();
-    sc.init()
-
-    // sc.makeNodeFile(1)
-    
-    // var account = "0x0966932825ac22362965bab5a3680b417398ce61";
-
-    // var publickey = 0x0966932825ac22362965bab5a3680b417398ce61;
-    // var account2 = publickey.value.trim()
-    // // var account2 = publickey.toString(16);
-  
-     
-    // console.log(account2);
-    // sc.startMine(account2).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    // });
+    sc.init();
 
     sc.StartNode(1,true).then((data)=>{
         console.log(data);
