@@ -20,16 +20,17 @@ function seeleClient() {
 
     var shardCount = 4;
 
-    // this.client1 = new seelejs("http://104.218.164.27:8037");
-    // this.client2 = new seelejs("http://104.218.164.193:8038");
-    // this.client3 = new seelejs("http://104.218.164.27:8039");
-    // this.client4 = new seelejs("http://104.218.164.27:8036");
+    // this.client1 = new seelejs("http://104.218.164.181:8037");
+    // this.client2 = new seelejs("http://104.218.164.181:8038");
+    // this.client3 = new seelejs("http://104.218.164.181:8039");
+    // this.client4 = new seelejs("http://104.218.164.181:8036");
 
     // shardCount = 4
-    this.client1 = new seelejs("http://localhost:8037");
-    this.client2 = new seelejs("http://localhost:8038");
-    this.client3 = new seelejs("http://localhost:8039");
-    this.client4 = new seelejs("http://localhost:8036");
+
+    this.client1 = new seelejs("http://localhost:8035");
+    this.client2 = new seelejs("http://localhost:8032");
+    this.client3 = new seelejs("http://localhost:8033");
+    this.client4 = new seelejs("http://localhost:8034");
 
 
     this.accountArray = [];
