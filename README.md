@@ -4,6 +4,15 @@ Seele wallet 是一款基于Seele的数字货币钱包，主要提供了Seele账
 需要说明的是Seele wallet只是一个客户端应用程序，要连接到Seele网络，还需要您启动Seele节点服务。
 后续将说明如何下载和使用Seele wallet。
 
+## 使用之前说明：
+   1. 如果节点无法连接任何节点会出现disconnected的错误，这个是属于现象。要么继续等待连接，或者重新启动SeeleWallet，尝试新的连接。
+   2. SeeletWallet使用的端口分别为：</br>
+     ("http://localhost:8035");</br>
+     ("http://localhost:8032");</br>
+     ("http://localhost:8033");</br>
+     ("http://localhost:8034");</br>
+
+
 ## 下载和安装
 
 第一步请确保下载最新版本的Seele wallet，下载地址在这里：https://github.com/seeleteam/SeeleWallet/releases
