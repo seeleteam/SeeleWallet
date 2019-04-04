@@ -155,10 +155,10 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
-    divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
-    divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
-    divhtml += `<dd id="isMining">Start Mining</dd>`;
-    divhtml += `</dl>`;
+    // divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
+    // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
+    // divhtml += `<dd id="isMining">Start Mining</dd>`;
+    // divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
@@ -287,8 +287,17 @@ function changeMingingStatus(publickey) {
     var mineStatus = document.getElementById("isMining").innerText;
     if(mineStatus === "Start Mining") {
         this.startMining(publickey);
+        this.stopMining(shard);
+        this.startMining(publickey);
+        this.stopMining(shard);
+        this.startMining(publickey);
     } else if (mineStatus === "Stop Mining"){
         this.stopMining(shard);
     }
     // seeleClient.killNonminingNodeProcess(shard);
+}
+
+function saveMineStatus(){
+    // var mineAccount = JSON.parse(localStorage.getItem('mineAccount')) || {};
+    // var
 }
