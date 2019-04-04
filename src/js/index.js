@@ -198,6 +198,13 @@ function ToAccountInfo(publickey, balance, shard) {
     // divhtml += `</ul>`
     // divhtml += `</div>`
 
+    // divhtml += `<div class="mine-config">`;
+    // divhtml += `<span style="font-size:15px; font-family: sans-serif; text-align: center; "> Choose "IP:PORT"s from Seelescan </span>`;
+    // divhtml += `<input type="image" src="./src/img/ViewonSeelescan.png" alt="Submit" width="18" height="18" style="cursor: pointer;" onclick="viewOnSeelescan('` + publickey + `')">`;
+    // divhtml += `<input style="margin:18px; width: 80%; height: 20px; text-align: center; padding: 0,0,20,0;">`;
+    // divhtml += `<input type="button" value="Cancel" id="mineConfigcancel" onclick="hidemineconfig()">`;
+    // divhtml += `<input type="button" value="Mine" id="createKey">`;
+    // divhtml += `</div>`;
 
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
@@ -244,6 +251,17 @@ function transfer(publickey) {
     $("#txpublicKey").val(publickey)
     $("#contractPublicKey").val(publickey)
 }
+
+function mineConfig(){
+    // console.log("how")
+    $('.mine-config').show()
+    $('.minedask').show()
+  }
+  
+  function hidemineconfig(){
+    $('.mine-config').hide()
+    $('.minedask').hide()
+  }
 
 function copy() {
     var copyTextarea = document.querySelector('li.publickey');
@@ -309,7 +327,8 @@ function changeMingingStatus(publickey) {
     // seeleClient.killNonminingNodeProcess(shard);
 }
 
-function saveMineStatus(){
-    // var mineAccount = JSON.parse(localStorage.getItem('mineAccount')) || {};
-    // var
+//@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh 
+function saveMineStatus (publickey) {
+
 }
+

@@ -39,7 +39,6 @@ function seeleClient() {
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
 
-
     this.getOS = function () {
         var  osName="Unknown OS";
         
@@ -199,7 +198,6 @@ function seeleClient() {
         });
     }
 
-  
     this.makeNodeFile = function(account, shard, initiate) {
     // this.makeNodeFile = function (account, privatekey, shard) {
         // cp file and save into nodepath
@@ -734,7 +732,8 @@ function seeleClient() {
     //         '127.0.0.1:8028',
     //         '127.0.0.1:8029',
     //         '127.0.0.1:8026',
-    //     ]
+    //     ];
+
     //     args.push(ip[shardNum-1]);
     //     return new Q((resolve, reject) => {
     //         try {
@@ -772,7 +771,8 @@ function seeleClient() {
     //         '127.0.0.1:8028',
     //         '127.0.0.1:8029',
     //         '127.0.0.1:8026',
-    //     ]
+    //     ];
+
     //     args.push(ip[shardNum-1]);
     // }
 
