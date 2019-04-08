@@ -1,5 +1,7 @@
 # SeeleWallet
 
+[English](https://github.com/seeleteam/SeeleWallet/blob/master/README_English.md)                [中文](https://github.com/seeleteam/SeeleWallet/edit/master/README.md)
+
 SeeleWallet is a digital wallet based on Seele coins, allowing users to manage accounts, make transactions and contracts. Please be informed that SeeleWallet is only a client side application that needs to connect to Seele's main net, which is done through your local execution of a Seele node. The following is instructions on how to download and use SeeleWallet. 
 
 ## Foreknowledge:
