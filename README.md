@@ -1,4 +1,5 @@
-# Seele Wallet
+# Seele Wallet 
+[English](https://github.com/seeleteam/SeeleWallet/blob/master/README_English.md)                [中文](https://github.com/seeleteam/SeeleWallet/edit/master/README.md)
 
 Seele wallet 是一款基于Seele的数字货币钱包，主要提供了Seele账户管理、转账和合约部署功能。
 需要说明的是Seele wallet只是一个客户端应用程序，要连接到Seele网络，还需要您启动Seele节点服务。
