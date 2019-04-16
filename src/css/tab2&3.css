@@ -1,285 +1,46 @@
-body {
-    font-family: Helvetica;
-    background: #ebf1f5;
-    margin: 0;
-}
 
-
-/* header */
-
-.header {
-    width: 100%;
-    height: 80px;
-    background: #fff;
-}
-
-.head-main,
-.main {
-    width: 1180px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-}
-
-.logo {
-    width: 110px;
-    height: 28px;
-    float: left;
-    margin: 26px 0 0 0;
-}
-
-.get-balance {
-    width: auto;
-    float: right;
-    font-size: 16px;
-    color: #666;
-    margin: 26px 0 0 0;
-}
-
-.get-balance span:nth-child(2) {
-    font-size: 30px;
-    color: #2c9ae3;
-    margin: 0 10px 0 20px;
-}
-.quick-link{
-    width: 490px;
-    margin: 0 auto;
-}
-.quick-link li{
-    color: #666;
-    font-size: 14px;
-    line-height: 80px;
-    list-style: none;
-    float: left;
-    padding-left: 25px;
-    padding-right: 15px;
-}
-.quick-link li:nth-child(1){
-    background: url(../img/internet.png) left center no-repeat;
-}
-.quick-link li:nth-child(2){
-    background: url(../img/signal.png) left center no-repeat;
-}
-.quick-link li:nth-child(3){
-    background: url(../img/block.png) left center no-repeat;
-}
-.quick-link li:nth-child(4){
-    padding-left: 5px;
-    padding-right: 0;
-}
-.quick-link li:nth-child(4) select{
-    width: 40px;
-    height: 23px;
-    border: 1px solid #999;
-    color: #999;
-}
 
 /* account */
 
-#accountlist {
-    width: 100%;
-    float: left;
-    margin: 0px 0 0 20px;
-}
-
-#tabs-1 h1,
-#tabs-1 h1 {
-    font-size: 24px;
-    color: #333;
-    padding: 0 0 0 20px;
-}
-
-#tabs-1 .accountFor {
-    width: 33%;
-    float: left;
-    margin-top: 40px;
-}
-
-#tabs-1 .accountImg img {
-    width: 60px;
-    height: 60px;
-    float: left;
-    border-radius: 50px;
-}
-
-#tabs-1 .accountFor ul {
-    width: calc(100% - 90px);
-    float: left;
-    list-style: none;
-    padding: 0;
-    margin: 0 15px;
-}
-
-#tabs-1 .accountFor ul li {
-    width: 100%;
-    float: left;
-    height: unset;
-    background: none;
-    font-family: Helvetica;
-}
-
-#tabs-1 .accountFor ul li:nth-child(1) {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-}
-
-#tabs-1 .accountFor ul li:nth-child(2) {
-    font-size: 16px;
-    color: #606060;
-    margin-top: 3px;
-    margin-left: 35px;
-    font-weight: unset;
-}
-
-#tabs-1 .accountFor ul li:nth-child(3) {
-    font-size: 12px;
-    color: #999;
-    margin-top: 5px;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: unset;
-    margin-left: 0px;
-}
-
-
-/* latest-transactions */
-.latest-title{
-    width: 180px;
-    height: 32px;
-    line-height: 32px;
-    background: #dae4e9;
-    color: #333;
-    font-size: 16px;
-    margin-left: 20px;
-    display: table;
-    text-align: center;
-}
-.overflow{
-    max-height: 178px;
-    overflow-y: auto;
-}
-.account-contact{
-    width: calc(100% - 20px);
-    height: 80px;
-    margin-left: 20px;
-    margin-top: 8px;
-}
-.contact-left{
-    line-height: 80px;
-    height: 80px;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    width: 120px;
-    text-align: center;
-    background: #dae4e9;
-    display: inline-block;
-    color: #55788a;
-}
-.contact-left span:nth-child(1){
-    font-size: 14px;
-}
-.contact-left span:nth-child(2){
-    font-size: 24px;
-    font-weight: bold;
-}
-#tab .contact-right{
-    width: calc(100% - 220px);
-    height: 60px;
-    background: #f5f8fa;
-    display: inline-block;
-    padding: 10px 30px;
-    margin: 0;
-}
-#tab .contact-right li{
-    line-height: 30px;
-    width: 100%;
-    display: inline-block;
-    background-size:unset;
-    background: unset;
-    height: unset;
-    font-weight: unset;
-}
-#tab .contact-right li:nth-child(1){
-    color: #333;
-    font-size: 16px;
-    font-family: 'Helvetica-Bold';
-}
-#tab .contact-right li:nth-child(2){
-    color: #999;
-    font-size: 14px;
-}
-#tab .contact-right li:nth-child(2) span{
-    width: calc(50% - 30px);
-    min-width: 415px;
-}
-#tab .contact-right li:nth-child(2) span:nth-child(1){
-    margin-left: 30px; 
-    float: left;
-}
-#tab .contact-right li:nth-child(2) span:nth-child(2){
-    display: inline-grid;
-}
-#tab .contact-right li:nth-child(2) span:nth-child(2) a{
-    background: unset;
-    color: #28a7f0;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin: unset;
-    word-break: break-all;
-    padding: unset;
-}
-
-/* send */
 
 #tabs-2,
 #tabs-3 {
     padding: 20px 0px 0 20px;
     color: #666;
 }
-
 form {
     display: block;
     float: left;
     padding: 0 0 50px 0;
 }
-
 #tab ul.send-list li:nth-child(1),
 #tab ul.send-list li:nth-child(2) {
     margin-left: unset;
     background: unset;
 }
-
 .send-title {
     font-size: 30px;
     margin: 0;
     padding: 0;
 }
-
 #tabs-2 .send-list,
 #tabs-3 .send-list {
     font-size: 14px;
     color: #666;
     background: none;
 }
-
 #tabs-2 .send-list li,
 #tabs-3 .send-list li {
     width: 510px;
     float: left;
     display: inline-table;
 }
-
 #tabs-2 .send-list li:nth-child(odd),
 #tabs-3 .send-list li:nth-child(odd) {
     margin-right: 80px;
     margin-bottom: 15px;
     margin-left: unset;
 }
-
 #tabs-2 .send-list li input,
 #tabs-3 .send-list li input {
     width: 498px;
@@ -290,7 +51,6 @@ form {
     border-radius: 2px;
     margin-top: 10px;
 }
-
 #tabs-2 .send-list li:nth-child(5),
 #tabs-3 .send-list li:nth-child(4) {
     width: 100%;
@@ -298,14 +58,12 @@ form {
     height: 21px;
     line-height: 21px;
 }
-
 #tabs-2 .send-list li:nth-child(5) span,
 #tabs-2 .send-list li:nth-child(5) img,
 #tabs-3 .send-list li:nth-child(4) span,
 #tabs-3 .send-list li:nth-child(4) img {
     float: left;
 }
-
 #tabs-2 .send-list li:nth-child(5) span,
 #tabs-3 .send-list li:nth-child(4) span {
     width: 347px;
@@ -315,7 +73,6 @@ form {
     text-overflow: ellipsis;
     text-align: right;
 }
-
 #tabs-2 .send-list li:nth-child(6),
 #tabs-3 .send-list li:nth-child(4),
 #tabs-3 .send-list li:nth-child(5) {
@@ -326,24 +83,20 @@ form {
     padding-bottom: 20px;
     border-bottom: 1px solid #DCDFE6;
 }
-
 #tabs-3 .send-list li:nth-child(4) {
     width: 510px;
     border-bottom: none;
     padding-bottom: unset;
     padding-top: 35px;
 }
-
 #tabs-2 .send-list li:nth-child(6) span,
 #tabs-3 .send-list li:nth-child(4) span,
 #tabs-3 .send-list li:nth-child(5) span {
     color: #1973AF;
 }
-
 .progress-title {
     font-size: 16px;
 }
-
 .progress {
     width: 500px;
     float: left;
@@ -352,27 +105,23 @@ form {
     border: none;
     margin: 25px 0 0 10px;
 }
-
 #tabs-2 .progress ul,
 #tabs-3 .progress ul {
     width: 100%;
     float: left;
     margin-top: 30px;
 }
-
 #tabs-2 .progress ul li,
 #tabs-3 .progress ul li {
     width: auto;
     font-size: 14px;
 }
-
 #tabs-2 .progress ul li:nth-child(1),
 #tabs-3 .progress ul li:nth-child(1) {
     float: left;
     margin-left: unset;
     background: unset;
 }
-
 #tabs-2 .progress ul li:nth-child(2),
 #tabs-3 .progress ul li:nth-child(2) {
     float: right;
@@ -380,7 +129,6 @@ form {
     background: unset;
     text-align: right;
 }
-
 .progress-info {
     width: 445px;
     font-size: 16px;
@@ -389,11 +137,9 @@ form {
     line-height: 30px;
     margin: 0;
 }
-
 .progress-info span {
     color: #4A91C0;
 }
-
 .total {
     width: calc(100% - 40px);
     float: left;
@@ -403,12 +149,10 @@ form {
     border-top: 1px solid #DCDFE6;
     border-bottom: 1px solid #DCDFE6;
 }
-
 .total dt {
     width: 100%;
     padding: 15px 0;
 }
-
 .total dd {
     width: 100%;
     margin: 0;
@@ -437,7 +181,6 @@ form {
     color:#1973AF;
     margin-left: 40px;
 }
-
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
@@ -448,7 +191,6 @@ form {
     outline: none;
     border: none;
 }
-
 .ui-state-focus,
 .ui-widget-content .ui-state-focus {
     width: 20px;
@@ -458,7 +200,6 @@ form {
     outline: none;
     border: none;
 }
-
 
 /* checkbox */
 #tabs-3 .send-list li input.magic-checkbox{
@@ -486,12 +227,10 @@ form {
     border-top: 0;
     border-left: 0;
 }
-
 .magic-checkbox:checked + label:before {
     border: #3e97eb;
     background: #3e97eb;
 }
-
 .magic-checkbox:checked[disabled] + label:before {
     border: #999;
     background: #999;

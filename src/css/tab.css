@@ -25,10 +25,10 @@ a:focus {
     overflow : auto;
 }
 
-#tab {
+/* #tab {
     width: 100%;
     margin: 0 auto;
-}
+} */
 #tab ul{
     padding: 0;
     margin: 20px 0 0 0;

@@ -2,6 +2,9 @@
 author: Miya_yang
 date:2018.10.30
 */
+
+// Account list page
+
 $(function ($) {
 
 
@@ -155,10 +158,11 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `</div>`;
     divhtml += `<div class="icon-list">`;
-//     divhtml += `<dl onclick="changeMingingStatus('` + publickey + `')">`;
-//     divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
-//     divhtml += `<dd id="isMining">Start Mining</dd>`;
-//     divhtml += `</dl>`;
+    // divhtml += `<dl onclick="mineConfig()">`;
+    // divhtml += `<dl id="miningAccount" onclick="changeMingingStatus('` + publickey + `')">`;
+    // divhtml += `<dt><img src="./src/img/mine.png" heigth="50px", width="50px"></dt>`;
+    // divhtml += `<dd id="isMining">Start Mining</dd>`;
+    // divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
     divhtml += `<dd>Transfer Seele & Tokens</dd>`;
@@ -211,6 +215,90 @@ function ToAccountInfo(publickey, balance, shard) {
     $('#tabs-1').html(divhtml)
 }
 
+// Account info page mining function
+
+function mineConfig(){
+  // console.log("how")
+  $('.mine-config').show()
+  $('.minedask').show()
+}
+
+function hidemineconfig(){
+  $('.mine-config').hide()
+  $('.minedask').hide()
+}
+
+function startMining(publickey) {
+  
+  seeleClient.startMine(publickey);
+  document.getElementById("isMining").innerText="Stop Mining";
+}
+
+function stopMining(publickey, shard) {
+  seeleClient.StartNode(publickey, shard);
+  document.getElementById("isMining").innerText="Start Mining";
+}
+
+function changeMingingStatus(publickey) {
+  var shard = seeleClient.getShardNum(publickey)
+  var mineStatus = document.getElementById("isMining").innerText;
+  if(mineStatus === "Start Mining") {
+    this.startMining(publickey, shard);
+  } else if (mineStatus === "Stop Mining"){
+    this.stopMining(shard);
+  }
+  // seeleClient.killNonminingNodeProcess(shard);
+}
+
+function saveMineStatus (publickey) {
+  
+}
+
+// Account info page other 4 functions
+
+function transfer(publickey) {
+    var lis = $("#tab ul li")
+    lis.each(function (i) {
+        if ($(this).hasClass('tabli_active')) {
+            $(this).removeClass('tabli_active')
+            $(this).find('a').removeClass('tabulous_active')
+        } else {
+            $(this).addClass('tabli_active')
+            $(this).find('a').addClass('tabulous_active')
+        }
+    })
+
+    $("#tabs_container").height(627)
+    $("#tabs-1").addClass('make_transist')
+    $("#tabs-1").addClass('hideleft')
+    $("#tabs-1").removeClass('showleft')
+
+    $("#tabs-2").addClass('hideleft')
+    $("#tabs-2").addClass('make_transist')
+    $("#tabs-2").addClass('showleft')
+
+    $("#txpublicKey").val(publickey)
+    $("#contractPublicKey").val(publickey)
+}
+
+function viewOnSeelescan(publickey) {
+    require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
+}
+
+function copy() {
+    var copyTextarea = document.querySelector('li.publickey');
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(copyTextarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    document.execCommand('copy');
+
+    selection.removeAllRanges();
+    layer.msg("copy success")
+}
+
 function showQR (publickey) {
     var result = document.getElementById("qr_result"); //mylink
     var request = document.getElementById("qr_request");//btnlink
@@ -229,106 +317,3 @@ function showQR (publickey) {
         result.innerHTML = "";
     }
 }
-
-function transfer(publickey) {
-    // var lis = $("#tab ul li")
-    $("#tab ul li:nth-child(1)").removeClass('tabli_active') 
-    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active') 
-    $("#tab ul li:nth-child(2)").addClass('tabli_active') 
-    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active') 
-    $("#tab ul li:nth-child(3)").removeClass('tabli_active') 
-    $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
-
-    $("#tabs_container").height(627)
-    $("#tabs-1").addClass('make_transist')
-    $("#tabs-1").addClass('hideleft')
-    $("#tabs-1").removeClass('showleft')
-
-    $("#tabs-2").addClass('hideleft')
-    $("#tabs-2").addClass('make_transist')
-    $("#tabs-2").addClass('showleft')
-
-    $("#txpublicKey").val(publickey)
-    $("#contractPublicKey").val(publickey)
-}
-
-function mineConfig(){
-    // console.log("how")
-    $('.mine-config').show()
-    $('.minedask').show()
-  }
-  
-  function hidemineconfig(){
-    $('.mine-config').hide()
-    $('.minedask').hide()
-  }
-
-function copy() {
-    var copyTextarea = document.querySelector('li.publickey');
-    var selection = window.getSelection();
-    var range = document.createRange();
-    range.selectNodeContents(copyTextarea);
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    document.execCommand('copy');
-
-    selection.removeAllRanges();
-    layer.msg("copy success")
-}
-
-function viewOnSeelescan(publickey) {
-    require("electron").shell.openExternal("https://seelescan.net/#/account/detail?address=" + publickey);
-}
-
-function startMining(publickey) {
-    seeleClient.startMine(publickey).then((data)=>{
-        console.log(data);
-    }).catch((err)=>{
-        console.log(err);
-    });
-    document.getElementById("isMining").innerText="Stop Mining";
-}
-
-function stopMining2(shard) {
-    seeleClient.StartNode(shard).then(data=>{
-        console.log(data);
-    }).catch((err)=>{
-        console.log(err);
-    });
-    document.getElementById("isMining").innerText="Start Mining";   
-}
-
-function stopMining(shard) {
-    seeleClient.reStart(shard).then(data=>{
-        console.log(data);
-    }).catch((err)=>{
-        console.log(err);
-    });
-    document.getElementById("isMining").innerText="Start Mining";   
-}
-
-function changeMingingStatus(publickey) {
-    var shard = seeleClient.getShardNum(publickey);
-    var mineStatus = document.getElementById("isMining").innerText;
-    if(mineStatus === "Start Mining") {
-        this.startMining(publickey);
-        this.stopMining2(shard);
-        this.startMining(publickey);
-        this.stopMining2(shard);
-        this.startMining(publickey);
-    } else if (mineStatus === "Stop Mining"){
-        this.stopMining(shard);
-        // this.startMining(publickey);
-        // this.stopMining(shard);
-        // this.startMining(publickey);
-        // this.stopMining(shard);
-    }
-    // seeleClient.killNonminingNodeProcess(shard);
-}
-
-//@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh 
-function saveMineStatus (publickey) {
-
-}
-

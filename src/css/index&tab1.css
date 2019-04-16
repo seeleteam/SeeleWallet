@@ -1,0 +1,592 @@
+/* STRUCTURE */
+/* head
+body 
+  .header
+    .head-main
+      .logo
+      .quick-link
+        #netWork
+        #isListening
+        #blockheight
+        #shard
+      .get-balance
+  .main
+    #tab
+      #tabs_header
+      #tabs_container
+        #tabs-1
+        #tabs-2
+        #tabs-3
+  .dask
+  .minedask
+  .create-account
+  .search-hash  */
+  
+/* REWRITTEN ELEMENTS' STRUCTURE */
+/* #tab
+#tabs-1 by getBalance.js(loadAccount)
+  .export-account
+  .import-account
+  #accountlist
+    .accountFor
+    .accountImg
+    .accountBalance
+  .account-contact
+    .contact-left
+    .contact-right
+#tabs-1 by index.js(AccountInfo)
+  .accountFor
+  .accountImg
+  .publickey
+  .shard */
+
+
+
+/* body, header & main */
+body {
+  font-family: Helvetica;
+  background: #ebf1f5;
+  margin: 0;
+}
+.header {
+    width: 100%;
+    height: 80px;
+    background: #fff;
+}
+.head-main {
+  width: 1180px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+.logo{
+  width: 110px;
+  height: 28px;
+  float: left;
+  margin: 26px 0 0 0;
+}
+.quick-link{
+    width: 490px;
+    margin: 0 auto;
+}
+.quick-link li{
+    color: #666;
+    font-size: 14px;
+    line-height: 80px;
+    list-style: none;
+    float: left;
+    padding-left: 25px;
+    padding-right: 15px;
+}
+.quick-link li:nth-child(1){
+    background: url(../img/internet.png) left center no-repeat;
+}
+.quick-link li:nth-child(2){
+    background: url(../img/signal.png) left center no-repeat;
+}
+.quick-link li:nth-child(3){
+    background: url(../img/block.png) left center no-repeat;
+}
+.quick-link li:nth-child(4){
+    padding-left: 5px;
+    padding-right: 0;
+}
+.quick-link li:nth-child(4) select{
+    width: 40px;
+    height: 23px;
+    border: 1px solid #999;
+    color: #999;
+}
+.get-balance {
+    width: auto;
+    float: right;
+    font-size: 16px;
+    color: #666;
+    margin: 26px 0 0 0;
+}
+.get-balance span:nth-child(2) {
+    font-size: 30px;
+    color: #2c9ae3;
+    margin: 0 10px 0 20px;
+}
+
+/* main and tab switching */
+/* more are shown in tab.css */
+.main {
+    width: 1180px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+#tab {
+    width: 100%;
+    margin: 0 auto;
+}
+#tabs-1 h1.note{
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+    float: left;
+    font-weight: bold;
+    margin: 0;
+    padding: 80px 0 0 60px;
+}
+#tabs-1 p.info {
+    width: calc(100% - 20px);
+    float: left;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0;
+    padding: 30px 0px 50px 20px;
+    color: #999;
+}
+#tabs-1 p.info span{
+    color: #2eb3f3;
+}
+
+
+/* tabs one account list by getBalance.js(loadAccount) */
+.export-account{
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background:RGB(236,241,245);
+    outline: none;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    /* background: #2c9ae3; */
+}
+.export-account img {
+    width: 35px;
+    height: 35px;
+}
+.import-account{
+    /* width: 38px; */
+    width: 58px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background:RGB(236,241,245);
+    outline: none;
+    right: 0px;
+    cursor: pointer;
+    /* margin: 10px; */
+    font-size: 12px;
+    border-radius: 8px;
+    /* background: #2c9ae3; */
+}
+.import-account img {
+    width: 35px;
+    height: 35px;
+}
+#accountlist {
+    width: 100%;
+    float: left;
+    margin: 0px 0 0 20px;
+}
+#tabs-1 h1{
+    font-size: 24px;
+    color: #333;
+    padding: 0 0 0 20px;
+}
+#tabs-1 .accountFor {
+    width: 33%;
+    float: left;
+    margin-top: 40px;
+}
+#tabs-1 .accountImg img {
+    width: 60px;
+    height: 60px;
+    float: left;
+    border-radius: 50px;
+}
+#tabs-1 .accountFor ul {
+    width: calc(100% - 90px);
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0 15px;
+}
+#tabs-1 .accountFor ul li {
+    width: 100%;
+    float: left;
+    height: unset;
+    background: none;
+    font-family: Helvetica;
+}
+#tabs-1 .accountFor ul li:nth-child(1) {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+#tabs-1 .accountFor ul li:nth-child(2) {
+    font-size: 16px;
+    color: #606060;
+    margin-top: 3px;
+    margin-left: unset;
+    font-weight: unset;
+}
+#tabs-1 .accountFor ul li:nth-child(3) {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: unset;
+    margin-left: 0px;
+}
+#tabs-1 .accountFor ul li:nth-child(4) {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: unset;
+}
+
+/* tabs one contact list by getBalance.js(loadAccount) */
+.latest-title{
+    width: 180px;
+    height: 32px;
+    line-height: 32px;
+    background: #dae4e9;
+    color: #333;
+    font-size: 16px;
+    margin-left: 20px;
+    display: table;
+    text-align: center;
+}
+.overflow{
+    max-height: 178px;
+    overflow-y: auto;
+}
+.account-contact{
+    width: calc(100% - 20px);
+    height: 80px;
+    margin-left: 20px;
+    margin-top: 8px;
+}
+.contact-left{
+    line-height: 80px;
+    height: 80px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 120px;
+    text-align: center;
+    background: #dae4e9;
+    display: inline-block;
+    color: #55788a;
+}
+.contact-left span:nth-child(1){
+    font-size: 14px;
+}
+.contact-left span:nth-child(2){
+    font-size: 24px;
+    font-weight: bold;
+}
+#tab .contact-right{
+    width: calc(100% - 220px);
+    height: 60px;
+    background: #f5f8fa;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 0;
+}
+#tab .contact-right li{
+    line-height: 30px;
+    width: 100%;
+    display: inline-block;
+    background-size:unset;
+    background: unset;
+    height: unset;
+    font-weight: unset;
+}
+#tab .contact-right li:nth-child(1){
+    color: #333;
+    font-size: 16px;
+    font-family: 'Helvetica-Bold';
+}
+#tab .contact-right li:nth-child(2){
+    color: #999;
+    font-size: 14px;
+}
+#tab .contact-right li:nth-child(2) span{
+    width: calc(50% - 30px);
+    min-width: 415px;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(1){
+    margin-left: 30px; 
+    float: left;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(2){
+    display: inline-grid;
+}
+#tab .contact-right li:nth-child(2) span:nth-child(2) a{
+    background: unset;
+    color: #28a7f0;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: unset;
+    word-break: break-all;
+    padding: unset;
+}
+
+/*tabs one account info by index.js(AccountInfo)*/
+.icon-list{
+    width: 100%;
+    float: left;
+    margin: 50px 0 0 55px;
+}
+.icon-list dl{
+    width: 130px;
+    float: left;
+    margin-left: 50px;
+    font-size: 14px;
+    color: #76a6d2;
+    /* border-style: solid;
+    border-width: 5px; */
+}
+.icon-list dl dt{
+    width: 50px;
+    height: 50px;
+    padding: 0 25px 12px 40px;
+}
+.icon-list dl dd{
+    text-align: center;
+    margin: 0;
+    white-space: nowrap;
+}
+.mine-config{
+    width: 340px;
+    height: 164px;
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: calc(50% - 170px);
+    display: none;
+    background: #f8fafb;
+    padding: 54px 40px 42px 40px;
+    font-size: 14px;
+    font-family: 'SourceHansansCN-regular';
+}
+#main-container {
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;              /* default value; can be omitted */
+    justify-content: space-between; /* switched from default (flex-start, see below) */
+}
+
+/* dask, add-account, search-hash */
+.add-account{
+    width: 190px;
+    height: 40px;
+    margin: 80px 0 0 20px;
+    padding: 0;
+    border: none;
+    background: unset;
+    outline: none;
+    /* background: #2c9ae3; */
+}
+.add-account span{
+    float: left;
+}
+.add-account span:nth-child(2){
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: bold;
+    display: inline-block;
+    color: #333;
+    margin: 0 0 0 20px;
+}
+.fa-lg{
+    font-size: 40px;
+}
+p.info {
+    width: calc(100% - 40px);
+    float: left;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 100px 0px 50px 0px;
+    text-align: left;
+}
+input,select{
+    outline: none;
+}
+.dask{
+    width: 100%;
+    height: 130%;
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    background: rgb(0,0,0,.4)
+}
+.minedask{
+    width: 100%;
+    height: 130%;
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    background: rgb(0,0,0,.4)
+  }
+.create-account{
+    width: 340px;
+    height: 164px;
+    position: absolute;
+    z-index: 2;
+    top: 200px;
+    right: 0;
+    bottom: 0;
+    left: calc(50% - 170px);
+    display: none;
+    background: #f8fafb;
+    padding: 54px 40px 42px 40px;
+    font-size: 14px;
+    font-family: 'SourceHansansCN-regular';
+}
+#passWord{
+    width: calc(100% - 55px);
+    height: 34px;
+    border: 1px solid #e0e7eb;
+    font-size: 14px;
+    padding: 0 43px 0 10px;
+}
+#passWord::placeholder{
+    color: #c4c8ca;
+}
+#shardnum{
+    width:78px;
+    height: 34px; 
+    border: 1px solid #e0e7eb;
+    color: #333;
+    padding-left: 10px;
+    margin: 20px 0 0 0;
+}
+.name{
+    color: #333;
+    margin-left: 10px;
+}
+#cancel{
+    width: 80px;
+    height: 32px;
+    background: #bdc7ce;
+    color: #fff;
+    border:none;
+    border-radius: 4px;
+    margin: 40px 25px 0 150px;
+    cursor: pointer;
+}
+#createKey{
+    width: 80px;
+    height: 32px;
+    background: #2c9ae3;
+    color: #fff;
+    border:none;
+    border-radius: 4px;
+    margin: 40px 0px 0 0;
+}
+#mineConfigcancel{
+    width: 80px;
+    height: 32px;
+    background: #bdc7ce;
+    color: #fff;
+    border:none;
+    border-radius: 4px;
+    margin: 40px 25px 0 150px;
+    cursor: pointer;
+}
+.hideShowPassword-toggle {
+    background-image: url(../img/eye.png);
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -9999em;
+    width: 30px;
+    position: absolute;
+    margin-top: -27px;
+    margin-left: 305px;
+    user-select: none;
+}
+.hideShowPassword-toggle-hide {
+    background-position: -40px center;
+}
+.search-hash{
+    width: 517px;
+    height: 655px;
+    position: absolute;
+    z-index: 2;
+    top: 300px;
+    right: 0;
+    bottom: 0;
+    left: calc(50% - 300px);
+    display: none;
+    background: #fff;
+    padding: 20px 30px 20px 30px;
+    font-size: 14px;
+    font-family: 'SourceHansansCN-regular';
+}
+.search-hash h3{
+    font-size: 24px;
+    color: #666;
+    text-align: center;
+    line-height: 24px;
+}
+.search{
+    width: 100%;
+    margin-top: 28px;
+    height: 42px;
+}
+.search input{
+    width: calc(100% - 2px);
+    border: 1px solid #999;
+    border-radius: 2px;
+    height: 40px;
+    padding-left:15px; 
+}
+.search button{
+    width: 23px;
+    height: 23px;
+    border: none;
+    background: unset;
+    outline: none;
+    position: absolute;
+    z-index: 50;
+    margin-top: -34px;
+    margin-left: 473px;
+    cursor: pointer;
+}
+.search-hash ul{
+    width: calc(100% - 30px);
+    background: #fafafa;
+    height: 437px;
+    margin-top: 24px;
+    padding: 5px 15px 15px 15px;
+}
+.search-hash ul li{
+    list-style: none;
+    line-height: 30px;
+    word-wrap: break-word; 
+}
+.ok-search{
+    width: 110px;
+    height: 40px;
+    background: #1973AF;
+    color: #fff;
+    border: none;
+    margin: 5px 0 0 200px;
+    cursor: pointer;
+}
+.qr_result {
+    display: none;
+}
