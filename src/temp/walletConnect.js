@@ -90,7 +90,7 @@ function isListening() {
             if (err) {
                 isListening.innerText = "Disconnected";
             } else {
-                isListening.innerText = "Connected";
+                isListening.innerText = "Connecting";
             }
         });
     }, 2000);
