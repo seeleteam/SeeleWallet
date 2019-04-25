@@ -136,38 +136,7 @@ function seeleClient() {
             }
         });
     }
-    this.reStart = function(shardNum) {
-        return new Q((resolve, reject) => {
-            try {
-                var args = [
-                    'miner',
-                    'stop'
-                ];
-                if (shardNum === 1) {
-                    args.push('-a 127.0.0.1:8025');
-                } else if(shardNum === 2){
-                    args.push('-a 127.0.0.1:8022');
-                } else if(shardNum === 3) {
-                    args.push('-a 127.0.0.1:8023')
-                } else if(shardNum === 4) {
-                    args.push('-a 127.0.0.1:8024')
-                }
-
-                const proc = spawn(this.binPath(), args);
-
-                proc.stdout.on('data', data => {
-                    resolve(data);
-                });
-
-                proc.stderr.on('data', data => {
-                    reject(data)
-                });
-            } catch (e) {
-                return reject(e)
-            }
-        });
-    }
-
+    
     this.startMine = function(publickey) {
         var shardNum = this.getShardNum(publickey);
         this.killnode(shardNum);
@@ -182,7 +151,7 @@ function seeleClient() {
                 var args = this.miningArgs(shardNum)
                 const proc = spawn(this.nodePath(), args);
                 console.log(proc)
-                this.execute('echo "starting mine before proc on"')
+                // this.execute('echo "starting mine before proc on"')
                 proc.stdout.on('data', data => {
                     console.log(data.toString())
                     resolve(data.toString())
@@ -254,6 +223,7 @@ function seeleClient() {
         args.push('stop')
         return args
     }
+    
     this.miningArgs = function(shard){
         // var shard = this.getShardNum(account)
         var thread = 16;
@@ -266,21 +236,37 @@ function seeleClient() {
         args.push(thread);
         return args;
     }
-    this.killnode = function (shardNum) {
-
-        if (shardNum === '1'){     
-            this.execute('ps -ef | grep "node-1.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
-            console.log("node-1 is killed");
-       } else if (shardNum === '2'){
-           this.execute('ps -ef | grep "node-2.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
-           console.log("node-2 is killed");
-       } else if (shardNum === '3'){
-           this.execute('ps -ef | grep "node-3.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
-           console.log("node-3 is killed");
-       } else if (shardNum === '4'){
-           this.execute('ps -ef | grep "node-4.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
-           console.log("node-4 is killed");
-       } 
+    
+    this.killnode = function(shardNum) {
+        if (this.getOS() === "Windows"){
+            if (shardNum === '1'){    
+                this.execute("powershell.exe", "Stop-Process $(Get-WmiObject Win32_Process | Select ProcessId, CommandLine | Select-String 'node-1.json'| % {$_ -replace '.*Id=', ''} | % {$_ -replace ';.*', ''})");
+                console.log("node-1 is killed");
+           } else if (shardNum === '2'){
+                this.execute("powershell.exe", "Stop-Process $(Get-WmiObject Win32_Process | Select ProcessId, CommandLine | Select-String 'node-2.json'| % {$_ -replace '.*Id=', ''} | % {$_ -replace ';.*', ''})");
+                console.log("node-2 is killed");
+           } else if (shardNum === '3'){
+                this.execute("powershell.exe", "Stop-Process $(Get-WmiObject Win32_Process | Select ProcessId, CommandLine | Select-String 'node-3.json'| % {$_ -replace '.*Id=', ''} | % {$_ -replace ';.*', ''})");
+                console.log("node-3 is killed");
+           } else if (shardNum === '4'){
+                this.execute("powershell.exe", "Stop-Process $(Get-WmiObject Win32_Process | Select ProcessId, CommandLine | Select-String 'node-4.json'| % {$_ -replace '.*Id=', ''} | % {$_ -replace ';.*', ''})");
+                console.log("node-4 is killed");
+           }
+        } else {
+            if (shardNum === '1'){     
+                this.execute('ps -ef | grep "node-1.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+                console.log("node-1 is killed");
+           } else if (shardNum === '2'){
+               this.execute('ps -ef | grep "node-2.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+               console.log("node-2 is killed");
+           } else if (shardNum === '3'){
+               this.execute('ps -ef | grep "node-3.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+               console.log("node-3 is killed");
+           } else if (shardNum === '4'){
+               this.execute('ps -ef | grep "node-4.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
+               console.log("node-4 is killed");
+           } 
+        }
     }
 
     this.execute = function(command) {
@@ -520,25 +506,6 @@ function seeleClient() {
         }
     };
 
-//     this.getBalanceSync = function (publicKey) {
-//         try {
-//             var numberInfo = this.getshardnum(publicKey)
-//             if (numberInfo == "1") {
-//                 return this.client1.sendSync("getBalance", publicKey);
-//             } else if (numberInfo == "2") {
-//                 return this.client2.sendSync("getBalance", publicKey);
-//             } else if (numberInfo == "3") {
-//                 return this.client3.sendSync("getBalance", publicKey);
-//             } else if (numberInfo == "4") {
-//                 return this.client4.sendSync("getBalance", publicKey);
-//             } else {
-//                 alert(numberInfo)
-//             }
-//         } catch (e) {
-//             console.error("no node started in local host")
-//         }
-//     }
-
     this.sendtx = function (publicKey, passWord, to, amount, price, gaslimit,payload, callBack) {
         var client
         var numberInfo = this.getshardnum(publicKey)
@@ -596,12 +563,12 @@ function seeleClient() {
             return
         }
         client.getTransactionByHash(hash, callBack);
-    }
+    };
 
     this.getShardNum = function(publickey) {
             var numberInfo = this.getshardnum(publickey);
             return numberInfo;
-    } 
+    }; 
     
     this.ParsePublicKey = function (input) {
         try {
@@ -722,9 +689,12 @@ function seeleClient() {
             return this.client4.estimateGas(tx, callBack);
         }
     }
+    
+    this.clearshard = function(shard){};
 
-}
+};
 
+module.exports = seeleClient;
   // this.stopMiner = function(publickey) {
     //     var shardNum = this.getShardNum(publickey);    
     //     var ip = [
@@ -775,5 +745,21 @@ function seeleClient() {
 
     //     args.push(ip[shardNum-1]);
     // }
-
-module.exports = seeleClient;
+    //     this.getBalanceSync = function (publicKey) {
+    //         try {
+    //             var numberInfo = this.getshardnum(publicKey)
+    //             if (numberInfo == "1") {
+    //                 return this.client1.sendSync("getBalance", publicKey);
+    //             } else if (numberInfo == "2") {
+    //                 return this.client2.sendSync("getBalance", publicKey);
+    //             } else if (numberInfo == "3") {
+    //                 return this.client3.sendSync("getBalance", publicKey);
+    //             } else if (numberInfo == "4") {
+    //                 return this.client4.sendSync("getBalance", publicKey);
+    //             } else {
+    //                 alert(numberInfo)
+    //             }
+    //         } catch (e) {
+    //             console.error("no node started in local host")
+    //         }
+    //     }
