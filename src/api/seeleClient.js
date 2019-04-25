@@ -144,7 +144,6 @@ function seeleClient() {
         const proc = spawn(this.nodePath(), args);
         proc.stdout.on('data', data => {
           resolve(data.toString())
-          console.log("wot???")
         });
         proc.stderr.on('data', data => {
           reject(data.toString())
