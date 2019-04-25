@@ -223,8 +223,22 @@ function changeMingingStatus(publickey) {
   var mineStatus = document.getElementById("isMining").innerText;
   if(mineStatus === "Start Mining") {
     document.getElementById("isMining").innerText="Stop Mining";
+    // seeleClient.killnode(shard);
+    // seeleClient.startMine(publickey).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    //     console.log("Start Mining isn't working");
+    // });
+
     seeleClient.killnode(shard);
-    seeleClient.startMine(publickey);
+    seeleClient.initateNodeConfig(shard);
+    seeleClient.StartNode(shard,true).then((data)=>{
+        console.log(data);
+    }).catch((data) => {
+        console.log(data);
+        console.log("neither is start node working");
+    });
   } else if (mineStatus === "Stop Mining"){
     document.getElementById("isMining").innerText="Start Mining";
     seeleClient.killnode(shard);
@@ -233,13 +247,14 @@ function changeMingingStatus(publickey) {
         console.log(data);
     }).catch((data) => {
         console.log(data);
+        console.log("neither is start node working");
     });
   }
   // seeleClient.killNonminingNodeProcess(shard);
 }
 
 function saveMineStatus (publickey) {
-  
+
 }
 
 // Account info page other 4 functions

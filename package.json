@@ -50,6 +50,7 @@
         "bignumber.js": "^8.0.1",
         "bluebird": "^3.5.2",
         "edit-json-file": "^1.2.1",
+        "node-powershell": "^4.0.0",
         "ps-node": "^0.1.6",
         "seeleteam.js": "^1.6.8",
         "shelljs": "^0.8.3",

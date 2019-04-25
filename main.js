@@ -14,7 +14,9 @@ let mainWindow
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
-
+    delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS;
+    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
+    
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
@@ -60,7 +62,7 @@ function createWindow() {
     }).catch((data) => {
         console.log(data);
     });
-    
+
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
