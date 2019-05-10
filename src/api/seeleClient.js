@@ -1,6 +1,9 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+os// this file contains all class functions within a constructor
+// And thus, the order of variable initialization and function declaration matters
+// Possible future implementations:
+// Support more operating systems in this.GetOS()
+// consideration when provided with invalid public keys or keyfiless
+
 var seelejs = require('seeleteam.js');
 var fs = require('fs');
 var os = require("os")
@@ -19,133 +22,107 @@ const editJsonFile = require("edit-json-file");
 function seeleClient() {
 
   var shardCount = 4;
-
-  // this.client1 = new seelejs("http://104.218.164.181:8037");
-  // this.client2 = new seelejs("http://104.218.164.181:8038");
-  // this.client3 = new seelejs("http://104.218.164.181:8039");
-  // this.client4 = new seelejs("http://104.218.164.181:8036");
-
-  // shardCount = 4
-
   this.client1 = new seelejs("http://localhost:8035");
   this.client2 = new seelejs("http://localhost:8032");
   this.client3 = new seelejs("http://localhost:8033");
   this.client4 = new seelejs("http://localhost:8034");
-
-  this.getOS = function() {
-    var osName = "Unknown OS";
-
-    if (os.type().indexOf("Win") != -1) osName = "Windows";
-    if (os.type().indexOf("Darwin") != -1) osName = "MacOS";
-    if (os.type().indexOf("Linux") != -1) osName = "Linux";
-    if (os.type().indexOf("X11") != -1) osName = "UNIX";
-    if (os.type().indexOf("Android") != -1) osName = "Android";
-    if (os.type().indexOf("iPhone") != -1) osName = "iPhone";
-
-    // console.log(osName);
-    return osName;
-  }
-
-  if (this.getOS() === "Windows") {
-    this.accountPath = os.homedir() + "\\.SeeleWallet\\account\\";
-    this.nodeConfigPath = os.homedir() + "\\.SeeleWallet\\node\\";
-    this.txPath = os.homedir() + "\\.SeeleWallet\\tx\\";
-  } else {
-    this.accountPath = os.homedir() + "/.SeeleWallet/account/";
-    this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
-    this.txPath = os.homedir() + "/.SeeleWallet/tx/";
-  }
+  this.nodeProcessArray = [];
+  this.mineProcessArray = [];
   this.accountArray = [];
   this.txArray = [];
+  this.walletPath = os.homedir() + path.sep + ".SeeleWallet" + path.sep;
+  this.accountPath = this.walletPath + "account" + path.sep;
+  this.nodeConfigPath = this.walletPath + "node" + path.sep;
+  this.txPath = this.walletPath + "tx" + path.sep;
+  this.PathSync = function(){
+    console.log("PathSync!");
+    try { fs.mkdirSync(this.accountPath); } catch (err){}
+    try { fs.mkdirSync(this.nodeConfigPath); } catch (err){}
+    try { fs.mkdirSync(this.txPath); } catch (err){}
+  }
 
-  this.binPath = function() {
+  this.GetOS = function() {
+    var osName = "Unknown OS";
+
+    if (os.type().indexOf("Win") > -1) osName = "Windows";
+    else if (os.type().indexOf("Darwin") > -1) osName = "MacOS";
+    else if (os.type().indexOf("Linux") > -1) osName = "Linux";
+
+    return osName;
+}
+
+  this.os = this.GetOS();
+
+  this.NodePath = function() {
     var clientpath = `${__dirname}`;
-    // app.asar : An asar archive is a simple tar-like format that concatenates files into a single file.
-    // Electron can read arbitrary files from it without unpacking the whole file.
-    if (clientpath.indexOf("app.asar") > 0) {
-      // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../client";
-      if (this.getOS() === "MacOS") {
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/client";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/client";
-      } else if (this.getOS() === "Linux") {
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/client";
-      } else {
-        console.log("the operation system may not be supported");
-        return null;
-      }
+    if (this.os === "Unknown OS") { return "unsupported operating system"}
+    if (clientpath.indexOf('app.asar') != -1){
+      return clientpath.substring(0, clientpath.indexOf('app.asar') + this.os + path.sep +  'node')
     } else {
-      //TODO this works for dev environment, need to check path validity for packed exe
-      // return "./cmd/win32/client"
-      //console.log(this.getOS());
-      if (this.getOS() === "MacOS") {
-        return clientpath + "/../../cmd/mac/client";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
-        return clientpath + "\\..\\..\\cmd\\win32\\client";
-      } else if (this.getOS() === "Linux") {
-        return clientpath + "/../../cmd/linux/client";
-      } else {
-        console.log("the operation system may not be supported");
-        return null;
-      }
+      return clientpath + path.sep + ".." + path.sep + ".." + path.sep + "cmd" + path.sep + this.os + path.sep + "node";
     }
-  };
+  }
 
-  this.nodePath = function() {
+  this.ClientPath = function() {
     var clientpath = `${__dirname}`;
-    if (clientpath.indexOf("app.asar") > 0) {
-      // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../node";
-      if (this.getOS() === "MacOS") {
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/node";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/node";
-      } else if (this.getOS() === "Linux") {
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/node";
-      } else {
-        console.log("the operation system may not be supported");
-        return null;
-      }
+    if (this.os === "Unknown OS") { return "unsupported operating system"}
+    if (clientpath.indexOf('app.asar') != -1){
+      return clientpath.substring(0, clientpath.indexOf('app.asar') + this.os + path.sep +  'client')
     } else {
-      //return "./cmd/win32/node";
-      if (this.getOS() === "MacOS") {
-        return clientpath + "/../../cmd/mac/node";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
-        return clientpath + "\\..\\..\\cmd\\win32\\node";
-      } else if (this.getOS() === "Linux") {
-        return clientpath + "/../../cmd/linux/node";
-      } else {
-        alert("the operation system may not be supported");
-        return null;
-      }
+      return clientpath + path.sep + ".." + path.sep + ".." + path.sep + "cmd" + path.sep + this.os + path.sep + "client";
     }
-  };
+  }
 
-  this.StartNodeP = function(shardNum, initiate) {
-    const ps = new Shell({
-      executionPolicy: 'Bypass',
-      noProfile: true
-    });
+  this.nodePath = this.NodePath();
 
-    ps.addCommand("");
-    ps.invoke().then(output => {
-      console.log("Started, supposedly, go look at it yourself");
-    }).catch(err => {
-      console.log(err);
+  this.clientPath = this.ClientPath();
+
+  this.initateNodeConfig = function(shard) {
+    var initiate = true
+    var args = ['key', '--shard', shard];
+    // args.push('--shard', shard);
+    // console.log("common!!!");
+    // console.log(this.nodePath);
+    const proc = spawn(this.nodePath, args);
+
+    proc.stdout.on('data', data => {
+      var output = `${data}`
+      var publickey = this.ParsePublicKey(output)
+      this.makeNodeFile(publickey, shard, initiate)
     });
   }
 
-  this.StartNode = function(shardNum, initiate) {
+  this.ParsePublicKey = function(input) {
+    try {
+      return input.substring(input.indexOf("publick key:") + 12, input.indexOf("private key:")).trim()
+    } catch (e) {
+      return ""
+    }
+  };
 
+  this.ParsePrivateKey = function(input) {
+    try {
+      return input.substring(input.indexOf("private key:") + 12).trim()
+    } catch (e) {
+      return ""
+    }
+  };
+
+  this.StartNode = function(shardNum, initiate) {
+    // this.KillNode(shardNum);
+    console.log("start node ran!")
     return new Q((resolve, reject) => {
       try {
         var args = this.nonMiningArgs(shardNum);
-        // console.log(this.nodePath())
+        // console.log(this.nodePath
         // console.log(args);
-        const proc = spawn(this.nodePath(), args);
-        proc.stdout.on('data', data => {
+        this.nodeProcessArray[shardNum] = spawn(this.nodePath, args);
+
+        // console.log("started with", this.nodePath, args)
+        this.nodeProcessArray[shardNum].stdout.on('data', data => {
           resolve(data.toString())
         });
-        proc.stderr.on('data', data => {
+        this.nodeProcessArray[shardNum].stderr.on('data', data => {
           reject(data.toString())
           // alert(data.toString())
         });
@@ -157,22 +134,25 @@ function seeleClient() {
     });
   }
 
-  this.startMine = function(publickey) {
+  this.StartMine = function(publickey) {
+    console.log("returned 1 and execute!");
+
     var shardNum = this.getShardNum(publickey);
+    // this.KillNode(shardNum);
     this.makeNodeFile(publickey, shardNum, false);
     return new Q((resolve, reject) => {
       try {
         var args = this.miningArgs(shardNum);
-        const proc = spawn(this.nodePath(), args);
+        const proc = spawn(this.nodePath, args);
         // this.execute('echo "starting mine before proc on"')
         proc.stdout.on('data', data => {
           console.log(data.toString())
           resolve(data.toString())
-          console.log("output from Mine")
+          console.log("output from StartMine")
         });
         proc.stderr.on('data', data => {
           reject(data.toString())
-          console.log("Error from Mine")
+          console.log("Error from StartMine")
         });
       } catch (e) {
         // alert(e)
@@ -184,8 +164,7 @@ function seeleClient() {
   }
 
   this.makeNodeFile = function(account, shard, initiate) {
-    // this.makeNodeFile = function (account, privatekey, shard) {
-    // cp file and save into nodepath
+
     var configpath = `${__dirname}` + path.sep + '..' + path.sep + '..' + path.sep + 'cmd' + path.sep + 'config' + path.sep
     var nodefile = configpath + 'node' + shard + '.json'
     // var dstfile = this.nodeConfigPath+path.sep+'node-'+shard+'-'+account+'.json'
@@ -196,6 +175,7 @@ function seeleClient() {
     shell.cp('-f', nodefile, dstfile);
     //replace files with right configs
     this.setUpNodeFile(dstfile, account, shard, initiate)
+    console.log("finish creating node-",shard,".json for", account);
   }
 
   this.setUpNodeFile = function(dstfile, account, shard, initiate) {
@@ -211,7 +191,7 @@ function seeleClient() {
         'key',
       ];
       args.push('--shard', shard)
-      const proc = spawn(this.nodePath(), args);
+      const proc = spawn(this.nodePath, args);
 
       proc.stdout.on('data', data => {
         var output = `${data}`
@@ -237,6 +217,8 @@ function seeleClient() {
     args.push(this.nodeConfigPath + 'node-' + shard + '.json')
     args.push('-m')
     args.push('stop')
+    // var log = ' * > ' + this.nodeConfigPath + 'node' + shard +'.log';
+    // args.push(log)
     return args
   }
 
@@ -253,8 +235,8 @@ function seeleClient() {
     return args;
   }
 
-  this.killnode = function(shardNum) {
-    if (this.getOS() === "Windows") {
+  this.KillNode = function(shardNum) {
+    if (this.os === "Windows") {
       const ps = new Shell({
         executionPolicy: 'Bypass',
         noProfile: true
@@ -278,6 +260,7 @@ function seeleClient() {
         ps.addCommand("Stop-Process $(Get-WmiObject Win32_Process | Select ProcessId, CommandLine | Select-String 'node-3.json'| % {$_ -replace '.*Id=', ''} | % {$_ -replace ';.*', ''})");
         ps.invoke().then(output => {
           console.log("node-3 is killed or already clear");
+          return 1;
         }).catch(err => {
           console.log(err);
         });
@@ -289,19 +272,25 @@ function seeleClient() {
           console.log(err);
         });
       }
+
+      return 1;
     } else {
       if (shardNum === '1') {
         this.execute('ps -ef | grep "node-1.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
         console.log("node-1 is killed");
+        return 1;
       } else if (shardNum === '2') {
         this.execute('ps -ef | grep "node-2.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
         console.log("node-2 is killed");
+        return 1;
       } else if (shardNum === '3') {
         this.execute('ps -ef | grep "node-3.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
         console.log("node-3 is killed");
+        return 1;
       } else if (shardNum === '4') {
         this.execute('ps -ef | grep "node-4.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
         console.log("node-4 is killed");
+        return 1;
       }
     }
   }
@@ -313,43 +302,28 @@ function seeleClient() {
     })
   }
 
-  this.initateNodeConfig = function(shard) {
-    var initiate = true
-    var args = [
-      'key',
-    ];
-    args.push('--shard', shard)
-    const proc = spawn(this.nodePath(), args);
-
-    proc.stdout.on('data', data => {
-      var output = `${data}`
-      var publickey = this.ParsePublicKey(output)
-      this.makeNodeFile(publickey, shard, initiate)
-    });
-  }
-
   this.solcPath = function() {
     var clientpath = `${__dirname}`;
     if (clientpath.indexOf("app.asar") > 0) {
       // return clientpath.substring(0, clientpath.indexOf("app.asar")) + "/../solc";
-      if (this.getOS() === "MacOS") {
+      if (this.os === "MacOS") {
         return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/solc";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
+      } else if (this.os === "Windows") { //so far, we only provide win32
         return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/solc";
-      } else if (this.getOS() === "Linux") {
-        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/solc";
+      } else if (this.os === "Linux") {
+        return clientpath.substring(0, clientpath.indexOf("app.asar")) + "Linux/solc";
       } else {
         console.log("the operation system may not be supported");
         return null;
       }
     } else {
       // return "./cmd/win32/solc"
-      if (this.getOS() === "MacOS") {
+      if (this.os === "MacOS") {
         return clientpath + "/../../cmd/mac/solc";
-      } else if (this.getOS() === "Windows") { //so far, we only provide win32
+      } else if (this.os === "Windows") { //so far, we only provide win32
         return clientpath + "\\..\\..\\cmd\\win32\\solc";
-      } else if (this.getOS() === "Linux") {
-        return clientpath + "/../../cmd/linux/solc";
+      } else if (this.os === "Linux") {
+        return clientpath + "/../../cmd/Linux/solc";
       } else {
         alert("the operation system may not be supported");
         return null;
@@ -407,17 +381,10 @@ function seeleClient() {
     } catch (e) {
       return e.toString
     }
-  };
-
-  this.init = function() {
-    if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
-      fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
-      fs.mkdirSync(this.accountPath)
-    }
-  };
+  }
 
   this.generateKey = function(shardnum, passWord) {
-    this.init();
+    // this.PathSync();
     return new Q((resolve, reject) => {
       try {
         var args = [
@@ -427,7 +394,7 @@ function seeleClient() {
           args.push('--shard', shardnum)
         }
 
-        const proc = spawn(this.binPath(), args);
+        const proc = spawn(this.clientPath, args);
 
         proc.stdout.on('data', data => {
           var output = `${data}`
@@ -452,7 +419,7 @@ function seeleClient() {
       'getshardnum',
     ];
     args.push('--account', publicKey)
-    const proc = spawnSync(this.binPath(), args);
+    const proc = spawnSync(this.clientPath, args);
 
     var info = `${proc.stdout}`
     if (info == "") {
@@ -475,7 +442,7 @@ function seeleClient() {
       args.push("--privatekey", privatekey)
       args.push("--file", filePath)
 
-      const proc = spawn(this.binPath(), args);
+      const proc = spawn(this.clientPath, args);
 
       proc.stdout.on('data', data => {
         proc.stdin.write(passWord + '\n');
@@ -498,7 +465,7 @@ function seeleClient() {
 
       args.push("--file", filePath)
 
-      const proc = spawn(this.binPath(), args);
+      const proc = spawn(this.clientPath, args);
 
       proc.stdout.on('data', data => {
         proc.stdin.write(passWord + '\n');
@@ -524,6 +491,7 @@ function seeleClient() {
   };
 
   this.getBalance = function(publicKey, callBack) {
+    console.log("getBalance has, ", publicKey);
     try {
       var numberInfo = this.getshardnum(publicKey)
       // shardCount = 4
@@ -605,22 +573,6 @@ function seeleClient() {
   this.getShardNum = function(publickey) {
     var numberInfo = this.getshardnum(publickey);
     return numberInfo;
-  };
-
-  this.ParsePublicKey = function(input) {
-    try {
-      return input.substring(input.indexOf("publick key:") + 12, input.indexOf("private key:")).trim()
-    } catch (e) {
-      return ""
-    }
-  };
-
-  this.ParsePrivateKey = function(input) {
-    try {
-      return input.substring(input.indexOf("private key:") + 12).trim()
-    } catch (e) {
-      return ""
-    }
   };
 
   this.getblock = function(shard, hash, height, fulltx, callBack) {

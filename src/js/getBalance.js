@@ -30,7 +30,7 @@ function firstLoad() {
         if(loaddingAccount){
             loadAccount();
         }
-        
+
     });
     loadAccount()
     var interval = setInterval(function(){
@@ -72,25 +72,10 @@ function loadAccount() {
     tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
     tabs1HTML += `<h3 class="latest-title">Latest Transactions</h3>`
 
-    // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-    // tabs1HTML += `<span>Nov.</span><span>13</span>`
-    // tabs1HTML += `</p>`
-    // tabs1HTML += `<ul class="contact-right"><li>Created Contact</li>`
-    // tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    // tabs1HTML += `</ul>`
-    // tabs1HTML += `</div>`
-
-    // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-    // tabs1HTML += `<span>Nov.</span><span>13</span>`
-    // tabs1HTML += `</p>`
-    // tabs1HTML += `<ul class="contact-right"><li>Transfer Between Accounts</li>`
-    // tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    // tabs1HTML += `</ul>`
-    // tabs1HTML += `</div>`
 
     for(var item in seeleClient.txArray) {
         var time = new Date(seeleClient.txArray[item].time)
-        
+
         tabs1HTML += `<div class="account-contact"><p class="contact-left">`
         tabs1HTML += `<span>`+time.toDateString().split(" ")[1]+`</span><span>`+time.getDate()+`</span>`
         tabs1HTML += `</p>`
@@ -142,7 +127,7 @@ function loadAccount() {
                 accountlist.innerHTML += accountHTML;
                 if (count == 0) {
                     document.getElementById("txpublicKey").value = info.Account;
-                    document.getElementById("contractPublicKey").value = info.Account;                    
+                    document.getElementById("contractPublicKey").value = info.Account;
                     span_balance.innerText = (info.Balance / 100000000).toFixed(3);
                 }
                 if (count == seeleClient.accountArray.length - 1) {
@@ -165,7 +150,7 @@ function loadAccount() {
                 balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
         })
-       
+
     }
 }
 
@@ -209,7 +194,7 @@ function refreshBalance(){
                     loaddingAccount = true;
                 }
                 count += 1;
-                accountBalanceInfo[info[0]] = 0; 
+                accountBalanceInfo[info[0]] = 0;
             } else {
                 if (count == seeleClient.accountArray.length - 1) {
                     loaddingAccount = true;
@@ -241,6 +226,6 @@ function refreshBalance(){
                 balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
         })
-       
+
     }
 }

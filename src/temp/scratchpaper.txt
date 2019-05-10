@@ -1,1 +1,18 @@
+For every shard:
+  SeeleClient.initiateNodeConfig() // shard 1
+    SeeleClient.nodePath() //given to spawn as child process to spawn shard1 coinbase
+      uses getOS() //this uses os.type()
+      ${__dirname}
+    SeeleClient.ParsePublicKey() //trims and returns the privatekey
+    SeeleClient.makeNodeFile() //
+    fsmkdirSync(this.nodeConfigPath)//
+    SeeleClient.setUpNodeFile()//
+      fs.set()
 
+SeeleClient.init() //for synchronizing paths
+
+SeeleClient.StartNode()
+  SeeleClient
+I will use the path.sep to clean up code a little
+
+SeeleClient.StartNode()

@@ -9,17 +9,18 @@ var SeeleClient = require('./src/api/seeleClient');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+// let mainWindow
 
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
     delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS;
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
-    
+
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
+    sc.PathSync();
     sc.initateNodeConfig(1);
     sc.initateNodeConfig(2);
     sc.initateNodeConfig(3);
@@ -39,8 +40,6 @@ function createWindow() {
     //const menu = Menu.buildFromTemplate(mainMenu.mainMenu)
     //mainWindow.webContents.openDevTools();
     //Menu.setApplicationMenu(menu)
-
-    sc.init();
 
     sc.StartNode(1,true).then((data)=>{
         console.log(data);

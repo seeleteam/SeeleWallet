@@ -121,18 +121,7 @@ function exportAccounts() {
 
   //Get account file names and source paths
   const fs = require('fs')
-  const srcpath = seeleClient.accountPath
-
-  //create directory
-  //var existingDirNames = fs.readdirSync(dstpath)
-  //var dirname = 'account'
-  //var i = 0
-  //
-  //while ( (dirname+i) in existingDirNames ) {i++}
-  //dirname = dirname + i
-  //
-  //fs.mkdir(dstpath+'/'+dirname, err => {
-  //  if (err && err.code != 'EEXIST') throw 'up'})
+  const srcpath = seeleClient.accountPaths
 
   //loop to copy
   seeleClient.accountList();
@@ -185,72 +174,36 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `</div>`;
     divhtml += `<h1 class="note">Note</h1>`;
     divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
-    // divhtml += `<h3 class="latest-title">Latest Transactions</h3>`
 
-    // divhtml += `<div class="account-contact"><p class="contact-left">`
-    // divhtml += `<span>Nov.</span><span>13</span>`
-    // divhtml += `</p>`
-    // divhtml += `<ul class="contact-right"><li>Created Contact</li>`
-    // divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    // divhtml += `</ul>`
-    // divhtml += `</div>`
-    //
-    // divhtml += `<div class="account-contact"><p class="contact-left">`
-    // divhtml += `<span>Nov.</span><span>13</span>`
-    // divhtml += `</p>`
-    // divhtml += `<ul class="contact-right"><li>Transfer Between Accounts</li>`
-    // divhtml += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
-    // divhtml += `</ul>`
-    // divhtml += `</div>`
-
-    // divhtml += `<div class="mine-config">`;
-    // divhtml += `<span style="font-size:15px; font-family: sans-serif; text-align: center; "> Choose "IP:PORT"s from Seelescan </span>`;
-    // divhtml += `<input type="image" src="./src/img/ViewonSeelescan.png" alt="Submit" width="18" height="18" style="cursor: pointer;" onclick="viewOnSeelescan('` + publickey + `')">`;
-    // divhtml += `<input style="margin:18px; width: 80%; height: 20px; text-align: center; padding: 0,0,20,0;">`;
-    // divhtml += `<input type="button" value="Cancel" id="mineConfigcancel" onclick="hidemineconfig()">`;
-    // divhtml += `<input type="button" value="Mine" id="createKey">`;
-    // divhtml += `</div>`;
-
-    //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
-    // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
     $('#tabs-1').html(divhtml)
 }
 
 // Account info page mining function
 
-function changeMingingStatus(publickey) {
+
+function changeMingingStatus (publickey) {
   var shard = seeleClient.getShardNum(publickey)
   var mineStatus = document.getElementById("isMining").innerText;
   if(mineStatus === "Start Mining") {
-    document.getElementById("isMining").innerText="Stop Mining";
-    // seeleClient.killnode(shard);
-    // seeleClient.startMine(publickey).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    //     console.log("Start Mining isn't working");
-    // });
+      document.getElementById("isMining").innerText="Stop Mining";
 
-    seeleClient.killnode(shard);
-    seeleClient.initateNodeConfig(shard);
-    seeleClient.StartNode(shard,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-        console.log("neither is start node working");
-    });
+      seeleClient.KillNode(shard)
+      setTimeout(function() {
+        seeleClient.StartMine(publickey);
+      }, 2000);
+
   } else if (mineStatus === "Stop Mining"){
-    document.getElementById("isMining").innerText="Start Mining";
-    seeleClient.killnode(shard);
-    seeleClient.initateNodeConfig(shard);
-    seeleClient.StartNode(shard,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-        console.log("neither is start node working");
-    });
-  }
-  // seeleClient.killNonminingNodeProcess(shard);
+      document.getElementById("isMining").innerText="Start Mining";
+
+      seeleClient.KillNode(shard)
+      setTimeout(function() {
+        seeleClient.initateNodeConfig(shard);
+        setTimeout(function() {
+          seeleClient.StartNode(shard,true);
+        }, 2000);
+      }, 2000);
+
+    }
 }
 
 function saveMineStatus (publickey) {

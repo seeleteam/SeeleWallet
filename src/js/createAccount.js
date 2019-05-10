@@ -26,19 +26,21 @@ addLoadEvent(function() {
 })
 
 function generateKey() {
+    console.log("generate key shown!")
     var shard = document.getElementById("shardnum")
     var passWord = document.getElementById("passWord")
 
     layer.load(0, { shade: false });
 
     seeleClient.generateKey(shard.value, passWord.value).then((outdata) => {
-        setInterval(function() {
-            if (fs.existsSync(seeleClient.accountPath + outdata.trim())) {
-                layer.closeAll();
-                window.location.reload();
-            }
-        }, 1000, "Interval");
+        // setInterval(function() {
+        //     if (fs.existsSync(seeleClient.accountPath + outdata.trim())) {
+        //         layer.closeAll();
+        //         window.location.reload();
+        //     }
+        // }, 1000, "Interval");
     }).catch(err => {
+        console.log("error in generateKEy")
         alert(err)
     });
 }
