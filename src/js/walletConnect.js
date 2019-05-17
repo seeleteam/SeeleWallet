@@ -87,11 +87,14 @@ function isListening() {
     setInterval(function(){
         var isListening = document.getElementById("isListening");
         seeleClient.isListening(shard, function (isListen,err) {
-            if (err) {
-                isListening.innerText = "Disconnected";
-            } else {
-                isListening.innerText = "Connected";
-            }
+          if (err) {
+              isListening.innerText = "Disconnected";
+              document.getElementById("isListening").style.color = '#EA322C';
+
+          } else {
+              isListening.innerText = "Connected";
+              document.getElementById("isListening").style.color = '#149D34';
+          }
         });
     }, 2000);
 }
