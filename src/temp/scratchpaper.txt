@@ -16,6 +16,9 @@ SeeleClient.StartNode()
 I will use the path.sep to clean up code a little
 
 SeeleClient.StartNode()
+<<<<<<< HEAD
 
 
 createkey -> 
+=======
+>>>>>>> 29fecc401c23ca1b79b5c1b40b35337ada7b84c6
