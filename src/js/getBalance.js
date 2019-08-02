@@ -78,7 +78,7 @@ function loadAccount() {
     tabs1HTML += `<div id="accountlist"></div>`
     tabs1HTML += `<button class="add-account" onclick="addAccount()">`
     tabs1HTML += `<span><img src="./src/img/add.png"></span>`
-    tabs1HTML += `<span>ADD ACCOUNT</span>`
+    tabs1HTML += `<span>CREATE ACCOUNT</span>`
     tabs1HTML += `</button>`
     tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
     tabs1HTML += `<h3 class="latest-title">Latest Transactions</h3>`
