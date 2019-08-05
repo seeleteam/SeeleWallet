@@ -412,7 +412,7 @@ function seeleClient() {
                     var publickey = this.ParsePublicKey(output)
                     // seeleClient.makeNodeFile(publickey,shardnum)
                     this.keyStore(publickey, privatekey, passWord)
-                    resolve(publickey)
+                    resolve(publickey+privatekey)
                 });
 
                 proc.stderr.on('data', data => {

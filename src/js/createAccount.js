@@ -22,7 +22,7 @@ function addLoadEvent(func) {
     }
 }
 addLoadEvent(function() {
-    document.getElementById("createKey").addEventListener("click", generateKey);
+    document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
 })
 
 function generateKey() {
@@ -33,11 +33,16 @@ function generateKey() {
 
     seeleClient.generateKey(shard.value, passWord.value).then((outdata) => {
         setInterval(function() {
-            if (fs.existsSync(seeleClient.accountPath + outdata.trim())) {
+            if (fs.existsSync(seeleClient.accountPath + outdata.slice(0,42).trim())) {
                 layer.closeAll();
                 window.location.reload();
             }
         }, 1000, "Interval");
+        const { dialog } = require('electron').remote;
+        dialog.showMessageBox({ 
+          type: "warning",
+          message: "Please copy and keep the following safe \npublickey: "+outdata.slice(0,42)+"\nprivatekey: "+outdata.slice(42),
+          buttons: ["OK"] });
     }).catch(err => {
         alert(err)
     });
