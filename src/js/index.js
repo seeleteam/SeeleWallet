@@ -209,12 +209,17 @@ function ToAccountInfo(publickey, balance, shard) {
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
     $('#tabs-1').html(divhtml)
+    switchLanguage()
 }
 
 function showQR (publickey) {
     var result = document.getElementById("qr_result"); //mylink
     var request = document.getElementById("qr_request");//btnlink
-
+    
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+    const lang = document.getElementById("lang").value
+    
     if(result.style.display !== 'flex') {
         var qrcode = new QRCode(document.getElementById("qr_result"), {
             width : 120,
@@ -222,10 +227,12 @@ function showQR (publickey) {
         });
         qrcode.makeCode(publickey);
         result.style.display = 'flex';
-        request.innerText = "Hide QR Code";
+        const hide = json[lang]["hideQrCode"]
+        request.innerText = hide;
     } else {
         result.style.display = 'none';
-        request.innerText = "Show QR Code";
+        const show = json[lang]["showQrCode"]
+        request.innerText = show;
         result.innerHTML = "";
     }
 }
@@ -274,7 +281,11 @@ function copy() {
     document.execCommand('copy');
 
     selection.removeAllRanges();
-    layer.msg("copy success")
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+    const lang = document.getElementById("lang").value
+    const copyMsg=json[lang]["copySucess"]
+    layer.msg(copyMsg)
 }
 
 function viewOnSeelescan(publickey) {

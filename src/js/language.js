@@ -33,12 +33,12 @@ function switchLanguage() {
     var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
     console.log()
     var literals = document.getElementsByClassName("lit");
+    const lang = document.getElementById("lang").value
+    console.log(lang)
     for (i = 0; i < literals.length; i++) {
         console.log(literals[i].id);
         // literals[i].innerHTML = "nono";
         
-        const lang = document.getElementById("lang").value
-        console.log(lang)
         literals[i].value = json[lang][literals[i].id];
         literals[i].innerHTML = json[lang][literals[i].id];
         literals[i].placeholder = json[lang][literals[i].id];

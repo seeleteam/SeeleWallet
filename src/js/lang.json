@@ -47,7 +47,18 @@
     "toView":"View On Seelescan",
     "toCopy":"Copy Address",
     "qr_request":"Show QR Code",
-    "note":"Note"
+    "note":"Note",
+    "warning_txpublicKey":"Please enter your account address",
+    "warning_to_required":"Please enter a valid to address",
+    "warning_to_rangelength":"Not a valid address",
+    "warning_accountpassword_required":"Please enter your account password",
+    "warning_amount_required":"Please enter the transfer amount",
+    "warning_amount_number":"Amount should be a valid number",
+    "warning_amount_fixedPrecision":"The max precision is 8",
+    "transactionSent":"Transaction sent!\n\n Tx Hash:\n",
+    "copySucess":"copy success",
+    "hideQrCode":"Hide QR Code",
+    "showQrCode":"Show QR Code"
   },
   "CN":{
     "balance":"余额",
@@ -97,6 +108,17 @@
     "toView":"在Seelescan查看",
     "toCopy":"复制账户公钥",
     "qr_request":"显示二维码",
-    "note":"注释"
+    "note":"注释",
+    "warning_txpublicKey":"请输入你的账户地址",
+    "warning_to_required":"请输入有效收账地址",
+    "warning_to_rangelength":"地址无效",
+    "warning_accountpassword_required":"请输入你的账户密码",
+    "warning_amount_required":"请输入交易金额",
+    "warning_amount_number":"金额需为有效数字",
+    "warning_amount_fixedPrecision":"最高精度为8",
+    "transactionSent":"交易发送\n\n 交易Hash:\n",
+    "copySucess":"成功复制",
+    "hideQrCode":"隐藏二维码",
+    "showQrCode":"显示二维码"
   }
 }
