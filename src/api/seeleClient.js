@@ -27,11 +27,15 @@ function seeleClient() {
 
     // shardCount = 4
 
-    this.client1 = new seelejs("http://localhost:8035");
-    this.client2 = new seelejs("http://localhost:8032");
-    this.client3 = new seelejs("http://localhost:8033");
-    this.client4 = new seelejs("http://localhost:8034");
+    // this.client1 = new seelejs("http://localhost:8035");
+    // this.client2 = new seelejs("http://localhost:8032");
+    // this.client3 = new seelejs("http://localhost:8033");
+    // this.client4 = new seelejs("http://localhost:8034");
 
+    this.client1 = new seelejs("http://104.218.164.169:8037");
+    this.client2 = new seelejs("http://107.150.105.10:8038");
+    this.client3 = new seelejs("http://107.150.103.125:8039");
+    this.client4 = new seelejs("http://104.218.164.193:8036");
 
     this.accountArray = [];
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";

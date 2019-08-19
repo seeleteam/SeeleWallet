@@ -18,10 +18,10 @@ function createWindow() {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
-    sc.initateNodeConfig(1);
-    sc.initateNodeConfig(2);
-    sc.initateNodeConfig(3);
-    sc.initateNodeConfig(4);
+    // sc.initateNodeConfig(1);
+    // sc.initateNodeConfig(2);
+    // sc.initateNodeConfig(3);
+    // sc.initateNodeConfig(4);
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()
@@ -40,26 +40,26 @@ function createWindow() {
 
     sc.init();
 
-    sc.StartNode(1,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(2,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(3,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(4,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
+    // sc.StartNode(1,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(2,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(3,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(4,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
     
 }
 // This method will be called when Electron has finished
