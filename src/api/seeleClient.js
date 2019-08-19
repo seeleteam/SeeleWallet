@@ -404,7 +404,7 @@ function seeleClient() {
                 var args = [
                     'key',
                 ];
-                if (shardnum != "") {
+                if (shardnum == "1" || shardnum == "2" || shardnum == "3" || shardnum == "4" ) {
                     args.push('--shard', shardnum)
                 }
 

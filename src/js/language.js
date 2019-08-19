@@ -39,8 +39,9 @@ function switchLanguage() {
         
         const lang = document.getElementById("lang").value
         console.log(lang)
+        literals[i].value = json[lang][literals[i].id];
         literals[i].innerHTML = json[lang][literals[i].id];
-        literals[i].value = json[lang][literals[i].id]
+        literals[i].placeholder = json[lang][literals[i].id];
     }
     // fetch("../lang.json") 
     // .then(response => response.json())

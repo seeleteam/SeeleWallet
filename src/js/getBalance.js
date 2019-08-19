@@ -133,7 +133,7 @@ function loadAccount() {
                 accountHTML += `<li class="lit" id="account">Account</li>`;
                 accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> seele</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
-                accountHTML += `<li>` + "<span class=\"lit\" id=\"shard-\">SHARD-</span>" + seeleClient.getShardNum(info.Account) + `</li>`;
+                accountHTML += `<li>` + "<span class=\"lit\" id=\"shard\">SHARD</span><span>-</span>" + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;

@@ -177,19 +177,19 @@
         <div class="dask"></div>
         <div class="minedask"></div>
         <div class="create-account">
-            <span class="name">KEEP PASSWORD and KEYS</span>
+            <span class="name lit" id="createWarning">KEEP PASSWORD and KEYS somewhere safe</span>
             <input type="password" class="login-field login-field-password" id="passWord" placeholder="set password">
             <div class="hideShowPassword-toggle">Show</div>
             <select id="shardnum">
-                <option value=''>Any</option>
+                <option class="lit" value='' id="any">Any</option>
                 <option value='1'>1</option>
                 <option value='2'>2</option>
                 <option value='3'>3</option>
                 <option value='4'>4</option>
             </select>
-            <span class="name">Shard</span>
-            <input type="button" value="Cancel" id="cancel">
-            <input type="button" value="OK" id="createKey">
+            <span class="name lit" id="shard">Shard</span>
+            <input class="name lit" type="button" value="Cancel" id="cancel">
+            <input class="name lit" type="button" value="OK" id="createKey">
             <span id="address"></span>
             <span id="filepath"></span>
         </div>
