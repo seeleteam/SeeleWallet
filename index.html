@@ -29,19 +29,19 @@
                             <option value="4">4</option>
                         </select></li>
                     <li><select id="lang" onInput="switchLanguage()">
-                            <option value="CN">CN</option>
                             <option value="EN">EN</option>
+                            <option value="CN">CN</option>
                     </select></li>
                 </ul>
-                <div class="get-balance"><span>BALANCE</span><span id="span_balance">0.00</span><span>SLE</span></div>
+                <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SLE</span></div>
             </div>
         </div>
         <div class="main">
             <div id="tab">
                 <ul>
-                    <li><a href="#tabs-1" title="WALLETS">WALLETS</a></li>
-                    <li><a href="#tabs-2" title="SEND">SEND</a></li>
-                    <li><a href="#tabs-3" title="CONTRACT">CONTRACT</a></li>
+                    <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
+                    <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
+                    <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li>
                 </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">
@@ -90,61 +90,57 @@
 
                     </div>
                     <div id="tabs-2">
-                        <h1 id="send-title" class="send-title">Send funds</h1>
+                        <h1 id="titleSend" class="send-title lit">Send funds</h1>
                         <form id="txform">
                             <ul class="send-list">
-                                <li id="shardfrom">From<input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
-                                <li id="shardto">To<input type="text" placeholder="0x000..." id="to" name="to" ></li>
-                                <li>Password<input type="password" placeholder="press key file password" id="accountpassWord" name="accountpassword"></li>
-                                <li>Amount<input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
+                                <li id="shardfrom"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
+                                <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li>
+                                <li><p class="lit" id="password">Password</p><input type="password" placeholder="press key file password" id="accountpassWord" name="accountpassword"></li>
+                                <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span id="txamount1">0.00</span>SEELE</li>
-                                <li>You want to send <span id="txamount2">0</span> SEELE </li>
+                                <li><span class="lit" id="youWantToSend">You want to send</span> <span id="txamount2">0</span> SEELE </li>
                             </ul>
-                            <h2 class="progress-title">Seele Fee</h2>
+                            <h2 class="progress-title lit" id="seeleFee">Seele Fee</h2>
                             <div class="progress" id="gasPrice">
                                 <ul>
-                                    <li>Slower</li>
-                                    <li>Faster</li>
+                                    <li class="lit" id="cheaper">Cheaper</li>
+                                    <li class="lit" id="faster">Faster</li>
                                 </ul>                                
                             </div>
-                            <p class="progress-info">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
+                            <p class="progress-info lit" id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
                                 <div class="gas-limit"> Estimated gas:<span id="estimatedgas">21000</span> </div>
                                 <dl class="total">
-                                <dt>TOTAL</dt>
+                                <dt class="lit" id="totalCost">TOTAL</dt>
                                 <dd><span id="totalamount">0.0</span> SEELE</dd>
                             </dl>
-                            <input id="sendtx" class="send" value="SEND" type="button">
+                            <input id="sendtx" class="send lit" value="SEND" type="button">
                         </form>
                     </div>
                     <div id="tabs-3">
-                        <h1 class="send-title">Deploy contract</h1>
+                        <h1 class="send-title lit" id="titleContract">Deploy contract</h1>
                         <form id="contractForm">
                             <ul class="send-list">
-                                <li>From<input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
-                                <li>Password<input type="password" placeholder="press key file password" id="contractAccountpassWord" name="contractAccountpassWord"></li>
-                                <li>Amount<input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
+                                <li><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
+                                <li><p class="lit" id="password">Password</p><input type="password" placeholder="press key file password" id="contractAccountpassWord" name="contractAccountpassWord"></li>
+                                <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
                                 <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
                                     <label for="sendEvery">Send everything</label></li> -->
-                                <li>You want to send <span id="ctxamount2">0.0 </span>SEELE</li>
+                                <li><span class="lit" id="youWantToSend">You want to send</span> <span id="ctxamount2">0.0 </span>SEELE</li>
                             </ul>
                             <div class="solc">
                                 <div class="tab-code">
                                     <ul>
-                                        <li class="code-default cur">SOLIDITY CONTRACT SOURCE CODE</li>
-                                        <li class="code-after">CONTRACT BYTE CODE</li>
+                                        <li class="code-default cur lit" id="contractSource">SOLIDITY CONTRACT SOURCE CODE</li>
+                                        <li class="code-after lit" id="contractByte">CONTRACT BYTE CODE</li>
                                     </ul>
                                     <div id="getPayload" name="getPayload" style="display:none"></div>
                                     <div id="contractSourceCode" style="display:none"></div>
                                     <div class="code_container">
-                                        <textarea id="contractInput">pragma solidity ^0.5.0;
-contract validUintContractTest {
-    function test() public pure {
-    }
-}</textarea>
+                                        <textarea id="contractInput">pragma solidity ^0.5.0;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
                                     </div>
                                 </div>
-                                <input type="button" class="compile" id="compileContract" value="Compile" />
+                                <input type="button" class="compile lit" id="compileContract" value="Compile" />
                                 <div id="compileSuccess" class="success-result">
                                     <span class="success"></span>
                                 </div>
@@ -159,20 +155,20 @@ contract validUintContractTest {
                             <h2 class="progress-title">Seele Fee</h2>
                             <div class="progress" id="contractGasPrice">
                                 <ul>
-                                    <li>Cheaper</li>
-                                    <li>Faster</li>
-                                </ul>
+                                    <li class="lit" id="cheaper">Cheaper</li>
+                                    <li class="lit" id="faster">Faster</li>
+                                </ul>                                
                             </div>
-                            <p class="progress-info">This is the most amount of money that might be used to process
+                            <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
                                 this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
                                 <div class="gas-limit"> Estimated gas:<span id="ctx-estimatedgas">21000</span> </div>
                             <dl class="total">
-                                <dt>TOTAL</dt>
+                                <dt class="lit" id="totalCost">TOTAL</dt>
                                 <dd><span id="ctx-totalamount">0.0</span> SEELE</dd>
                             </dl>
                             <div id="QueryHash" style="display:none"></div>
-                            <input id="deployContract" class="send" value="Deploy" type="button">
-                            <input id="QueryContract" class="send Query" value="Query" type="button">
+                            <input id="deployContract" class="send lit" value="Deploy" type="button">
+                            <input id="QueryContract" class="send Query lit" value="Query" type="button">
                         </form>
                     </div>
                 </div>
@@ -231,6 +227,7 @@ contract validUintContractTest {
 <script src="./src/js/jquery-ui-slider-pips.js"></script>
 <script src="./src/js/jquery.validate.js"></script>
 
+<script src="./src/js/language.js"></script>
 <script src="./src/js/hidePassword.js"></script>
 <script src="./src/js/clipboard.min.js"></script>
 <script src="./src/js/tab.js"></script>
