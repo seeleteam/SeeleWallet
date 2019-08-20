@@ -28,17 +28,13 @@ function switchLanguage() {
     var json = JSON.parse(fs.readFileSync('./src/js/lang.json').toString());
     const lang = document.getElementById("lang").value
     var literals = document.getElementsByClassName("lit");
-    // console.log(process.cwd());
-    // console.log(lang)
     for (i = 0; i < literals.length; i++) {
         literals[i].value = json[lang][literals[i].id];
         literals[i].innerHTML = json[lang][literals[i].id];
         literals[i].placeholder = json[lang][literals[i].id];
     }
     
-    //also save it ...
     const editJsonFile = require("edit-json-file");
-    // console.log(seeleClient.configpath);
     let file = editJsonFile(seeleClient.configpath);   
     file.set("lang", ''+lang);
     file.save();
@@ -82,5 +78,4 @@ function switchLanguage() {
             }
         }
       });
-    // location.reload();
 }
