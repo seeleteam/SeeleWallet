@@ -58,7 +58,11 @@
     "transactionSent":"Transaction sent!\n\n Tx Hash:\n",
     "copySucess":"copy success",
     "hideQrCode":"Hide QR Code",
-    "showQrCode":"Show QR Code"
+    "showQrCode":"Show QR Code",
+    "privatenet":"private",
+    "mainnet":"main",
+    "connected":"connected",
+    "disconnected":"disconnected"
   },
   "中文":{
     "balance":"余额",
@@ -119,6 +123,10 @@
     "transactionSent":"交易发送\n\n 交易Hash:\n",
     "copySucess":"成功复制",
     "hideQrCode":"隐藏二维码",
-    "showQrCode":"显示二维码"
+    "showQrCode":"显示二维码",
+    "privatenet":"私网",
+    "mainnet":"主网",
+    "connected":"已连接",
+    "disconnected":"未连接"
   }
 }
