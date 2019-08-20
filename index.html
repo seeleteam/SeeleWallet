@@ -30,7 +30,7 @@
                         </select></li>
                     <li><select id="lang" onInput="switchLanguage()">
                             <option value="EN">EN</option>
-                            <option value="CN">CN</option>
+                            <option value="中文">中文</option>
                     </select></li>
                 </ul>
                 <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SLE</span></div>
@@ -214,12 +214,16 @@
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
-            require('./src/api/seeleClient.js')
+            var seeleclient = require('./src/api/seeleClient.js')
             require('./src/js/getBalance.js')
             require('./src/js/createAccount.js')
             // require('./src/js/sendtx.js')
             require('./src/js/walletConnect.js')
             require('./src/js/contract.js')
+            const fs = require('fs');
+            client = new seeleclient;
+            var json = JSON.parse(fs.readFileSync(client.configpath).toString());
+            document.getElementById("lang").value=json["lang"]
         </script>
 </body>
 <script src="./src/js/jQuery.js"></script>

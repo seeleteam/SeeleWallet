@@ -52,6 +52,7 @@ addLoadEvent(function() {
         var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
         document.getElementById("totalamount").innerText=total;
     } );
+    console.log("when is validator triggerred?")
     validator =   $('form[id="txform"]').validate({
         // Specify validation rules
         rules: {
@@ -69,10 +70,12 @@ addLoadEvent(function() {
           amount:{
               required:true,
               number:true,
-              fixedPrecision:8
+              fixedPrecision:9
           }
         },
         // Specify validation error messages
+        // publickey: 0xe1e3f55628ac137f34da83b2d24aa55066247f81
+        // privatekey: 0x95adf50a30eceaf5e6d615ffbfcddf7a1ac1f99677f4e132d52dddc2e8ac2638
         messages: {
             txpublicKey: "Please enter your account address",
             to: {
@@ -89,6 +92,44 @@ addLoadEvent(function() {
             }
         }
       });
+      
+      // validator =   $('form[id="txform"]').validate({
+      //     // Specify validation rules
+      //     rules: {
+      //       // The key name on the left side is the name attribute
+      //       // of an input field. Validation rules are defined
+      //       // on the right side
+      //       txpublicKey: "required",
+      //       to: {
+      //           required:true,
+      //           rangelength:[42,42]
+      //       },
+      //       accountpassword: {
+      //           required:true
+      //       },
+      //       amount:{
+      //           required:true,
+      //           number:true,
+      //           fixedPrecision:8
+      //       }
+      //     },
+      //     // Specify validation error messages
+      //     messages: {
+      //         txpublicKey: "请输入您的发送者地址",
+      //         to: {
+      //             required:"请输入有效接收者地址",
+      //             rangelength:"地址无效"
+      //         },
+      //         accountpassword:{
+      //             required:"请输入您的账户文档密码"
+      //         },
+      //         amount:{
+      //             required:"请输入发送金额",
+      //             number:"金额数字无效",
+      //             fixedPrecision:"精确到小数第八位"
+      //         }
+      //     }
+      //   });
 })
 
 function sendtx() {

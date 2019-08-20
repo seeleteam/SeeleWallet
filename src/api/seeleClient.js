@@ -38,6 +38,7 @@ function seeleClient() {
     this.client4 = new seelejs("http://104.218.164.193:8036");
 
     this.accountArray = [];
+    this.configpath = os.homedir()+"/.SeeleWallet/config.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
