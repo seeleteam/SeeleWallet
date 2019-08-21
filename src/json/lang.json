@@ -63,7 +63,14 @@
     "disconnected":"disconnected",
     "netWork":"private",
     "isListening":"disconnected",
-    "manage":"manage"
+    "manage":"manage",
+    "passwordWarning":{
+      "length":"Password must contain at least 10 characters",
+      "uppercase":"Password must contain at least 1 uppercase letter",
+      "letter":"Password must contain at least 1 letter",
+      "number":"Password must contain at least 1 number",
+      "specialChar":"Password must contain at least 1 special char"
+    } 
   },
   "中文":{
     "balance":"余额",
@@ -129,6 +136,13 @@
     "disconnected":"未连接",
     "netWork":"私网",
     "isListening":"未连接",
-    "manage":"管理"
+    "manage":"管理",
+    "passwordWarning":{
+      "length":"密码必须含至少10个字符",
+      "uppercase":"密码必须含至少1个大写字母",
+      "letter":"密码必须含至少1个字母",
+      "number":"密码必须含至少1个数字",
+      "specialChar":"密码必须含至少1个特殊字符"
+    } 
   }
 }
