@@ -41,7 +41,7 @@ function generateKey() {
         const { dialog } = require('electron').remote;
         const lang = document.getElementById("lang").value;
         const fs = require('fs');
-        var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+        var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
         const createwarning1 = json[lang]["saveWarning1"];
         const createwarning2 = json[lang]["saveWarning2"];
         const ok = json[lang]["ok"];

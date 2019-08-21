@@ -3,8 +3,6 @@
     "balance":"BALANCE",
     "seele":"SLE",
     "wallets":"WALLETS",
-    "export":"EXPORT",
-    "import":"IMPORT",
     "createAccount":"CREATE",
     "createInfo":"Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.",
     "latestTransactions":"Latest Transactions",
@@ -64,14 +62,13 @@
     "connected":"connected",
     "disconnected":"disconnected",
     "netWork":"private",
-    "isListening":"disconnected"
+    "isListening":"disconnected",
+    "manage":"manage"
   },
   "中文":{
     "balance":"余额",
     "seele":"SLE",
     "wallets":"账户总览",
-    "export":"导出",
-    "import":"导入",
     "createAccount":"创建账户",
     "createInfo":"账户指的是用于签名交易与合约所用的钥匙文本身不能展示账户交易",
     "latestTransactions":"最新交易记录",
@@ -131,6 +128,7 @@
     "connected":"已连接",
     "disconnected":"未连接",
     "netWork":"私网",
-    "isListening":"未连接"
+    "isListening":"未连接",
+    "manage":"管理"
   }
 }
