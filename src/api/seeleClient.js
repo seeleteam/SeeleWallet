@@ -569,13 +569,14 @@ function seeleClient() {
         }
 
         var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
-
+        // console.log("nonce returned nonce: "+nonce)
+        nonce+=1
         var rawTx = {
             "Type":0,
             "From": publicKey,
             "To": to,
             "Amount": parseInt(amount*Math.pow(10,8)),
-            "AccountNonce": nonce,
+            "AccountNonce": nonce+1,
             "GasPrice": parseInt(price),
             "GasLimit": parseInt(gaslimit),//3000000,
             "Timestamp": 0,
