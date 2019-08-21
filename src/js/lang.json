@@ -62,7 +62,9 @@
     "privatenet":"private",
     "mainnet":"main",
     "connected":"connected",
-    "disconnected":"disconnected"
+    "disconnected":"disconnected",
+    "netWork":"private",
+    "isListening":"disconnected"
   },
   "中文":{
     "balance":"余额",
@@ -127,6 +129,8 @@
     "privatenet":"私网",
     "mainnet":"主网",
     "connected":"已连接",
-    "disconnected":"未连接"
+    "disconnected":"未连接",
+    "netWork":"私网",
+    "isListening":"未连接"
   }
 }

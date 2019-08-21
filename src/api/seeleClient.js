@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 var seelejs = require('seeleteam.js');
 var fs = require('fs');
-var os = require("os")
+var os = require("os");
 var path = require('path');
 var shell = require('shelljs');
 var editFile = require("edit-json-file");
@@ -213,7 +213,8 @@ function seeleClient() {
         if (!fs.existsSync(this.nodeConfigPath)) {
             fs.mkdirSync(this.nodeConfigPath)
         }
-        shell.cp('-f', nodefile, dstfile);        
+        shell.cp('-f', nodefile, dstfile); 
+               
         //replace files with right configs
         this.setUpNodeFile(dstfile, account, shard, initiate)
     } 

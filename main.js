@@ -27,6 +27,13 @@ function createWindow() {
     //mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
+    const os = require("os")
+    const shell = require('shelljs');
+    const fs = require('fs');
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
+      shell.cp('-f', './src/api/config.json', os.homedir()+'/.SeeleWallet/')
+    }
+    
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
