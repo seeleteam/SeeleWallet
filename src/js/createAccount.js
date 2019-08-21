@@ -39,10 +39,16 @@ function generateKey() {
             }
         }, 1000, "Interval");
         const { dialog } = require('electron').remote;
+        const lang = document.getElementById("lang").value;
+        const fs = require('fs');
+        var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+        const createwarning1 = json[lang]["saveWarning1"];
+        const createwarning2 = json[lang]["saveWarning2"];
+        const ok = json[lang]["ok"];
         dialog.showMessageBox({ 
           type: "warning",
-          message: "Please copy and keep the following safe \npublickey: "+outdata.slice(0,42)+"\nprivatekey: "+outdata.slice(42),
-          buttons: ["OK"] });
+          message: createwarning1+outdata.slice(0,42)+createwarning2+outdata.slice(42),
+          buttons: [ok] });
     }).catch(err => {
         alert(err)
     });

@@ -18,15 +18,22 @@ function createWindow() {
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
-    sc.initateNodeConfig(1);
-    sc.initateNodeConfig(2);
-    sc.initateNodeConfig(3);
-    sc.initateNodeConfig(4);
+    // sc.initateNodeConfig(1);
+    // sc.initateNodeConfig(2);
+    // sc.initateNodeConfig(3);
+    // sc.initateNodeConfig(4);
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
+    const os = require("os")
+    const shell = require('shelljs');
+    const fs = require('fs');
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
+      shell.cp('-f', './src/api/config.json', os.homedir()+'/.SeeleWallet/')
+    }
+    
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -34,32 +41,32 @@ function createWindow() {
         mainWindow = null
     })
 
-    //const menu = Menu.buildFromTemplate(mainMenu.mainMenu)
-    //mainWindow.webContents.openDevTools();
-    //Menu.setApplicationMenu(menu)
+    // const menu = Menu.buildFromTemplate(mainMenu.mainMenu)
+    // mainWindow.webContents.openDevTools();
+    // Menu.setApplicationMenu(menu)
 
     sc.init();
 
-    sc.StartNode(1,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(2,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(3,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
-    sc.StartNode(4,true).then((data)=>{
-        console.log(data);
-    }).catch((data) => {
-        console.log(data);
-    });
+    // sc.StartNode(1,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(2,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(3,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
+    // sc.StartNode(4,true).then((data)=>{
+    //     console.log(data);
+    // }).catch((data) => {
+    //     console.log(data);
+    // });
     
 }
 // This method will be called when Electron has finished

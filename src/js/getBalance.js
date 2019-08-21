@@ -56,33 +56,19 @@ function loadAccount() {
     var tabs1 = document.getElementById("tabs-1");
     tabs1.innerHTML = "";
 
-    var tabs1HTML =`<div id="main-container">`
-    tabs1HTML +=`<div><h1>Accounts Overview</h1></div>`
-
-    // tabs1HTML += `<div><button class="export-account" title="EXPORT ACCOUNTS" onclick="exportAccounts()">`
-    // tabs1HTML += `<span><img src="./src/img/export.png"></span>`
-    // // tabs1HTML += `<span>EXPORT ACCOUNTS</span>`
-    // tabs1HTML += `</button>`
-    // tabs1HTML += `<button class="import-account" title="IMPORT ACCOUNTS" onclick="importAccounts()">`
-    // tabs1HTML += `<span><img src="./src/img/import.png"></span>`
-    // // tabs1HTML += `<span>IMPORT ACCOUNTS</span>`
-    // tabs1HTML += `</button></div>`
-
-    tabs1HTML += `<div><button class="export-account" title="EXPORT ACCOUNTS" onclick="exportAccounts()">`
-    // tabs1HTML += `<span><img src="./src/img/export.png"></span>`
-    tabs1HTML += `EXPORT`
-    tabs1HTML += `</button>`
-    tabs1HTML += `<button class="import-account" title="IMPORT ACCOUNTS" onclick="importAccounts()">IMPORT</button></div>`
-
-    tabs1HTML += `</div>`
+    var tabs1HTML = `<div id="main-container">`
+    tabs1HTML += `<div><h1 class="lit" id="titleWallets">Accounts overview</h1></div>`
+    tabs1HTML += `<div><button class="export-account lit" title="EXPORT ACCOUNTS" id="export" onclick="exportAccounts()">export</button>`
+    tabs1HTML += `<button class="import-account lit" title="IMPORT ACCOUNTS" id="import" onclick="importAccounts()">import</button></div></div>`
     tabs1HTML += `<div id="accountlist"></div>`
     tabs1HTML += `<button class="add-account" onclick="addAccount()">`
     tabs1HTML += `<span><img src="./src/img/add.png"></span>`
-    tabs1HTML += `<span>CREATE ACCOUNT</span>`
+    tabs1HTML += `<span class="lit" id="createAccount">CREATE</span>`
     tabs1HTML += `</button>`
-    tabs1HTML += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
-    tabs1HTML += `<h3 class="latest-title">Latest Transactions</h3>`
+    tabs1HTML += `<p class="info lit" id="createInfo">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.</p>`
+    tabs1HTML += `<h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3>`
 
+    // transaction examples
     // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
     // tabs1HTML += `<span>Nov.</span><span>13</span>`
     // tabs1HTML += `</p>`
@@ -90,7 +76,7 @@ function loadAccount() {
     // tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
     // tabs1HTML += `</ul>`
     // tabs1HTML += `</div>`
-
+    // 
     // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
     // tabs1HTML += `<span>Nov.</span><span>13</span>`
     // tabs1HTML += `</p>`
@@ -103,9 +89,9 @@ function loadAccount() {
         var time = new Date(seeleClient.txArray[item].time)
         
         tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-        tabs1HTML += `<span>`+time.toDateString().split(" ")[1]+`</span><span>`+time.getDate()+`</span>`
+        tabs1HTML += `<span>`+time.toLocaleDateString()+`  `+time.toLocaleTimeString()+`</span><span>`+time.getDate()+`</span>`
         tabs1HTML += `</p>`
-        tabs1HTML += `<ul class="contact-right"><li>Created </li>`
+        tabs1HTML += `<ul class="contact-right"><li class="lit" id="created">Created </li>`
         tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
@@ -144,10 +130,10 @@ function loadAccount() {
                 accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + (info.Balance / 100000000).toFixed(3) + `,` + seeleClient.getShardNum(info.Account) + `)">`;
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
-                accountHTML += `<li>Account</li>`;
+                accountHTML += `<li class="lit" id="account">Account</li>`;
                 accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> seele</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
-                accountHTML += `<li>` + "Shard-" + seeleClient.getShardNum(info.Account) + `</li>`;
+                accountHTML += `<li>` + "<span class=\"lit\" id=\"shard\">SHARD</span><span>-</span>" + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;
@@ -175,6 +161,7 @@ function loadAccount() {
                 }
                 balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
+            switchLanguage()
         })
        
     }

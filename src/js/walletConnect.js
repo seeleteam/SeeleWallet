@@ -5,6 +5,9 @@ var SeeleClient = require('../api/seeleClient');
 
 seeleClient = new SeeleClient();
 var shard
+const fs = require('fs');
+var json = JSON.parse(fs.readFileSync('./src/js/lang.json').toString());
+
 
 function addLoadEvent(func) {
     var oldonload = window.onload;
@@ -51,18 +54,19 @@ function getNetWork() {
     var mainNetWork3 = '0x9100dd797bb7dd309ce7f132d389f1c6a50c728956eff0c2f878c0e67b5ecd2a'
     var mainNetWork4 = '0x17baaedc248777709511e9966719622fe11e4189825c5722f555bd292b6e84be'
     seeleClient.getblock(shard, "", 0, false, function (block,err) {
+        const lang = document.getElementById("lang").value
         if (err) {
-            netWork.innerText = "private";
+            netWork.innerText = json[lang]["privatenet"];
         } else {
             switch (block.hash) {
                 case mainNetWork1:
                 case mainNetWork2:
                 case mainNetWork3:
                 case mainNetWork4:
-                    netWork.innerText = "main";
+                    netWork.innerText = json[lang]["mainnet"];
                     break
                 default:
-                    netWork.innerText = "private";
+                    netWork.innerText = json[lang]["privatenet"];
                     break
             }
         }
@@ -87,10 +91,11 @@ function isListening() {
     setInterval(function(){
         var isListening = document.getElementById("isListening");
         seeleClient.isListening(shard, function (isListen,err) {
+            const lang = document.getElementById("lang").value
             if (err) {
-                isListening.innerText = "Disconnected";
+                isListening.innerText = json[lang]["disconnected"];
             } else {
-                isListening.innerText = "Connected";
+                isListening.innerText = json[lang]["connected"];
             }
         });
     }, 2000);

@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 var seelejs = require('seeleteam.js');
 var fs = require('fs');
-var os = require("os")
+var os = require("os");
 var path = require('path');
 var shell = require('shelljs');
 var editFile = require("edit-json-file");
@@ -27,13 +27,18 @@ function seeleClient() {
 
     // shardCount = 4
 
-    this.client1 = new seelejs("http://localhost:8035");
-    this.client2 = new seelejs("http://localhost:8032");
-    this.client3 = new seelejs("http://localhost:8033");
-    this.client4 = new seelejs("http://localhost:8034");
+    // this.client1 = new seelejs("http://localhost:8035");
+    // this.client2 = new seelejs("http://localhost:8032");
+    // this.client3 = new seelejs("http://localhost:8033");
+    // this.client4 = new seelejs("http://localhost:8034");
 
+    this.client1 = new seelejs("http://104.218.164.169:8037");
+    this.client2 = new seelejs("http://107.150.105.10:8038");
+    this.client3 = new seelejs("http://107.150.103.125:8039");
+    this.client4 = new seelejs("http://104.218.164.193:8036");
 
     this.accountArray = [];
+    this.configpath = os.homedir()+"/.SeeleWallet/config.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
@@ -208,7 +213,8 @@ function seeleClient() {
         if (!fs.existsSync(this.nodeConfigPath)) {
             fs.mkdirSync(this.nodeConfigPath)
         }
-        shell.cp('-f', nodefile, dstfile);        
+        shell.cp('-f', nodefile, dstfile); 
+               
         //replace files with right configs
         this.setUpNodeFile(dstfile, account, shard, initiate)
     } 
@@ -400,7 +406,7 @@ function seeleClient() {
                 var args = [
                     'key',
                 ];
-                if (shardnum != "") {
+                if (shardnum == "1" || shardnum == "2" || shardnum == "3" || shardnum == "4" ) {
                     args.push('--shard', shardnum)
                 }
 

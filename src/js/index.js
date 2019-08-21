@@ -142,15 +142,15 @@ function exportAccounts() {
 }
 
 function ToAccountInfo(publickey, balance, shard) {
-    var divhtml = ""
+    var divhtml = ``
     divhtml += `<div id="accountlist" onload="resetGlobal()">`;
     divhtml += `<div class="accountFor">`;
     divhtml += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
     divhtml += `<ul>`;
-    divhtml += `<li>Account</li>`;
+    divhtml += `<li class="lit" id="account">Account</li>`;
     divhtml += `<li><span>` + balance + `</span> Seele</li>`;
     divhtml += `<li class="publickey">` + publickey + `</li>`;
-    divhtml += `<li class="shard">` + "shard-" + shard + `</li>`;
+    divhtml += `<li class="shard">` + "<span class=\"lit\" id=\"shard\">SHARD</span><span>-</span>" + shard + `</li>`;
     divhtml += `</ul>`;
     divhtml += `</div>`;
     divhtml += `</div>`;
@@ -161,25 +161,25 @@ function ToAccountInfo(publickey, balance, shard) {
 //     divhtml += `</dl>`;
     divhtml += `<dl onclick="transfer('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/Transfer.png"></dt>`;
-    divhtml += `<dd>Transfer Seele & Tokens</dd>`;
+    divhtml += `<dd class="lit" id="toTransfer">Transfer Seele & Tokens</dd>`;
     divhtml += `</dl>`;
     divhtml += `<dl style="cursor: pointer;" onclick="viewOnSeelescan('` + publickey + `')">`;
     divhtml += `<dt><a href="#"><img src="./src/img/ViewonSeelescan.png"></a></dt>`;
-    divhtml += `<dd>View On Seelescan</dd>`;
+    divhtml += `<dd class="lit" id="toView">View On Seelescan</dd>`;
     divhtml += `</dl>`;
     divhtml += `<dl class="dl_copy" style="cursor: pointer;" onclick="copy()">`;
     divhtml += `<dt id="minePic"><img src="./src/img/copy.png"></dt>`;
-    divhtml += `<dd>Copy Address</dd>`;
+    divhtml += `<dd class="lit" id="toCopy">Copy Address</dd>`;
     divhtml += `</dl>`;
     divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
     divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
-    divhtml += `<dd id="qr_request">Show QR Code</dd></br>`;
+    divhtml += `<dd class="lit" id="qr_request">Show QR Code</dd></br>`;
     divhtml += `</dl>`;
     divhtml += `<dl id="qr_result" class="qr_result" align="left">`
     divhtml += `</dl>`
     divhtml += `</div>`;
-    divhtml += `<h1 class="note">Note</h1>`;
-    divhtml += `<p class="info">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
+    divhtml += `<h1 class="note lit" id="note">Note</h1>`;
+    divhtml += `<p class="info lit" id="createInfo">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
     // divhtml += `<h3 class="latest-title">Latest Transactions</h3>`
 
     // divhtml += `<div class="account-contact"><p class="contact-left">`
@@ -209,12 +209,17 @@ function ToAccountInfo(publickey, balance, shard) {
     //divhtml += `<span class="publickey" style="display:none">` + publickey + `<span>`
     // divhtml += `<input id="cptg" style="display: none;" value="` + publickey + `" readonly/>`
     $('#tabs-1').html(divhtml)
+    switchLanguage()
 }
 
 function showQR (publickey) {
     var result = document.getElementById("qr_result"); //mylink
     var request = document.getElementById("qr_request");//btnlink
-
+    
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+    const lang = document.getElementById("lang").value
+    
     if(result.style.display !== 'flex') {
         var qrcode = new QRCode(document.getElementById("qr_result"), {
             width : 120,
@@ -222,10 +227,12 @@ function showQR (publickey) {
         });
         qrcode.makeCode(publickey);
         result.style.display = 'flex';
-        request.innerText = "Hide QR Code";
+        const hide = json[lang]["hideQrCode"]
+        request.innerText = hide;
     } else {
         result.style.display = 'none';
-        request.innerText = "Show QR Code";
+        const show = json[lang]["showQrCode"]
+        request.innerText = show;
         result.innerHTML = "";
     }
 }
@@ -274,7 +281,11 @@ function copy() {
     document.execCommand('copy');
 
     selection.removeAllRanges();
-    layer.msg("copy success")
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/js/lang.json').toString());
+    const lang = document.getElementById("lang").value
+    const copyMsg=json[lang]["copySucess"]
+    layer.msg(copyMsg)
 }
 
 function viewOnSeelescan(publickey) {

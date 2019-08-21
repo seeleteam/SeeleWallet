@@ -1,7 +1,7 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-var SeeleClient = require('../api/seeleClient');
+var SeeleClient = require('./src/api/seeleClient');
 const BigNumber = require('bignumber.js');
 seeleClient = new SeeleClient();
 
@@ -69,7 +69,7 @@ addLoadEvent(function() {
           amount:{
               required:true,
               number:true,
-              fixedPrecision:8
+              fixedPrecision:9
           }
         },
         // Specify validation error messages
