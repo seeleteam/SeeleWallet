@@ -576,7 +576,7 @@ function seeleClient() {
             "From": publicKey,
             "To": to,
             "Amount": parseInt(amount*Math.pow(10,8)),
-            "AccountNonce": nonce+1,
+            "AccountNonce": nonce,
             "GasPrice": parseInt(price),
             "GasLimit": parseInt(gaslimit),//3000000,
             "Timestamp": 0,

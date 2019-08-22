@@ -29,12 +29,16 @@ function passwordStrengthTest(password){
   // length, case, number, specialchar
   var err = []
   const len = password.length
-  if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]) }
+  if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
   if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
   if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
   if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
   if (/^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
-  return err
+  if (err.length != 0) {
+    var errmsg = [json[lang]["passwordWarning"]["fail"]];
+    errmsg.concat(err);
+  }
+  return errmsg
 }
 
 addLoadEvent(function() {
@@ -47,8 +51,8 @@ function generateKey() {
     
     var result = passwordStrengthTest(passWord.value);
     if(result.length!=0){
-      var alertmsg = "Password create failed:";
-      for (i = 0; i < result.length; i++ ){
+      var alertmsg = result[0];
+      for (i = 1; i < result.length; i++ ){
         alertmsg += "\n"+result[i];
       }
       alert(alertmsg)
