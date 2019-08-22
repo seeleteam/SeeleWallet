@@ -8,7 +8,6 @@ var shard
 const fs = require('fs');
 var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
 
-
 function addLoadEvent(func) {
     var oldonload = window.onload;
     if (typeof window.onload != 'function') {
