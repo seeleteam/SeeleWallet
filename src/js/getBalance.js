@@ -58,8 +58,7 @@ function loadAccount() {
 
     var tabs1HTML = `<div id="main-container">`
     tabs1HTML += `<div><h1 class="lit" id="titleWallets">Accounts overview</h1></div>`
-    tabs1HTML += `<div><button class="export-account lit" title="EXPORT ACCOUNTS" id="export" onclick="exportAccounts()">export</button>`
-    tabs1HTML += `<button class="import-account lit" title="IMPORT ACCOUNTS" id="import" onclick="importAccounts()">import</button></div></div>`
+    tabs1HTML += `<div><button class="export-account lit" title="MANAGE ACCOUNTS" id="manage" onclick="showAccountDir()">manage</button></div></div>`
     tabs1HTML += `<div id="accountlist"></div>`
     tabs1HTML += `<button class="add-account" onclick="addAccount()">`
     tabs1HTML += `<span><img src="./src/img/add.png"></span>`

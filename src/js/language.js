@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function switchLanguage() {
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync('./src/js/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
     const lang = document.getElementById("lang").value
     var literals = document.getElementsByClassName("lit");
     for (i = 0; i < literals.length; i++) {

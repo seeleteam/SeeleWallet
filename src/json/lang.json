@@ -1,16 +1,14 @@
 {
   "EN":{
     "balance":"BALANCE",
-    "seele":"SLE",
+    "seele":"SEELE",
     "wallets":"WALLETS",
-    "export":"EXPORT",
-    "import":"IMPORT",
     "createAccount":"CREATE",
     "createInfo":"Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming transactions.",
     "latestTransactions":"Latest Transactions",
     "created":"Created",
     "account":"Account",
-    "inSeele":"SLE",
+    "inSeele":"SEELE",
     "shard":"SHARD",
     "tabWallets":"WALLETS",
     "tabSend":"SEND",
@@ -36,7 +34,7 @@
     "contractInfo":"This is the most amount of money that might be used to process this transaction. Your transaction will be mined probably within 30 seconds",
     "deployContract":"DEPLOY",
     "QueryContract":"QUERY",
-    "createWarning":"KEEP PASSWORD and KEYS somewhere safe",
+    "createWarning":"Secure your PASSWORD and KEYS, password must be 10+ characters long and include numbers, alphabets and special symbols",
     "any":"Any",
     "cancel":"Cancel",
     "createKey":"OK",
@@ -64,20 +62,27 @@
     "connected":"connected",
     "disconnected":"disconnected",
     "netWork":"private",
-    "isListening":"disconnected"
+    "isListening":"disconnected",
+    "manage":"manage",
+    "passwordWarning":{
+      "fail":"Fail to Create password",
+      "length":"Password must contain at least 10 characters",
+      "uppercase":"Password must contain at least 1 uppercase letter",
+      "letter":"Password must contain at least 1 letter",
+      "number":"Password must contain at least 1 number",
+      "specialChar":"Password must contain at least 1 special char"
+    } 
   },
   "中文":{
     "balance":"余额",
-    "seele":"SLE",
+    "seele":"SEELE",
     "wallets":"账户总览",
-    "export":"导出",
-    "import":"导入",
     "createAccount":"创建账户",
-    "createInfo":"账户指的是用于签名交易与合约所用的钥匙文本身不能展示账户交易",
+    "createInfo":"秘钥文件可用于交易与合约的签名，本身不含交易历史",
     "latestTransactions":"最新交易记录",
     "created":"创建",
     "account":"账户",
-    "inSeele":"SLE",
+    "inSeele":"SEELE",
     "shard":"片",
     "tabWallets":"钱包",
     "tabSend":"交易",
@@ -102,8 +107,8 @@
     "compileContract":"编译",
     "contractInfo":"这是处理该类交易可以使用的最高额度。该类交易从发送到距查询大约需要30秒",
     "deployContract":"部署",
-    "QueryContract":"搜寻",
-    "createWarning":"请保存好密码和账户文档",
+    "QueryContract":"查找",
+    "createWarning":"请保存密码和秘钥文件，密码要10位以上含字母数字特殊字符",
     "any":"任意",
     "cancel":"取消",
     "createKey":"创建",
@@ -131,6 +136,15 @@
     "connected":"已连接",
     "disconnected":"未连接",
     "netWork":"私网",
-    "isListening":"未连接"
+    "isListening":"未连接",
+    "manage":"管理",
+    "passwordWarning":{
+      "fail":"账户创建失败",
+      "length":"密码必须含至少10个字符",
+      "uppercase":"密码必须含至少1个大写字母",
+      "letter":"密码必须含至少1个字母",
+      "number":"密码必须含至少1个数字",
+      "specialChar":"密码必须含至少1个特殊字符"
+    } 
   }
 }

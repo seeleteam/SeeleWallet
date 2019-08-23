@@ -31,7 +31,7 @@ function createWindow() {
     const shell = require('shelljs');
     const fs = require('fs');
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
-      shell.cp('-f', './src/api/config.json', os.homedir()+'/.SeeleWallet/')
+      shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
     }
     
     mainWindow.on('closed', function() {

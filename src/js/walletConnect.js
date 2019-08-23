@@ -6,8 +6,7 @@ var SeeleClient = require('../api/seeleClient');
 seeleClient = new SeeleClient();
 var shard
 const fs = require('fs');
-var json = JSON.parse(fs.readFileSync('./src/js/lang.json').toString());
-
+var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
 
 function addLoadEvent(func) {
     var oldonload = window.onload;

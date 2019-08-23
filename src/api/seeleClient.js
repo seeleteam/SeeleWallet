@@ -38,7 +38,7 @@ function seeleClient() {
     this.client4 = new seelejs("http://104.218.164.193:8036");
 
     this.accountArray = [];
-    this.configpath = os.homedir()+"/.SeeleWallet/config.json";
+    this.configpath = os.homedir()+"/.SeeleWallet/viewconfig.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
@@ -500,7 +500,14 @@ function seeleClient() {
 
     this.accountList = function () {
         if (fs.existsSync(this.accountPath)) {
-            this.accountArray = fs.readdirSync(this.accountPath)
+            // this.accountArray = fs.readdirSync(this.accountPath)
+            filelist = fs.readdirSync(this.accountPath)
+            for(i = 0; i < filelist.length; i ++){
+              //starts with 0x + 40 alpha numeric
+              if(/0x[0-9a-zA-Z]{40,40}/.test(filelist[i])){
+                this.accountArray.push(filelist[i])
+              }
+            }
         } else {
             console.log(this.accountPath + "  Not Found!");
         }
@@ -562,7 +569,8 @@ function seeleClient() {
         }
 
         var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
-
+        // console.log("nonce returned nonce: "+nonce)
+        nonce+=1
         var rawTx = {
             "Type":0,
             "From": publicKey,
