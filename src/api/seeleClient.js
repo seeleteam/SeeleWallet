@@ -31,11 +31,16 @@ function seeleClient() {
     // this.client2 = new seelejs("http://localhost:8032");
     // this.client3 = new seelejs("http://localhost:8033");
     // this.client4 = new seelejs("http://localhost:8034");
-
-    this.client1 = new seelejs("http://104.218.164.169:8037");
-    this.client2 = new seelejs("http://107.150.105.10:8038");
-    this.client3 = new seelejs("http://107.150.103.125:8039");
-    this.client4 = new seelejs("http://104.218.164.193:8036");
+    this.address = [0,
+      "http://104.218.164.169:8037",
+      "http://107.150.105.10:8038",
+      "http://107.150.103.125:8039",
+      "http://104.218.164.193:8036"
+    ];
+    this.client1 = new seelejs(this.address[1]);
+    this.client2 = new seelejs(this.address[2]);
+    this.client3 = new seelejs(this.address[3]);
+    this.client4 = new seelejs(this.address[4]);
 
     this.accountArray = [];
     this.configpath = os.homedir()+"/.SeeleWallet/viewconfig.json";
