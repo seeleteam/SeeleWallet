@@ -499,11 +499,11 @@ function seeleClient() {
     };
 
     this.accountList = function () {
+        this.accountArray=[]
         if (fs.existsSync(this.accountPath)) {
-            // this.accountArray = fs.readdirSync(this.accountPath)
             filelist = fs.readdirSync(this.accountPath)
             for(i = 0; i < filelist.length; i ++){
-              //starts with 0x + 40 alpha numeric
+              //starts with "0x" and followed by 40alphanumeric
               if(/0x[0-9a-zA-Z]{40,40}/.test(filelist[i])){
                 this.accountArray.push(filelist[i])
               }
