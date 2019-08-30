@@ -1,52 +1,28 @@
-/*
-Todo: 
-for every 1 minute, 
-first clear up the array to empty
-recall again and again until all parts of the array are filled
 
-[
-  genesis, height, balances()
-]
+addLoadEvent(firstLoad);
+// document.getElementById("refreshInfo").addEventListener("click", refreshInfo);
+document.getElementById("infoTime").addEventListener("click", showInfo);
 
-
-[
-  [b],p,anchor,top
-  [b],p,anchor,top
-  [b],p,anchor,top
-  [b],p,anchor,top
-]
-*/
-// document.getElementById("demo").innerHTML = "Hello Worl);
-function getBlockTime(){
-  
+function addLoadEvent(func){
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    } else {
+        window.onload = function () {
+            oldonload();
+            func();
+        }
+    }
 }
 
-function networkInfo(){
-  
+function firstLoad(){
+    var interval = setInterval(function(){
+        refreshInfo();
+    }, 1000);
 }
 
 function refreshInfo(){
-  //first break the account array into four to match our purposes, 
-  //the most important part is actually the waiting part.
-  // var response = ["","",[]]
-  // 
-  // if (response[0]==""){
-  //   console.log("is empty, not good")
-  //   console.log(seeleClient.accountArray)
-  // }
-  /*
-    shard1: height (n s ago)
-    genesis_is_indeed:
-    peers
-  */
-  
-  // I need the height, time, and genesis (no peer display)
-  // var seelejs = require('seeleteam.js');
-  // var client1 = new seelejs(seeleClient.address[1])
-  // peers, anchor, top
-  // client1.getPeerCount().then(result => {console.log(result)}, function(err) { console.log(err) });
-  // client1.getInfo().then(result => {console.log(result)}, function() {});
-  var time = new Date()
+  var time = new Date();
   document.getElementById("infoTime").innerHTML= `<span>`+time.toLocaleDateString()+`  `+time.toLocaleTimeString()+`</span>`
   
   const gensisHashes = [
@@ -86,11 +62,7 @@ function refreshInfo(){
   }
 }
 
-document.getElementById("refreshInfo").addEventListener("click", refreshInfo);
-document.getElementById("infoTime").addEventListener("click", showInfo);
-
 function showInfo(){
-  // console.log("why?")
   if (document.getElementById("netinfo").style.display == "none") {
     document.getElementById("netinfo").style.display = "block";
   } else {
