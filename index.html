@@ -19,22 +19,24 @@
             <div class="head-main">
                 <div class="logo"><img src="./src/img/logo-head.png"></div>
                 <ul class="quick-link">
-                    <li class="lit" id="netWork">Private-net</li>
-                    <li class="lit" id="isListening">Disconnected</li>
-                    <li id="blockheight">0</li>
-                    <li><select id="shard">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select></li>
-                    <li><select id="lang" onInput="switchLanguage();location.reload();">
-                            <option value="EN">EN</option>
-                            <option value="中文">中文</option>
-                    </select></li>
+                  <!-- <li><div><img id="refreshInfo" src="./src/img/refresh.png" width="14px" height="14px"></div></li> -->
+                  <li><div id="infoTime"> 3/31/2019 11:20:18 PM</div></li>
+                  <li><div><select id="lang" onInput="switchLanguage();location.reload();">
+                          <option value="EN">EN</option>
+                          <option value="中文">中文</option>
+                  </select></div></li>
                 </ul>
-                <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SLE</span></div>
+                <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
             </div>
+        </div>
+        <div id="netinfo" style="display: none">
+          <table id="netInfoTable" style="width:60%;margin-left:20%;margin-right:20%;text-align:center;margin-top:10px">
+              <tr> <th>shard</th> <th>peers</th> <th>address</th> <th>genesis</th> <th>height</th> </tr>
+              <tr> <td>1</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>      
+              <tr> <td>2</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
+              <tr> <td>3</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
+              <tr> <td>4</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
+          </table>
         </div>
         <div class="main">
             <div id="tab">
@@ -219,6 +221,7 @@
             require('./src/js/createAccount.js')
             // require('./src/js/sendtx.js')
             require('./src/js/walletConnect.js')
+            require('./src/js/refreshInfo.js')
             require('./src/js/contract.js')
             const fs = require('fs');
             client = new seeleclient;

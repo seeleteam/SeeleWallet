@@ -218,25 +218,28 @@ function refreshBalance(){
             }
             if(count == seeleClient.accountArray.length){
                 var accountlist = document.getElementById("accountlist");
+                var sum = 0;
                 for(var i=0 ;i< accountlist.childElementCount;i++){
                    var accountAddress = accountlist.children[i].children[1].children[2].innerText;
                    if(accountBalanceInfo[accountAddress]!="undefined"){
                     accountlist.children[i].children[1].children[1].children[0].innerText = (accountBalanceInfo[accountAddress]/ 100000000).toFixed(3)
+                    sum += accountBalanceInfo[accountAddress]
+                    document.getElementById('span_balance').innerText = (sum / 100000000).toFixed(3)
                    }
                 }
             }
-            var sum = 0;
-            var balanceSum = document.getElementById('span_balance')
-            if (balanceArray.length == 0) {
-                balanceSum.innerText = '0'
-            } else if (balanceArray.length == 1) {
-                balanceSum.innerText = (balanceArray[0] / 100000000).toFixed(3)
-            } else {
-                for (var i = 0; i < balanceArray.length; i++) {
-                    sum += balanceArray[i];
-                }
-                balanceSum.innerText = (sum / 100000000).toFixed(3)
-            }
+            // var sum = 0;
+            // var balanceSum = document.getElementById('span_balance')
+            // if (balanceArray.length == 0) {
+            //     balanceSum.innerText = '0'
+            // } else if (balanceArray.length == 1) {
+            //     balanceSum.innerText = (balanceArray[0] / 100000000).toFixed(3)
+            // } else {
+            //     for (var i = 0; i < balanceArray.length; i++) {
+            //         sum += balanceArray[i];
+            //     }
+            //     balanceSum.innerText = (sum / 100000000).toFixed(3)
+            // }
         })
        
     }
