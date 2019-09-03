@@ -29,19 +29,22 @@ function passwordStrengthTest(password){
   // length, case, number, specialchar
   var err = []
   const len = password.length
+  
   if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
   if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
   if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
   if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
   if (/^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
+  var errmsg = []
   if (err.length != 0) {
-    var errmsg = [json[lang]["passwordWarning"]["fail"]];
-    errmsg.concat(err);
+    errmsg = [json[lang]["passwordWarning"]["fail"]].concat(err);
+    console.log(errmsg)
   }
   return errmsg
 }
 
 addLoadEvent(function() {
+    console.log("shit!")
     document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
 })
 

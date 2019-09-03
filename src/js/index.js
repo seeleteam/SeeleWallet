@@ -45,6 +45,7 @@ $(function ($) {
         $('.create-account').hide()
         $('.search-hash').hide()
         $('.dask').hide()
+        location.reload()
     })
     // click contract CONTRACT BYTE CODE
     $('.tab-code ul li').click(function () {
