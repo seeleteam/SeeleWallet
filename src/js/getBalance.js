@@ -160,10 +160,9 @@ function loadAccount() {
                 }
                 balanceSum.innerText = (sum / 100000000).toFixed(3)
             }
-            switchLanguage()
         })
-       
     }
+    switchLanguage()
 }
 
 function getBalance() {

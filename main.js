@@ -14,14 +14,13 @@ let mainWindow
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
-
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
-    // sc.initateNodeConfig(1);
-    // sc.initateNodeConfig(2);
-    // sc.initateNodeConfig(3);
-    // sc.initateNodeConfig(4);
+    sc.initateNodeConfig(1);
+    sc.initateNodeConfig(2);
+    sc.initateNodeConfig(3);
+    sc.initateNodeConfig(4);
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()
@@ -30,10 +29,19 @@ function createWindow() {
     const os = require("os")
     const shell = require('shelljs');
     const fs = require('fs');
+    
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
+    }
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
+    }
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
+    }
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
       shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
     }
-    
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time

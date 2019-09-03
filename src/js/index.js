@@ -87,6 +87,7 @@ function addAccount() {
 
 function showAccountDir(){
   const { shell } = require('electron')
+  console.log("triggerd")
   shell.openItem(seeleClient.accountPath);
 }
 

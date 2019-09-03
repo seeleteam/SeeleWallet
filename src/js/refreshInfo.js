@@ -1,7 +1,7 @@
 
 addLoadEvent(firstLoad);
 // document.getElementById("refreshInfo").addEventListener("click", refreshInfo);
-document.getElementById("infoTime").addEventListener("click", showInfo);
+// document.getElementById("infoTime").addEventListener("click", showInfo);
 
 function addLoadEvent(func){
     var oldonload = window.onload;
@@ -10,10 +10,12 @@ function addLoadEvent(func){
     } else {
         window.onload = function () {
             oldonload();
+            document.getElementById("infoTime").addEventListener("click", showInfo);
             func();
         }
     }
 }
+
 
 function firstLoad(){
     var interval = setInterval(function(){
