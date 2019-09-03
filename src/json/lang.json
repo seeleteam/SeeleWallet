@@ -71,7 +71,12 @@
       "letter":"Password must contain at least 1 letter",
       "number":"Password must contain at least 1 number",
       "specialChar":"Password must contain at least 1 special char"
-    } 
+    },
+    "shardWarning":{
+      "1":"NOTE: \n\nsend funds From SHARD",
+      "2":" To SHARD",
+      "3":"\nhigher fee will be taken!\n\n\nClick OK to continue"
+    }
   },
   "中文":{
     "balance":"余额",
@@ -145,6 +150,11 @@
       "letter":"密码必须含至少1个字母",
       "number":"密码必须含至少1个数字",
       "specialChar":"密码必须含至少1个特殊字符"
-    } 
+    },
+    "shardWarning":{
+      "1":"注意: \n\n金额将从片",
+      "2":" 转至片",
+      "3":"\n交易费用会提高\n\n\n点击OK继续交易操作"
+    }
   }
 }

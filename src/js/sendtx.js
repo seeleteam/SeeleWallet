@@ -111,8 +111,11 @@ function sendtx() {
         if (err) {
             layer.alert(err.message);
         } else {
-            console.log(seeleClient.txArray)
-            alert("Transaction send!\n\n Tx Hash:\n"+hash)
+            
+            const fs = require('fs');
+            var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+            const lang = document.getElementById("lang").value
+            alert(json[lang]["transactionSent"]+hash)
             // seeleClient.txArray.push(hash)
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
@@ -150,7 +153,11 @@ function getEstimateGas(from,to){
 function detectShards(from, to) {
     var shardFrom = seeleClient.getShardNum(from);
     var shardTo = seeleClient.getShardNum(to);
-    var alertText = "NOTE: \n\nsend funds From SHARD: " + shardFrom + " To SHARD: " + shardTo + "\nhigher fee will be taken!\n\n\nClick OK to continue";
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+    const lang = document.getElementById("lang").value
+    
+    var alertText = json[lang]["shardWarning"]["1"]+ shardFrom + json[lang]["shardWarning"]["2"] + shardTo + json[lang]["shardWarning"]["3"];
     // var detectshardfrom = document.getElementById("shardfrom");
     // var fromchange = detectshardfrom.childNodes[0];
     // fromchange.nodeValue = "From Shard: " + shardFrom;
