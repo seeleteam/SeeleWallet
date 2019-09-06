@@ -29,7 +29,7 @@ function createWindow() {
     const os = require("os")
     const shell = require('shelljs');
     const fs = require('fs');
-    
+
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
       fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
     }
@@ -40,7 +40,9 @@ function createWindow() {
       fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
     }
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
-      shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
+
+      var err = shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
+      // console.log(err)
     }
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
@@ -75,7 +77,7 @@ function createWindow() {
     // }).catch((data) => {
     //     console.log(data);
     // });
-    
+
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
