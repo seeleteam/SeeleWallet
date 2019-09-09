@@ -6,7 +6,8 @@ var SeeleClient = require('../api/seeleClient');
 seeleClient = new SeeleClient();
 var shard
 const fs = require('fs');
-var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
+console.log(`WalletConnect is in ${__dirname}`)
+var json = JSON.parse(fs.readFileSync(`${__dirname}/../json/lang.json`).toString());
 
 function addLoadEvent(func) {
     var oldonload = window.onload;

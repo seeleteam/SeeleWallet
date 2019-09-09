@@ -23,8 +23,8 @@ function createWindow() {
     sc.initateNodeConfig(4);
 
     //Open the DevTools.
-    //mainWindow.webContents.openDevTools()
-
+    mainWindow.webContents.openDevTools()
+    
     // Emitted when the window is closed.
     const os = require("os")
     const shell = require('shelljs');
@@ -41,7 +41,7 @@ function createWindow() {
     }
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
 
-      var err = shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
+      var err = shell.cp('-f', `${__dirname}/src/json/viewconfig.json`, os.homedir()+'/.SeeleWallet/')
       // console.log(err)
     }
     mainWindow.on('closed', function() {

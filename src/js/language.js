@@ -2,7 +2,7 @@
 var SeeleClient = require('./src/api/seeleClient');
 
 seeleClient = new SeeleClient();
-
+console.log(`Language is in ${__dirname}`)
 function addLoadEvent(func) {
     var oldonload = window.onload;
     if (typeof window.onload != 'function') {
@@ -11,6 +11,7 @@ function addLoadEvent(func) {
         window.onload = function() {
             oldonload();
             func();
+            console.log("no, not ran!")
         }
     }
 }
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function switchLanguage() {
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync(`${__dirname}/src/json/lang.json`).toString());
     const lang = document.getElementById("lang").value
     var literals = document.getElementsByClassName("lit");
     for (i = 0; i < literals.length; i++) {

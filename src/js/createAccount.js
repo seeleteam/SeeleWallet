@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 var SeeleClient = require('../api/seeleClient');
 var fs = require('fs');
+console.log(`createAccount is in ${__dirname}`)
 
 seeleClient = new SeeleClient();
 
@@ -24,7 +25,7 @@ function addLoadEvent(func) {
 
 function passwordStrengthTest(password){
   const fs = require('fs');
-  var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
+  var json = JSON.parse(fs.readFileSync('./../json/lang.json').toString());
   const lang = document.getElementById("lang").value
   // length, case, number, specialchar
   var err = []
