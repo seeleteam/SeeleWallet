@@ -224,7 +224,7 @@ function showQR (publickey) {
     var request = document.getElementById("qr_request");//btnlink
     
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     const lang = document.getElementById("lang").value
     
     if(result.style.display !== 'flex') {
@@ -289,7 +289,7 @@ function copy() {
 
     selection.removeAllRanges();
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     const lang = document.getElementById("lang").value
     const copyMsg=json[lang]["copySucess"]
     layer.msg(copyMsg)

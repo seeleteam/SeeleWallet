@@ -43,6 +43,7 @@ function seeleClient() {
     this.client4 = new seelejs(this.address[4]);
 
     this.accountArray = [];
+    this.langPath = os.homedir()+"/.SeeleWallet/lang.json"
     this.configpath = os.homedir()+"/.SeeleWallet/viewconfig.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
