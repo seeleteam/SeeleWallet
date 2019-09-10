@@ -23,8 +23,8 @@ function createWindow() {
     sc.initateNodeConfig(4);
 
     //Open the DevTools.
-    mainWindow.webContents.openDevTools()
-    
+    // mainWindow.webContents.openDevTools()
+
     // Emitted when the window is closed.
     const os = require("os")
     const shell = require('shelljs');
