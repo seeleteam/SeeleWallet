@@ -28,9 +28,9 @@ addLoadEvent(function() {
         if(validator.element("#to")){
             var from = document.getElementById("txpublicKey").value;
             var to = this.value;
-            getEstimateGas(from,to); 
-            detectShards(from,to); 
-        }             
+            getEstimateGas(from,to);
+            detectShards(from,to);
+        }
     });
     $('#amount').on('input',function(e){
         if(validator.element("#amount")){
@@ -40,14 +40,14 @@ addLoadEvent(function() {
             var gasPrice = $('#gasPrice').slider("value");
             var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
             document.getElementById("totalamount").innerText=total;
-        }       
+        }
     });
     $( "#gasPrice" ).on( "slidestop", function( event, ui ) {
         if(validator.element("#amount")){
             amount = document.getElementById("amount").value;
         }else{
             amount= "0.0";
-        }        
+        }
         var estimatedgas = document.getElementById("estimatedgas").innerText;
         var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
         document.getElementById("totalamount").innerText=total;
@@ -92,11 +92,11 @@ addLoadEvent(function() {
 })
 
 function sendtx() {
-   
+
     if(!validator.form()){
         return;
     }
-    
+
     var publicKey = document.getElementById("txpublicKey");
     var to = document.getElementById("to");
     var amount = document.getElementById("amount");
@@ -111,12 +111,24 @@ function sendtx() {
         if (err) {
             layer.alert(err.message);
         } else {
-            
+
             const fs = require('fs');
             var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
             const lang = document.getElementById("lang").value
-            alert(json[lang]["transactionSent"]+hash)
+            const createwarning0 = json[lang]["saveWarning0"];
+            const message = json[lang]["transactionSent"]+hash;
             // seeleClient.txArray.push(hash)
+            alert(createwarning0+message)
+            navigator.permissions.query({name: "clipboard-write"}).then(result => {
+              if (result.state == "granted" || result.state == "prompt") {
+                navigator.clipboard.writeText(hash).then(
+                  function() {
+                  console.log("copied!")
+                }, function() {
+                  console.log("failed, but still permitted")
+                });
+              }
+            });
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
         }
@@ -156,7 +168,7 @@ function detectShards(from, to) {
     const fs = require('fs');
     var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     const lang = document.getElementById("lang").value
-    
+
     var alertText = json[lang]["shardWarning"]["1"]+ shardFrom + json[lang]["shardWarning"]["2"] + shardTo + json[lang]["shardWarning"]["3"];
     // var detectshardfrom = document.getElementById("shardfrom");
     // var fromchange = detectshardfrom.childNodes[0];

@@ -23,7 +23,7 @@ function createWindow() {
     sc.initateNodeConfig(4);
 
     //Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     const os = require("os")
@@ -112,24 +112,24 @@ function createMenu() {
   const edit = {
     label: "Edit",
     submenu: [
-      {
-        label: "Undo",
-        accelerator: "CmdOrCtrl+Z",
-        selector: "undo:"
-      },
-      {
-        label: "Redo",
-        accelerator: "Shift+CmdOrCtrl+Z",
-        selector: "redo:"
-      },
-      {
-        type: "separator"
-      },
-      {
-        label: "Cut",
-        accelerator: "CmdOrCtrl+X",
-        selector: "cut:"
-      },
+      // {
+      //   label: "Undo",
+      //   accelerator: "CmdOrCtrl+Z",
+      //   selector: "undo:"
+      // },
+      // {
+      //   label: "Redo",
+      //   accelerator: "Shift+CmdOrCtrl+Z",
+      //   selector: "redo:"
+      // },
+      // {
+      //   type: "separator"
+      // },
+      // {
+      //   label: "Cut",
+      //   accelerator: "CmdOrCtrl+X",
+      //   selector: "cut:"
+      // },
       {
         label: "Copy",
         accelerator: "CmdOrCtrl+C",
@@ -140,11 +140,11 @@ function createMenu() {
         accelerator: "CmdOrCtrl+V",
         selector: "paste:"
       },
-      {
-        label: "Select All",
-        accelerator: "CmdOrCtrl+A",
-        selector: "selectAll:"
-      }
+      // {
+      //   label: "Select All",
+      //   accelerator: "CmdOrCtrl+A",
+      //   selector: "selectAll:"
+      // }
     ]
   }
 

@@ -6,7 +6,7 @@ var SeeleClient = require('../api/seeleClient');
 seeleClient = new SeeleClient();
 var shard
 const fs = require('fs');
-console.log(`WalletConnect is in ${__dirname}`)
+// console.log(`WalletConnect is in ${__dirname}`)
 var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
 
 function addLoadEvent(func) {

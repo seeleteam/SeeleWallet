@@ -39,7 +39,8 @@ function refreshInfo(){
   for (let i = 1; i<=4; i++){
 
     // document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "N/A";
-    document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = seeleClient.address[i];
+    // document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = seeleClient.address[i];
+    document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = "default remote";
 
     seeleClient.getblock(i, "", 0, false, function (block,err) {
       if (err) {

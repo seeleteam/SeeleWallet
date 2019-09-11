@@ -2,7 +2,7 @@
 var SeeleClient = require('./src/api/seeleClient');
 
 seeleClient = new SeeleClient();
-console.log(`Language is in ${__dirname}`)
+// console.log(`Language is in ${__dirname}`)
 function addLoadEvent(func) {
     var oldonload = window.onload;
     if (typeof window.onload != 'function') {
@@ -11,7 +11,6 @@ function addLoadEvent(func) {
         window.onload = function() {
             oldonload();
             func();
-            console.log("no, not ran!")
         }
     }
 }
@@ -34,12 +33,12 @@ function switchLanguage() {
         literals[i].innerHTML = json[lang][literals[i].id];
         literals[i].placeholder = json[lang][literals[i].id];
     }
-    
+
     const editJsonFile = require("edit-json-file");
-    let file = editJsonFile(seeleClient.configpath);   
+    let file = editJsonFile(seeleClient.configpath);
     file.set("lang", ''+lang);
     file.save();
-    
+
     validator =   $('form[id="txform"]').validate({
         // Specify validation rules
         rules: {
