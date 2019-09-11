@@ -137,9 +137,9 @@ function sendtx() {
     document.getElementById("accountpassWord").value='';
     document.getElementById("amount").value='';
     document.getElementById("to").value='';
-    document.getElementById("txamount1").value='0.00';
-    document.getElementById("txamount1").value='0';
-    document.getElementById("totalamount").value='0.0';
+    document.getElementById("txamount1").innerText='0.00';
+    document.getElementById("txamount2").innerText='0';
+    document.getElementById("totalamount").innerText='0.0';
 
 }
 
