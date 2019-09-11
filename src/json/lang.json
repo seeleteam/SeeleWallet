@@ -77,7 +77,12 @@
       "1":"NOTE: \n\nsend funds From SHARD",
       "2":" To SHARD",
       "3":"\nhigher fee will be taken!\n\n\nClick OK to continue"
-    }
+    },
+    "tb-shard":"shard",
+    "tb-connected":"connected",
+    "tb-address":"address",
+    "tb-genesis":"genesis",
+    "tb-height":"height"
   },
   "中文":{
     "balance":"余额",
@@ -157,6 +162,11 @@
       "1":"注意: \n\n金额将从片",
       "2":" 转至片",
       "3":"\n交易费用会提高\n\n\n点击OK继续交易操作"
-    }
+    },
+    "tb-shard":"片",
+    "tb-connected":"连接",
+    "tb-address":"地址",
+    "tb-genesis":"初始块",
+    "tb-height":"高度"
   }
 }
