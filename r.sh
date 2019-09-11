@@ -1,2 +1,2 @@
-electron-packager . SeeleWallet --platform darwin --arch x64 --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet.ico
-electron-packager . SeeleWallet --platform win32 --arch x64 --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet.ico
+# electron-packager . SeeleWallet --platform darwin --arch x64 --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet.ico
+electron-packager . SeeleWallet --platform win32 --arch x64 --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet_48.ico
