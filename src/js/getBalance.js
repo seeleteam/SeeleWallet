@@ -29,10 +29,12 @@ function firstLoad() {
     $('#tab ul li:eq(0)').click(async function () {
         if(loaddingAccount){
             loadAccount();
+            switchLanguage()
         }
 
     });
     loadAccount()
+    switchLanguage()
     var interval = setInterval(function(){
         refreshBalance();
     }, 5000);
@@ -103,8 +105,13 @@ function loadAccount() {
     tabs1.innerHTML = tabs1HTML
 
     var balanceArray = new Array()
+    const fs = require('fs');
+    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+    const lang = document.getElementById("lang").value
+
     for (var item in seeleClient.accountArray) {
         seeleClient.getBalance(seeleClient.accountArray[item].trim(), function (info, err) {
+
             if (err) {
                 try {
                     var msg = JSON.parse(err.message);
@@ -134,10 +141,10 @@ function loadAccount() {
                 accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + (info.Balance / 100000000).toFixed(3) + `,` + seeleClient.getShardNum(info.Account) + `)">`;
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
-                accountHTML += `<li class="lit lit-account">Account</li>`;
+                accountHTML += `<li class="lit lit-account">`+json[lang]["account"]+`</li>`;
                 accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> SEELE</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
-                accountHTML += `<li>` + `<span class="lit lit-shard" >SHARD</span><span>-</span>` + seeleClient.getShardNum(info.Account) + `</li>`;
+                accountHTML += `<li>` + `<span class="lit lit-shard" >`+json[lang]["shard"]+`</span><span>-</span>` + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;
@@ -167,7 +174,7 @@ function loadAccount() {
             }
         })
     }
-    switchLanguage()
+    // switchLanguage()
 }
 
 function getBalance() {
