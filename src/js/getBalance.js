@@ -30,7 +30,7 @@ function firstLoad() {
         if(loaddingAccount){
             loadAccount();
         }
-        
+
     });
     loadAccount()
     var interval = setInterval(function(){
@@ -75,7 +75,7 @@ function loadAccount() {
     // tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
     // tabs1HTML += `</ul>`
     // tabs1HTML += `</div>`
-    // 
+    //
     // tabs1HTML += `<div class="account-contact"><p class="contact-left">`
     // tabs1HTML += `<span>Nov.</span><span>13</span>`
     // tabs1HTML += `</p>`
@@ -86,10 +86,15 @@ function loadAccount() {
 
     for(var item in seeleClient.txArray) {
         var time = new Date(seeleClient.txArray[item].time)
-        
+
         tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-        tabs1HTML += `<span>`+time.toLocaleDateString()+`  `+time.toLocaleTimeString()+`</span><span>`+time.getDate()+`</span>`
+        // tabs1HTML += `<span>`
+        tabs1HTML += `<span style='padding: 0px 10px 0px 10px; word-wrap: break-word'>`+time.toLocaleDateString()+` `+time.toLocaleTimeString()+`</span>`
+        // tabs1HTML += `<ul><li>`+time.toLocaleDateString()+`</li>`
+        // tabs1HTML += `<li>`+time.toLocaleTimeString()+`</li>`
+        // tabs1HTML += `</ul>`
         tabs1HTML += `</p>`
+        // tabs1HTML += `</span>`
         tabs1HTML += `<ul class="contact-right"><li class="lit" id="created">Created </li>`
         tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
         tabs1HTML += `</ul>`
@@ -129,16 +134,16 @@ function loadAccount() {
                 accountHTML += `<div class="accountFor" onclick="ToAccountInfo('` + info.Account + `',` + (info.Balance / 100000000).toFixed(3) + `,` + seeleClient.getShardNum(info.Account) + `)">`;
                 accountHTML += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
                 accountHTML += `<ul>`;
-                accountHTML += `<li class="lit" id="account">Account</li>`;
-                accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> seele</li>`;
+                accountHTML += `<li class="lit lit-account">Account</li>`;
+                accountHTML += `<li><span class="accountBalance">` + (info.Balance / 100000000).toFixed(3) + `</span> SEELE</li>`;
                 accountHTML += `<li>` + info.Account + `</li>`;
-                accountHTML += `<li>` + "<span class=\"lit\" id=\"shard\">SHARD</span><span>-</span>" + seeleClient.getShardNum(info.Account) + `</li>`;
+                accountHTML += `<li>` + `<span class="lit lit-shard" >SHARD</span><span>-</span>` + seeleClient.getShardNum(info.Account) + `</li>`;
                 accountHTML += `</ul>`;
                 accountHTML += `</div>`;
                 accountlist.innerHTML += accountHTML;
                 if (count == 0) {
                     document.getElementById("txpublicKey").value = info.Account;
-                    document.getElementById("contractPublicKey").value = info.Account;                    
+                    document.getElementById("contractPublicKey").value = info.Account;
                     span_balance.innerText = (info.Balance / 100000000).toFixed(3);
                 }
                 if (count == seeleClient.accountArray.length - 1) {
@@ -205,7 +210,7 @@ function refreshBalance(){
                     loaddingAccount = true;
                 }
                 count += 1;
-                accountBalanceInfo[info[0]] = 0; 
+                accountBalanceInfo[info[0]] = 0;
             } else {
                 if (count == seeleClient.accountArray.length - 1) {
                     loaddingAccount = true;
@@ -240,6 +245,6 @@ function refreshBalance(){
             //     balanceSum.innerText = (sum / 100000000).toFixed(3)
             // }
         })
-       
+
     }
 }

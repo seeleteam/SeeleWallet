@@ -23,7 +23,7 @@ function createWindow() {
     sc.initateNodeConfig(4);
 
     //Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     const os = require("os")
@@ -148,9 +148,30 @@ function createMenu() {
     ]
   }
 
+  const help = {
+    role: "help",
+    submenu: [
+      {
+        label: "Learn More",
+        click: async () => {
+          const { shell } = require("electron")
+          await shell.openExternal("https://seele-seeletech.gitbook.io/wiki/tutorial/seelewallet-windows")
+        }
+      },
+      {
+        label: "了解更多",
+        click: async () => {
+          const { shell } = require("electron")
+          await shell.openExternal("https://seele-seeletech.gitbook.io/wiki/chinese/seelewallet-windows")
+        }
+      }
+    ]
+  }
+
   const template = [
     application,
-    edit
+    edit,
+    help
   ]
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))

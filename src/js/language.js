@@ -34,6 +34,15 @@ function switchLanguage() {
         literals[i].placeholder = json[lang][literals[i].id];
     }
 
+    var accounts = document.getElementsByClassName("lit-account")
+    for (i = 0; i < accounts.length; i++) {
+      accounts[i].innerHTML = json[lang]["account"]
+    }
+    var shards = document.getElementsByClassName("lit-shard")
+    for (i = 0; i < shards.length; i++) {
+      shards[i].innerHTML = json[lang]["shard"]
+    }
+
     const editJsonFile = require("edit-json-file");
     let file = editJsonFile(seeleClient.configpath);
     file.set("lang", ''+lang);
@@ -78,4 +87,5 @@ function switchLanguage() {
             }
         }
       });
+
 }

@@ -46,12 +46,16 @@ function refreshInfo(){
       if (err) {
         console.log(err);
         document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✕";
+        document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'red';
       } else {
         document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✓";
+        document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'green';
         if(block.hash == gensisHashes[i]){
           document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✓";
+          document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'green';
         } else {
           document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✕";
+          document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'red';
         }
       }
     });
