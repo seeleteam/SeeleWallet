@@ -34,8 +34,8 @@ addLoadEvent(function() {
     });
     $('#amount').on('input',function(e){
         if(validator.element("#amount")){
-            document.getElementById("txamount1").innerText=this.value;
-            document.getElementById("txamount2").innerText=this.value;
+            document.getElementById("txamount1").innerText=Math.abs(this.value);
+            document.getElementById("txamount2").innerText=Math.abs(this.value);
             var estimatedgas = document.getElementById("estimatedgas").innerText;
             var gasPrice = $('#gasPrice').slider("value");
             var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
