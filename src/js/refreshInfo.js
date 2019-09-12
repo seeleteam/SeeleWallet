@@ -42,7 +42,24 @@ function refreshInfo(){
     // document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = seeleClient.address[i];
     document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = "default remote";
 
-    seeleClient.getblock(i, "", 0, false, function (block,err) {
+    // seeleClient.getblock(i, "", 0, false, function (block,err) {
+    //   if (err) {
+    //     console.log(err);
+    //     document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✕";
+    //     document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'red';
+    //   } else {
+    //     document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✓";
+    //     document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'green';
+    //     // if(block.hash == gensisHashes[i]){
+    //     //   document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✓";
+    //     //   document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'green';
+    //     // } else {
+    //     //   document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✕";
+    //     //   document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'red';
+    //     // }
+    //   }
+    // });
+    seeleClient.getblock(i, "", -1, false, function (block,err) {
       if (err) {
         console.log(err);
         document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✕";
@@ -50,21 +67,8 @@ function refreshInfo(){
       } else {
         document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✓";
         document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'green';
-        if(block.hash == gensisHashes[i]){
-          document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✓";
-          document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'green';
-        } else {
-          document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✕";
-          document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'red';
-        }
-      }
-    });
-    seeleClient.getblock(i, "", -1, false, function (block,err) {
-      if (err) {
-        console.log(err);
-      } else {
         var now = parseInt(Date.now().toString().slice(0,-3)) - block.header.CreateTimestamp;
-        document.getElementById("netInfoTable").rows[i].cells[4].innerHTML = block.header.Height+"("+now+"s ago)";
+        document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = block.header.Height+"("+now+"s ago)";
       }
     });
 

@@ -85,7 +85,7 @@ function loadAccount() {
     // tabs1HTML += `<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>`
     // tabs1HTML += `</ul>`
     // tabs1HTML += `</div>`
-
+    tabs1HTML += `<div  style="height: 300px; overflow-y: scroll;">`
     for(var item in seeleClient.txArray) {
         var time = new Date(seeleClient.txArray[item].time)
 
@@ -102,8 +102,8 @@ function loadAccount() {
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
     }
+    tabs1HTML += `</div>`
     tabs1.innerHTML = tabs1HTML
-
     var balanceArray = new Array()
     const fs = require('fs');
     var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());

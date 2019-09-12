@@ -361,7 +361,7 @@ form {
     padding-top: 35px;
 }
 
-#tabs-2 .send-list li:nth-child(6) span,
+/* #tabs-2 .send-list li:nth-child(6) span, */
 #tabs-3 .send-list li:nth-child(4) span,
 #tabs-3 .send-list li:nth-child(5) span {
     color: #1973AF;
