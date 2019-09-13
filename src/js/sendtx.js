@@ -116,9 +116,9 @@ function sendtx() {
             var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
             const lang = document.getElementById("lang").value
             const createwarning0 = json[lang]["saveWarning0"];
-            const message = json[lang]["transactionSent"]+hash;
+            const message = json[lang]["transactionSent"]+createwarning0+hash;
             // seeleClient.txArray.push(hash)
-            alert(createwarning0+message)
+            alert(message)
             navigator.permissions.query({name: "clipboard-write"}).then(result => {
               if (result.state == "granted" || result.state == "prompt") {
                 navigator.clipboard.writeText(hash).then(
@@ -131,6 +131,7 @@ function sendtx() {
             });
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
+            location.reload()
         }
     });
     // reset everything

@@ -97,7 +97,7 @@ function loadAccount() {
         // tabs1HTML += `</ul>`
         tabs1HTML += `</p>`
         // tabs1HTML += `</span>`
-        tabs1HTML += `<ul class="contact-right"><li class="lit" id="created">Created </li>`
+        tabs1HTML += `<ul class="contact-right">`
         tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
         tabs1HTML += `</ul>`
         tabs1HTML += `</div>`
