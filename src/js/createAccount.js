@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 var SeeleClient = require('../api/seeleClient');
 var fs = require('fs');
+// console.log(`createAccount is in ${__dirname}`)
 
 seeleClient = new SeeleClient();
 
@@ -24,19 +25,22 @@ function addLoadEvent(func) {
 
 function passwordStrengthTest(password){
   const fs = require('fs');
-  var json = JSON.parse(fs.readFileSync('./src/json/lang.json').toString());
+
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
   const lang = document.getElementById("lang").value
   // length, case, number, specialchar
   var err = []
   const len = password.length
+
   if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
   if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
   if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
   if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
   if (/^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
+  var errmsg = []
   if (err.length != 0) {
-    var errmsg = [json[lang]["passwordWarning"]["fail"]];
-    errmsg.concat(err);
+    errmsg = [json[lang]["passwordWarning"]["fail"]].concat(err);
+    console.log(errmsg)
   }
   return errmsg
 }
@@ -48,7 +52,7 @@ addLoadEvent(function() {
 function generateKey() {
     var shard = document.getElementById("shardnum")
     var passWord = document.getElementById("passWord")
-    
+
     var result = passwordStrengthTest(passWord.value);
     if(result.length!=0){
       var alertmsg = result[0];
@@ -72,14 +76,31 @@ function generateKey() {
         const { dialog } = require('electron').remote;
         const lang = document.getElementById("lang").value;
         const fs = require('fs');
-        var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+        var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+        const createwarning0 = json[lang]["saveWarning0"];
         const createwarning1 = json[lang]["saveWarning1"];
         const createwarning2 = json[lang]["saveWarning2"];
         const ok = json[lang]["ok"];
-        dialog.showMessageBox({ 
+
+        // This is a chromium only solution, does not work in other browsers
+        const message = createwarning1+outdata.slice(0,42)+createwarning2+outdata.slice(42);
+        navigator.permissions.query({name: "clipboard-write"}).then(result => {
+          if (result.state == "granted" || result.state == "prompt") {
+            navigator.clipboard.writeText(message).then(
+              function() {
+              console.log("copied!")
+            }, function() {
+              console.log("failed, but still permitted")
+            });
+          }
+        });
+
+        dialog.showMessageBox({
           type: "warning",
-          message: createwarning1+outdata.slice(0,42)+createwarning2+outdata.slice(42),
-          buttons: [ok] });
+          message: createwarning0+message,
+          buttons: [ok]
+        });
+
     }).catch(err => {
         alert(err)
     });

@@ -17,11 +17,11 @@
     <div class="container">
         <div class="header">
             <div class="head-main">
-                <div class="logo"><img src="./src/img/logo-head.png"></div>
+                <div class="logo" onclick="location.reload()"><img src="./src/img/logo-head.png"></div>
                 <ul class="quick-link">
                   <!-- <li><div><img id="refreshInfo" src="./src/img/refresh.png" width="14px" height="14px"></div></li> -->
                   <li><div id="infoTime"> 3/31/2019 11:20:18 PM</div></li>
-                  <li><div><select id="lang" onInput="switchLanguage();location.reload();">
+                  <li><div><select id="lang" onInput="switchLanguage();location.reload()">
                           <option value="EN">EN</option>
                           <option value="中文">中文</option>
                   </select></div></li>
@@ -31,11 +31,18 @@
         </div>
         <div id="netinfo" style="display: none">
           <table id="netInfoTable" style="width:60%;margin-left:20%;margin-right:20%;text-align:center;margin-top:10px">
-              <tr> <th>shard</th> <th>peers</th> <th>address</th> <th>genesis</th> <th>height</th> </tr>
-              <tr> <td>1</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>      
-              <tr> <td>2</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
-              <tr> <td>3</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
-              <tr> <td>4</td>     <td></td>      <td></td>        <td></td>        <td></td>       </tr>
+              <tr>
+                <th class="lit" id="tb-shard">shard</th>
+                <th class="lit" id="tb-connected">connected</th>
+                <th class="lit" id="tb-address">address</th>
+                <!-- <th class="lit" id="tb-genesis">genesis</th> -->
+                <th class="lit" id="tb-height">height</th>
+              </tr>
+          <!--<tr> <th>shard</th> <th>connected</th> <th>address</th>                 <th>genesis</th> <th>height</th> </tr>-->
+              <tr> <td>1</td>     <td></td>          <td></td>                                <td></td>       </tr>
+              <tr> <td>2</td>     <td></td>          <td></td>                                <td></td>       </tr>
+              <tr> <td>3</td>     <td></td>          <td></td>                                <td></td>       </tr>
+              <tr> <td>4</td>     <td></td>          <td></td>                                <td></td>       </tr>
           </table>
         </div>
         <div class="main">
@@ -43,7 +50,7 @@
                 <ul>
                     <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
                     <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
-                    <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li>
+                    <!-- <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li> -->
                 </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">
@@ -97,23 +104,23 @@
                             <ul class="send-list">
                                 <li id="shardfrom"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
                                 <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li>
-                                <li><p class="lit" id="password">Password</p><input type="password" placeholder="press key file password" id="accountpassWord" name="accountpassword"></li>
+                                <li><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="accountpassWord" name="accountpassword"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span id="txamount1">0.00</span>SEELE</li>
-                                <li><span class="lit" id="youWantToSend">You want to send</span> <span id="txamount2">0</span> SEELE </li>
+                                <li><span class="lit" id="youWantToSend">You want to send </span> <span id="txamount2">0</span> SEELE </li>
                             </ul>
                             <h2 class="progress-title lit" id="seeleFee">Seele Fee</h2>
                             <div class="progress" id="gasPrice">
                                 <ul>
-                                    <li class="lit" id="cheaper">Cheaper</li>
-                                    <li class="lit" id="faster">Faster</li>
-                                </ul>                                
+                                    <li class="lit" id="min"></li>
+                                    <li class="lit" id="max"></li>
+                                </ul>
                             </div>
                             <p class="progress-info lit" id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
                                 <div class="gas-limit"> Estimated gas:<span id="estimatedgas">21000</span> </div>
                                 <dl class="total">
                                 <dt class="lit" id="totalCost">TOTAL</dt>
-                                <dd><span id="totalamount">0.0</span> SEELE</dd>
+                                <dd><span id="totalamount">0.00021000</span> SEELE</dd>
                             </dl>
                             <input id="sendtx" class="send lit" value="SEND" type="button">
                         </form>
@@ -128,7 +135,7 @@
                                 <li><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
                                 <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
                                     <label for="sendEvery">Send everything</label></li> -->
-                                <li><span class="lit" id="youWantToSend">You want to send</span> <span id="ctxamount2">0.0 </span>SEELE</li>
+                                <li><span class="lit" id="youWantToSend">You want to send</span><pre> </pre><span id="ctxamount2"> 0.0 </span>SEELE</li>
                             </ul>
                             <div class="solc">
                                 <div class="tab-code">
@@ -159,7 +166,7 @@
                                 <ul>
                                     <li class="lit" id="cheaper">Cheaper</li>
                                     <li class="lit" id="faster">Faster</li>
-                                </ul>                                
+                                </ul>
                             </div>
                             <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
                                 this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
@@ -216,6 +223,7 @@
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
+            // console.log(`Start from the html${__dirname}`)
             var seeleclient = require('./src/api/seeleClient.js')
             require('./src/js/getBalance.js')
             require('./src/js/createAccount.js')

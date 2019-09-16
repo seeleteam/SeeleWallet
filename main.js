@@ -14,26 +14,41 @@ let mainWindow
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
-
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     sc = new SeeleClient();
-    // sc.initateNodeConfig(1);
-    // sc.initateNodeConfig(2);
-    // sc.initateNodeConfig(3);
-    // sc.initateNodeConfig(4);
+    sc.initateNodeConfig(1);
+    sc.initateNodeConfig(2);
+    sc.initateNodeConfig(3);
+    sc.initateNodeConfig(4);
 
     //Open the DevTools.
-    //mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     const os = require("os")
     const shell = require('shelljs');
     const fs = require('fs');
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
-      shell.cp('-f', './src/json/viewconfig.json', os.homedir()+'/.SeeleWallet/')
+
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
     }
-    
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
+    }
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
+      fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
+    }
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
+
+      var err = shell.cp('-f', `${__dirname}/src/json/viewconfig.json`, os.homedir()+'/.SeeleWallet/')
+      // console.log(err)
+    }
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
+
+      var err = shell.cp('-f', `${__dirname}/src/json/lang.json`, os.homedir()+'/.SeeleWallet/')
+      // console.log(err)
+    }
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -67,12 +82,105 @@ function createWindow() {
     // }).catch((data) => {
     //     console.log(data);
     // });
-    
+
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
+function createMenu() {
+  const application = {
+    label: "Application",
+    submenu: [
+      {
+        label: "About Application",
+        selector: "orderFrontStandardAboutPanel:"
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "Quit",
+        accelerator: "Command+Q",
+        click: () => {
+          app.quit()
+        }
+      }
+    ]
+  }
+
+  const edit = {
+    label: "Edit",
+    submenu: [
+      // {
+      //   label: "Undo",
+      //   accelerator: "CmdOrCtrl+Z",
+      //   selector: "undo:"
+      // },
+      // {
+      //   label: "Redo",
+      //   accelerator: "Shift+CmdOrCtrl+Z",
+      //   selector: "redo:"
+      // },
+      // {
+      //   type: "separator"
+      // },
+      // {
+      //   label: "Cut",
+      //   accelerator: "CmdOrCtrl+X",
+      //   selector: "cut:"
+      // },
+      {
+        label: "Copy",
+        accelerator: "CmdOrCtrl+C",
+        selector: "copy:"
+      },
+      {
+        label: "Paste",
+        accelerator: "CmdOrCtrl+V",
+        selector: "paste:"
+      },
+      // {
+      //   label: "Select All",
+      //   accelerator: "CmdOrCtrl+A",
+      //   selector: "selectAll:"
+      // }
+    ]
+  }
+
+  const help = {
+    role: "help",
+    submenu: [
+      {
+        label: "Learn More",
+        click: async () => {
+          const { shell } = require("electron")
+          await shell.openExternal("https://seele-seeletech.gitbook.io/wiki/tutorial/seelewallet-windows")
+        }
+      },
+      {
+        label: "了解更多",
+        click: async () => {
+          const { shell } = require("electron")
+          await shell.openExternal("https://seele-seeletech.gitbook.io/wiki/chinese/seelewallet-windows")
+        }
+      }
+    ]
+  }
+
+  const template = [
+    application,
+    edit,
+    help
+  ]
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+}
+
+app.on('ready', () => {
+  createWindow()
+  createMenu()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {

@@ -43,6 +43,7 @@ function seeleClient() {
     this.client4 = new seelejs(this.address[4]);
 
     this.accountArray = [];
+    this.langPath = os.homedir()+"/.SeeleWallet/lang.json"
     this.configpath = os.homedir()+"/.SeeleWallet/viewconfig.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
@@ -51,7 +52,7 @@ function seeleClient() {
 
     this.getOS = function () {
         var  osName="Unknown OS";
-        
+
         if (os.type().indexOf("Win")!=-1)  osName="Windows";
         if (os.type().indexOf("Darwin")!=-1)  osName="MacOS";
         if (os.type().indexOf("Linux")!=-1)  osName="Linux";
@@ -73,7 +74,7 @@ function seeleClient() {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/client";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/client";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/client";
             } else {
                 console.log("the operation system may not be supported");
@@ -87,7 +88,7 @@ function seeleClient() {
                 return clientpath + "/../../cmd/mac/client";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath + "/../../cmd/win32/client";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath + "/../../cmd/linux/client";
             } else {
                 console.log("the operation system may not be supported");
@@ -104,7 +105,7 @@ function seeleClient() {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/node";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/node";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/node";
             } else {
                 console.log("the operation system may not be supported");
@@ -116,7 +117,7 @@ function seeleClient() {
                 return clientpath + "/../../cmd/mac/node";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath + "/../../cmd/win32/node";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath + "/../../cmd/linux/node";
             } else {
                 alert("the operation system may not be supported");
@@ -126,7 +127,7 @@ function seeleClient() {
     };
 
     this.StartNode = function (shardNum, initiate) {
-    
+
         return new Q((resolve, reject) => {
             try {
                 var args = this.nonMiningArgs(shardNum);
@@ -184,7 +185,7 @@ function seeleClient() {
         this.makeNodeFile(publickey, shardNum, false);
         this.execute('echo ')
         // this.execute('/Users/seele/go/src/github.com/seeleteam/SeeleWallet/cmd/mac/node start  -c /Users/seele/.SeeleWallet/node/node-1.json')
-        
+
         // this.execute('nodeexc start  -c /Users/seele/.SeeleWallet/node/node-1.json')
         //start the mining node
         return new Q((resolve, reject) => {
@@ -218,15 +219,15 @@ function seeleClient() {
         if (!fs.existsSync(this.nodeConfigPath)) {
             fs.mkdirSync(this.nodeConfigPath)
         }
-        shell.cp('-f', nodefile, dstfile); 
-               
+        shell.cp('-f', nodefile, dstfile);
+
         //replace files with right configs
         this.setUpNodeFile(dstfile, account, shard, initiate)
-    } 
+    }
 
     this.setUpNodeFile = function(dstfile, account, shard, initiate){
-        
-        let file = editJsonFile(dstfile);   
+
+        let file = editJsonFile(dstfile);
         // Set a couple of fields
         file.set("basic.coinbase", ''+account);
         file.set("basic.dataDir", 'seeleWallet-node'+shard);
@@ -238,7 +239,7 @@ function seeleClient() {
             ];
             args.push('--shard', shard)
             const proc = spawn(this.nodePath(), args);
-    
+
             proc.stdout.on('data', data => {
                 var output = `${data}`
                 var privatekey = this.ParsePrivateKey(output)
@@ -254,7 +255,7 @@ function seeleClient() {
             autosave: true
         });
     }
-    
+
     this.nonMiningArgs = function(shard){
         var args = [
             'start',
@@ -279,7 +280,7 @@ function seeleClient() {
     }
     this.killnode = function (shardNum) {
 
-        if (shardNum === '1'){     
+        if (shardNum === '1'){
             this.execute('ps -ef | grep "node-1.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
             console.log("node-1 is killed");
        } else if (shardNum === '2'){
@@ -291,7 +292,7 @@ function seeleClient() {
        } else if (shardNum === '4'){
            this.execute('ps -ef | grep "node-4.json" | grep -v grep | awk {\'print $2\'} | xargs kill -9');
            console.log("node-4 is killed");
-       } 
+       }
     }
 
     this.execute = function(command) {
@@ -324,7 +325,7 @@ function seeleClient() {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "mac/solc";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "win/solc";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath.substring(0, clientpath.indexOf("app.asar")) + "linux/solc";
             } else {
                 console.log("the operation system may not be supported");
@@ -336,7 +337,7 @@ function seeleClient() {
                 return clientpath + "/../../cmd/mac/solc";
             } else if(this.getOS() === "Windows") { //so far, we only provide win32
                 return clientpath + "/../../cmd/win32/solc";
-            } else if(this.getOS() === "Linux") { 
+            } else if(this.getOS() === "Linux") {
                 return clientpath + "/../../cmd/linux/solc";
             } else {
                 alert("the operation system may not be supported");
@@ -509,7 +510,7 @@ function seeleClient() {
             filelist = fs.readdirSync(this.accountPath)
             for(i = 0; i < filelist.length; i ++){
               //starts with "0x" and followed by 40alphanumeric
-              if(/0x[0-9a-zA-Z]{40,40}/.test(filelist[i])){
+              if(/^0x[0-9a-zA-Z]{40,40}$/.test(filelist[i])){
                 this.accountArray.push(filelist[i])
               }
             }
@@ -620,8 +621,8 @@ function seeleClient() {
     this.getShardNum = function(publickey) {
             var numberInfo = this.getshardnum(publickey);
             return numberInfo;
-    } 
-    
+    }
+
     this.ParsePublicKey = function (input) {
         try {
             return input.substring(input.indexOf("publick key:") + 12, input.indexOf("private key:")).trim()
@@ -673,7 +674,7 @@ function seeleClient() {
             this.client4.isListening(callBack);
         }
     };
-    
+
     this.saveFile = function (isTx, hash) {
         if (!fs.existsSync(this.txPath)) {
             fs.mkdirSync(this.txPath)
@@ -684,16 +685,16 @@ function seeleClient() {
                 console.log(err.message)
         })
     }
-    
+
     this.readFile = function () {
         if (fs.existsSync(this.txPath)) {
             // this.txArray = fs.readdirSync(this.txPath)
             var dir = this.txPath;
             this.txArray = fs.readdirSync(dir)
-              .map(function(v) { 
+              .map(function(v) {
                   return { name:v,
                            time:fs.statSync(dir + v).mtime.getTime()
-                         }; 
+                         };
                })
                .sort(function(a, b) { return b.time - a.time; })
                .map(function(v) { return v; });
@@ -701,7 +702,7 @@ function seeleClient() {
             console.log(this.txPath + "  Not Found!");
         }
     }
-    
+
     this.queryContract = function (hash,callBack) {
         // let hash = $('#QueryHash').text()
         if (hash != null && hash != "" && hash != undefined) {
@@ -745,7 +746,7 @@ function seeleClient() {
 }
 
   // this.stopMiner = function(publickey) {
-    //     var shardNum = this.getShardNum(publickey);    
+    //     var shardNum = this.getShardNum(publickey);
     //     var ip = [
     //         '127.0.0.1:8027',
     //         '127.0.0.1:8028',

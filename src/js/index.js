@@ -45,6 +45,7 @@ $(function ($) {
         $('.create-account').hide()
         $('.search-hash').hide()
         $('.dask').hide()
+        location.reload()
     })
     // click contract CONTRACT BYTE CODE
     $('.tab-code ul li').click(function () {
@@ -87,6 +88,7 @@ function addAccount() {
 
 function showAccountDir(){
   const { shell } = require('electron')
+  console.log("triggerd")
   shell.openItem(seeleClient.accountPath);
 }
 
@@ -153,7 +155,7 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `<span class="accountImg"><img src="./src/img/Headportrait.png"></span>`;
     divhtml += `<ul>`;
     divhtml += `<li class="lit" id="account">Account</li>`;
-    divhtml += `<li><span>` + balance + `</span> Seele</li>`;
+    divhtml += `<li><span>` + balance + `</span> SEELE</li>`;
     divhtml += `<li class="publickey">` + publickey + `</li>`;
     divhtml += `<li class="shard">` + "<span class=\"lit\" id=\"shard\">SHARD</span><span>-</span>" + shard + `</li>`;
     divhtml += `</ul>`;
@@ -220,11 +222,11 @@ function ToAccountInfo(publickey, balance, shard) {
 function showQR (publickey) {
     var result = document.getElementById("qr_result"); //mylink
     var request = document.getElementById("qr_request");//btnlink
-    
+
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     const lang = document.getElementById("lang").value
-    
+
     if(result.style.display !== 'flex') {
         var qrcode = new QRCode(document.getElementById("qr_result"), {
             width : 120,
@@ -244,11 +246,11 @@ function showQR (publickey) {
 
 function transfer(publickey) {
     // var lis = $("#tab ul li")
-    $("#tab ul li:nth-child(1)").removeClass('tabli_active') 
-    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active') 
-    $("#tab ul li:nth-child(2)").addClass('tabli_active') 
-    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active') 
-    $("#tab ul li:nth-child(3)").removeClass('tabli_active') 
+    $("#tab ul li:nth-child(1)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
+    $("#tab ul li:nth-child(2)").addClass('tabli_active')
+    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active')
+    $("#tab ul li:nth-child(3)").removeClass('tabli_active')
     $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
 
     $("#tabs_container").height(627)
@@ -269,7 +271,7 @@ function mineConfig(){
     $('.mine-config').show()
     $('.minedask').show()
   }
-  
+
   function hidemineconfig(){
     $('.mine-config').hide()
     $('.minedask').hide()
@@ -287,7 +289,7 @@ function copy() {
 
     selection.removeAllRanges();
     const fs = require('fs');
-    var json = JSON.parse(fs.readFileSync(process.cwd()+'/src/json/lang.json').toString());
+    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     const lang = document.getElementById("lang").value
     const copyMsg=json[lang]["copySucess"]
     layer.msg(copyMsg)
@@ -312,7 +314,7 @@ function stopMining2(shard) {
     }).catch((err)=>{
         console.log(err);
     });
-    document.getElementById("isMining").innerText="Start Mining";   
+    document.getElementById("isMining").innerText="Start Mining";
 }
 
 function stopMining(shard) {
@@ -321,7 +323,7 @@ function stopMining(shard) {
     }).catch((err)=>{
         console.log(err);
     });
-    document.getElementById("isMining").innerText="Start Mining";   
+    document.getElementById("isMining").innerText="Start Mining";
 }
 
 function changeMingingStatus(publickey) {
@@ -343,8 +345,7 @@ function changeMingingStatus(publickey) {
     // seeleClient.killNonminingNodeProcess(shard);
 }
 
-//@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh 
+//@TODO use setItem/getItem to save mining status into localstorage, in order to get mining status after page refresh
 function saveMineStatus (publickey) {
 
 }
-
