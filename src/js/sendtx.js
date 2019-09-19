@@ -104,10 +104,32 @@ function sendtx() {
     var accountpassWord = document.getElementById("accountpassWord")
     var estimatedgas = document.getElementById("estimatedgas").innerText;
     var gasPrice = $('.progress').slider("value");
+    var requested = false;
+    setTimeout(function(){
+      console.log(requested.toString());
+      if (!requested) {
+        const fs = require('fs');
+        var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+        const lang = document.getElementById("lang").value
+        alert(json[lang]["broadcastError"])
+        location.reload()
+        // console.log(requested)
+        // document.getElementById("txpublicKey").value=publicKey.value;
+        // document.getElementById("accountpassWord").value=accountpassWord.value;
+        // document.getElementById("amount").value=amount.value;
+        // document.getElementById("to").value=to.value;
+        // document.getElementById("txamount1").innerText='0.00';
+        // document.getElementById("txamount2").innerText='0';
+        // document.getElementById("totalamount").innerText='0.00021000';
+        // return 0;
+      }
+    }, 3000);
 
     layer.load(0, { shade: false });
     seeleClient.sendtx(publicKey.value, accountpassWord.value, to.value, amount.value, gasPrice,estimatedgas, "", function(result, err, hash) {
         layer.closeAll();
+        requested = true;
+        console.log(requested)
         if (err) {
             layer.alert(err.message);
         } else {
@@ -134,6 +156,7 @@ function sendtx() {
             location.reload()
         }
     });
+
     // reset everything
     document.getElementById("accountpassWord").value='';
     document.getElementById("amount").value='';

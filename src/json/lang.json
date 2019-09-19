@@ -82,7 +82,8 @@
     "tb-connected":"connected",
     "tb-address":"address",
     "tb-genesis":"genesis",
-    "tb-height":"height"
+    "tb-height":"height",
+    "broadcastError":"Transaction incomplete, please resend your transaction"
   },
   "中文":{
     "balance":"余额",
@@ -167,6 +168,7 @@
     "tb-connected":"连接",
     "tb-address":"地址",
     "tb-genesis":"初始块",
-    "tb-height":"高度"
+    "tb-height":"高度",
+    "broadcastError":"交易中断，请重新发送交易"
   }
 }

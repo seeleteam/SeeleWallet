@@ -178,12 +178,12 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `<dt id="minePic"><img src="./src/img/copy.png"></dt>`;
     divhtml += `<dd class="lit" id="toCopy">Copy Address</dd>`;
     divhtml += `</dl>`;
-    divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
-    divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
-    divhtml += `<dd class="lit" id="qr_request">Show QR Code</dd></br>`;
-    divhtml += `</dl>`;
-    divhtml += `<dl id="qr_result" class="qr_result" align="left">`
-    divhtml += `</dl>`
+    // divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
+    // divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
+    // divhtml += `<dd class="lit" id="qr_request">Show QR Code</dd></br>`;
+    // divhtml += `</dl>`;
+    // divhtml += `<dl id="qr_result" class="qr_result" align="left">`
+    // divhtml += `</dl>`
     divhtml += `</div>`;
     divhtml += `<h1 class="note lit" id="note">Note</h1>`;
     divhtml += `<p class="info lit" id="createInfo">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
