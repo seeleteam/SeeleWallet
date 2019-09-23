@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
+    
     <link href="./src/css/jquery-ui-slider-pips.min.css" rel="stylesheet" />
     <link href="./src/css/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
+    <link href="./src/css/account.css" rel="stylesheet" />
     <link href="./src/css/pulic.css" rel="stylesheet" />
     <link href="./src/css/index.css" rel="stylesheet" />
     <link href="./src/css/account-info.css" rel="stylesheet" />
@@ -17,13 +19,13 @@
     <div class="container">
         <div class="header">
             <div class="head-main">
-                <div class="logo" onclick="location.reload()"><img src="./src/img/logo-head.png"></div>
-                <ul class="quick-link">
+                <div class="logo"><img src="./src/img/logo-head.png"></div>
+                <ul class="quick-link" >
                   <!-- <li><div><img id="refreshInfo" src="./src/img/refresh.png" width="14px" height="14px"></div></li> -->
-                  <li><div id="infoTime"> 3/31/2019 11:20:18 PM</div></li>
-                  <li><div><select id="lang" onInput="switchLanguage();location.reload()">
-                          <option value="EN">EN</option>
+                  <li><div id="infoTime" style: "margin-left: 50%"> 3/31/2019 11:20:18 PM</div></li>
+                  <li><div><select id="lang" onInput="switchLanguage();location.reload()" style="display: none">
                           <option value="中文">中文</option>
+                          <option value="EN">EN</option>
                   </select></div></li>
                 </ul>
                 <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
@@ -48,9 +50,9 @@
         <div class="main">
             <div id="tab">
                 <ul>
-                    <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
+                    <!-- <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
                     <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
-                    <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li>
+                    <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li> -->
                 </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">
@@ -123,6 +125,7 @@
                                 <dd><span id="totalamount">0.00021000</span> SEELE</dd>
                             </dl>
                             <input id="sendtx" class="send lit" value="SEND" type="button">
+                            <input id="CancelTransaction" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
                     <div id="tabs-3">
@@ -178,6 +181,7 @@
                             <div id="QueryHash" style="display:none"></div>
                             <input id="deployContract" class="send lit" value="Deploy" type="button">
                             <input id="QueryContract" class="send Query lit" value="Query" type="button">
+                            <input id="CancelContract" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
                 </div>
@@ -242,6 +246,7 @@
 <script src="./src/js/jquery-ui-slider-pips.js"></script>
 <script src="./src/js/jquery.validate.js"></script>
 <script src="./src/js/sendtx.js"></script>
+<script src="./src/js/refreshInfo.js"></script>
 <script src="./src/js/language.js"></script>
 <script src="./src/js/hidePassword.js"></script>
 <script src="./src/js/clipboard.min.js"></script>

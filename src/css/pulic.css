@@ -52,6 +52,7 @@ body {
     float: left;
     padding-left: 25px;
     padding-right: 15px;
+    margin-left: 130px;
 }
 /* obsolete display
 .quick-link li:nth-child(1){
@@ -94,7 +95,7 @@ div#netinfo{
 }
 
 #lang {
-  width: 60px;
+  width: 0px;
   height: 23px;
   border: 1px solid #999;
   color: #999;
@@ -462,7 +463,7 @@ form {
 .Query{
     background: #F2F2F2;
     color:#1973AF;
-    margin-left: 40px;
+    margin: 0px 0px 0px 40px;
 }
 
 .ui-state-default,

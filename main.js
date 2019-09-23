@@ -1,31 +1,36 @@
 // Modules to control application life and create native browser window
 const electron = require('electron')
+const shell = electron.shell
 const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const app = electron.app
 var mainMenu = require("./menu")
+const ipcMain = electron.ipcMain
+ipcMain.on( "setMyGlobalVariable", ( event, myGlobalVariable ) => {
+  global.myGlobalVariable = myGlobalVariable;
+} );
 
 var SeeleClient = require('./src/api/seeleClient');
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
+
 
 function createWindow() {
-    // Create the browser window.
+    // Browser window
     mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
-    // and load the index.html of the app.
+    
+    // Window content
     mainWindow.loadFile('index.html')
+    
+    // Connect to four nodes
     sc = new SeeleClient();
     sc.initateNodeConfig(1);
     sc.initateNodeConfig(2);
     sc.initateNodeConfig(3);
     sc.initateNodeConfig(4);
 
-    //Open the DevTools.
-    // mainWindow.webContents.openDevTools()
-
-    // Emitted when the window is closed.
+    // Settup Local structure
     const os = require("os")
     const shell = require('shelljs');
     const fs = require('fs');
@@ -39,9 +44,8 @@ function createWindow() {
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
       fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
     }
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/config.json')) {
-
-      var err = shell.cp('-f', `${__dirname}/src/json/viewconfig.json`, os.homedir()+'/.SeeleWallet/')
+    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.0.json')) {
+      var err = shell.cp('-f', `${__dirname}/src/json/viewconfig_1.0.json`, os.homedir()+'/.SeeleWallet/')
       // console.log(err)
     }
     if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
@@ -49,6 +53,7 @@ function createWindow() {
       var err = shell.cp('-f', `${__dirname}/src/json/lang.json`, os.homedir()+'/.SeeleWallet/')
       // console.log(err)
     }
+    
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -56,52 +61,35 @@ function createWindow() {
         mainWindow = null
     })
 
-    // const menu = Menu.buildFromTemplate(mainMenu.mainMenu)
-    // mainWindow.webContents.openDevTools();
-    // Menu.setApplicationMenu(menu)
-
     sc.init();
-
-    // sc.StartNode(1,true).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    // });
-    // sc.StartNode(2,true).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    // });
-    // sc.StartNode(3,true).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    // });
-    // sc.StartNode(4,true).then((data)=>{
-    //     console.log(data);
-    // }).catch((data) => {
-    //     console.log(data);
-    // });
 
 }
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 // app.on('ready', createWindow)
+// function changeConfig(configName, configValue){
+// 
+// }
+global.languageSetting = "cn";
+var i18n = new(require('./translations/i18n'))
 function createMenu() {
   const application = {
-    label: "Application",
+    label: i18n.__("SeeleWallet"),
     submenu: [
       {
-        label: "About Application",
-        selector: "orderFrontStandardAboutPanel:"
+        label: i18n.__("Developer Options"),
+        accelerator: "CmdOrCtrl+shift+I",
+        click: () => {
+          mainWindow.webContents.openDevTools()
+        }
       },
       {
         type: "separator"
       },
       {
-        label: "Quit",
-        accelerator: "Command+Q",
+        label: i18n.__("Quit"),
+        accelerator: "CmdOrCtrl+Q",
         click: () => {
           app.quit()
         }
@@ -109,50 +97,97 @@ function createMenu() {
     ]
   }
 
-  const edit = {
-    label: "Edit",
-    submenu: [
-      // {
-      //   label: "Undo",
-      //   accelerator: "CmdOrCtrl+Z",
-      //   selector: "undo:"
-      // },
-      // {
-      //   label: "Redo",
-      //   accelerator: "Shift+CmdOrCtrl+Z",
-      //   selector: "redo:"
-      // },
-      // {
-      //   type: "separator"
-      // },
-      // {
-      //   label: "Cut",
-      //   accelerator: "CmdOrCtrl+X",
-      //   selector: "cut:"
-      // },
+  const file = {
+    label: i18n.__("File"),
+    submenu:[
       {
-        label: "Copy",
+        label: i18n.__("Create Keyfile(s)"),
+        accelerator: "CmdOrCtrl+N",
+        click: () => {
+          // mainWindow.webContents.executeJavascript(`location.refresh`)
+          
+          // $('.create-account').show()
+          //.executeJavascript(`$('.create-account').show()`)
+          // $('.create-account').show()
+          // $('.dask').show()
+          mainWindow.webContents.executeJavaScript('addAccount()')
+        }
+      },
+      {
+        label: i18n.__("Manage Keyfile(s)"),
+        accelerator: "CmdOrCtrl+O",
+        click: () => {
+          shell.openItem(sc.accountPath);  
+        }
+      }
+    ]
+  }
+
+  const edit = {
+    label: i18n.__("Edit"),
+    submenu: [
+      {
+        label: i18n.__("Copy"),
         accelerator: "CmdOrCtrl+C",
         selector: "copy:"
       },
       {
-        label: "Paste",
+        label: i18n.__("Paste"),
         accelerator: "CmdOrCtrl+V",
         selector: "paste:"
       },
-      // {
-      //   label: "Select All",
-      //   accelerator: "CmdOrCtrl+A",
-      //   selector: "selectAll:"
-      // }
+      {
+        label: i18n.__("Refresh"),
+        accelerator: "CmdOrCtrl+R",
+        click: function () {
+          mainWindow.reload();
+        }
+      }
+    ]
+  }
+
+  const language = {
+    label:"Language",
+    submenu: [
+      {
+        label: "English",
+        type: "radio",
+        click: function () {
+          global.languageSetting = "en"
+          console.log("switch to English!", global.languageSetting);
+        }
+      },
+      {
+        label: "中文",
+        type: "radio",
+        click: function () {
+          global.languageSetting = "cn"
+          console.log("转成中文!", global.languageSetting);
+        },
+      }
+    ]
+  }
+
+  const view = {
+    label: i18n.__("View"),
+    submenu: [
+      // language
+      {
+        label: i18n.__("Show NetWork Info"),
+        accelerator: "CmdOrCtrl+I",
+        click: () => {
+          mainWindow.webContents.executeJavaScript('showInfo()')
+        }
+      }
     ]
   }
 
   const help = {
+    label: i18n.__("Help"),
     role: "help",
     submenu: [
       {
-        label: "Learn More",
+        label: 'Learn More',
         click: async () => {
           const { shell } = require("electron")
           await shell.openExternal("https://seele-seeletech.gitbook.io/wiki/tutorial/seelewallet-windows")
@@ -168,12 +203,19 @@ function createMenu() {
     ]
   }
 
-  const template = [
+  template = [
     application,
+    file,
     edit,
+    view,
     help
   ]
-
+  // module.exports.mainWindow = mainWindow;
+  // console.log('exported!',mainWindow)
+  // const menutest = require('./menu');
+  // console.log(menutest.mainMenu)
+  // Menu.setApplicationMenu(Menu.buildFromTemplate(menutest.mainMenu));
+  // console.log(template)
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
 

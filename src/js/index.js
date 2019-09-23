@@ -86,12 +86,6 @@ function addAccount() {
     $('.dask').show()
 }
 
-function showAccountDir(){
-  const { shell } = require('electron')
-  console.log("triggerd")
-  shell.openItem(seeleClient.accountPath);
-}
-
 function importAccounts(){
   const { dialog } = require('electron').remote
 
@@ -244,26 +238,73 @@ function showQR (publickey) {
     }
 }
 
-function transfer(publickey) {
+function wallet(){
+  $("#tab ul li:nth-child(1)").removeClass('tabli_active')
+  $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
+  $("#tab ul li:nth-child(3)").removeClass('tabli_active')
+  $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
+  
+  $("#tab ul li:nth-child(1)").addClass('tabli_active')
+  $("#tab ul li:nth-child(1)").find('a').addClass('tabulous_active')
+
+  // $("#tabs_container").height(627)
+  $("#tabs-2").addClass('make_transist')
+  $("#tabs-2").addClass('hideleft')
+  $("#tabs-2").removeClass('showleft')
+  $("#tabs-3").addClass('make_transist')
+  $("#tabs-3").addClass('hideleft')
+  $("#tabs-3").removeClass('showleft')
+
+  $("#tabs-1").addClass('hideleft')
+  $("#tabs-1").addClass('make_transist')
+  $("#tabs-1").addClass('showleft')
+}
+
+function contract(publickey) {
     // var lis = $("#tab ul li")
     $("#tab ul li:nth-child(1)").removeClass('tabli_active')
     $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
-    $("#tab ul li:nth-child(2)").addClass('tabli_active')
-    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active')
-    $("#tab ul li:nth-child(3)").removeClass('tabli_active')
-    $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
+    $("#tab ul li:nth-child(2)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(2)").find('a').removeClass('tabulous_active')
+    
+    $("#tab ul li:nth-child(3)").addClass('tabli_active')
+    $("#tab ul li:nth-child(3)").find('a').addClass('tabulous_active')
 
-    $("#tabs_container").height(627)
+    // $("#tabs_container").height(627)
     $("#tabs-1").addClass('make_transist')
     $("#tabs-1").addClass('hideleft')
     $("#tabs-1").removeClass('showleft')
 
+    $("#tabs-3").addClass('hideleft')
+    $("#tabs-3").addClass('make_transist')
+    $("#tabs-3").addClass('showleft')
+
+    $("#contractPublicKey").val(publickey)
+}
+
+function transaction(publickey) {
+    //disable tab 1, 3
+    $("#tab ul li:nth-child(1)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
+    $("#tab ul li:nth-child(3)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
+    //show tab 2
+    $("#tab ul li:nth-child(2)").addClass('tabli_active')
+    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active')
+
+    //hiding tab1
+    $("#tabs_container").height(627)
+    $("#tabs-1").addClass('make_transist')
+    $("#tabs-1").addClass('hideleft')
+    $("#tabs-1").removeClass('showleft')
+    
+    //showing tab2
     $("#tabs-2").addClass('hideleft')
     $("#tabs-2").addClass('make_transist')
     $("#tabs-2").addClass('showleft')
-
+    
+    //filling tab2
     $("#txpublicKey").val(publickey)
-    $("#contractPublicKey").val(publickey)
 }
 
 function mineConfig(){
@@ -284,7 +325,7 @@ function copy() {
     range.selectNodeContents(copyTextarea);
     selection.removeAllRanges();
     selection.addRange(range);
-
+    
     document.execCommand('copy');
 
     selection.removeAllRanges();
@@ -293,6 +334,24 @@ function copy() {
     const lang = document.getElementById("lang").value
     const copyMsg=json[lang]["copySucess"]
     layer.msg(copyMsg)
+}
+
+function toclip(text) {
+  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+    if (result.state == "granted" || result.state == "prompt") {
+      navigator.clipboard.writeText(text).then(
+        function() {
+        console.log("copied!")
+        const fs = require('fs');
+        var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+        const lang = document.getElementById("lang").value
+        const copyMsg=json[lang]["copySucess"]
+        layer.msg(copyMsg)
+      }, function() {
+        console.log("failed, but still permitted")
+      });
+    }
+  });
 }
 
 function viewOnSeelescan(publickey) {

@@ -259,7 +259,7 @@ a:focus {
     background-size: 210px 60px;
 }
 #tab ul li:nth-child(1).tabli_active{
-    background: url(../img/wallet-bai.png) left top no-repeat;
+    /* background: url(../img/wallet-bai.png) left top no-repeat; */
 }
 #tab ul li:nth-child(2).tabli_active{
     margin-left: -40px;
