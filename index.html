@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
-    
-    <link href="./src/css/jquery-ui-slider-pips.min.css" rel="stylesheet" />
-    <link href="./src/css/jqueryui.min.css" rel="stylesheet" />
+    <link href="./src/css/main.css" rel="stylesheet" />  
+    <link href="./src/css/more.css" rel="stylesheet" />  
+    <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
+    <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
     <link href="./src/css/account.css" rel="stylesheet" />
     <link href="./src/css/pulic.css" rel="stylesheet" />
@@ -17,6 +18,40 @@
 
 <body>
     <div class="container">
+        <div class="popuplocationwrap">
+          <div class="popup">
+            <div class="moreinfo">
+              <div class="more-filename"></div>
+              <div class="more-shard"></div>
+              <div class="more-publickey"></div>
+              <div class="prikey" style="display:none;"></div>
+            </div>
+            <div class="controls">
+              <div class="option disabledOption copy-pub">
+                <span class="option-text">复制公钥</span>
+                <img class="option-icon" src="./src/img/pubkey.png" alt="">
+              </div>
+              <div class="option disabledOption copy-pri">
+                <span class="option-text">复制私钥</span>
+                <img class="option-icon" src="./src/img/prikey.png" alt="">
+              </div>
+              <div class="option disabledOption copy-key">
+                <span class="option-text">复制钥文</span>
+                <img class="option-icon" src="./src/img/keyfile.png" alt="">
+              </div>
+              <div class="option disabledOption move-key">
+                <span class="option-text">移出钥文</span>
+                <img class="option-icon" src="./src/img/move.png" alt="">
+              </div>
+            </div>
+            <div class="password">
+              <input type="password" class="passwordfield">
+            </div>  
+            <div class="action">
+              <div class="actionbutton" onclick="unlockmore()">解 锁</div>
+            </div>
+          </div>
+        </div>
         <div class="header">
             <div class="head-main">
                 <div class="logo"><img src="./src/img/logo-head.png"></div>
@@ -31,7 +66,8 @@
                 <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
             </div>
         </div>
-        <div id="netinfo" style="display: none">
+        
+        <div id="netinfo" style="display: none; margin: 100px 0px 30px 0px;">
           <table id="netInfoTable" style="width:60%;margin-left:20%;margin-right:20%;text-align:center;margin-top:10px">
               <tr>
                 <th class="lit" id="tb-shard">shard</th>
@@ -49,11 +85,11 @@
         </div>
         <div class="main">
             <div id="tab">
-                <ul>
+                <!-- <ul> -->
                     <!-- <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
                     <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
                     <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li> -->
-                </ul>
+                <!-- </ul> -->
                 <div id="tabs_container">
                     <div id="tabs-1">
                         <h1>Accounts Overview</h1>
@@ -187,7 +223,7 @@
                 </div>
             </div>
         </div>
-        <div class="dask"></div>
+        <div class="dask" onclick="clearpopup()"></div>
         <div class="minedask"></div>
         <div class="create-account">
             <span class="name lit" id="createWarning">KEEP PASSWORD and KEYS somewhere safe</span>
@@ -240,6 +276,7 @@
             var json = JSON.parse(fs.readFileSync(client.configpath).toString());
             document.getElementById("lang").value=json["lang"]
         </script>
+        </div>
 </body>
 <script src="./src/js/jQuery.js"></script>
 <script src="./src/js/jquery-plus-ui.min.js"></script>
@@ -254,4 +291,6 @@
 <script src="./src/js/progress.js"></script>
 <script src="./src/js/index.js"></script>
 <script src="./src/js/layer.js"></script>
+<script src="./src/js/popup.js"></script>
+<!-- <script src="./src/js/popup.js"></script> -->
 </html>

@@ -23,6 +23,7 @@ a:focus {
     position: absolute;
     height : 100%;
     overflow : auto;
+    overflow-x: hidden;
 }
 
 #tab {

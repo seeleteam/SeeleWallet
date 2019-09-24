@@ -18,7 +18,7 @@ let mainWindow;
 
 function createWindow() {
     // Browser window
-    mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico'})
+    mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico', resizable: false})
     
     // Window content
     mainWindow.loadFile('index.html')

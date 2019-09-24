@@ -35,28 +35,11 @@ p.info {
     text-align: left;
 }
 
-.header{
-    width: 100%;
-    height: 80px;
-    background: #fff;
-}
 .head-main,.main{
-    width: 1200px;
-    margin: 0 auto;
+    /* width: 1200px; */
+    width: 100%;
+    margin: 0;
     padding-bottom: 40px;
-}
-.logo{
-    width: 110px;
-    height: 28px;
-    float: left;
-    margin: 26px 0 0 0;
-}
-.get-balance{
-    width: auto;
-    float: right;
-    font-size: 16px;
-    color: #666;
-    margin: 26px 0 0 0;
 }
 
 .balanceClaim{
@@ -73,24 +56,8 @@ p.info {
 input,select{
     outline: none;
 }
-.dask{
-    width: 100%;
-    height: 130%;
-    display: none;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    background: rgb(0,0,0,.4)
-}
-.minedask{
-    width: 100%;
-    height: 130%;
-    display: none;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    background: rgb(0,0,0,.4)
-  }
+
+
 .create-account{
     width: 340px;
     height: 184px;

@@ -5,35 +5,15 @@ body {
 }
 
 
-/* header */
-
-.header {
-    width: 100%;
-    height: 80px;
-    background: #fff;
-}
-
 .head-main,
 .main {
-    width: 1180px;
-    margin: 0 auto;
+    /* width: 1180px; */
+    width: 100%;
+    margin: 0;
     padding-bottom: 40px;
 }
 
-.logo {
-    width: 110px;
-    height: 28px;
-    float: left;
-    margin: 26px 0 0 0;
-}
 
-.get-balance {
-    width: auto;
-    float: right;
-    font-size: 16px;
-    color: #666;
-    margin: 26px 0 0 0;
-}
 
 .get-balance span:nth-child(2) {
     font-size: 30px;

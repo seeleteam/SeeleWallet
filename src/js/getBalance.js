@@ -82,7 +82,7 @@ function loadAccount() {
 
 
     for (var i in seeleClient.accountArray) {
-        account  = seeleClient.accountArray[i];
+        account = seeleClient.accountArray[i];
         publicKey = account.pubkey;
         shardNum = account.shard;
         filename = account.filename;
@@ -93,6 +93,7 @@ function loadAccount() {
         shardWord = json[lang]['tb-shard'];
         send = json[lang]['tabSend'];
         balance = 0
+        
         var accountHTML = ``
         accountHTML += `<div class='account'><div class='account-up'><div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div><div class='account-balance'>`
         accountHTML += `<span id='`+ publicKey +`'>` + balance + '</span><span>SEELE</span>' + `</div> </div><div class='account-down'><div class='account-controls'>`
@@ -101,7 +102,9 @@ function loadAccount() {
         accountHTML += `<div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> <div class='account-contract'>` 
         accountHTML += `<img class='img-solidity' onclick=contract("`+publicKey+`") src='./src/img/solidity.png'></div>`
         accountHTML += `<div class='account-transaction' onclick=transaction("`+ publicKey +`") >`+ send +`</div></div>`
-        accountHTML += `<div class='account-file'>`+ filename +`</div></div></div>`      
+        accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account) + `)> <img class='img-more' src='./src/img/more.png'> </div>`
+        accountHTML += `<div class='account-file'>`+ filename +`</div></div></div>`  
+        
         document.getElementById("accountlist").innerHTML += accountHTML;
     }
     loadingBalances = false;
@@ -174,3 +177,5 @@ function refreshBalances(){
         })
     } 
 }
+
+module.exports = loadAccount;

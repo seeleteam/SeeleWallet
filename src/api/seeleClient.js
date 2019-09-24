@@ -473,7 +473,7 @@ function seeleClient() {
         });
     };
 
-    this.DecKeyFile = function (fileName, passWord) {
+    this.decKeyFile = function (fileName, passWord) {
         return new Q((resolve, reject) => {
             var args = [
                 'deckeyfile',
@@ -488,13 +488,15 @@ function seeleClient() {
             proc.stdout.on('data', data => {
                 proc.stdin.write(passWord + '\n');
                 var output = `${data}`
+                // console.log(output.slice(-67));
                 if (output.indexOf("private") > 0) {
-                    resolve(data)
+                    resolve(output.slice(-67))
                 }
             });
 
             proc.stderr.on('data', data => {
                 console.log(data.toString());
+                // console.log("what?")
                 reject(data)
             });
         });
@@ -518,7 +520,7 @@ function seeleClient() {
     
     this.keyfileisvalid = function (keyfilepath) {
       var fsize = fs.statSync(keyfilepath).size;
-      if ( fsize == 376 ) {
+      if ( fsize <= 376 ) {
         try {
             filecontents = JSON.parse(fs.readFileSync(keyfilepath).toString());
         } catch (e) {

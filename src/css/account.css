@@ -16,7 +16,7 @@ account
 .account {
   float: left;
   padding: 2px;
-  width: 30%;
+  width: 32%;
   overflow: auto;
   user-select: none;
 }
@@ -58,7 +58,6 @@ account
   font-weight: 900;
 }
 .shardnum {
-  color: black;
   font-size: 40px;
   font-family: monospace;
   font-weight: 900;
@@ -66,7 +65,7 @@ account
 
 .account-publicKey {
   padding: 5px 0px 0px 0px;
-  font-size: 13px;
+  font-size: 14px;
   float: left;
 }
 
@@ -83,8 +82,16 @@ account
 
 .img-solidity{
   float: right;
-  padding: 5px 5px 5px 5px;
-  width: 15px;
+  padding: 5px 3px 5px 3px;
+  width: 19px;
+  height: 20px;
+}
+
+.img-more {
+  float: right;
+  clear: right;
+  padding: 5px 3px 5px 3px;
+  width: 19px;
   height: 20px;
 }
 
@@ -106,13 +113,15 @@ account
 }
 
 .account-file {
-  clear: both;
+  clear: left;
   color: black;
   font-family: monospace;
   font-weight: 900;
-  font-size: 30px;
+  font-size: 20px;
   text-align: right;
+  float: left;
 }
+
 
 /* 
 __________________________________________________________________
@@ -136,8 +145,9 @@ __________________________________________________________________
   inner hover activity
 */
 
-.img-copy:hover, .img-solidity:hover {
-  background-color: #66ccff;
+.img-copy:hover, .img-solidity:hover, .img-more:hover, .account-transaction:hover{
+  /* background-color: #c1cbde; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
 
@@ -157,6 +167,5 @@ __________________________________________________________________
   width: 50px;
   padding: 10px 10px 10px 10px;
   font-weight: 900;
-  background-color: #66ccff;
   border-radius: 10px;
 }
