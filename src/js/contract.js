@@ -26,7 +26,7 @@ addLoadEvent(function () {
     $('#contractAmount').on('input',function(e){
         if(ctxvalidator.element("#contractAmount")){
             document.getElementById("ctxamount1").innerText=this.value;
-            document.getElementById("ctxamount2").innerText=this.value;
+            // document.getElementById("ctxamount2").innerText=this.value;
             var estimatedgas = document.getElementById("ctx-estimatedgas").innerText;
             var gasPrice = $('#contractGasPrice').slider("value");
             var total = BigNumber(gasPrice).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(this.value));
@@ -82,13 +82,17 @@ addLoadEvent(function () {
 function compileContract() {
     var input = document.getElementById("contractSourceCode").innerText;
     seeleClient.compileContract(input).then((outdata) => {
+        console.log(outdata);
         var getPayload = document.getElementById("getPayload");
         getPayload.innerText = outdata
         var output = document.getElementById("compileSuccess")
         output.innerText = "Success"
         output.style.display = 'block'
-        if($('.cur').text() == 'CONTRACT BYTE CODE'){
+        if($('.cur')[0].id == 'contractByte'){
             $('#contractInput').val(outdata)
+            // $('#contractInput').innerText(outdata)
+            // $('#contractInput').innerHTML(outda/ta)
+            // $('#contractSourceCode').val(outdata)
         }
         // update estimated gas and total fee 
         var publicKey = document.getElementById("contractPublicKey");

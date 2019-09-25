@@ -48,6 +48,8 @@
 .option-text {
   float: left;
   display: block;
+  height:auto;
+  padding: auto;
   font-size: 15px;
 }
 

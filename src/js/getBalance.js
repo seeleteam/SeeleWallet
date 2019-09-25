@@ -28,12 +28,16 @@ function firstLoad() {
         refreshBalances();
     }, 2000);
     
+    // var interval2 = setInterval(function(){
+    //     loadAccount();
+    // }, 10000);
+    
 }
 
 function loadAccount() {
     loadingBalances = true;
     seeleClient.accountList();
-    
+      
     if (seeleClient.txArray == null || seeleClient.txArray.length <= 0) {
         seeleClient.readFile();
     }
@@ -48,7 +52,7 @@ function loadAccount() {
     var tabs1 = document.getElementById("tabs-1");
     tabs1.innerHTML = "";
 
-    var tabs1HTML = `<div id="main-container"><div><h1 class="lit" id="titleWallets">Accounts overview</h1></div></div>`
+    var tabs1HTML = `<div id="main-container"><div><h1 class="" id="titleWallets"></h1></div></div>`
     tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
     tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
     tabs1HTML += `<div style="height: 300px; overflow-y: scroll;">`
@@ -95,15 +99,32 @@ function loadAccount() {
         balance = 0
         
         var accountHTML = ``
-        accountHTML += `<div class='account'><div class='account-up'><div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div><div class='account-balance'>`
-        accountHTML += `<span id='`+ publicKey +`'>` + balance + '</span><span>SEELE</span>' + `</div> </div><div class='account-down'><div class='account-controls'>`
-        accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'>`
-        accountHTML += `<img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div><div class='account-shard'> `
-        accountHTML += `<div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> <div class='account-contract'>` 
-        accountHTML += `<img class='img-solidity' onclick=contract("`+publicKey+`") src='./src/img/solidity.png'></div>`
-        accountHTML += `<div class='account-transaction' onclick=transaction("`+ publicKey +`") >`+ send +`</div></div>`
+        
+        accountHTML += `<div class='account'><div class='account-up'>`
+        accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
+        accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span>SEELE</span>`
+        accountHTML += `</div></div>`
+        accountHTML += `<div class='account-down'><div class='account-controls'>`
+        accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
+        accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
+        accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>` 
+        accountHTML += `<div class='account-transaction' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
         accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account) + `)> <img class='img-more' src='./src/img/more.png'> </div>`
-        accountHTML += `<div class='account-file'>`+ filename +`</div></div></div>`  
+        accountHTML += `<div class='account-file'>`+ filename + `</div>`
+        accountHTML += `</div></div>`
+        
+        // accountHTML += `<div class='account'><div class='account-up'>`
+        // accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
+        // accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span>SEELE</span>`
+        // accountHTML += `</div></div>`
+        // accountHTML += `<div class='account-down'><div class='account-controls'>`
+        // accountHTML += `<img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'><div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'> </div>`
+        // accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract("`+publicKey+`") src='./src/img/solidity.png'></div>` 
+        // accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
+        // accountHTML += `<div class='account-transaction' onclick=transaction("`+ publicKey +`") >`+ send +`</div></div>`
+        // accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account) + `)> <img class='img-more' src='./src/img/more.png'> </div>`
+        // accountHTML += `<div class='account-file'>`+ filename + `</div>`
+        // accountHTML += `</div></div>`
         
         document.getElementById("accountlist").innerHTML += accountHTML;
     }

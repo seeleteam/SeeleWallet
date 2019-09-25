@@ -35,12 +35,6 @@ p.info {
     text-align: left;
 }
 
-.head-main,.main{
-    /* width: 1200px; */
-    width: 100%;
-    margin: 0;
-    padding-bottom: 40px;
-}
 
 .balanceClaim{
     width: auto;

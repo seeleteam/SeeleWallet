@@ -1,12 +1,23 @@
+/* 
+_____________________________________
+display for all the popups
+
+
+ */
+
 .popuplocationwrap{
   /* text-align: center; */
   z-index: 2;
   position: fixed;
-  display: none;
   top: 200px;
   left: calc(50% - 314px);
   user-select: none;
 }
+
+.morepopup {
+  display: none;
+}
+
 .popup {
   font-family: STHeiTi;
   font-weight: 900;
@@ -69,13 +80,13 @@
   width: 60%;
 }
 
-.passwordfield{
+.passwordfield-add, .passwordfield-more{
   height: 25px;
   width: 100%;
   font-size: 15px;
 }
 
-.passwordfield:focus{
+.passwordfield-add:focus, .passwordfield-more:focus{
   outline: none;
 }
 
@@ -125,6 +136,7 @@
   font-weight: 900;
   text-align: center;
   clear:both;
+  overflow: auto;
 }
 
 .more-shard, .more-publickey {
@@ -132,4 +144,23 @@
   text-align: center;
   clear:both;
   font-size: 10px;
+}
+
+
+/* _____________________________________ */
+
+.addpopup {
+  display: none;
+}
+.option-string {
+  float: right;
+  font-size: 15px;
+}
+.option-string:focus {
+  outline: none;
+}
+.option-title {
+  float: left;
+  line-height: 25px;
+  font-size: 15px;
 }

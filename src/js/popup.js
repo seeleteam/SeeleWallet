@@ -1,4 +1,4 @@
-var refreshAccount = require('./src/js/getBalance.js')
+var refreshAccount = require('./src/js/getBalance.js');
 var SeeleClient = require('./src/api/seeleClient');
 seeleClient = new SeeleClient();
 
@@ -10,46 +10,50 @@ function moreAbout(account){
     $('.more-shard').html("片: " + account.shard)
     $('.more-publickey').html(account.pubkey)
     
-    $('.popuplocationwrap').show()  
+    $('.morepopup').show()  
     $('.dask').show()
+    
+    $('.dask').click ( function () { clearMoreAbout(); } )
+    $('.copy-pub').click( function(){ toclip($('.more-publickey').html()); } )
+    $('.copy-key').click( function(){ toclip(account.pubkey); } )
+    $('.move-key').click( function(){ moveKeyfileTo(account.filename); } )
 }
 
-function clearpopup() {
+function clearMoreAbout() {
   // hide
-  $('.popuplocationwrap').hide()
+  $('.morepopup').hide()
   $('.dask').hide()
+  $('.dask').off()
+  
   // clear fields
   $('.passwordfield').val('')
   $('.more-filename').val('')
   $('.more-shard').val('')
   $('.more-publickey').val('')
   // disable options
-  $('.option').removeClass("enabledOption")
-  $('.option').addClass("disabledOption")
+  $('.copy-pri').removeClass("enabledOption")
+  $('.copy-pri').addClass("disabledOption")
   $('.option').off()
   // update account if move happened
   refreshAccount()
 }
 
 function unlockmore() {
-    var pass = $('.passwordfield').val()
-    $('.passwordfield').val('')
+    var pass = $('.passwordfield-more').val()
+    $('.passwordfield-more').val('')
     var file = $('.more-filename').html()
     var key = fs.readFileSync(seeleClient.accountPath+file).toString()
     seeleClient.decKeyFile(file,pass).then( 
       function(result){
         layer.msg("unlock success!")
-        $('.option').removeClass("disabledOption")
-        $('.option').addClass("enabledOption")
+        $('.copy-pri').removeClass("disabledOption")
+        $('.copy-pri').addClass("enabledOption")
         $('.prikey').html(result)
-        $('.copy-pub').click( function(){ toclip($('.more-publickey').html()); } )
         $('.copy-pri').click( function(){ toclip(result); } )
-        $('.copy-key').click( function(){ toclip(key); } )
-        $('.move-key').click( function(){ moveKeyfileTo(file); } )
       }, 
       function(error){
-        $('.popuplocationwrap').addClass("smh")
-        setTimeout(function(){ $('.popuplocationwrap').removeClass("smh"); }, 200);
+        $('.morepopup').addClass("smh")
+        setTimeout(function(){ $('.morepopup').removeClass("smh"); }, 200);
       })
 }
 

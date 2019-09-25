@@ -1,16 +1,4 @@
-body {
-    font-family: Helvetica;
-    background: #ebf1f5;
-    margin: 0;
-}
 
-
-.head-main,.main{
-    /* width: 1200px; */
-    width: 100%
-    margin: 0;
-    padding-bottom: 40px;
-}
 
 
 .balanceClaim{
@@ -30,7 +18,7 @@ body {
 #accountlist {
     width: 100%;
     float: left;
-    margin: 0px 0 30px 20px;
+    margin: 60px 20px 30px 20px;
 }
 #tabs-1 h1,#tabs-1 h1{
     font-size: 30px;
@@ -103,7 +91,7 @@ body {
 
 /* send */
 #tabs-2{
-    padding: 20px 0px 0 20px;
+    padding: 60px 0px 0 20px;
     color: #666;
 }
 form{
@@ -111,10 +99,17 @@ form{
     float: left;
     padding: 0 0 50px 0;
 }
-#tab ul.send-list li:nth-child(1),#tab ul.send-list li:nth-child(2){
+#tab ul.send-list li:nth-child(1), #tab ul.send-list li:nth-child(2){
     margin-left: unset;
     background: unset;
 }
+
+#tab ul.send-list li:nth-child(1){
+    margin-right: 80px;
+    margin-bottom: 15px;
+    background: unset;
+}
+
 .send-title{
     font-size: 30px;
     margin: 0;
@@ -129,10 +124,15 @@ form{
     float: left;
     display: inline-table;
 }
-#tabs-2 .send-list li:nth-child(odd){
+/* #tabs-2 .send-list li:nth-child(1){
     margin-right: 80px;
+} */
+
+#tabs-2 .send-list li:nth-child(odd){
     margin-bottom: 15px;
+    margin-right: 80px;
 }
+
 #tabs-2 .send-list li input{
     width: 498px;
     height: 30px;

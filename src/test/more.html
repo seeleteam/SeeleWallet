@@ -10,13 +10,57 @@
     width: 1200;
     background-color: rgba(122, 122, 133);
   }
+  .morepopup {
+    display: none;
+  }
+  .addpopup {
+    display: none;
+  }
+  .option-string {
+    float: right;
+    font-size: 15px;
+  }
+  .option-string:focus {
+    outline: none;
+  }
+  .option-title {
+    float: left;
+    line-height: 25px;
+    font-size: 15px;
+  }
   
 </style>
 
 </head>
 <body>
 
-<div class="popuplocationwrap">
+  <div class="popuplocationwrap addpopup">
+  <div class="popup">
+    <div class="controls">
+      <div class="option">
+        <span class="option-title">文件名*</span>
+        <input class="option-string" type="text">
+      </div>
+      <div class="option">
+        <span class="option-title">私钥</span>
+        <input class="option-string" type="text">
+      </div>
+      <div class="option">
+        <span class="option-title">片号</span>
+        <input class="option-string" type="text">
+      </div>
+      
+    </div>
+    <div class="password">
+      <input type="password" class="passwordfield" placeholder=" 请输入密码">
+    </div>  
+    <div class="action">
+      <div class="actionbutton">创 建</div>
+    </div>
+  </div>
+  </div>
+
+<div class="popuplocationwrap morepopup">
 <div class="popup">
   <div class="controls">
     <div class="option">

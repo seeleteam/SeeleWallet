@@ -2,6 +2,9 @@
 author: Miya_yang
 date:2018.10.30
 */
+
+var refreshAccount = require('./src/js/getBalance.js');
+
 $(function ($) {
 
 
@@ -51,7 +54,7 @@ $(function ($) {
     $('.tab-code ul li').click(function () {
         let getPayload = $('#getPayload').text()
         $(this).addClass('cur').siblings().removeClass('cur')
-        if ($(this).text() == 'CONTRACT BYTE CODE') {
+        if ($(this)[0].id == 'contractByte') {
             $('#contractInput').val(getPayload)
         } else {
             // var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
@@ -62,9 +65,9 @@ $(function ($) {
     })
     //save contractInput content
     $('#contractInput').on('input',function(e){
-        if($('.cur').text() == 'SOLIDITY CONTRACT SOURCE CODE'){
+        if($('.cur')[0].id == 'contractSource'){
             document.getElementById("contractSourceCode").innerText = this.value;
-        }else if($('.cur').text() == 'CONTRACT BYTE CODE'){
+        }else if($('.cur')[0].id == 'contractByte'){
             document.getElementById("getPayload").innerText = this.value;
         }
     });
@@ -80,6 +83,143 @@ $(function ($) {
         return this.optional(element) || value.substring(value.indexOf(".")).length<=param;
       }, "Please specify the correct precision for your value");
 })
+
+
+function addKeyfilePopup(){
+  // bring up display and give dask specific cleaning action listener
+  $('.addpopup').show()
+  $('.dask').show()
+  $('.dask').click ( function () { clearAddKeyfile(); } )
+  
+  // add logic to text files:
+  // loop: use class to significy choice
+  // 
+  $('.prikey-add').focus ( function () {
+      $('.add-choices').removeClass("add-type")
+      $('.add-choices').val('')
+      $('.prikey-add').addClass("add-type")
+  })
+  
+  $('.shard-add').focus ( function () {
+      $('.add-choices').removeClass("add-type")
+      $('.add-choices').val('')
+      $('.shard-add').addClass("add-type")
+  })
+}
+
+function clearAddKeyfile(){
+  $('.addpopup').hide()
+  $('.dask').hide()
+  $('.dask').off()
+  
+  $('.option-string').val('')
+  $('.passwordfield-add').val('')
+  refreshAccount()
+}
+
+function isDuplicateBy(value, field, arrayOfJsonObj) {
+  if (arrayOfJsonObj.length==0){
+    return false;
+  }
+  
+  if ((field in arrayOfJsonObj[0])==false) {
+    console.log("FIELD NOT EXIST")
+  }
+  
+  for ( jsonObj of arrayOfJsonObj) {
+      if (jsonObj[field] == value) {
+        console.log(value, "is found in", jsonObj)
+        return true
+      }
+  }
+  return false
+}
+
+function shakeAddpopWithEr(msg){
+  layer.msg(msg)
+  $('.addpopup').addClass("smh")
+  setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+}
+
+function addKeyfile(){
+  // if file name is full and valid
+  // if password is full and valid
+  // There must be a choice, defaulted 
+    // shard is valid 
+    // prikey is valid
+    // btw its better that you give a default 1, and the add-type
+  error = []
+  
+  var name = $('.file-add').val() // fam it can't be empty!
+  if ( name == "" ) { 
+    error.push("文件名不能为空")
+  } else {
+    seeleClient.accountListPromise().then(a=>{
+        if ( isDuplicateBy(name,"filename",a) ) { 
+          shakeAddpopWithEr("文件名已有")
+        }
+    }).catch(e=>{console.log(e);})
+  }
+  
+  var pass = $('.passwordfield-add').val()
+  // concat only returns a copy
+  error = error.concat(passwordStrengthTest(pass));
+  
+  var prikey = $('.prikey-add').val()
+  var shard = $('.shard-add').val()
+  
+  if (shard != "") {
+    if( !/^[1-4]{1,1}$/.test( shard ) ){
+      error.push("片号须为1-4")
+    } else {
+      var wallet = require("./src/js/wallet.js");
+      gen = new wallet;
+      prikey = gen.createbyshard(shard).privatekey
+    }
+  } else if ( prikey != "" ) {
+    if( !/^0x[0-9a-z]{64,64}$/.test( prikey ) ){ 
+      error.push("私钥须为以0x开头66位数字字母字符串")
+    }
+  }
+  
+  if ( error.length != 0 ) {
+    console.log(error);
+    layer.msg(error.join("\n"))
+    $('.addpopup').addClass("smh")
+    setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+  } else {
+    console.log(name, prikey, pass);
+    seeleClient.keyStore(name, prikey, pass).then( 
+      (res)=>{ clearAddKeyfile(); layer.msg("创建成功!"); console.log("resolved");},
+      (rej)=>{ console.log("rejected: why:");}
+    )
+  }
+  setTimeout(function(){ refreshAccount(); }, 2000);
+
+}
+
+function passwordStrengthTest(password){
+  const fs = require('fs');
+
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  const lang = document.getElementById("lang").value
+  // length, case, number, specialchar
+  var err = []
+  const len = password.length
+
+  if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
+  if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
+  if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
+  if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
+  if (!/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
+  var errmsg = []
+  if (err.length != 0) {
+    errmsg = [json[lang]["passwordWarning"]["fail"]].concat(err);
+    // console.log(errmsg)
+  }
+  return errmsg
+}
+
 
 function addAccount() {
     $('.create-account').show()
@@ -101,12 +241,14 @@ function importAccounts(){
     //console.log(srcpath[item])
     var tempfilename = srcpath[item].split(path.sep)
     //console.log(dstpath+tempfilename[tempfilename.length-1])
-    fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
+    fs.copyFileSync(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
       if (err) throw err;
       //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
     });
   }
-  window.location.reload();
+  var refreshAccount = require('./src/js/getBalance.js');
+  refreshAccount();
+  // window.location.reload();
 }
 
 function exportAccounts() {
@@ -260,7 +402,7 @@ function wallet(){
   $("#tabs-1").addClass('showleft')
 }
 
-function contract(publickey) {
+function contract(account) {
     // var lis = $("#tab ul li")
     $("#tab ul li:nth-child(1)").removeClass('tabli_active')
     $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
@@ -279,10 +421,10 @@ function contract(publickey) {
     $("#tabs-3").addClass('make_transist')
     $("#tabs-3").addClass('showleft')
 
-    $("#contractPublicKey").val(publickey)
+    $("#contractPublicKey").val(account.pubkey)
 }
 
-function transaction(publickey) {
+function transaction(account) {
     //disable tab 1, 3
     $("#tab ul li:nth-child(1)").removeClass('tabli_active')
     $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
@@ -304,7 +446,8 @@ function transaction(publickey) {
     $("#tabs-2").addClass('showleft')
     
     //filling tab2
-    $("#txpublicKey").val(publickey)
+    $("#txPublicKey").val(account.pubkey)
+    $("#txAccount").val(JSON.stringify(account))
 }
 
 function mineConfig(){
@@ -408,3 +551,5 @@ function changeMingingStatus(publickey) {
 function saveMineStatus (publickey) {
 
 }
+
+// module.exports = importAccounts;

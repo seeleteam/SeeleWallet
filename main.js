@@ -18,7 +18,7 @@ let mainWindow;
 
 function createWindow() {
     // Browser window
-    mainWindow = new BrowserWindow({width: 1280, height: 950, icon: './SeeleWallet_48.ico', resizable: false})
+    mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: './SeeleWallet_48.ico', resizable: true})
     
     // Window content
     mainWindow.loadFile('index.html')
@@ -104,20 +104,26 @@ function createMenu() {
         label: i18n.__("Create Keyfile(s)"),
         accelerator: "CmdOrCtrl+N",
         click: () => {
-          // mainWindow.webContents.executeJavascript(`location.refresh`)
-          
-          // $('.create-account').show()
-          //.executeJavascript(`$('.create-account').show()`)
-          // $('.create-account').show()
-          // $('.dask').show()
-          mainWindow.webContents.executeJavaScript('addAccount()')
+          // console.log("clicked");
+          mainWindow.webContents.executeJavaScript('addKeyfilePopup()');
+            // mainWindow.webContents.executeJavaScript('importAccounts()')
         }
       },
       {
         label: i18n.__("Manage Keyfile(s)"),
-        accelerator: "CmdOrCtrl+O",
+        accelerator: "CmdOrCtrl+M",
         click: () => {
           shell.openItem(sc.accountPath);  
+        }
+      },
+      {
+        label: i18n.__("Import Keyfile(s)"),
+        accelerator: "CmdOrCtrl+I",
+        click: () => {
+            // var importKey = require('./src/js/index.js');
+            mainWindow.webContents.executeJavaScript('importAccounts()')
+            // importKey();
+            // console.log("really")
         }
       }
     ]
@@ -174,7 +180,7 @@ function createMenu() {
       // language
       {
         label: i18n.__("Show NetWork Info"),
-        accelerator: "CmdOrCtrl+I",
+        accelerator: "CmdOrCtrl+E",
         click: () => {
           mainWindow.webContents.executeJavaScript('showInfo()')
         }

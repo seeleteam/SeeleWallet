@@ -400,7 +400,7 @@ function seeleClient() {
             fs.mkdirSync(this.accountPath)
         }
     };
-
+    
     this.generateKey = function (shardnum, passWord) {
         this.init();
         return new Q((resolve, reject) => {
@@ -419,8 +419,7 @@ function seeleClient() {
                     var privatekey = this.ParsePrivateKey(output)
                     var publickey = this.ParsePublicKey(output)
                     // seeleClient.makeNodeFile(publickey,shardnum)
-                    this.keyStore(publickey, privatekey, passWord)
-                    resolve(publickey+privatekey)
+                    resolve({"publickey":publickey,"privatekey":privatekey})
                 });
 
                 proc.stderr.on('data', data => {
@@ -463,7 +462,9 @@ function seeleClient() {
             const proc = spawn(this.binPath(), args);
 
             proc.stdout.on('data', data => {
+                console.log(data);
                 proc.stdin.write(passWord + '\n');
+                console.log(data);
                 resolve(data)
             });
 
@@ -558,7 +559,37 @@ function seeleClient() {
             console.log(this.accountPath + "  Not Found!");
         }
         this.accountArray.sort(function(a,b){return a.shard - b.shard })
-        console.log(this.accountArray)
+        // console.log(this.accountArray)
+    };
+    
+    this.accountListPromise = function () {
+        var accountArray=[]
+        if (fs.existsSync(this.accountPath)) {
+            filelist = fs.readdirSync(this.accountPath)
+            var publickey;
+            for(i = 0; i < filelist.length; i ++){
+              publickey = this.keyfileisvalid(this.accountPath+filelist[i]);
+              // if ( publickey ) { this.accountArray.push(publickey); }
+              if ( publickey ) { accountArray.push({
+                "pubkey": publickey,
+                "filename": filelist[i],
+                "shard": this.getShardNum(publickey)
+              });}
+            }
+        } else {
+            console.log(this.accountPath + "  Not Found!");
+        }
+        accountArray.sort(function(a,b){return a.shard - b.shard })
+        // console.log(this.accountArray)
+        return new Q((resolve, reject) => {
+          try {
+            resolve(accountArray)
+            reject(accountArray)
+          } catch (e) {
+            console.log(e.toString())
+            return reject(false)
+          } finally {}
+        });
     };
     
     this.getInfo = function (numberInfo, callBack) {
@@ -599,9 +630,11 @@ function seeleClient() {
         }
     };
 
-    this.sendtx = function (publicKey, passWord, to, amount, price, gaslimit,payload, callBack) {
-        var client
-        var numberInfo = this.getshardnum(publicKey)
+    this.sendtx = function (accountstr, passWord, to, amount, price, gaslimit, payload, callBack) {
+        var account = JSON.parse(accountstr)
+        publicKey = account.pubkey;
+        numberInfo = account.shard;
+        console.log(publicKey,numberInfo);
         if (numberInfo == "1") {
             client = this.client1;
         } else if (numberInfo == "2") {
@@ -616,7 +649,7 @@ function seeleClient() {
         }
 
         var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
-        // console.log("nonce returned nonce: "+nonce)
+        console.log("nonce returned nonce: "+nonce)
         nonce+=1
         var rawTx = {
             "Type":0,
@@ -629,10 +662,10 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
-        this.DecKeyFile(publicKey, passWord).then((data) => {
-            var output = `${data}`
-            var privatekey = this.ParsePrivateKey(output);
-            var tx = client.generateTx(privatekey, rawTx);
+        this.decKeyFile(account.filename, passWord).then((data) => {
+            // console.log(data);
+            var tx = client.generateTx(data, rawTx);
+            // console.log(tx);
             client.addTx(tx, function (info, err) {
                 callBack(info, err, tx.Hash);
             });

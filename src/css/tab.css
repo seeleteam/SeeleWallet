@@ -1,3 +1,4 @@
+
 /* TAB */
 a,
 a:active,
@@ -24,6 +25,7 @@ a:focus {
     height : 100%;
     overflow : auto;
     overflow-x: hidden;
+    margin: auto;
 }
 
 #tab {
@@ -62,7 +64,7 @@ a:focus {
     /* background: url(../img/SEND-hui.png) left bottom no-repeat; */
 }
 #tab ul li:nth-child(3){
-    margin-left: -32px;
+    /* margin-left: -32px; */
     /* background: #e1e8ec; */
     /* background: url(../img/contact-hui.png) left bottom no-repeat; */
 }
@@ -78,8 +80,9 @@ a:focus {
     margin: 19px 0 0 34px;
 }
 #tabs_container {
+    /* height: 100; */
     padding: 20px;
-    min-height: 630px;
+    min-height: 1000px;
     overflow: hidden;
     position: relative;
     background: #fff;
