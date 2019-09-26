@@ -222,7 +222,8 @@ function createMenu() {
   // console.log(menutest.mainMenu)
   // Menu.setApplicationMenu(Menu.buildFromTemplate(menutest.mainMenu));
   // console.log(template)
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  // setInterval(() => {Menu.setApplicationMenu(Menu.buildFromTemplate(template)), console.log("intervalset");}, 2000);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 app.on('ready', () => {
