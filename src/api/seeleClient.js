@@ -21,16 +21,19 @@ function seeleClient() {
     var shardCount = 4;
 
     this.address = [0,
-      "http://104.218.164.169:8037",
-      "http://107.150.105.10:8038",
-      "http://107.150.103.125:8039",
-      "http://104.218.164.193:8036"
+      "http://117.50.97.136:18037",
+      "http://117.50.97.136:8038",
+      "http://107.150.102.94:8039",
+      "http://117.50.97.136:8036"
     ];
     
-    this.client1 = new seelejs(this.address[1]);
-    this.client2 = new seelejs(this.address[2]);
-    this.client3 = new seelejs(this.address[3]);
-    this.client4 = new seelejs(this.address[4]);
+    this.client = [
+      0,
+      new seelejs(this.address[1]),
+      new seelejs(this.address[2]),
+      new seelejs(this.address[3]),
+      new seelejs(this.address[4])
+    ]
 
     this.accountArray = [];
     this.accountArray2= [];
@@ -42,6 +45,8 @@ function seeleClient() {
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
+    
+    this.txRecords = [];
 
     this.getOS = function () {
         var  osName="Unknown OS";
@@ -113,7 +118,7 @@ function seeleClient() {
             } else if(this.getOS() === "Linux") {
                 return clientpath + "/../../cmd/linux/node";
             } else {
-                alert("the operation system may not be supported");
+                console.error("the operation system may not be supported");
                 return null;
             }
         }
@@ -131,10 +136,10 @@ function seeleClient() {
                 });
                 proc.stderr.on('data', data => {
                     reject(data.toString())
-                    // alert(data.toString())
+                    // console.error(data.toString())
                 });
             } catch (e) {
-                // alert(e)
+                // console.error(e)
                 console.log(e.toString())
                 return reject(false)
             }
@@ -196,7 +201,7 @@ function seeleClient() {
                     reject(data.toString())
                 });
             } catch (e) {
-                // alert(e)
+                // console.error(e)
                 console.log(e.toString())
                 return reject(false)
             }
@@ -336,7 +341,7 @@ function seeleClient() {
             } else if(this.getOS() === "Linux") {
                 return clientpath + "/../../cmd/linux/solc";
             } else {
-                alert("the operation system may not be supported");
+                console.error("the operation system may not be supported");
                 return null;
             }
         }
@@ -592,18 +597,12 @@ function seeleClient() {
         });
     };
     
-    this.getInfo = function (numberInfo, callBack) {
+    this.getInfo = function (shard, callBack) {
       try {
-          if (numberInfo == "1") {
-              this.client1.getInfo(callBack);
-          } else if (numberInfo == "2") {
-              this.client2.getInfo(callBack);
-          } else if (numberInfo == "3") {
-              this.client3.getInfo(callBack);
-          } else if (numberInfo == "4") {
-              this.client4.getInfo(callBack);
+          if (!/^[1-4]{1,1}$/.test( shard )) {
+              console.error("invalid shardnum getInfo", shard)
           } else {
-              alert("invalid shardnum", numberInfo)
+              this.client[shard].getInfo(callBack)
           }
       } catch (e) {
           console.error(e)
@@ -612,19 +611,13 @@ function seeleClient() {
     
     this.getBalance = function (account, callBack) {
         publicKey = account.pubkey;
-        numberInfo = account.shard;
+        shard = account.shard;
         try {
-            if (numberInfo == "1") {
-                this.client1.getBalance(publicKey, "", -1, callBack);
-            } else if (numberInfo == "2") {
-                this.client2.getBalance(publicKey, "", -1, callBack);
-            } else if (numberInfo == "3") {
-                this.client3.getBalance(publicKey, "", -1, callBack);
-            } else if (numberInfo == "4") {
-                this.client4.getBalance(publicKey, "", -1, callBack);
-            } else {
-                alert(numberInfo)
-            }
+          if (!/^[1-4]{1,1}$/.test( shard )) {
+              console.error("invalid shardnum getBalance", shard)
+          } else {
+              this.client[shard].getBalance(publicKey, "", -1, callBack);
+          }
         } catch (e) {
             console.error("no node started in local host")
         }
@@ -633,23 +626,16 @@ function seeleClient() {
     this.sendtx = function (accountstr, passWord, to, amount, price, gaslimit, payload, callBack) {
         var account = JSON.parse(accountstr)
         publicKey = account.pubkey;
-        numberInfo = account.shard;
-        console.log(publicKey,numberInfo);
-        if (numberInfo == "1") {
-            client = this.client1;
-        } else if (numberInfo == "2") {
-            client = this.client2;
-        } else if (numberInfo == "3") {
-            client = this.client3;
-        } else if (numberInfo == "4") {
-            client = this.client4;
+        shard = account.shard;
+        console.log(publicKey, shard);
+        if (!/^[1-4]{1,1}$/.test( shard )) {
+            console.error("invalid shardnum sendtx", shard)
         } else {
-            alert(numberInfo)
-            return
+            client = this.client[shard];
         }
 
         var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
-        console.log("nonce returned nonce: "+nonce)
+        console.log("returned nonce: "+nonce)
         nonce+=1
         var rawTx = {
             "Type":0,
@@ -662,12 +648,27 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
+        
+
         this.decKeyFile(account.filename, passWord).then((data) => {
             // console.log(data);
             var tx = client.generateTx(data, rawTx);
             // console.log(tx);
+            //files are structured shorter because 256 limit of file writing limit
+            //2 for pending, 3 for contract, 1 for success, 0 for nonce fail
+            let txRecord = {
+              "t":new Date().getTime(),
+              "fa":rawTx.From,
+              "fs":this.getShardNum(rawTx.From),
+              "ta":rawTx.To,
+              "ts":this.getShardNum(rawTx.To),
+              "m":rawTx.Amount,
+              "s":tx.Hash,
+              "n":nonce,
+              "u":2
+            }
             client.addTx(tx, function (info, err) {
-                callBack(info, err, tx.Hash);
+                callBack(info, err, tx.Hash, JSON.stringify(txRecord));
             });
         }).catch((data) => {
             callBack("", new Error(data.toString()), "");
@@ -676,19 +677,13 @@ function seeleClient() {
 
     this.gettxbyhash = function (hash, publickey, callBack) {
         var client
-        var numberInfo = this.getshardnum(publickey)
-        if (numberInfo == "1") {
-            client = this.client1;
-        } else if (numberInfo == "2") {
-            client = this.client2;
-        } else if (numberInfo == "3") {
-            client = this.client3;
-        } else if (numberInfo == "4") {
-            client = this.client4;
+        var shard = this.getshardnum(publickey)
+        if (!/^[1-4]{1,1}$/.test( shard )) {
+            console.error("invalid shardnum gettxbyhash", shard)
         } else {
-            alert(numberInfo)
-            return
+            client = this.client[shard];
         }
+        
         client.getTransactionByHash(hash, callBack);
     }
 
@@ -714,39 +709,29 @@ function seeleClient() {
     };
 
     this.getblock = function (shard, hash, height, fulltx, callBack) {
-        if (shard == "1") {
-            this.client1.getBlock(hash, height, fulltx, callBack);
-        } else if (shard == "2") {
-            this.client2.getBlock(hash, height, fulltx, callBack);
-        } else if (shard == "3") {
-            this.client3.getBlock(hash, height, fulltx, callBack);
-        } else if (shard == "4") {
-            this.client4.getBlock(hash, height, fulltx, callBack);
+      
+        if (!/^[1-4]{1,1}$/.test( shard )) {
+            console.error("invalid shardnum getBlock", shard)
+        } else {
+            this.client[shard].getBlock(hash, height, fulltx, callBack)
         }
     };
     
     this.getblockheight = function (shard, callBack) {
-        if (shard == "1") {
-            this.client1.getBlockHeight(callBack);
-        } else if (shard == "2") {
-            this.client2.getBlockHeight(callBack);
-        } else if (shard == "3") {
-            this.client3.getBlockHeight(callBack);
-        } else if (shard == "4") {
-            this.client4.getBlockHeight(callBack);
-        }
+      if (!/^[1-4]{1,1}$/.test( shard )) {
+          console.error("invalid shardnum getBlockHeight", shard)
+      } else {
+          this.client[shard].getBlockHeight(callBack);
+      }
     };
 
     this.isListening = function (shard, callBack) {
-        if (shard == "1") {
-            this.client1.isListening(callBack);
-        } else if (shard == "2") {
-            this.client2.isListening(callBack);
-        } else if (shard == "3") {
-            this.client3.isListening(callBack);
-        } else if (shard == "4") {
-            this.client4.isListening(callBack);
-        }
+      console.log(shard);
+      if (!/^[1-4]{1,1}$/.test( shard )) {
+          console.error("invalid shardnum isListening", shard)
+      } else {
+          this.client[shard].isListening(callBack);
+      }  
     };
 
     this.saveFile = function (isTx, hash) {
@@ -766,9 +751,10 @@ function seeleClient() {
             var dir = this.txPath;
             this.txArray = fs.readdirSync(dir)
               .map(function(v) {
-                  return { name:v,
-                           time:fs.statSync(dir + v).mtime.getTime()
-                         };
+                  return { 
+                    name:v,
+                    time:fs.statSync(dir + v).mtime.getTime()
+                  };
                })
                .sort(function(a, b) { return b.time - a.time; })
                .map(function(v) { return v; });
@@ -781,16 +767,12 @@ function seeleClient() {
         // let hash = $('#QueryHash').text()
         if (hash != null && hash != "" && hash != undefined) {
             var send = document.getElementById("contractPublicKey").value
-            var numberInfo = this.getshardnum(send)
-            if (numberInfo == "1") {
-                return this.client1.getReceiptByTxHash(hash, "", callBack);
-            } else if (numberInfo == "2") {
-                return this.client2.getReceiptByTxHash(hash, "", callBack);
-            } else if (numberInfo == "3") {
-                return this.client3.getReceiptByTxHash(hash, "", callBack);
-            } else if (numberInfo == "4") {
-                return this.client4.getReceiptByTxHash(hash, "", callBack);
-            }
+            var shard = this.getshardnum(send)
+            if (!/^[1-4]{1,1}$/.test( shard )) {
+                console.error("invalid shardnum getReceiptByTxHash", shard)
+            } else {
+                this.client[shard].getReceiptByTxHash(hash, "", callBack);
+            } 
         }
     };
 
@@ -805,19 +787,102 @@ function seeleClient() {
         txData.Payload = payload;
         var tx = {};
         tx.Data = txData;
-        var numberInfo = this.getshardnum(from);
-        if (numberInfo == "1") {
-            return this.client1.estimateGas(tx, callBack);
-        } else if (numberInfo == "2") {
-            return this.client2.estimateGas(tx, callBack);
-        } else if (numberInfo == "3") {
-            return this.client3.estimateGas(tx, callBack);
-        } else if (numberInfo == "4") {
-            return this.client4.estimateGas(tx, callBack);
-        }
+        var shard = this.getshardnum(from);
+        
+        if (!/^[1-4]{1,1}$/.test( shard )) {
+            console.error("invalid shardnum estimateGas", shard);
+        } else {
+            this.client[shard].estimateGas(tx, callBack);
+        }  
     }
     
+    this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
+    
+    this.saveRecord = function(r){
+      if (!fs.existsSync(this.rcPath)) {
+          fs.mkdirSync(this.rcPath)
+      }
+      var _path = this.rcPath + r
+      console.log("I'm about to write!", _path);
+      fs.writeFile(_path, "", function (err) {
+          if (err)
+            console.log(err.message)
+      })
+    }
+    
+    this.getRecords = function(){
+      // this.txReccords = [];
+      if (fs.existsSync(this.rcPath)) {
+          var dir = this.rcPath;
+          this.txRecords = fs.readdirSync(dir).map( x => JSON.parse(x) ).sort((a, b) => (a.t > b.t) ? -1 : 1)
+          // console.log(this.txRecords);
+             // .sort(function(a, b) { return b.time - a.time; })
+             // .map(function(v) { return v; });
+      } else {
+          console.log(this.rcPath + "  Not Found!");
+      }
+    }
+    
+    //returns wait, done/debt, fail,
+    this.verify = function(tx, callBack){
+      var status = "wait"
+      nonce = this.client[tx.fs].sendSync("getAccountNonce", tx.fa, "", -1);
+      
+      console.log("account nonce:",nonce,"\ntx nonce:",tx.n);      
+      if (nonce < tx.n) {
+          console.log(tx.t,status);
+          callBack(tx,status)
+      } else {
+          this.client[tx.fs].getTransactionByHash(tx.s, function(data){
+              console.log(data);
+              if(data.status=="pool"){
+                console.log(tx.t,status);
+                callBack(tx,status)
+              } else if (data.status=="block") {
+                // if (){
+                if (tx.fs == tx.ts) {
+                  status = "done"
+                  // console.log(status);
+                  console.log(tx.t,status);
+                  callBack(tx,status)
+                } else if (data.debt.Hash) {
+                  status="debt"
+                  console.log(data.debt.Hash,tx.ts);
+                  if(data.debt.Hash)
+                  // console.log(this.client[tx.ts]);
+                  // this.client[tx.ts].getInfo(function(data){console.log(data);})
+                  // this.client[tx.ts].getDebtByHash(data.debt.Hash,function(deb){
+                  //   console.log("result of debt:",deb);
+                  // })
+                  // console.log(tx.t,status);
+                  // console.log(data.debt.Hash, tx.ts);
+                  // getDebtByHash
+                  callBack(tx,status,data.debt.Hash)
+                } else {
+                  console.log("unthought of");
+                }
+                // 
+                // }
+              } else if(data == [tx.s]) { 
+                console.log("isarray");
+                callBack(tx,status)
+              } else {
+                status = "fail"
+                // console.log(status);
+                console.log(tx.t,status,data);
+                callBack(tx,status)
+              }
+          })
+      }
+    }
 
+    this.getDebtByHash = function(hash, shard, callBack) {
+      if (!/^[1-4]{1,1}$/.test( shard )) {
+          console.error("getDebtByHash", shard);
+      } else {
+          this.client[shard].getDebtByHash(hash, callBack);
+      } 
+    }
 }
 
 

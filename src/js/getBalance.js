@@ -16,6 +16,7 @@ function addLoadEvent(func) {
         window.onload = function () {
             oldonload();
             func();
+            
         }
     }
 }
@@ -28,16 +29,69 @@ function firstLoad() {
         refreshBalances();
     }, 2000);
     
+    var interval2 = setInterval(function(){ 
+      updateRecords(); 
+    }, 2000);
     // var interval2 = setInterval(function(){
     //     loadAccount();
     // }, 10000);
     
 }
 
+function beautifyTime(epochStr){
+  var txdate = new Date(epochStr);
+  var tostr = new Date().getTime();
+  var yestr = todate-86400;
+  var todate = new Date(tostr);
+  var yedate = new Date(yestr);
+  time = ''
+  if (txdate.toLocaleDateString()==todate.toLocaleDateString()){
+    time += "今天 ";
+  } else if (txdate.toLocaleDateString()==yedate.toLocaleDateString()) {
+    time += "昨天 ";
+  } else {
+    time += txdate.toLocaleDateString().replace(/\//g,"-")
+  }
+  time += " " + txdate.toLocaleTimeString()
+  return time
+}
+
+function loadRecords() {
+  // seeleClient.accountList(); 
+  seeleClient.getRecords(); 
+  
+  recordHTML = ``
+  recordHTML = `<div class="txrecord title">   <div class="tx-side">     交易广播时间   </div>   <div class="from tx-mid">     <div class="content">发出</div>   </div>   <div class="to tx-mid">     <div class="content">接收</div>   </div>   <div class="amount tx-mid">     <div class="content">数额</div>   </div>   <div class="txhash tx-mid">     <div class="content">交易哈希</div>   </div>   <div class="status tx-side">     状态   </div> </div>`
+  for (var item of seeleClient.txRecords) {
+      // updating items: time, hash, status
+      // console.log(item);
+      // on first load, make hash invisible status to be waiting, 
+      recordHTML += `<div class="txrecord table">`
+      recordHTML += `<div class="time tx-side"> ` + beautifyTime(item.t) + ` </div>`
+      recordHTML += `<div class="from tx-mid" onclick="toclip('`+ item.fa +`')"><div class="content">`+item.fa+`</div></div>`
+      recordHTML += `<div class="to tx-mid" onclick="toclip('`+ item.ta +`')"><div class="content">`+item.ta+`</div></div>`
+      recordHTML += `<div class="amount tx-mid"><div class="content">`+(item.m/100000000)+`<span> SLE</span></div></div>`
+      recordHTML += `<div class="txhash tx-mid" onclick="toclip('`+ item.s +`')"><div class="content">`+item.s+`</div></div>`
+      
+      if (item.fs==item.ts) { var to = "-" } else {var to = item.ts}
+      if (item.u==2) {
+        recordHTML += `<div class="status tx-side tx-wait">等待 `+ item.fs +`-`+ to + `</div>`
+      } else if (item.u==1) {
+        recordHTML += `<div class="status tx-side tx-done">完成 `+ item.fs +`-`+ to + `</div>`
+      } else if (item.u==0) {
+        recordHTML += `<div class="status tx-side tx-fail">失效 `+ item.fs +`-`+ to + `</div>`
+      } 
+          
+      recordHTML += `</div>`
+  }
+  var list = document.getElementById("txRecordList")
+  list.innerHTML = recordHTML;
+}
+
 function loadAccount() {
     loadingBalances = true;
-    seeleClient.accountList();
-      
+    seeleClient.accountList(); 
+    
     if (seeleClient.txArray == null || seeleClient.txArray.length <= 0) {
         seeleClient.readFile();
     }
@@ -50,25 +104,26 @@ function loadAccount() {
 
     var count = 0;
     var tabs1 = document.getElementById("tabs-1");
-    tabs1.innerHTML = "";
+    // tabs1.innerHTML = "";
 
     var tabs1HTML = `<div id="main-container"><div><h1 class="" id="titleWallets"></h1></div></div>`
     tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
     tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
-    tabs1HTML += `<div style="height: 300px; overflow-y: scroll;">`
+    tabs1HTML += `<div id="txRecordList" style="display:block; height: 300px; overflow-y: scroll;"></div>`
+
+    // for(var item in seeleClient.txArray) {
+    //     var time = new Date(seeleClient.txArray[item].time)
+    //     tabs1HTML += `<div class="account-contact"><p class="contact-left">`
+    //     tabs1HTML += `<span style='padding: 0px 10px 0px 10px; word-wrap: break-word'>`+time.toLocaleDateString()+` `+time.toLocaleTimeString()+`</span>`
+    //     tabs1HTML += `</p>`
+    //     tabs1HTML += `<ul class="contact-right">`
+    //     tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
+    //     tabs1HTML += `</ul>`
+    //     tabs1HTML += `</div>`
+    // }
+    // tabs1HTML += recordHTML;
     
-    
-    for(var item in seeleClient.txArray) {
-        var time = new Date(seeleClient.txArray[item].time)
-        tabs1HTML += `<div class="account-contact"><p class="contact-left">`
-        tabs1HTML += `<span style='padding: 0px 10px 0px 10px; word-wrap: break-word'>`+time.toLocaleDateString()+` `+time.toLocaleTimeString()+`</span>`
-        tabs1HTML += `</p>`
-        tabs1HTML += `<ul class="contact-right">`
-        tabs1HTML += `<li><span onclick="require('electron').shell.openExternal('https://seelescan.net/#/transaction/detail?txhash=`+seeleClient.txArray[item].name.trim() +`')">`+ seeleClient.txArray[item].name.trim() + `</span></li>`
-        tabs1HTML += `</ul>`
-        tabs1HTML += `</div>`
-    }
-    tabs1HTML += `</div>`
+    // tabs1HTML += `</div>`
     tabs1.innerHTML = tabs1HTML
       
     //****************************************************************************************************************************************************************
@@ -102,7 +157,7 @@ function loadAccount() {
         
         accountHTML += `<div class='account'><div class='account-up'>`
         accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
-        accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span>SEELE</span>`
+        accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span> SLE</span>`
         accountHTML += `</div></div>`
         accountHTML += `<div class='account-down'><div class='account-controls'>`
         accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
@@ -113,21 +168,9 @@ function loadAccount() {
         accountHTML += `<div class='account-file'>`+ filename + `</div>`
         accountHTML += `</div></div>`
         
-        // accountHTML += `<div class='account'><div class='account-up'>`
-        // accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
-        // accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span>SEELE</span>`
-        // accountHTML += `</div></div>`
-        // accountHTML += `<div class='account-down'><div class='account-controls'>`
-        // accountHTML += `<img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'><div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'> </div>`
-        // accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract("`+publicKey+`") src='./src/img/solidity.png'></div>` 
-        // accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
-        // accountHTML += `<div class='account-transaction' onclick=transaction("`+ publicKey +`") >`+ send +`</div></div>`
-        // accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account) + `)> <img class='img-more' src='./src/img/more.png'> </div>`
-        // accountHTML += `<div class='account-file'>`+ filename + `</div>`
-        // accountHTML += `</div></div>`
-        
         document.getElementById("accountlist").innerHTML += accountHTML;
     }
+    loadRecords();
     loadingBalances = false;
 }
 
@@ -198,5 +241,70 @@ function refreshBalances(){
         })
     } 
 }
+
+//expect an object and a string
+function changeStatusTo(tx, status){
+  console.log(tx);
+  var oldPath = seeleClient.rcPath + JSON.stringify(tx);
+  if (status == "done") {
+    var tx2 = JSON.parse(JSON.stringify(tx))
+    tx2.u = 1;
+  } else if (status == "fail") {
+    var tx2 = JSON.parse(JSON.stringify(tx))
+    tx2.u = 0;
+  } else {
+    console.error("unknown status", status);
+  }
+  var newPath = seeleClient.rcPath + JSON.stringify(tx2);
+  console.log(oldPath, newPath);
+  var err = fs.renameSync(oldPath, newPath);
+  if (err) {
+    console.error(err);
+  } else {
+    records = 0;
+  }
+}
+
+function updateRecords(){
+  let records = 0;
+  for (var item of seeleClient.txRecords.reverse()) {
+    if (item.u==2 ) {
+      if (records == 0){
+        records = 1;
+        console.log(item.t, "deal", item.u);
+        seeleClient.verify(item, function(tx, status, debt){
+          // console.log(tx.t, " is ", status, "but", tx.u);
+          if (status == "done") {
+            console.log("thus", tx ," should be changed");
+            changeStatusTo(tx,"done");
+            loadRecords();
+          } else if (status == "fail") {
+            //change to fail
+            changeStatusTo(tx,"fail");
+          } else if (status == "wait") {
+            //do nothing 
+          } else if (status == "debt") {
+            seeleClient.getDebtByHash(debt,tx.ts,function(result){
+              // console.log(result.status);
+              if(result.status == "block"){
+                changeStatusTo(tx,"done");
+                loadRecords();
+              }
+            })
+            // console.log(tx, "is debt", debt);
+          } else {
+            console.error(item, "invalid status:", status);
+          }
+        })  
+      } else {
+        console.log(item.t, "pend");
+      }
+    } else {
+      // console.log();
+    }
+  }
+}
+
+
 
 module.exports = loadAccount;

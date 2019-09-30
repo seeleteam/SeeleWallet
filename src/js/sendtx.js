@@ -127,7 +127,7 @@ function sendtx() {
 
     layer.load(0, { shade: false });
 
-    seeleClient.sendtx(account.value, accountpassWord.value, to.value, amount.value, gasPrice,estimatedgas, "", function(result, err, hash) {
+    seeleClient.sendtx(account.value, accountpassWord.value, to.value, amount.value, gasPrice,estimatedgas, "", function(result, err, hash, txRecord) {
         layer.closeAll();
         requested = true;
         console.log(requested)
@@ -154,6 +154,7 @@ function sendtx() {
             });
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
             seeleClient.saveFile(false, hash)
+            seeleClient.saveRecord(txRecord);
             location.reload()
         }
     });
