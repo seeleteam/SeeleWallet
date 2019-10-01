@@ -8,6 +8,7 @@ var remote = electron
 module.exports = i18n;
 
 function i18n() {
+    global.languageSetting = "cn";
     let langfile = global.languageSetting+'.json';
     if(fs.existsSync(path.join(__dirname, app.getLocale() + '.json'))) {
          loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, app.getLocale() + '.json'), 'utf8'))
