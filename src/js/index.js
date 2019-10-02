@@ -422,6 +422,7 @@ function contract(account) {
     $("#tabs-3").addClass('showleft')
 
     $("#contractPublicKey").val(account.pubkey)
+    $("#ctAccount").val(JSON.stringify(account))
 }
 
 function transaction(account) {

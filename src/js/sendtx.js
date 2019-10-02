@@ -153,7 +153,7 @@ function sendtx() {
               }
             });
             seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
-            seeleClient.saveFile(false, hash)
+            // seeleClient.saveFile(false, hash)
             seeleClient.saveRecord(txRecord);
             location.reload()
         }

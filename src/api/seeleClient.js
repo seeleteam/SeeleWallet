@@ -793,6 +793,7 @@ function seeleClient() {
             console.error("invalid shardnum estimateGas", shard);
         } else {
             this.client[shard].estimateGas(tx, callBack);
+            console.log("why");
         }  
     }
     
@@ -815,7 +816,6 @@ function seeleClient() {
       if (fs.existsSync(this.rcPath)) {
           var dir = this.rcPath;
           this.txRecords = fs.readdirSync(dir).map( x => JSON.parse(x) ).sort((a, b) => (a.t > b.t) ? -1 : 1)
-          // console.log(this.txRecords);
              // .sort(function(a, b) { return b.time - a.time; })
              // .map(function(v) { return v; });
       } else {

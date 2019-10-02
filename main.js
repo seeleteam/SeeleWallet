@@ -5,7 +5,7 @@ const {
   Menu,
   app,
   ipcMain
-} = require('electron')
+} = require('electron');
 ipcMain.on( "setMyGlobalVariable", ( event, myGlobalVariable ) => {
   global.myGlobalVariable = myGlobalVariable;
 } );

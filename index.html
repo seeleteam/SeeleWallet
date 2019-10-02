@@ -14,7 +14,7 @@
     <link href="./src/css/index.css" rel="stylesheet" />
     <link href="./src/css/tx-record.css" rel="stylesheet" />
     <link href="./src/css/account-info.css" rel="stylesheet" />
-    <script type="text/javascript" src="qrcode.js"></script>
+    <!-- <script type="text/javascript" src="qrcode.js"></script> -->
 </head>
 
 <body>
@@ -153,6 +153,7 @@
                     <div id="tabs-3">
                         <!-- <h1 class="send-title lit" id="titleContract">Deploy contract</h1> -->
                         <form id="contractForm">
+                            <div style="display:none" id="ctAccount"> </div>
                             <ul class="send-list">
                                 <li style="clear:right;"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
                                 <!-- <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li> -->
@@ -281,5 +282,7 @@
 <script src="./src/js/index.js"></script>
 <script src="./src/js/layer.js"></script>
 <script src="./src/js/popup.js"></script>
-<!-- <script src="./src/js/popup.js"></script> -->
+<script src="./src/js/qrcode.js"></script>
+<!-- <script type="text/javascript" src="qrcode.js"></script> -->
+
 </html>

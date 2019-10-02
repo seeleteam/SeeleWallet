@@ -82,7 +82,6 @@ addLoadEvent(function () {
 function compileContract() {
     var input = document.getElementById("contractSourceCode").innerText;
     seeleClient.compileContract(input).then((outdata) => {
-        console.log(outdata);
         var getPayload = document.getElementById("getPayload");
         getPayload.innerText = outdata
         var output = document.getElementById("compileSuccess")
@@ -127,23 +126,28 @@ function depolyContract() {
     console.log(payload)
     if (payload != null && payload != "" && payload != undefined) {
         var publicKey = document.getElementById("contractPublicKey");
+        var account = document.getElementById("ctAccount")
         var amount = document.getElementById("contractAmount");
         //var price = document.getElementById("price");
         var accountpassWord = document.getElementById("contractAccountpassWord")
         var gasPrice = $('.progress').slider("value");
         //get estimate gas
         var estimateGas=-1;
+        // seeleClient.estimateGas("0x00asdf",contractToAddress,"0x" + payload,function(result,err){
         seeleClient.estimateGas(publicKey.value,contractToAddress,"0x" + payload,function(result,err){
+            console.log("result : ", result, "\nerror : ", JSON.stringify(err));
             if(err){
-                alert(err)
-            }else{
+                // alert(err)
+                console.error(err);
+                
+            } else {
                 estimateGas = result;
                 layer.load(0, {
                     shade: false
                 });
-        
-                seeleClient.sendtx(publicKey.value, accountpassWord.value,
-                     "0x0000000000000000000000000000000000000000", amount.value,gasPrice,estimateGas, "0x" + payload, function (result, err, hash) {
+                
+                seeleClient.sendtx(account.value, accountpassWord.value,"0x0000000000000000000000000000000000000000", amount.value,gasPrice,estimateGas, "0x" + payload, function (resultt, errt, hash, txRecord) {
+                    console.log(txRecord);
                     layer.closeAll();
                     if (err) {
                         layer.alert(err.message)
@@ -153,10 +157,13 @@ function depolyContract() {
                         QueryHash.innerText = hash
                         // seeleClient.txArray.push(hash)
                         seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
-                        seeleClient.saveFile(false, hash)
+                        // seeleClient.saveFile(false, hash)
+                        seeleClient.saveRecord(txRecord);
+                        location.reload()
                     }
                 });
             }
+            console.log("end");
         });       
 
 
@@ -170,6 +177,7 @@ function queryContract(hash) {
     if(hash == ""){
         hash = $('#QueryHash').text();
     }
+    console.log(hash);
     seeleClient.queryContract(hash,function (result, err) {
         if (err) {
             alert(err.message)
