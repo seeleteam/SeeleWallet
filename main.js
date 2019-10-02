@@ -10,7 +10,7 @@ ipcMain.on( "setMyGlobalVariable", ( event, myGlobalVariable ) => {
   global.myGlobalVariable = myGlobalVariable;
 } );
 const SeeleClient = require('./src/api/seeleClient');
-const m = require('./src/js/menu.js').createTemplate;
+const createMenu = require('./src/js/menu.js').createMenu;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,30 +30,6 @@ function createWindow() {
     sc.initateNodeConfig(2);
     sc.initateNodeConfig(3);
     sc.initateNodeConfig(4);
-
-    // Settup Local structure
-    const os = require("os")
-    const shell = require('shelljs');
-    const fs = require('fs');
-
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
-      fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
-    }
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
-      fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
-    }
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
-      fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
-    }
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.0.json')) {
-      var err = shell.cp('-f', `${__dirname}/src/json/viewconfig_1.0.json`, os.homedir()+'/.SeeleWallet/')
-      // console.log(err)
-    }
-    if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
-
-      var err = shell.cp('-f', `${__dirname}/src/json/lang.json`, os.homedir()+'/.SeeleWallet/')
-      // console.log(err)
-    }
     
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
@@ -68,8 +44,8 @@ function createWindow() {
 
 
 app.on('ready', () => {
-  createWindow()
-  m(mainWindow)
+  createWindow();
+  createMenu(mainWindow);
 })
 
 // Quit when all windows are closed.

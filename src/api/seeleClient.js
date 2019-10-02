@@ -37,8 +37,6 @@ function seeleClient() {
 
     this.accountArray = [];
     this.accountArray2= [];
-    this.langPath = os.homedir()+"/.SeeleWallet/lang.json"
-    // console.log(`${__dirname}`+`/../json/lang.json`)
     this.langPath = `${__dirname}`+`/../json/lang.json`
     this.configpath = os.homedir()+"/.SeeleWallet/viewconfig_1.0.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
@@ -403,6 +401,28 @@ function seeleClient() {
         if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
             fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
+        }
+        
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/rc')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/rc', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.0.json')) {
+          var err = shell.cp('-f', `${__dirname}/../json/viewconfig_1.0.json`, os.homedir()+'/.SeeleWallet/')
+          // console.log(err)
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
+
+          var err = shell.cp('-f', `${__dirname}/../json/lang.json`, os.homedir()+'/.SeeleWallet/')
+          // console.log(err)
         }
     };
     

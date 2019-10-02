@@ -1,7 +1,9 @@
-var i18n = new(require('./../../translations/i18n'))
 const { Menu, app } = require('electron')
 
-function createTemplate (mainWindow) {
+function createMenu (mainWindow) {
+  //reinitiate i18 to reload language from settings
+  var i18n = new(require('./../../translations/i18n'))
+
   const application = {
     label: i18n.__("SeeleWallet"),
     submenu: [
@@ -86,21 +88,31 @@ function createTemplate (mainWindow) {
       {
         label: "English",
         type: "radio",
+        id:"en",
         click: function () {
           global.languageSetting = "en"
-          console.log("switch to English!", global.languageSetting);
-          console.log(Menu);
+          refreshMenu(mainWindow,"en");
         }
       },
       {
         label: "中文",
         type: "radio",
+        id:"cn",
         click: function () {
           global.languageSetting = "cn"
-          console.log("转成中文!", global.languageSetting);
+          refreshMenu(mainWindow,"cn");
         },
       }
     ]
+  }
+  
+  var langused = i18n.lang()
+  
+  for (var item of language.submenu) {
+    console.log();
+    if ( item.id == langused) {
+      item.checked = true;
+    }
   }
   
   const view = {
@@ -150,5 +162,10 @@ function createTemplate (mainWindow) {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
+function refreshMenu(win, lang) {
+  var i18n = new(require('./../../translations/i18n'))
+  i18n.langChange(lang);
+  createMenu(win);
+}
 
-module.exports.createTemplate = createTemplate
+module.exports.createMenu = createMenu

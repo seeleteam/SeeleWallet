@@ -1,7 +1,18 @@
 {
+  "SeeleWallet":"SeeleWallet",
+  "Quit":"Exit Seele Wallet",
+  "File":"File",
+  "Create Keyfile(s)":"Create Keyfile(s)",
+  "Manage Keyfile(s)":"Manage Keyfile(s)",
+  "Import Keyfile(s)":"Import Keyfile(s)",
+  "Export Keyfile(s)":"Export Keyfile(s)",
   "Developer Options":"Developer Options",
-  "copy":"copy",
-  "paste":"paste",
-  "refresh":"refresh",
+  "Edit":"Edit",
+  "Copy":"Copy",
+  "Paste":"Paste",
+  "Refresh":"Refresh",
+  "View":"View",
+  "Show NetWork Info":"Show NetWork Info",
+  "Help":"Help",
   "Learn More":"Learn More"
 }
