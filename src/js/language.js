@@ -29,6 +29,7 @@ function switchLanguage() {
       seeleClient = new SeeleClient();
     }
     
+    //1. transalate html elments described by id's
     const fs = require('fs');
     var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
     var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
@@ -39,19 +40,21 @@ function switchLanguage() {
         literals[i].innerHTML = json[lang][literals[i].id];
         literals[i].placeholder = json[lang][literals[i].id];
     }
-
+    
+    //2. transalate accounts' descriptions
     var accounts = document.getElementsByClassName("lit-account")
     for (i = 0; i < accounts.length; i++) {
       accounts[i].innerHTML = json[lang]["account"]
     }
     
+    //3. transalate transaction records' descriptions
     var shards = document.getElementsByClassName("lit-shard")
     for (i = 0; i < shards.length; i++) {
       shards[i].innerHTML = json[lang]["shard"]
     }
 
-
-    validator =   $('form[id="txform"]').validate({
+    //4. translate form validators
+    validator = $('form[id="txform"]').validate({
         // Specify validation rules
         rules: {
           // The key name on the left side is the name attribute

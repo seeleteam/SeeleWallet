@@ -1,3 +1,9 @@
+/* .txRecordList{
+    width: 100%;
+    float: left;
+    margin: 60px 20px 30px 20px;
+} */
+
 ::-webkit-scrollbar {
   width: 0px;
 }
