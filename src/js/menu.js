@@ -88,19 +88,21 @@ function createMenu (mainWindow) {
       {
         label: "English",
         type: "radio",
-        id:"en",
+        id:"EN",
         click: function () {
-          global.languageSetting = "en"
-          refreshMenu(mainWindow,"en");
+          // global.languageSetting = "en"
+          // mainWindow.webContents.executeJavaScript('switchLanguage()');
+          refreshMenu(mainWindow,"EN");
         }
       },
       {
         label: "中文",
         type: "radio",
-        id:"cn",
+        id:"CN",
         click: function () {
-          global.languageSetting = "cn"
-          refreshMenu(mainWindow,"cn");
+          // global.languageSetting = "cn"
+          // mainWindow.webContents.executeJavaScript('switchLanguage()');
+          refreshMenu(mainWindow,"CN");
         },
       }
     ]
@@ -163,9 +165,10 @@ function createMenu (mainWindow) {
 }
 
 function refreshMenu(win, lang) {
-  var i18n = new(require('./../../translations/i18n'))
+  var i18n = new(require('./../../translations/i18n'));
   i18n.langChange(lang);
   createMenu(win);
+  win.webContents.executeJavaScript('switchLanguage()');
 }
 
 module.exports.createMenu = createMenu

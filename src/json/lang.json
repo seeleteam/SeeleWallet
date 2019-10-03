@@ -87,7 +87,7 @@
     "tb-height":"height",
     "broadcastError":"Transaction incomplete, please resend your transaction"
   },
-  "中文":{
+  "CN":{
     "balance":"余额",
     "seele":"SEELE",
     "wallets":"账户总览",

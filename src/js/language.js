@@ -1,7 +1,6 @@
-
 var SeeleClient = require('./src/api/seeleClient');
+const seeleClient = new SeeleClient();
 
-seeleClient = new SeeleClient();
 // console.log(`Language is in ${__dirname}`)
 function addLoadEvent(func) {
     var oldonload = window.onload;
@@ -24,9 +23,16 @@ document.addEventListener('DOMContentLoaded', function () {
 }, false);
 
 function switchLanguage() {
+    // var SeeleClient = require('./src/api/seeleClient');
+    if ( seeleClient == undefined) {
+      var SeeleClient = require('./src/api/seeleClient');
+      seeleClient = new SeeleClient();
+    }
+    
     const fs = require('fs');
     var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
-    const lang = document.getElementById("lang").value
+    var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+    const lang = settings.lang;
     var literals = document.getElementsByClassName("lit");
     for (i = 0; i < literals.length; i++) {
         literals[i].value = json[lang][literals[i].id];
@@ -38,15 +44,12 @@ function switchLanguage() {
     for (i = 0; i < accounts.length; i++) {
       accounts[i].innerHTML = json[lang]["account"]
     }
+    
     var shards = document.getElementsByClassName("lit-shard")
     for (i = 0; i < shards.length; i++) {
       shards[i].innerHTML = json[lang]["shard"]
     }
 
-    const editJsonFile = require("edit-json-file");
-    let file = editJsonFile(seeleClient.configpath);
-    file.set("lang", ''+lang);
-    file.save();
 
     validator =   $('form[id="txform"]').validate({
         // Specify validation rules
@@ -89,3 +92,5 @@ function switchLanguage() {
       });
 
 }
+
+module.exports.switchLanguage = switchLanguage

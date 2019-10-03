@@ -1,6 +1,6 @@
 var refreshAccount = require('./src/js/getBalance.js');
-var SeeleClient = require('./src/api/seeleClient');
-seeleClient = new SeeleClient();
+// var SeeleClient = require('./src/api/seeleClient');
+// seeleClient = new SeeleClient();
 
 function moreAbout(account){
     // console.log(account);

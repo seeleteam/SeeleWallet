@@ -14,10 +14,10 @@ function i18n() {
     var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
 
     
-    global.languageSetting = settings.language;
+    global.languageSetting = settings.lang;
     
-    loadedLanguage = settings.language;
-    let langfile = global.languageSetting+'.json';
+    loadedLanguage = settings.lang;
+    let langfile = loadedLanguage + '.json';
     if(fs.existsSync(path.join(__dirname, app.getLocale() + '.json'))) {
          loadedDictionary = JSON.parse(fs.readFileSync(path.join(__dirname, app.getLocale() + '.json'), 'utf8'))
     }
@@ -43,7 +43,6 @@ i18n.prototype.langChange = function(lang) {
   const SeeleClient = require('./../src/api/seeleClient.js');
   var seeleClient = new SeeleClient;
   var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
-  settings.language = lang;
+  settings.lang = lang;
   fs.writeFileSync(seeleClient.configpath, JSON.stringify(settings))
-  
 }
