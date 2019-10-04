@@ -169,6 +169,8 @@ function refreshMenu(win, lang) {
   i18n.langChange(lang);
   createMenu(win);
   win.webContents.executeJavaScript('switchLanguage()');
+  // win.reload();
+  win.webContents.executeJavaScript('location.reload()');
 }
 
 module.exports.createMenu = createMenu

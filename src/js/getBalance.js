@@ -4,7 +4,7 @@ seeleClient = new SeeleClient();
 
 const fs = require('fs');
 const json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
-const lang = document.getElementById("lang").value
+var lang = document.getElementById("lang").value
 let loadingBalances = false;
 addLoadEvent(firstLoad);
 
@@ -16,7 +16,6 @@ function addLoadEvent(func) {
         window.onload = function () {
             oldonload();
             func();
-            
         }
     }
 }
@@ -61,7 +60,8 @@ function loadRecords() {
   seeleClient.getRecords(); 
   
   recordHTML = ``
-  recordHTML = `<div class="txrecord title">   <div class="tx-side">     交易广播时间   </div>   <div class="from tx-mid">     <div class="content">发出</div>   </div>   <div class="to tx-mid">     <div class="content">接收</div>   </div>   <div class="amount tx-mid">     <div class="content">数额</div>   </div>   <div class="txhash tx-mid">     <div class="content">交易哈希</div>   </div>   <div class="status tx-side">     状态   </div> </div>`
+  recordHTML = `<div class="txrecord title">   <div class="tx-side lit" id="txBroadcastTime">     交易广播时间   </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom">发出</div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">接收</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">数额</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">交易哈希</div>   </div>   <div class="status tx-side lit" id="rcStatus">     状态   </div> </div>`
+  var lang = document.getElementById("lang").value
   for (var item of seeleClient.txRecords) {
       // updating items: time, hash, status
       // console.log(item);
@@ -73,19 +73,23 @@ function loadRecords() {
       recordHTML += `<div class="amount tx-mid"><div class="content">`+(item.m/100000000)+`<span> SEELE</span></div></div>`
       recordHTML += `<div class="txhash tx-mid" onclick="toclip('`+ item.s +`')"><div class="content">`+item.s+`</div></div>`
       
-      if (item.fs==item.ts) { var to = "-" } else {var to = item.ts}
+      if (item.fs==item.ts) { var ft = item.fs } else {var ft = item.fs + ` → ` + item.ts }
+      // console.log(ft);
       if (item.u==2) {
-        recordHTML += `<div class="status tx-side tx-wait">等待 `+ item.fs +`-`+ to + `</div>`
+        var status = "tx-wait"
       } else if (item.u==1) {
-        recordHTML += `<div class="status tx-side tx-done">完成 `+ item.fs +`-`+ to + `</div>`
+        var status = "tx-done"
       } else if (item.u==0) {
-        recordHTML += `<div class="status tx-side tx-fail">失效 `+ item.fs +`-`+ to + `</div>`
+        var status = "tx-fail"
       } 
-          
+      console.log(json[lang][status]);
+      recordHTML += `<div class="status tx-side ` + status + `"><span class="`+status+`-word">`+json[lang][status]+`</span><span>` + ft + `</span></div>`
       recordHTML += `</div>`
   }
   var list = document.getElementById("txRecordList")
   list.innerHTML = recordHTML;
+  // var switchLanguage = require('./language.js').switchLanguage
+  switchLanguage();
 }
 
 function loadAccount() {
@@ -113,7 +117,7 @@ function loadAccount() {
     
     // tabs1HTML += `</div>`
     tabs1.innerHTML = tabs1HTML
-
+    var lang = document.getElementById("lang").value
     for (var i in seeleClient.accountArray) {
         account = seeleClient.accountArray[i];
         publicKey = account.pubkey;
@@ -137,14 +141,15 @@ function loadAccount() {
         accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
         accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
         accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>` 
-        accountHTML += `<div class='account-transaction' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
-        accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account) + `)> <img class='img-more' src='./src/img/more.png'> </div>`
+        accountHTML += `<div class='account-transaction sendword' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
+        accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img-more' src='./src/img/more.png'> </div>`
         accountHTML += `<div class='account-file'>`+ filename + `</div>`
         accountHTML += `</div></div>`
         
         document.getElementById("accountlist").innerHTML += accountHTML;
     }
     loadRecords();
+    switchLanguage();
     loadingBalances = false;
 }
 

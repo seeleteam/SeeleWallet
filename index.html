@@ -42,27 +42,27 @@
             </div>
             <div class="controls">
               <div class="option enabledOption copy-pub">
-                <span class="option-text">复制公钥</span>
+                <span class="option-text lit" id="copy-pub"></span>
                 <img class="option-icon" src="./src/img/pubkey.png" alt="">
               </div>
               <div class="option disabledOption copy-pri">
-                <span class="option-text">复制私钥</span>
+                <span class="option-text lit" id="copy-pri"></span>
                 <img class="option-icon" src="./src/img/prikey.png" alt="">
               </div>
               <div class="option enabledOption copy-key">
-                <span class="option-text">复制钥文</span>
+                <span class="option-text lit" id="copy-key"></span>
                 <img class="option-icon" src="./src/img/keyfile.png" alt="">
               </div>
               <div class="option enabledOption move-key">
-                <span class="option-text">移出钥文</span>
+                <span class="option-text lit" id="move-key"></span>
                 <img class="option-icon" src="./src/img/move.png" alt="">
               </div>
             </div>
             <div class="password">
-              <input type="password" class="passwordfield-more">
+              <input type="password" class="passwordfield-more lit" id="unlock-keyfile-password" placeholder="">
             </div>  
             <div class="action">
-              <div class="actionbutton" onclick="unlockmore()">解 锁</div>
+              <div class="actionbutton lit" onclick="unlockmore()" id="unlock"></div>
             </div>
           </div>
         </div>
@@ -70,24 +70,24 @@
           <div class="popup">
             <div class="controls">
               <div class="option">
-                <span class="option-title add-filename">文件名*</span>
+                <span class="option-title add-filename lit" id="keyfileName*"></span>
                 <input class="option-string file-add" type="text">
               </div>
               <div class="option">
-                <span class="option-title add-prikey">私钥</span>
+                <span class="option-title add-prikey lit" id="createtByPri"></span>
                 <input class="add-choices option-string prikey-add" type="text">
               </div>
               <div class="option">
-                <span class="option-title add-shard">片号</span>
+                <span class="option-title add-shard lit" id="createByShard"></span>
                 <input class="add-choices option-string shard-add" type="text">
               </div>
               
             </div>
             <div class="password">
-              <input type="password" class="passwordfield-add" placeholder=" 请输入密码">
+              <input type="password" class="passwordfield-add lit" id="create-keyfile-password">
             </div>  
             <div class="action">
-              <div class="actionbutton" onclick="addKeyfile()">创 建</div>
+              <div class="actionbutton lit" onclick="addKeyfile()" id="createKeyfile"></div>
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@
                             <ul class="send-list">
                                 <li style="clear:right;"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
                                 <!-- <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li> -->
-                                <li style="clear:left;margin-right:80px;"><p class="lit" id="password">Password</p><input type="password" placeholder="press key file password" id="contractAccountpassWord" name="contractAccountpassWord"></li>
+                                <li style="clear:left;margin-right:80px;"><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="contractAccountpassWord" name="contractAccountpassWord"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
                                 <li ><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
                                 <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
@@ -188,11 +188,11 @@
                                     </div>
                                 </div>-->
                             </div>
-                            <h2 class="progress-title">Seele Fee</h2>
+                            <h2 class="progress-title lit" id="contract-seeleFee">Seele Fee</h2>
                             <div class="progress" id="contractGasPrice">
                                 <ul>
-                                    <li class="" id="cheaper">更低</li>
-                                    <li class="" id="faster">更高</li>
+                                    <li class="lit" id="cheaper">更低</li>
+                                    <li class="lit" id="faster">更高</li>
                                 </ul>
                             </div>
                             <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
@@ -231,7 +231,7 @@
             <span id="filepath"></span>
         </div>
         <div class="search-hash" >
-            <h3>Query Contract</h3>
+            <h3 class="lit" id="querycontract">查找合约</h3>
             <div class="search">
                 <input type="text" placeholder="Hash:" id="ctxHash">
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
@@ -245,7 +245,7 @@
                 <li id="contractTxhash">txhash: “0x”</li>
                 <li id="contractUsedGas">usedGas: 210000</li>
             </ul>
-            <button class="ok-search">OK</button>
+            <button class="ok-search lit" id="querydone"></button>
         </div>
         <!--<script src="bundle.js"></script>-->
         <script>

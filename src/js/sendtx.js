@@ -52,7 +52,10 @@ addLoadEvent(function() {
         var total = BigNumber(ui.value).times(parseFloat(estimatedgas)).div(100000000).plus(parseFloat(amount));
         document.getElementById("totalamount").innerText=total;
     } );
-    validator =   $('form[id="txform"]').validate({
+    
+    // switchLanguage()
+    
+    validator = $('form[id="txform"]').validate({
         // Specify validation rules
         rules: {
           // The key name on the left side is the name attribute

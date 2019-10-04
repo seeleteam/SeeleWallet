@@ -36,25 +36,42 @@ function switchLanguage() {
     const lang = settings.lang;
     var literals = document.getElementsByClassName("lit");
     for (i = 0; i < literals.length; i++) {
-        literals[i].value = json[lang][literals[i].id];
-        literals[i].innerHTML = json[lang][literals[i].id];
-        literals[i].placeholder = json[lang][literals[i].id];
+        if (literals[i].type == "password") {
+          // console.log(literals[i]);
+          literals[i].placeholder = json[lang][literals[i].id];
+        } else {
+          literals[i].value = json[lang][literals[i].id];
+          literals[i].innerHTML = json[lang][literals[i].id];
+        }
+        // literals[i].placeholder = json[lang][literals[i].id];
     }
     
     //2. transalate accounts' descriptions
-    var accounts = document.getElementsByClassName("lit-account")
+    var accounts = document.getElementsByClassName("shardword")
     for (i = 0; i < accounts.length; i++) {
-      accounts[i].innerHTML = json[lang]["account"]
+      accounts[i].innerHTML = json[lang]["shard"]
+    }
+    
+    var accounts = document.getElementsByClassName("sendword")
+    for (i = 0; i < accounts.length; i++) {
+      accounts[i].innerHTML = json[lang]["tabSend"]
     }
     
     //3. transalate transaction records' descriptions
-    var shards = document.getElementsByClassName("lit-shard")
-    for (i = 0; i < shards.length; i++) {
-      shards[i].innerHTML = json[lang]["shard"]
+    var records = document.getElementsByClassName("tx-done-word")
+    for (i = 0; i < records.length; i++) {
+      // records[i].innerHTML
+      records[i].innerHTML = json[lang]["tx-done-word"];
+      // console.log(records[i]);
     }
 
     //4. translate form validators
-    validator = $('form[id="txform"]').validate({
+    // var validator;
+    // var ctxvalidator;
+    // $('#span_balance').
+    console.log(lang);
+    $('form[id="txform"]').validate({
+    // $('form[id="txform"]').validate({
         // Specify validation rules
         rules: {
           // The key name on the left side is the name attribute
@@ -93,7 +110,43 @@ function switchLanguage() {
             }
         }
       });
-
+    // console.log($('form[id="txform"]').validate());
+    // if ( jQuery.isReady ) {  
+    // // fn.call( document, jQuery );
+    //   console.log("u");
+    //   validator;
+    // } 
+    // validator2 = 
+    
+    $('form[id="contractForm"]').validate({
+        ignore: [],
+        rules: {
+            contractPublicKey: "required",
+            contractAccountpassWord: {
+                required:true
+            },
+            contractAmount:{
+                required:true,
+                number:true,
+                fixedPrecision:9
+            }
+        },
+        messages: {
+            contractPublicKey:json[lang]["warning_txpublicKey"],
+            contractAccountpassWord:{
+                required:json[lang]["warning_accountpassword_required"]
+            },
+            contractAmount:{
+                required:json[lang]["warning_amount_required"],
+                number:json[lang]["warning_amount_number"],
+                fixedPrecision:json[lang]["warning_amount_fixedPrecision"]
+            }
+        }
+        // ,
+        // errorPlacement: function(error, element) {
+        //     error.insertAfter($(element).parent());
+        // }
+      });
 }
 
 module.exports.switchLanguage = switchLanguage

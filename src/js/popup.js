@@ -2,12 +2,12 @@ var refreshAccount = require('./src/js/getBalance.js');
 // var SeeleClient = require('./src/api/seeleClient');
 // seeleClient = new SeeleClient();
 
-function moreAbout(account){
+function moreAbout(account, phrase){
     // console.log(account);
     //place your filename, shard and publickey on the top
     //which you can then use to 
     $('.more-filename').html(account.filename)
-    $('.more-shard').html("片: " + account.shard)
+    $('.more-shard').html(phrase + account.shard)
     $('.more-publickey').html(account.pubkey)
     
     $('.morepopup').show()  
