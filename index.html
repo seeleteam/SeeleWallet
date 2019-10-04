@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
-    <link href="./src/css/main.css" rel="stylesheet" />  
-    <link href="./src/css/more.css" rel="stylesheet" />  
+    <link href="./src/css/main.css" rel="stylesheet" />
+    <link href="./src/css/more.css" rel="stylesheet" />
     <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
     <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
             </ul>
             <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
         </div>
-    </div>    
+    </div>
     <div class="container">
         <div class="popuplocationwrap morepopup">
           <div class="popup">
@@ -60,7 +60,7 @@
             </div>
             <div class="password">
               <input type="password" class="passwordfield-more lit" id="unlock-keyfile-password" placeholder="">
-            </div>  
+            </div>
             <div class="action">
               <div class="actionbutton lit" onclick="unlockmore()" id="unlock"></div>
             </div>
@@ -81,11 +81,11 @@
                 <span class="option-title add-shard lit" id="createByShard"></span>
                 <input class="add-choices option-string shard-add" type="text">
               </div>
-              
+
             </div>
             <div class="password">
               <input type="password" class="passwordfield-add lit" id="create-keyfile-password">
-            </div>  
+            </div>
             <div class="action">
               <div class="actionbutton lit" onclick="addKeyfile()" id="createKeyfile"></div>
             </div>
@@ -191,8 +191,8 @@
                             <h2 class="progress-title lit" id="contract-seeleFee">Seele Fee</h2>
                             <div class="progress" id="contractGasPrice">
                                 <ul>
-                                    <li class="lit" id="cheaper">更低</li>
-                                    <li class="lit" id="faster">更高</li>
+                                    <li class="lit" id="cheaper">cheaper</li>
+                                    <li class="lit" id="faster">faster</li>
                                 </ul>
                             </div>
                             <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
@@ -231,7 +231,7 @@
             <span id="filepath"></span>
         </div>
         <div class="search-hash" >
-            <h3 class="lit" id="querycontract">查找合约</h3>
+            <h3 class="lit" id="querycontract">Query Contract</h3>
             <div class="search">
                 <input type="text" placeholder="Hash:" id="ctxHash">
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
