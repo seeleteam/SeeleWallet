@@ -783,11 +783,11 @@ function seeleClient() {
         }
     };
 
-    this.queryContract = function (hash,callBack) {
+    this.queryContract = function (shard, hash,callBack) {
         // let hash = $('#QueryHash').text()
         if (hash != null && hash != "" && hash != undefined) {
-            var send = document.getElementById("contractPublicKey").value
-            var shard = this.getshardnum(send)
+            // var send = document.getElementById("contractPublicKey").value
+            // var shard = this.getshardnum(send)
             if (!/^[1-4]{1,1}$/.test( shard )) {
                 console.error("invalid shardnum getReceiptByTxHash", shard)
             } else {

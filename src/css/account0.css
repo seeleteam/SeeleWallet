@@ -220,6 +220,7 @@ __________________________________________________________________
 .tooltip {
   position: relative;
   display: inline-block;
+  font-weight: 900;
 }
 /* .account .account-down .account-controls  */
 .account .account-down .account-controls .tooltip .tooltiptext{
@@ -250,5 +251,6 @@ __________________________________________________________________
 
 .account .account-down .account-controls .tooltip:hover .tooltiptext {
   visibility: visible;
+  opacity: 0.5;
   z-index: 4;
 }

@@ -24,7 +24,7 @@ function addLoadEvent(func) {
 }
 
 addLoadEvent(function() {
-    document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
+    // document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
 })
 
 function generateKey() {

@@ -22,7 +22,8 @@ addLoadEvent(function () {
     document.getElementById("contractSourceCode").innerText = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("deployContract").addEventListener("click", depolyContract);
-    document.getElementById("QueryContract").addEventListener("click", queryContract(""));
+    // document.getElementById("QueryContract").addEventListener("click", queryContract(""));
+    
     $('#contractAmount').on('input',function(e){
         if(ctxvalidator.element("#contractAmount")){
             document.getElementById("ctxamount1").innerText=this.value;
@@ -74,9 +75,7 @@ addLoadEvent(function () {
         // }
       });
       // add search contract event 
-      $('#searchImg').on('click',function(e){        
-        queryContract(document.getElementById("ctxHash").value);
-    });
+    $('#searchImg').on('click',function(){queryContract();console.log("clicked");});
 })
 
 function compileContract() {
@@ -173,12 +172,15 @@ function depolyContract() {
     }
 }
 
-function queryContract(hash) {
-    if(hash == ""){
-        hash = $('#QueryHash').text();
-    }
-    console.log(hash);
-    seeleClient.queryContract(hash,function (result, err) {
+function queryContract() {
+    // if (hash == "") {
+    //   hash = $('#QueryHash').text();
+    // }
+    console.log("lol");
+    hash = document.getElementById("ctxHash").value
+    shard = document.getElementById("receiptShard").innerText
+    console.log(hash, shard);
+    seeleClient.queryContract(shard, hash,function (result, err) {
         if (err) {
             alert(err.message)
         }else {
@@ -205,3 +207,8 @@ function queryContract(hash) {
         }
     })
 }
+
+
+// function callContract(){
+// 
+// }

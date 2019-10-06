@@ -466,6 +466,43 @@ function transaction(account) {
     $("#txAccount").val(JSON.stringify(account))
 }
 
+function receipt( shard ) {
+    document.getElementById("receiptShard").innerText = shard;
+    console.log(document.getElementById("receiptShard").innerText);
+    $('#search-hash').show()
+    $('.dask').show()
+    $('.dask').click(function(){clearReceipt();})
+}
+
+function clearReceipt(){
+  $('#search-hash').hide()
+  $('.dask').hide()
+  document.getElementById("receiptShard").innerText = "";
+  document.getElementById("ctxHash").value = ""
+  // console.log(document.getElementById("receiptShard").innerText);
+  // console.log(document.getElementById("ctxHash").value);
+  var contractHash = document.getElementById("contractHash")
+  contractHash.innerText = "contract:" + ""
+
+  var contractDeployFailedOrNo = document.getElementById("contractDeployFailedOrNo")
+  contractDeployFailedOrNo.innerText = "failed:" + ""
+
+  var contractPoststate = document.getElementById("contractPoststate")
+  contractPoststate.innerText = "poststate:" + ""
+
+  var contractResult = document.getElementById("contractResult")
+  contractResult.innerText = "result:" + ""
+
+  var contractTota1Fee = document.getElementById("contractTota1Fee")
+  contractTota1Fee.innerText = "totalFee:" + ""
+
+  var contractTxhash = document.getElementById("contractTxhash")
+  contractTxhash.innerText = "txhash:" + ""
+
+  var contractUsedGas = document.getElementById("contractUsedGas")
+  contractUsedGas.innerText = "usedGas:" + ""
+}
+
 function mineConfig(){
     // console.log("how")
     $('.mine-config').show()

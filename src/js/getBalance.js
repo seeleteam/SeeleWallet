@@ -152,7 +152,7 @@ function loadAccount() {
         accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext lit" id="copyPubkey">复制公钥</span></div>`
         accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext lit" id="more">更多账户选项</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid'> <img class='img' src='./src/img/call.png'><span class="tooltiptext lit" id="callContract">查看合约</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid'> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">查看交易收据</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=receipt("`+shardNum+`")> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">查看交易收据</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployContract">部署+调用合约</span></div>`
         accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext lit" id="sendTx">发送交易</span></div></div><div class='account-info'>`
         accountHTML += `<div class='account-shard'> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
@@ -296,7 +296,6 @@ function updateRecords(){
     }
   }
 }
-
 
 
 module.exports = loadAccount;

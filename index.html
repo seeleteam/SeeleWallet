@@ -213,32 +213,9 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="dask"></div> -->
-        <div class="minedask"></div>
-        <div class="create-account">
-            <span class="name lit" id="createWarning">KEEP PASSWORD and KEYS somewhere safe</span>
-            <input type="password" class="login-field login-field-password" id="passWord" placeholder="set password">
-            <div class="hideShowPassword-toggle">Show</div>
-            <span class="name lit" id="shard">Shard</span>
-            <select id="shardnum">
-                <option class="lit" value='' id="any">Any</option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-            </select>
-            <input class="name lit" type="button" value="Cancel" id="cancel">
-            <input class="name lit" type="button" value="OK" id="createKey">
-            <span id="address"></span>
-            <span id="filepath"></span>
-        </div>
-<<<<<<< HEAD
         <div class="search-hash" id="search-hash">
             <h3 class="lit" id="querycontract"></h3>
-=======
-        <div class="search-hash" >
-            <h3 class="lit" id="querycontract">Query Contract</h3>
->>>>>>> b378d412dadfbaeba67fb3b3b939698b31267c8d
+            <div id="receiptShard" style="display:none;"></div>
             <div class="search">
                 <input type="text" placeholder="Hash:" id="ctxHash">
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
@@ -254,7 +231,7 @@
             </ul>
             <button class="ok-search lit" id="querydone"></button>
         </div>
-        <div class="popuplocationwrap" id="call-contract">
+        <!-- <div class="popuplocationwrap" id="call-contract">
           <div class="popup">
             <h3 >呼叫合约</h3>
             <div class="search">
@@ -272,8 +249,7 @@
             </ul>
             <button class="ok-search lit" id="querydone"></button>
           </div>
-        </div>
-
+        </div> -->
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
