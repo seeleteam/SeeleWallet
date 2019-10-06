@@ -82,6 +82,13 @@
       "2":" To Shard",
       "3":"\nhigher fee will be taken!\n\n\nClick OK to continue"
     },
+    "createKeyfileWarning":{
+      "stringEmpty":"Please enter name for keyfile",
+      "stringExist":"Name already used",
+      "shardInvalid":"Shard number must be 1-4",
+      "keyInvalid":"Privatekey should be 64 alphanumeric characters after 0x",
+      "createSuccess":"Create Success"
+    },
     "tb-shard":"shard",
     "tb-connected":"connected",
     "tb-address":"address",
@@ -109,8 +116,8 @@
     "keyfileName*":"Keyfile Name*",
     "createtByPri":"Create By Privatekey",
     "createByShard":"Create By Shard",
-    "create-keyfile-password":"please set keyfile password",
-    "unlock-keyfile-password":"please enter keyfile password",
+    "create-keyfile-password":" please set keyfile password",
+    "unlock-keyfile-password":" please enter keyfile password",
     "createKeyfile":"Create",
     "cheaper":"min",
     "faster":"max",
@@ -206,6 +213,13 @@
       "2":" 转至片",
       "3":"\n交易费用会提高\n\n\n点击OK继续交易操作"
     },
+    "createKeyfileWarning":{
+      "stringEmpty":"文件名不能为空",
+      "stringExist":"文件名已有",
+      "shardInvalid":"片号须为1-4",
+      "keyInvalid":"私钥须为以0x开头66位数字字母字符串",
+      "createSuccess":"创建成功!"
+    },
     "tb-shard":"片",
     "tb-connected":"连接",
     "tb-address":"地址",
@@ -233,8 +247,8 @@
     "keyfileName*":"钥文名*",
     "createtByPri":"私钥创建",
     "createByShard":"片数创建",
-    "create-keyfile-password":"请设定钥文密码",
-    "unlock-keyfile-password":"请输入钥文密码",
+    "create-keyfile-password":" 请设定钥文密码",
+    "unlock-keyfile-password":" 请输入钥文密码",
     "createKeyfile":"创 建",
     "cheaper":"更低",
     "faster":"更高",

@@ -101,16 +101,16 @@ function addKeyfilePopup(){
   $('.addpopup').show()
   $('.dask').show()
   $('.dask').click ( function () { clearAddKeyfile(); } )
-  
+
   // add logic to text files:
   // loop: use class to significy choice
-  // 
+  //
   $('.prikey-add').focus ( function () {
       $('.add-choices').removeClass("add-type")
       $('.add-choices').val('')
       $('.prikey-add').addClass("add-type")
   })
-  
+
   $('.shard-add').focus ( function () {
       $('.add-choices').removeClass("add-type")
       $('.add-choices').val('')
@@ -122,7 +122,7 @@ function clearAddKeyfile(){
   $('.addpopup').hide()
   $('.dask').hide()
   $('.dask').off()
-  
+
   $('.option-string').val('')
   $('.passwordfield-add').val('')
   refreshAccount()
@@ -132,11 +132,11 @@ function isDuplicateBy(value, field, arrayOfJsonObj) {
   if (arrayOfJsonObj.length==0){
     return false;
   }
-  
+
   if ((field in arrayOfJsonObj[0])==false) {
     console.log("FIELD NOT EXIST")
   }
-  
+
   for ( jsonObj of arrayOfJsonObj) {
       if (jsonObj[field] == value) {
         console.log(value, "is found in", jsonObj)
@@ -155,44 +155,48 @@ function shakeAddpopWithEr(msg){
 function addKeyfile(){
   // if file name is full and valid
   // if password is full and valid
-  // There must be a choice, defaulted 
-    // shard is valid 
+  // There must be a choice, defaulted
+    // shard is valid
     // prikey is valid
     // btw its better that you give a default 1, and the add-type
+  const fs = require('fs');
+
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  const lang = document.getElementById("lang").value
   error = []
-  
+
   var name = $('.file-add').val() // fam it can't be empty!
-  if ( name == "" ) { 
-    error.push("文件名不能为空")
+  if ( name == "" ) {
+    error.push(json[lang]["createKeyfileWarning"]["stringEmpty"])
   } else {
     seeleClient.accountListPromise().then(a=>{
-        if ( isDuplicateBy(name,"filename",a) ) { 
-          shakeAddpopWithEr("文件名已有")
+        if ( isDuplicateBy(name,"filename",a) ) {
+          shakeAddpopWithEr(json[lang]["createKeyfileWarning"]["stringExist"])
         }
     }).catch(e=>{console.log(e);})
   }
-  
+
   var pass = $('.passwordfield-add').val()
   // concat only returns a copy
   error = error.concat(passwordStrengthTest(pass));
-  
+
   var prikey = $('.prikey-add').val()
   var shard = $('.shard-add').val()
-  
+
   if (shard != "") {
     if( !/^[1-4]{1,1}$/.test( shard ) ){
-      error.push("片号须为1-4")
+      error.push(json[lang]["createKeyfileWarning"]["shardInvalid"])
     } else {
       var wallet = require("./src/js/wallet.js");
       gen = new wallet;
       prikey = gen.createbyshard(shard).privatekey
     }
   } else if ( prikey != "" ) {
-    if( !/^0x[0-9a-z]{64,64}$/.test( prikey ) ){ 
-      error.push("私钥须为以0x开头66位数字字母字符串")
+    if( !/^0x[0-9a-z]{64,64}$/.test( prikey ) ){
+      error.push(json[lang]["createKeyfileWarning"]["keyInvalid"])
     }
   }
-  
+
   if ( error.length != 0 ) {
     console.log(error);
     layer.msg(error.join("\n"))
@@ -200,8 +204,8 @@ function addKeyfile(){
     setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
   } else {
     console.log(name, prikey, pass);
-    seeleClient.keyStore(name, prikey, pass).then( 
-      (res)=>{ clearAddKeyfile(); layer.msg("创建成功!"); console.log("resolved");},
+    seeleClient.keyStore(name, prikey, pass).then(
+      (res)=>{ clearAddKeyfile(); layer.msg(json[lang]["createKeyfileWarning"]["createSuccess"]); console.log("resolved");},
       (rej)=>{ console.log("rejected: why:");}
     )
   }
@@ -396,7 +400,7 @@ function wallet(){
   $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
   $("#tab ul li:nth-child(3)").removeClass('tabli_active')
   $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
-  
+
   $("#tab ul li:nth-child(1)").addClass('tabli_active')
   $("#tab ul li:nth-child(1)").find('a').addClass('tabulous_active')
 
@@ -419,7 +423,7 @@ function contract(account) {
     $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
     $("#tab ul li:nth-child(2)").removeClass('tabli_active')
     $("#tab ul li:nth-child(2)").find('a').removeClass('tabulous_active')
-    
+
     $("#tab ul li:nth-child(3)").addClass('tabli_active')
     $("#tab ul li:nth-child(3)").find('a').addClass('tabulous_active')
 
@@ -451,12 +455,12 @@ function transaction(account) {
     $("#tabs-1").addClass('make_transist')
     $("#tabs-1").addClass('hideleft')
     $("#tabs-1").removeClass('showleft')
-    
+
     //showing tab2
     $("#tabs-2").addClass('hideleft')
     $("#tabs-2").addClass('make_transist')
     $("#tabs-2").addClass('showleft')
-    
+
     //filling tab2
     $("#txPublicKey").val(account.pubkey)
     $("#txAccount").val(JSON.stringify(account))
@@ -480,7 +484,7 @@ function copy() {
     range.selectNodeContents(copyTextarea);
     selection.removeAllRanges();
     selection.addRange(range);
-    
+
     document.execCommand('copy');
 
     selection.removeAllRanges();

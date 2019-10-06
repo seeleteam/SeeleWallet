@@ -23,18 +23,18 @@ function addLoadEvent(func) {
 function firstLoad() {
     loadAccount()
     switchLanguage()
-    
+
     var interval1 = setInterval(function(){
         refreshBalances();
     }, 2000);
-    
-    var interval2 = setInterval(function(){ 
-      updateRecords(); 
+
+    var interval2 = setInterval(function(){
+      updateRecords();
     }, 2000);
     // var interval2 = setInterval(function(){
     //     loadAccount();
     // }, 10000);
-    
+
 }
 
 function beautifyTime(epochStr){
@@ -56,23 +56,23 @@ function beautifyTime(epochStr){
 }
 
 function loadRecords() {
-  // seeleClient.accountList(); 
-  seeleClient.getRecords(); 
-  
+  // seeleClient.accountList();
+  seeleClient.getRecords();
+
   recordHTML = ``
-  recordHTML = `<div class="txrecord title">   <div class="tx-side lit" id="txBroadcastTime">     交易广播时间   </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom">发出</div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">接收</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">数额</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">交易哈希</div>   </div>   <div class="status tx-side lit" id="rcStatus">     状态   </div> </div>`
+  recordHTML = `<div class="txrecord title">   <div class="tx-side lit" id="txBroadcastTime"> Broadcast Time </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom"> From </div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">To</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">Amount</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">Transaction Hash</div>   </div>   <div class="status tx-side lit" id="rcStatus">Status</div> </div>`
   var lang = document.getElementById("lang").value
   for (var item of seeleClient.txRecords) {
       // updating items: time, hash, status
       // console.log(item);
-      // on first load, make hash invisible status to be waiting, 
+      // on first load, make hash invisible status to be waiting,
       recordHTML += `<div class="txrecord table">`
       recordHTML += `<div class="time tx-side"> ` + beautifyTime(item.t) + ` </div>`
       recordHTML += `<div class="from tx-mid" onclick="toclip('`+ item.fa +`')"><div class="content">`+item.fa+`</div></div>`
       recordHTML += `<div class="to tx-mid" onclick="toclip('`+ item.ta +`')"><div class="content">`+item.ta+`</div></div>`
       recordHTML += `<div class="amount tx-mid"><div class="content">`+(item.m/100000000)+`<span> SEELE</span></div></div>`
       recordHTML += `<div class="txhash tx-mid" onclick="toclip('`+ item.s +`')"><div class="content">`+item.s+`</div></div>`
-      
+
       if (item.fs==item.ts) { var ft = item.fs } else {var ft = item.fs + ` → ` + item.ts }
       // console.log(ft);
       if (item.u==2) {
@@ -81,7 +81,7 @@ function loadRecords() {
         var status = "tx-done"
       } else if (item.u==0) {
         var status = "tx-fail"
-      } 
+      }
       console.log(json[lang][status]);
       recordHTML += `<div class="status tx-side ` + status + `"><span class="`+status+`-word">`+json[lang][status]+`</span><span>` + ft + `</span></div>`
       recordHTML += `</div>`
@@ -94,8 +94,8 @@ function loadRecords() {
 
 function loadAccount() {
     loadingBalances = true;
-    seeleClient.accountList(); 
-    
+    seeleClient.accountList();
+
     if (seeleClient.txArray == null || seeleClient.txArray.length <= 0) {
         seeleClient.readFile();
     }
@@ -114,7 +114,7 @@ function loadAccount() {
     tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
     tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
     tabs1HTML += `<div id="txRecordList" style="display:block; height: 300px; overflow-y: scroll;"></div>`
-    
+
     // tabs1HTML += `</div>`
     tabs1.innerHTML = tabs1HTML
     var lang = document.getElementById("lang").value
@@ -126,11 +126,11 @@ function loadAccount() {
         if (account.filename.length > 12 ) {
           filename  = '…'+account.filename.slice(-12);
         }
-        
+
         shardWord = json[lang]['tb-shard'];
         send = json[lang]['tabSend'];
         balance = 0
-        
+
         var accountHTML = ``
         
         // accountHTML += `<div class='account'><div class='account-up'>`
@@ -176,7 +176,7 @@ function toclip(text) {
       });
     }
   });
-  
+
   selection.removeAllRanges();
   const fs = require('fs');
   var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
@@ -204,15 +204,15 @@ function getBalance() {
 }
 
 function refreshBalances(){
-    // if balance is being loaded (true) don't initiate the next load, 
+    // if balance is being loaded (true) don't initiate the next load,
     if(loadingBalances){
         return;
     }else{
         loadingBalances = true;
     }
-    
+
     // use count for asynchronous: when it reaches account array size, loading is done (turn false)
-    var count = 0;    
+    var count = 0;
     var sum = 0;
     for (var item in seeleClient.accountArray) {
         seeleClient.getBalance(seeleClient.accountArray[item], function (info, err) {
@@ -231,7 +231,7 @@ function refreshBalances(){
                 layer.closeAll();
             }
         })
-    } 
+    }
 }
 
 //expect an object and a string
@@ -274,7 +274,7 @@ function updateRecords(){
             //change to fail
             changeStatusTo(tx,"fail");
           } else if (status == "wait") {
-            //do nothing 
+            //do nothing
           } else if (status == "debt") {
             seeleClient.getDebtByHash(debt,tx.ts,function(result){
               // console.log(result.status);
@@ -287,7 +287,7 @@ function updateRecords(){
           } else {
             console.error(item, "invalid status:", status);
           }
-        })  
+        })
       } else {
         console.log(item.t, "pend");
       }
