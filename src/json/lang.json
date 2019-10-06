@@ -32,9 +32,10 @@
     "contractSource":"SOLIDITY CONTRACT SOURCE CODE",
     "contractByte":"CONTRACT BYTE CODE",
     "compileContract":"compile",
-    "contractInfo":"This is the most amount of money that might be used to process this transaction. Your transaction will be mined probably within 30 seconds",
+    "contractInfo":"This is the maximum fee available for this transaction. Transaction takes approximately 30 seconds to complete",
     "deployContract":"Deploy",
     "QueryContract":"Query",
+    "callContract":"Call",
     "createWarning":"Secure your PASSWORD and KEYS, password must be 10+ characters long and include numbers, alphabets and special symbols",
     "any":"Any",
     "cancel":"Cancel",
@@ -114,7 +115,13 @@
     "cheaper":"min",
     "faster":"max",
     "querydone":"done",
-    "querycontract":"Query Contract"
+    "querycontract":"Query Contract",
+    "copyPubkey":"Copy Publickey",
+    "more":"More Options",
+    "callContract":"Call Contract",
+    "viewReceipt":"View Receipt",
+    "deployContract":"Deploy/Query Contract",
+    "sendTx":"Send Transaction"
   },
   "CN":{
     "balance":"总余额",
@@ -151,7 +158,8 @@
     "compileContract":"编译",
     "contractInfo":"这是处理该类交易可以使用的最高额度。该类交易从发送到距查询大约需要30秒",
     "deployContract":"部署",
-    "QueryContract":"查找",
+    "QueryContract":"查询",
+    "callContract":"呼叫",
     "createWarning":"请保存密码和密钥文件，密码要10位以上含字母数字特殊字符",
     "any":"任意",
     "cancel":"取消",
@@ -231,6 +239,12 @@
     "cheaper":"更低",
     "faster":"更高",
     "querydone":"完成",
-    "querycontract":"查找合约"
+    "querycontract":"查找合约",
+    "copyPubkey":"复制公钥",
+    "more":"更多选项",
+    "callContract":"查看合约",
+    "viewReceipt":"查看收据",
+    "deployContract":"调用部署",
+    "sendTx":"发送交易"
   }
 }

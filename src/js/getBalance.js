@@ -133,18 +133,30 @@ function loadAccount() {
         
         var accountHTML = ``
         
-        accountHTML += `<div class='account'><div class='account-up'>`
-        accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
-        accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span> SEELE</span>`
-        accountHTML += `</div></div>`
-        accountHTML += `<div class='account-down'><div class='account-controls'>`
-        accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
-        accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
-        accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>` 
-        accountHTML += `<div class='account-transaction sendword' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
-        accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img-more' src='./src/img/more.png'> </div>`
-        accountHTML += `<div class='account-file'>`+ filename + `</div>`
-        accountHTML += `</div></div>`
+        // accountHTML += `<div class='account'><div class='account-up'>`
+        // accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
+        // accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span> SEELE</span>`
+        // accountHTML += `</div></div>`
+        // accountHTML += `<div class='account-down'><div class='account-controls'>`
+        // accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
+        // accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
+        // accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>` 
+        // accountHTML += `<div class='account-transaction sendword' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
+        // accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img-more' src='./src/img/more.png'> </div>`
+        // accountHTML += `<div class='account-file'>`+ filename + `</div>`
+        // accountHTML += `</div></div>`
+        
+        accountHTML += `<div class='account'><div class='account-up'> <div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
+        accountHTML += `<div class='account-balance'> <span class='acc-bal' id='`+ publicKey +`'>` + balance + `</span> <span class='acc-unit'> SEELE</span> </div></div><div class='account-down'><div class='account-controls'>`
+        accountHTML += `<div class='account-publicKey'>` + publicKey + `</div>`
+        accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext lit" id="copyPubkey">复制公钥</span></div>`
+        accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext lit" id="more">更多账户选项</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid'> <img class='img' src='./src/img/call.png'><span class="tooltiptext lit" id="callContract">查看合约</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid'> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">查看交易收据</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployContract">部署+调用合约</span></div>`
+        accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext lit" id="sendTx">发送交易</span></div></div><div class='account-info'>`
+        accountHTML += `<div class='account-shard'> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
+        accountHTML += `<div class='account-file'>`+filename+`</div></div></div></div>`
         
         document.getElementById("accountlist").innerHTML += accountHTML;
     }
@@ -214,6 +226,7 @@ function refreshBalances(){
             }
             if (count == seeleClient.accountArray.length) {
                 document.getElementById('span_balance').innerText = (sum / 100000000).toFixed(3);
+                // document.getElementById('span_balance').innerText = "1,000,000,000.000";
                 loadingBalances = false;
                 layer.closeAll();
             }

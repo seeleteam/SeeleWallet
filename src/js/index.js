@@ -33,10 +33,21 @@ $(function ($) {
     // })
 
     // search-hash
-    $('.Query').click(function () {
-        $('.search-hash').show()
+    $('#QueryContract').click(function () {
+        $('#search-hash').show()
         $('.dask').show()
     })
+    
+    // $('#callContract').click(function () {
+    //     $('#call-contract').show()
+    //     $('.dask').show()
+    //     $('.dask').click(function(){
+    //       $('#call-contract').hide();
+    //       $('#search-hash').hide();
+    //       $('.dask').hide();
+    //     })
+    // })
+    
     // ok  cancel
     $('.ok-search').click(function () {
         $('.search-hash').hide()

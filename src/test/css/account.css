@@ -5,31 +5,39 @@ account
     img-cryptologo
     account-balance
   account-down
-    account-publicKey
-    account-copy {img-copy}
-    account-shard {shardword, shardnum}
-    account-transaction
-    account-contract
-    account-file
+    account-controls
+      account-publicKey
+      account-copy {img-copy}
+      account-controls-left
+      account-controls-mid
+      account-controls-mid
+      account-controls-mid
+      account-controls-right (more)
+    account-info
+      account-shard {shardword, shardnum}
+      account-file
  */
 
 .account {
   float: left;
-  padding: 2px;
+  padding: 4px;
   width: 30%;
-  overflow: auto;
+  overflow: show;
   user-select: none;
+  font-family: STHeiTi;
+  position: relative;
 }
 
 .account-up {
   overflow: auto;
+  padding-right: 10px;
 }
 
 .account-down {
   color: #808080;
   padding: 10px 10px 10px 10px;
-  overflow: auto;
-  background-image: linear-gradient(-150deg, white, lightblue);
+  overflow: show;
+  position: relative;
 }
 
 .account-balance {
@@ -47,26 +55,11 @@ account
   padding: 10px 10px 10px 10px;
 }
 
-.account-shard {
-  float: left;
-  clear: left;
-}
-
-.shardword {
-  float: left;
-  padding: 13px 5px 0px 0px;
-  font-weight: 900;
-}
-.shardnum {
-  color: black;
-  font-size: 40px;
-  font-family: monospace;
-  font-weight: 900;
-}
 
 .account-publicKey {
   padding: 5px 0px 0px 0px;
   font-size: 14px;
+  font-family: serif;
   float: left;
 }
 
@@ -81,24 +74,36 @@ account
   height: 15px;
 }
 
-.img-solidity{
+.img {
   float: right;
   padding: 5px 3px 5px 3px;
   width: 19px;
   height: 20px;
 }
 
-.img-more {
-  float: right;
-  clear: right;
-  padding: 5px 3px 5px 3px;
-  width: 19px;
-  height: 20px;
+
+.account-controls{
+  overflow: show;
+  position: relative;
 }
 
-.account-contract {
-  float: right;
+.account-controls-right{
   clear: right;
+}
+
+.account-controls-mid{
+  /* clear: right; */
+}
+
+.account-controls-left{
+  /* clear: right; */
+  clear: left;
+}
+
+.account-controls-right, 
+.account-controls-mid,
+.account-controls-left{
+  float: right;
   text-align: center;
   padding: 5px 0px 10px 10px;
   width: 15px;
@@ -113,18 +118,51 @@ account
   font-weight: 900;
 }
 
+
+
+
+
+.account-info{
+  overflow: auto;
+  float: left;
+  clear: both;
+  width: 100%;
+  /* background-color: yellow; */
+  /* position: relative; */
+}
+
 .account-file {
-  clear: left;
+  clear: right;
   color: black;
-  font-family: monospace;
+  font-family: STHeiTi;
   font-weight: 900;
   font-size: 30px;
   text-align: right;
   float: right;
 }
 
+.account-shard {
+  float: left;
+  clear: left;
+  /* background: blue; */
+}
 
+.shardword {
+  float: left;
+  padding: 8px 5px 0px 0px;
+  font-weight: 900;
+  font-size: 18px;
+  height: 100%;
+  width: auto;
+}
 
+.shardnum {
+  color: black;
+  /* float: left; */
+  font-size: 30px;
+  
+  font-weight: 900;
+}
 
 /* 
 __________________________________________________________________
@@ -132,11 +170,13 @@ __________________________________________________________________
 */
 .account-controls {
   opacity: 1;
+  /* background-color: #000; */
 }
 
 
 .account-publicKey, .img-copy, .account-transaction{
   opacity: 1;
+  /* background-color: #000; */
 }
 
 .account-down:hover, .account-controls:hover{
@@ -148,7 +188,7 @@ __________________________________________________________________
   inner hover activity
 */
 
-.img-copy:hover, .img-solidity:hover, .img-more:hover{
+.img-copy:hover, .img:hover, .img-more:hover{
   background-color: #66ccff;
   border-radius: 5px;
 }
@@ -171,4 +211,44 @@ __________________________________________________________________
   font-weight: 900;
   background-color: #66ccff;
   border-radius: 10px;
+}
+
+/* 
+__________________________________________________________________
+  tool tip
+*/
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+/* .account .account-down .account-controls  */
+.account .account-down .account-controls .tooltip .tooltiptext{
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 3;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.account .account-down .account-controls .tooltip:hover .tooltiptext {
+  visibility: visible;
+  z-index: 4;
 }

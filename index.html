@@ -6,10 +6,11 @@
     <title>Seele Wallet</title>
     <link href="./src/css/main.css" rel="stylesheet" />  
     <link href="./src/css/more.css" rel="stylesheet" />  
+    <link href="./src/css/call.css" rel="stylesheet" />  
     <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
     <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
-    <link href="./src/css/account.css" rel="stylesheet" />
+    <link href="./src/css/account0.css" rel="stylesheet" />
     <link href="./src/css/pulic.css" rel="stylesheet" />
     <link href="./src/css/index.css" rel="stylesheet" />
     <link href="./src/css/tx-record.css" rel="stylesheet" />
@@ -205,6 +206,7 @@
                             <div id="QueryHash" style="display:none"></div>
                             <input id="deployContract" class="send lit" value="Deploy" type="button">
                             <input id="QueryContract" class="send Query lit" value="Query" type="button">
+                            <input id="callContract" class="send Query lit" value="Call" type="button">
                             <input id="CancelContract" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
@@ -230,8 +232,8 @@
             <span id="address"></span>
             <span id="filepath"></span>
         </div>
-        <div class="search-hash" >
-            <h3 class="lit" id="querycontract">查找合约</h3>
+        <div class="search-hash" id="search-hash">
+            <h3 class="lit" id="querycontract"></h3>
             <div class="search">
                 <input type="text" placeholder="Hash:" id="ctxHash">
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
@@ -247,7 +249,26 @@
             </ul>
             <button class="ok-search lit" id="querydone"></button>
         </div>
-        <!--<script src="bundle.js"></script>-->
+        <div class="popuplocationwrap" id="call-contract">
+          <div class="popup">
+            <h3 >呼叫合约</h3>
+            <div class="search">
+                <input type="text" placeholder="Hash:" id="ctxHash">
+                <button><span><img src="./src/img/search.png"></span></button>
+            </div>
+            <ul>
+                <li id="contractHash">contract: ”0x”</li>
+                <li id="contractDeployFailedOrNo">failed: false</li>
+                <li id="contractPoststate">poststate: “0x”</li>
+                <li id="contractResult">result: “0x”</li>
+                <li id="contractTota1Fee">tota1Fee: 210000</li>
+                <li id="contractTxhash">txhash: “0x”</li>
+                <li id="contractUsedGas">usedGas: 210000</li>
+            </ul>
+            <button class="ok-search lit" id="querydone"></button>
+          </div>
+        </div>
+
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')

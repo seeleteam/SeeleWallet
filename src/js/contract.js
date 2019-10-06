@@ -153,13 +153,13 @@ function depolyContract() {
                         layer.alert(err.message)
                     } else {
                         var QueryHash = document.getElementById("QueryHash")
-                        layer.alert("Deploy contract transaction Hash:"+ hash)
+                        alert("Deploy contract transaction Hash:"+ hash)
                         QueryHash.innerText = hash
                         // seeleClient.txArray.push(hash)
                         seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
                         // seeleClient.saveFile(false, hash)
                         seeleClient.saveRecord(txRecord);
-                        location.reload()
+                        // location.reload()
                     }
                 });
             }
