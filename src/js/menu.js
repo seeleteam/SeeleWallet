@@ -8,14 +8,30 @@ function createMenu (mainWindow) {
     label: i18n.__("SeeleWallet"),
     submenu: [
       {
-        label: i18n.__("Developer Options"),
+        label: i18n.__("Toggle Developer Options"),
         accelerator: "CmdOrCtrl+shift+I",
-        click: () => {
-          mainWindow.webContents.openDevTools()
-        }
+        // click: () => {
+        //   mainWindow.webContents.openDevTools()
+        // }
+        role: 'toggledevtools'
       },
       {
         type: "separator"
+      },
+      {
+        label: i18n.__("Minimize"),
+        accelerator: "CmdOrCtrl+M",
+        role: "minimize"
+      },
+      {
+        label: i18n.__("Toggle Fullscreen"),
+        accelerator: "CmdOrCtrl+shift+F",
+        role: 'togglefullscreen'
+      },
+      {
+        label: i18n.__("Close"),
+        accelerator: "CmdOrCtrl+W",
+        role: "close"
       },
       {
         label: i18n.__("Quit"),
@@ -135,6 +151,13 @@ function createMenu (mainWindow) {
     label: i18n.__("Help"),
     role: "help",
     submenu: [
+      {
+        label: "Toggle Tooltip",
+        accelerator: "CmdOrCtrl+T",
+        click: async () => {
+          mainWindow.webContents.executeJavaScript('toggleTooltip()')
+        }
+      },
       {
         label: 'Learn More',
         click: async () => {

@@ -1,5 +1,5 @@
 #call-contract{
   display: none;
   background-color: #fff;
-  overflow: auto;
+  z-index: 4;
 }

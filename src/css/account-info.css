@@ -16,10 +16,12 @@
 
 /* account */
 #accountlist {
-    width: 100%;
+    width: calc(100%-40px);
     float: left;
-    margin: 60px 20px 30px 20px;
+    margin: 60px 0px 30px 0px;
+    padding: 0 20px 0 20px;
 }
+
 #tabs-1 h1,#tabs-1 h1{
     font-size: 30px;
     color: #666;
@@ -142,14 +144,34 @@ form{
     border-radius: 2px;
     margin-top: 10px;
 }
+#tabs-3 .send-list li:nth-child(5),
 #tabs-2 .send-list li:nth-child(5){
     width: 100%;
     margin: 0;
     height: 21px;
     line-height: 21px;
+    display: block;
+    vertical-align: top;
 }
-#tabs-2 .send-list li:nth-child(5) span,#tabs-2 .send-list li:nth-child(5) img{
+
+#contractForm > ul > li:nth-child(5) > img{
+  display: block;
+  float: left;
+}
+#tabs-2 .send-list li:nth-child(5) span,
+#tabs-2 .send-list li:nth-child(5) img{
     float: left;
+}
+#tabs-3 .send-list li:nth-child(5) span{
+  float: left;
+  width: 348px;
+  height: 21px;
+  display: block;
+  padding: 0 10px 15px 10px;
+  line-height: 21px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;  
 }
 #tabs-2 .send-list li:nth-child(5) span{
     width: 348px;

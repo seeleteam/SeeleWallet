@@ -95,27 +95,52 @@ $(function ($) {
       }, "Please specify the correct precision for your value");
 })
 
+function compileContract(){
+  var input = {
+    language: 'Solidity',
+    sources: {
+      'test.sol': {
+        content: 'pragma solidity ^0.4.24; contract validUintContractTest {function test() public pure {}}'
+      }
+    },
+    settings: {
+      outputSelection: {
+        '*': {
+          '*': ['*']
+        }
+      }
+    }
+  };
+  const { ipcRenderer } = require('electron');
+  ipcRenderer.send('compileContract', input);  
+}
+compileContract()
 
 function addKeyfilePopup(){
+  console.log($('.addpopup').css("display"))
   // bring up display and give dask specific cleaning action listener
-  $('.addpopup').show()
-  $('.dask').show()
-  $('.dask').click ( function () { clearAddKeyfile(); } )
-
-  // add logic to text files:
-  // loop: use class to significy choice
-  //
-  $('.prikey-add').focus ( function () {
-      $('.add-choices').removeClass("add-type")
-      $('.add-choices').val('')
-      $('.prikey-add').addClass("add-type")
-  })
-
-  $('.shard-add').focus ( function () {
+  if ( $('.addpopup').css("display") == "none" ) {
+    $('.addpopup').show()
+    $('.dask').show()
+    $('.dask').click ( function () { clearAddKeyfile(); } )
+    
+    // add logic to text files:
+    // loop: use class to significy choice
+    //
+    $('.prikey-add').focus ( function () {
+        $('.add-choices').removeClass("add-type")
+        $('.add-choices').val('')
+        $('.prikey-add').addClass("add-type")
+    })
+    
+    $('.shard-add').focus ( function () {
       $('.add-choices').removeClass("add-type")
       $('.add-choices').val('')
       $('.shard-add').addClass("add-type")
-  })
+    })
+  } else {
+    clearAddKeyfile();
+  }
 }
 
 function clearAddKeyfile(){
@@ -466,12 +491,15 @@ function transaction(account) {
     $("#txAccount").val(JSON.stringify(account))
 }
 
-function receipt( shard ) {
+function receipt( shard, word ) {
+    document.getElementById("receiptShardword").innerText = word;
     document.getElementById("receiptShard").innerText = shard;
     console.log(document.getElementById("receiptShard").innerText);
     $('#search-hash').show()
     $('.dask').show()
     $('.dask').click(function(){clearReceipt();})
+    // $('#searchImg').on('click',function(){queryContract();});
+    // $('.okay-viewReceipt').on('click',function(){queryContract();console.log("clicked");});
 }
 
 function clearReceipt(){
@@ -481,25 +509,64 @@ function clearReceipt(){
   document.getElementById("ctxHash").value = ""
   // console.log(document.getElementById("receiptShard").innerText);
   // console.log(document.getElementById("ctxHash").value);
-  var contractHash = document.getElementById("contractHash")
+  var contractHash = document.getElementById("receipt-contractHash")
   contractHash.innerText = "contract:" + ""
 
-  var contractDeployFailedOrNo = document.getElementById("contractDeployFailedOrNo")
+  var contractDeployFailedOrNo = document.getElementById("receipt-contractDeployFailedOrNo")
   contractDeployFailedOrNo.innerText = "failed:" + ""
 
-  var contractPoststate = document.getElementById("contractPoststate")
+  var contractPoststate = document.getElementById("receipt-contractPoststate")
   contractPoststate.innerText = "poststate:" + ""
 
-  var contractResult = document.getElementById("contractResult")
+  var contractResult = document.getElementById("receipt-contractResult")
   contractResult.innerText = "result:" + ""
 
-  var contractTota1Fee = document.getElementById("contractTota1Fee")
+  var contractTota1Fee = document.getElementById("receipt-contractTota1Fee")
   contractTota1Fee.innerText = "totalFee:" + ""
 
-  var contractTxhash = document.getElementById("contractTxhash")
+  var contractTxhash = document.getElementById("receipt-contractTxhash")
   contractTxhash.innerText = "txhash:" + ""
 
-  var contractUsedGas = document.getElementById("contractUsedGas")
+  var contractUsedGas = document.getElementById("receipt-contractUsedGas")
+  contractUsedGas.innerText = "usedGas:" + ""
+}
+
+function call( shard, word ) {
+  document.getElementById("callShardword").innerText = word;
+  document.getElementById("callShard").innerText = shard 
+  console.log(document.getElementById("callShard").innerText);
+  $("#call-contract").show()
+  $(".dask").show()
+  $(".dask").click(function(){clearCall();})
+  // $('#callImg').on('click',function(){callContract();});
+  // 地址和负载
+  // 
+  // document.getElementById("")
+}
+
+function clearCall(){
+  $("#call-contract").hide()
+  $(".dask").hide()
+  // document.getElementById("contractAddress").value = ""
+  // document.getElementById("contractPayload").value = ""
+  document.getElementById("callShard").innerText = ""
+  
+  var contractDeployFailedOrNo = document.getElementById("call-contractDeployFailedOrNo")
+  contractDeployFailedOrNo.innerText = "failed:" + ""
+
+  var contractPoststate = document.getElementById("call-contractPoststate")
+  contractPoststate.innerText = "poststate:" + ""
+
+  var contractResult = document.getElementById("call-contractResult")
+  contractResult.innerText = "result:" + ""
+
+  var contractTota1Fee = document.getElementById("call-contractTota1Fee")
+  contractTota1Fee.innerText = "totalFee:" + ""
+
+  var contractTxhash = document.getElementById("call-contractTxhash")
+  contractTxhash.innerText = "txhash:" + ""
+
+  var contractUsedGas = document.getElementById("call-contractUsedGas")
   contractUsedGas.innerText = "usedGas:" + ""
 }
 
@@ -509,7 +576,7 @@ function mineConfig(){
     $('.minedask').show()
   }
 
-  function hidemineconfig(){
+function hidemineconfig(){
     $('.mine-config').hide()
     $('.minedask').hide()
   }
@@ -605,4 +672,14 @@ function saveMineStatus (publickey) {
 
 }
 
+function toggleTooltip () {
+  var list = document.getElementsByClassName("tooltiptext")
+  for ( var item of list ) {
+    if ( item.classList.contains("enable")) {
+      item.classList.remove("enable")
+    } else {
+      item.classList.add("enable")
+    }
+  }
+}
 // module.exports = importAccounts;

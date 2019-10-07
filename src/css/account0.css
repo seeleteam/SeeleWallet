@@ -20,8 +20,9 @@ account
 
 .account {
   float: left;
-  padding: 4px;
-  width: 32%;
+  padding: 0px;
+  
+  width: calc(1120px/3);
   overflow: show;
   user-select: none;
   /* font-family: STHeiTi; */
@@ -127,6 +128,7 @@ account
   float: left;
   clear: both;
   width: 100%;
+  border-bottom: lightblue solid 3px;
   /* background-color: yellow; */
   /* position: relative; */
 }
@@ -249,8 +251,10 @@ __________________________________________________________________
   border-color: black transparent transparent transparent;
 }
 
-.account .account-down .account-controls .tooltip:hover .tooltiptext {
+.account .account-down .account-controls .tooltip:hover .tooltiptext.enable {
   visibility: visible;
   opacity: 0.5;
   z-index: 4;
 }
+
+

@@ -1,12 +1,13 @@
 {
   "SeeleWallet":"Seele钱包",
-  "Quit":"退出",
+  "Quit":"退出钱包",
   "File":"文件",
   "Create Keyfile(s)":"创建keyfile",
   "Manage Keyfile(s)":"管理keyfile",
   "Import Keyfile(s)":"导入keyfile",
   "Export Keyfile(s)":"导出keyfile",
-  "Developer Options":"开发者选项",
+  "Toggle Developer Options":"开发者选项",
+  "Toggle Fullscreen":"切换全屏",
   "Edit":"编辑",
   "Copy":"复制",
   "Paste":"粘贴",
@@ -14,5 +15,7 @@
   "View":"显示",
   "Show NetWork Info":"显示网络信息",
   "Help":"帮助",
-  "Learn More":"了解更多"
+  "Learn More":"了解更多",
+  "Minimize":"最小化窗口",
+  "Close":"关闭窗口"
 }

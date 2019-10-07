@@ -345,8 +345,41 @@ function seeleClient() {
         }
     };
 
+    // this.compileContract = function (input) {
+      // return new Q((resolve, reject)) => {
+        // var input = {
+        //   language: 'Solidity',
+        //   sources: {
+        //     'test.sol': {
+        //       content: 'pragma solidity ^0.4.24; contract validUintContractTest {function test() public pure {}}'
+        //     }
+        //   },
+        //   settings: {
+        //     outputSelection: {
+        //       '*': {
+        //         '*': ['*']
+        //       }
+        //     }
+        //   }
+        // };
+        // console.log(__dirname);
+        // var solc = require('solc');
+        // var solc = solc.setupMethods(require("./solidity.js"))
+        // var output = JSON.parse(solc.compile(JSON.stringify(input)))
+        // for (var contractName in output.contracts['test.sol']) {
+        //   console.log(
+        //     contractName +
+        //     ': ' +
+        //     output.contracts['test.sol'][contractName].evm.bytecode.object
+        //   );
+        // }
+      // }
+    // }
+
     this.compileContract = function (input) {
         // if (input != '') {
+        console.log(__dirname);
+
 
             return new Q((resolve, reject) => {
                 // try {
@@ -794,6 +827,24 @@ function seeleClient() {
                 this.client[shard].getReceiptByTxHash(hash, "", callBack);
             } 
         }
+    };
+    
+    this.callContract = function (shard, payload, to, callBack) {
+        // curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"seele_call","params":["0x47a99059219055cf8277d5d7dff933446edb0012","0x6d4ce63c",-1],"id":1}' 117.50.97.136:8036
+        // let hash = $('#QueryHash').text()
+        
+            // var send = document.getElementById("contractPublicKey").value
+            // var shard = this.getshardnum(send)
+        if (/^0x[0-9a-zA-Z]{40,40}$/.test(to)){
+            if (!/^[1-4]{1,1}$/.test( shard )) {
+                console.error("invalid shardnum getReceiptByTxHash", shard)
+            } else {
+                this.client[shard].call(to, payload, -1, callBack);
+            } 
+        } else {
+          console.error("invalid contract address", to)
+        }
+        
     };
 
     this.estimateGas = function(from,to,payload,callBack) {

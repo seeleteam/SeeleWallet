@@ -127,8 +127,11 @@
     "more":"More Options",
     "callContract":"Call Contract",
     "viewReceipt":"View Receipt",
-    "deployContract":"Deploy/Query Contract",
-    "sendTx":"Send Transaction"
+    "deployContract":"Deploy",
+    "sendTx":"Send Transaction",
+    "ctxHash":"Transaction Hash: 0x...",
+    "contractAddress":"Contract Address: 0x...",
+    "contractPayload":"Contract Payload: 0x..."
   },
   "CN":{
     "balance":"总余额",
@@ -259,6 +262,9 @@
     "callContract":"查看合约",
     "viewReceipt":"查看收据",
     "deployContract":"调用部署",
-    "sendTx":"发送交易"
+    "sendTx":"发送交易",
+    "ctxHash":"交易哈希: 0x...",
+    "contractAddress":"合约地址: 0x...",
+    "contractPayload":"合约负载: 0x..."
   }
 }

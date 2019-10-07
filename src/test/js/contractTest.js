@@ -31,7 +31,7 @@ var input = {
 };
 
 var solc = require('solc');
-var solc = solc.setupMethods(require("/Users/timy/work/final/seelewallet/src/test/js/solidity.js"))
+var solc = solc.setupMethods(require("./../../api/solidity.js"))
 var output = JSON.parse(solc.compile(JSON.stringify(input)))
 for (var contractName in output.contracts['test.sol']) {
   console.log(

@@ -141,7 +141,7 @@
                                     <li class="lit" id="max"></li>
                                 </ul>
                             </div>
-                            <p class="progress-info lit" id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
+                            <p class="progress-info lit" style="visibility: hidden;"  id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
                                 <div class="gas-limit"> Estimated gas:<span id="estimatedgas">21000</span> </div>
                                 <dl class="total">
                                 <dt class="lit" id="totalCost">TOTAL</dt>
@@ -157,13 +157,13 @@
                             <div style="display:none" id="ctAccount"> </div>
                             <ul class="send-list">
                                 <li style="clear:right;"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
-                                <!-- <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li> -->
-                                <li style="clear:left;margin-right:80px;"><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="contractAccountpassWord" name="contractAccountpassWord"></li>
+                                <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li>
+                                <li style="clear:left;margin-right:80px;margin-bottom:15px"><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="contractAccountpassWord" name="contractAccountpassWord"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
                                 <li ><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
                                 <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
                                     <label for="sendEvery">Send everything</label></li> -->
-                                <!-- <li><span class="" id="youWantToSend"></span></li> -->
+                                <li><span class="" id="youWantToSend"></span></li>
                             </ul>
                             <div class="solc">
                                 <div class="tab-code">
@@ -196,7 +196,7 @@
                                     <li class="lit" id="faster">faster</li>
                                 </ul>
                             </div>
-                            <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
+                            <p class="progress-info lit" style="visibility: hidden;"  id="contractInfo">This is the most amount of money that might be used to process
                                 this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
                                 <div class="gas-limit"> Estimated gas:<span id="ctx-estimatedgas">21000</span> </div>
                             <dl class="total">
@@ -205,19 +205,17 @@
                             </dl>
                             <div id="QueryHash" style="display:none"></div>
                             <input id="deployContract" class="send lit" value="Deploy" type="button">
-                            <input id="QueryContract" class="send Query lit" value="Query" type="button">
-                            <input id="callContract" class="send Query lit" value="Call" type="button">
                             <input id="CancelContract" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="search-hash" id="search-hash">
-            <h3 class="lit" id="querycontract"></h3>
+        <!-- <div class="search-hash" id="search-hash">
+            <h3 class="lit" id="viewReceipt"></h3>
             <div id="receiptShard" style="display:none;"></div>
             <div class="search">
-                <input type="text" placeholder="Hash:" id="ctxHash">
+                <input type="text" placeholder="Trasaction Hash:" id="ctxHash">
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
             </div>
             <ul>
@@ -230,26 +228,48 @@
                 <li id="contractUsedGas">usedGas: 210000</li>
             </ul>
             <button class="ok-search lit" id="querydone"></button>
-        </div>
-        <!-- <div class="popuplocationwrap" id="call-contract">
-          <div class="popup">
-            <h3 >呼叫合约</h3>
+        </div> -->
+        
+        <div class="search-hash" id="search-hash">
+            <h3 class="lit" id="viewReceipt"></h3>
+            <div style="text-align:center;"> <span id="receiptShardword"></span><span id="receiptShard"></span></div>
             <div class="search">
-                <input type="text" placeholder="Hash:" id="ctxHash">
-                <button><span><img src="./src/img/search.png"></span></button>
+                <input type="text" class="lit" placeholder="Hash:" id="ctxHash">
+                <!-- <input type="text" placeholder="Trasaction Hash:" id="ctxHash"> -->
+                <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
             </div>
             <ul>
-                <li id="contractHash">contract: ”0x”</li>
-                <li id="contractDeployFailedOrNo">failed: false</li>
-                <li id="contractPoststate">poststate: “0x”</li>
-                <li id="contractResult">result: “0x”</li>
-                <li id="contractTota1Fee">tota1Fee: 210000</li>
-                <li id="contractTxhash">txhash: “0x”</li>
-                <li id="contractUsedGas">usedGas: 210000</li>
+                <li id="receipt-contractHash">contract:</li>
+                <li id="receipt-contractDeployFailedOrNo">failed:</li>
+                <li id="receipt-contractPoststate">poststate:</li>
+                <li id="receipt-contractResult">result:</li>
+                <li id="receipt-contractTota1Fee">tota1Fee:</li>
+                <li id="receipt-contractTxhash">txhash:</li>
+                <li id="receipt-contractUsedGas">usedGas:</li>
+            </ul>
+            <button class="ok-search lit" id="querydone"></button>
+        </div>
+        <div class="search-hash" id="call-contract">
+          <div class="">
+            <h3 class="lit" id="callContract"></h3>
+            <div style="text-align:center;"><span id="callShardword"></span><span id="callShard"></span></div>
+            <div class="search">
+                <input type="text" class="lit" placeholder="Contract Address: 0x..." id="contractAddress">
+                <input type="text" class="lit" placeholder="Payload:0x..." id="contractPayload">
+                <button><span><img src="./src/img/search.png" id="callImg"></span></button>
+            </div>
+            <ul>
+                <li id="call-contractHash">contract:</li>
+                <li id="call-contractDeployFailedOrNo">failed:</li>
+                <li id="call-contractPoststate">poststate:</li>
+                <li id="call-contractResult">result:</li>
+                <li id="call-contractTota1Fee">tota1Fee:</li>
+                <li id="call-contractTxhash">txhash:</li>
+                <li id="call-contractUsedGas">usedGas:</li>
             </ul>
             <button class="ok-search lit" id="querydone"></button>
           </div>
-        </div> -->
+        </div>
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
@@ -266,6 +286,8 @@
             // seeleClient = new seeleclient;
             var json = JSON.parse(fs.readFileSync(client.configpath).toString());
             document.getElementById("lang").value=json["lang"]
+            
+            
         </script>
         </div>
         <div class="dask"></div>

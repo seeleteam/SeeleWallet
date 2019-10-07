@@ -22,7 +22,9 @@ addLoadEvent(function () {
     document.getElementById("contractSourceCode").innerText = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("deployContract").addEventListener("click", depolyContract);
-    // document.getElementById("QueryContract").addEventListener("click", queryContract(""));
+    document.getElementById("searchImg").addEventListener("click", queryContract);
+    document.getElementById("callImg").addEventListener("click", callContract);
+    // document.getElementById("QueryContract").addEventListener("click", queryContract);
     
     $('#contractAmount').on('input',function(e){
         if(ctxvalidator.element("#contractAmount")){
@@ -75,7 +77,8 @@ addLoadEvent(function () {
         // }
       });
       // add search contract event 
-    $('#searchImg').on('click',function(){queryContract();console.log("clicked");});
+    $('#searchImg').on('click',function(){queryContract();});
+    $('#callImg').on('click',function(){callContract();});
 })
 
 function compileContract() {
@@ -176,7 +179,7 @@ function queryContract() {
     // if (hash == "") {
     //   hash = $('#QueryHash').text();
     // }
-    console.log("lol");
+    // console.log("lol");
     hash = document.getElementById("ctxHash").value
     shard = document.getElementById("receiptShard").innerText
     console.log(hash, shard);
@@ -184,31 +187,62 @@ function queryContract() {
         if (err) {
             alert(err.message)
         }else {
-            var contractHash = document.getElementById("contractHash")
+            var contractHash = document.getElementById("receipt-contractHash")
             contractHash.innerText = "contract:" + result.contract
 
-            var contractDeployFailedOrNo = document.getElementById("contractDeployFailedOrNo")
+            var contractDeployFailedOrNo = document.getElementById("receipt-contractDeployFailedOrNo")
             contractDeployFailedOrNo.innerText = "failed:" + result.failed
 
-            var contractPoststate = document.getElementById("contractPoststate")
+            var contractPoststate = document.getElementById("receipt-contractPoststate")
             contractPoststate.innerText = "poststate:" + result.poststate
 
-            var contractResult = document.getElementById("contractResult")
+            var contractResult = document.getElementById("receipt-contractResult")
             contractResult.innerText = "result:" + result.result
 
-            var contractTota1Fee = document.getElementById("contractTota1Fee")
+            var contractTota1Fee = document.getElementById("receipt-contractTota1Fee")
             contractTota1Fee.innerText = "totalFee:" + result.totalFee
 
-            var contractTxhash = document.getElementById("contractTxhash")
+            var contractTxhash = document.getElementById("receipt-contractTxhash")
             contractTxhash.innerText = "txhash:" + result.txhash
 
-            var contractUsedGas = document.getElementById("contractUsedGas")
+            var contractUsedGas = document.getElementById("receipt-contractUsedGas")
             contractUsedGas.innerText = "usedGas:" + result.usedGas
         }
     })
 }
 
 
-// function callContract(){
-// 
-// }
+function callContract() {
+  address = document.getElementById("contractAddress").value
+  payload = document.getElementById("contractPayload").value
+  shard = document.getElementById("callShard").innerText
+  console.log( shard, payload, address );
+
+  seeleClient.callContract(shard, payload, address, function (result, err) {
+    // console.log(result);
+    if (err) {
+      console.error(err);
+    } else {
+      var contractHash = document.getElementById("call-contractHash")
+      contractHash.innerText = "contract:" + result.contract
+
+      var contractDeployFailedOrNo = document.getElementById("call-contractDeployFailedOrNo")
+      contractDeployFailedOrNo.innerText = "failed:" + result.failed
+
+      var contractPoststate = document.getElementById("call-contractPoststate")
+      contractPoststate.innerText = "poststate:" + result.poststate
+
+      var contractResult = document.getElementById("call-contractResult")
+      contractResult.innerText = "result:" + result.result
+
+      var contractTota1Fee = document.getElementById("call-contractTota1Fee")
+      contractTota1Fee.innerText = "totalFee:" + result.totalFee
+
+      var contractTxhash = document.getElementById("call-contractTxhash")
+      contractTxhash.innerText = "txhash:" + result.txhash
+
+      var contractUsedGas = document.getElementById("call-contractUsedGas")
+      contractUsedGas.innerText = "usedGas:" + result.usedGas
+    }  
+  })
+}

@@ -6,8 +6,18 @@ const {
   app,
   ipcMain
 } = require('electron');
-ipcMain.on( "setMyGlobalVariable", ( event, myGlobalVariable ) => {
-  global.myGlobalVariable = myGlobalVariable;
+ipcMain.on( 'compileContract', ( event, input ) => {
+  console.log(input);
+  var solc = require('solc');
+  var solc = solc.setupMethods(require("./src/api/solidity.js"))
+  var output = JSON.parse(solc.compile(JSON.stringify(input)))
+  for (var contractName in output.contracts['test.sol']) {
+    console.log(
+      contractName +
+      ': ' +
+      output.contracts['test.sol'][contractName].evm.bytecode.object
+    );
+  }
 } );
 const SeeleClient = require('./src/api/seeleClient');
 const createMenu = require('./src/js/menu.js').createMenu;

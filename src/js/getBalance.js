@@ -60,7 +60,7 @@ function loadRecords() {
   seeleClient.getRecords();
 
   recordHTML = ``
-  recordHTML = `<div class="txrecord title">   <div class="tx-side lit" id="txBroadcastTime"> Broadcast Time </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom"> From </div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">To</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">Amount</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">Transaction Hash</div>   </div>   <div class="status tx-side lit" id="rcStatus">Status</div> </div>`
+  
   var lang = document.getElementById("lang").value
   for (var item of seeleClient.txRecords) {
       // updating items: time, hash, status
@@ -82,7 +82,7 @@ function loadRecords() {
       } else if (item.u==0) {
         var status = "tx-fail"
       }
-      console.log(json[lang][status]);
+      // console.log(json[lang][status]);
       recordHTML += `<div class="status tx-side ` + status + `"><span class="`+status+`-word">`+json[lang][status]+`</span><span>` + ft + `</span></div>`
       recordHTML += `</div>`
   }
@@ -112,7 +112,9 @@ function loadAccount() {
 
     var tabs1HTML = `<div id="main-container"><div><h1 class="" id="titleWallets"></h1></div></div>`
     tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
-    tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
+    // tabs1HTML += `<div class="reminder" id="" style="display: block">`
+    // tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
+    tabs1HTML += `<div class="txrecord title" id="txrecord-title">   <div class="tx-side lit" id="txBroadcastTime"> Broadcast Time </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom"> From </div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">To</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">Amount</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">Transaction Hash</div>   </div>   <div class="status tx-side lit" id="rcStatus">Status</div> </div>`
     tabs1HTML += `<div id="txRecordList" style="display:block; height: 300px; overflow-y: scroll;"></div>`
 
     // tabs1HTML += `</div>`
@@ -149,12 +151,12 @@ function loadAccount() {
         accountHTML += `<div class='account'><div class='account-up'> <div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
         accountHTML += `<div class='account-balance'> <span class='acc-bal' id='`+ publicKey +`'>` + balance + `</span> <span class='acc-unit'> SEELE</span> </div></div><div class='account-down'><div class='account-controls'>`
         accountHTML += `<div class='account-publicKey'>` + publicKey + `</div>`
-        accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext lit" id="copyPubkey">复制公钥</span></div>`
-        accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext lit" id="more">更多账户选项</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid'> <img class='img' src='./src/img/call.png'><span class="tooltiptext lit" id="callContract">查看合约</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid' onclick=receipt("`+shardNum+`")> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">查看交易收据</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployContract">部署+调用合约</span></div>`
-        accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext lit" id="sendTx">发送交易</span></div></div><div class='account-info'>`
+        accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext lit" id="copyPubkey">copy publickey</span></div>`
+        accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext lit" id="more">more options</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=call("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/call.png'><span class="tooltiptext lit" id="callContract">call contract</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployContract">deploy or query</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=receipt("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">view receipt</span></div>`
+        accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext lit" id="sendTx">send tx</span></div></div><div class='account-info'>`
         accountHTML += `<div class='account-shard'> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
         accountHTML += `<div class='account-file'>`+filename+`</div></div></div></div>`
         

@@ -1,8 +1,13 @@
-/* .txRecordList{
+#txRecordList{
     width: 100%;
     float: left;
-    margin: 60px 20px 30px 20px;
-} */
+    margin: 0px 0px 0px 0px;
+}
+
+#txrecord-title{
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 /* ::-webkit-scrollbar {
   width: 10px;

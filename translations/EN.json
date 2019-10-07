@@ -6,7 +6,8 @@
   "Manage Keyfile(s)":"Manage Keyfile(s)",
   "Import Keyfile(s)":"Import Keyfile(s)",
   "Export Keyfile(s)":"Export Keyfile(s)",
-  "Developer Options":"Developer Options",
+  "Toggle Developer Options":"Toggle Developer Options",
+  "Toggle Fullscreen":"Toggle Fullscreen",
   "Edit":"Edit",
   "Copy":"Copy",
   "Paste":"Paste",
@@ -14,5 +15,7 @@
   "View":"View",
   "Show NetWork Info":"Show NetWork Info",
   "Help":"Help",
-  "Learn More":"Learn More"
+  "Learn More":"Learn More",
+  "Minimize":"Minimize Window",
+  "Close":"Close Window"
 }

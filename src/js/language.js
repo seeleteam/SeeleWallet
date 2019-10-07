@@ -36,12 +36,16 @@ function switchLanguage() {
     const lang = settings.lang;
     var literals = document.getElementsByClassName("lit");
     for (i = 0; i < literals.length; i++) {
-        if (literals[i].type == "password") {
+        if (literals[i].type == "password" || literals[i].type == "text" ) {
           // console.log(literals[i]);
           literals[i].placeholder = json[lang][literals[i].id];
+          // console.log(literals[i])
+          // console.log(literals[i].type)
+          
         } else {
           literals[i].value = json[lang][literals[i].id];
           literals[i].innerHTML = json[lang][literals[i].id];
+          // console.log(literals[i]);
         }
         // literals[i].placeholder = json[lang][literals[i].id];
     }
@@ -69,7 +73,7 @@ function switchLanguage() {
     // var validator;
     // var ctxvalidator;
     // $('#span_balance').
-    console.log(lang);
+    // console.log(lang);
     $('form[id="txform"]').validate({
     // $('form[id="txform"]').validate({
         // Specify validation rules
