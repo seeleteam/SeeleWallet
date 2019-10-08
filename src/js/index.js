@@ -7,7 +7,6 @@ var refreshAccount = require('./src/js/getBalance.js');
 
 $(function ($) {
 
-
     // tab
     $('#tab').tabulous({
         effect: 'slideLeft'
@@ -95,26 +94,6 @@ $(function ($) {
       }, "Please specify the correct precision for your value");
 })
 
-function compileContract(){
-  var input = {
-    language: 'Solidity',
-    sources: {
-      'test.sol': {
-        content: 'pragma solidity ^0.4.24; contract validUintContractTest {function test() public pure {}}'
-      }
-    },
-    settings: {
-      outputSelection: {
-        '*': {
-          '*': ['*']
-        }
-      }
-    }
-  };
-  const { ipcRenderer } = require('electron');
-  ipcRenderer.send('compileContract', input);  
-}
-compileContract()
 
 function addKeyfilePopup(){
   console.log($('.addpopup').css("display"))
@@ -260,7 +239,6 @@ function passwordStrengthTest(password){
   return errmsg
 }
 
-
 function addAccount() {
     $('.create-account').show()
     $('.dask').show()
@@ -270,6 +248,10 @@ function importAccounts(){
   const { dialog } = require('electron').remote
 
   const fs = require('fs')
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+  const lang = settings.lang;
+  
   const srcpath = dialog.showOpenDialog(
     { properties: ['openFile', 'multiSelections'],
     // { properties: ['multiSelections'],
@@ -281,13 +263,28 @@ function importAccounts(){
     //console.log(srcpath[item])
     var tempfilename = srcpath[item].split(path.sep)
     //console.log(dstpath+tempfilename[tempfilename.length-1])
-    fs.copyFileSync(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
-      if (err) throw err;
-      //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
-    });
+    if ( seeleClient.keyfileisvalid(srcpath[item]) ) {
+      var name = tempfilename[tempfilename.length-1];
+      seeleClient.accountListPromise().then(a=>{
+          if ( isDuplicateBy(name,"filename",a) ) {
+            alert(json[lang]["createKeyfileWarning"]["stringExist"]);
+          } else {
+            fs.copyFileSync(srcpath[item], dstpath+name, (err) => {
+              console.log(err);
+              if (err) alert(err);
+              //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
+            }); 
+            var refreshAccount = require('./src/js/getBalance.js');
+            setTimeout(function(){ refreshAccount(); }, 1000);
+            // refreshAccount();
+          }
+      }).catch(e=>{console.log(e);})
+    } else {
+      // console.log(seeleClient.keyfileisvalid(srcpath[item]));
+      alert(json[lang]["importfail1"] +name+ json[lang]["importfail2"])
+    }
   }
-  var refreshAccount = require('./src/js/getBalance.js');
-  refreshAccount();
+  
   // window.location.reload();
 }
 
@@ -440,6 +437,9 @@ function wallet(){
   $("#tabs-1").addClass('hideleft')
   $("#tabs-1").addClass('make_transist')
   $("#tabs-1").addClass('showleft')
+  
+  $("#contractAccountpassWord").val('')
+  $("#accountpassWord").val('')
 }
 
 function contract(account) {
@@ -463,6 +463,7 @@ function contract(account) {
 
     $("#contractPublicKey").val(account.pubkey)
     $("#ctAccount").val(JSON.stringify(account))
+    // console.log(account);
 }
 
 function transaction(account) {

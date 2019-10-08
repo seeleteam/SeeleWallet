@@ -18,7 +18,7 @@ var input = {
   language: 'Solidity',
   sources: {
     'test.sol': {
-      content: 'pragma solidity ^0.4.24; contract validUintContractTest {function test() public pure {}}'
+      content: 'pragma solidity ^0.5.0; contract validUintContractTest {function test() public pure {}}'
     }
   },
   settings: {
@@ -29,10 +29,10 @@ var input = {
     }
   }
 };
-
 var solc = require('solc');
 var solc = solc.setupMethods(require("./../../api/solidity.js"))
 var output = JSON.parse(solc.compile(JSON.stringify(input)))
+console.log(output);
 for (var contractName in output.contracts['test.sol']) {
   console.log(
     contractName +

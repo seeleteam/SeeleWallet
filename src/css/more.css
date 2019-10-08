@@ -130,6 +130,7 @@ display for all the popups
   100% { transform: translate(3px, 0px) ; }
 }
 
+.popuptitle,
 .more-filename {
   padding: 40px 0px 20px 0px;
   font-size: 30px;
@@ -139,11 +140,14 @@ display for all the popups
   overflow: auto;
 }
 
-.more-shard, .more-publickey {
-  padding: 5px;
+.popupTip,
+.more-shard, 
+.more-publickey {
+  padding: 5px 100px 5px 100px;
   text-align: center;
   clear:both;
-  font-size: 10px;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 

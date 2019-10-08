@@ -7,18 +7,27 @@ const {
   ipcMain
 } = require('electron');
 ipcMain.on( 'compileContract', ( event, input ) => {
-  console.log(input);
+  // console.log(input);
   var solc = require('solc');
   var solc = solc.setupMethods(require("./src/api/solidity.js"))
   var output = JSON.parse(solc.compile(JSON.stringify(input)))
+  // console.log(output.contracts['test.sol']);
+  // console.log(output.errors);
+  var err = output.errors;
+  var byt;
+  var e = 0;
   for (var contractName in output.contracts['test.sol']) {
-    console.log(
-      contractName +
-      ': ' +
-      output.contracts['test.sol'][contractName].evm.bytecode.object
-    );
+    if (e == 0) {
+      byt = output.contracts['test.sol'][contractName].evm.bytecode.object;
+      // console.log(contractName + ': ' + byt);
+      e = 1;
+    }
   }
+  event.sender.send('compiledContract', byt, err);
+    
+  // event.sender.send('compiledContract', bytecode);
 } );
+
 const SeeleClient = require('./src/api/seeleClient');
 const createMenu = require('./src/js/menu.js').createMenu;
 

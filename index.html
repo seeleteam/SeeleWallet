@@ -69,6 +69,10 @@
         </div>
         <div class="popuplocationwrap addpopup">
           <div class="popup">
+            <div class="moreinfo">
+              <div class="lit popuptitle" id="createKeyfile"></div>
+              <div class="lit popupTip" id="createKeyfileTip"></div>
+            </div>
             <div class="controls">
               <div class="option">
                 <span class="option-title add-filename lit" id="keyfileName*"></span>
@@ -157,7 +161,7 @@
                             <div style="display:none" id="ctAccount"> </div>
                             <ul class="send-list">
                                 <li style="clear:right;"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
-                                <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li>
+                                <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="defualt: 0x000..." id="contractAddress" name="contractAddress" value = ""></li>
                                 <li style="clear:left;margin-right:80px;margin-bottom:15px"><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="contractAccountpassWord" name="contractAccountpassWord"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
                                 <li ><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
@@ -174,10 +178,11 @@
                                     <div id="getPayload" name="getPayload" style="display:none"></div>
                                     <div id="contractSourceCode" style="display:none"></div>
                                     <div class="code_container">
-                                        <textarea id="contractInput">pragma solidity ^0.5.0;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
+                                        <textarea id="contractInput">pragma solidity ^0.4.24;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
                                     </div>
                                 </div>
                                 <input type="button" class="compile lit" id="compileContract" value="Compile" />
+                                <div style="opacity:1;line-height:34px;float:left;height:34px;" value=""><pre>  using solidity v0.4.24</pre></div>
                                 <div id="compileSuccess" class="success-result">
                                     <span class="success"></span>
                                 </div>
@@ -204,7 +209,8 @@
                                 <dd><span id="ctx-totalamount">0.0</span> SEELE</dd>
                             </dl>
                             <div id="QueryHash" style="display:none"></div>
-                            <input id="deployContract" class="send lit" value="Deploy" type="button">
+                            <input id="fdeployContract" class="send lit" value="Deploy" type="button">
+                            <input id="femployContract" class="send lit Cancel" value="Employ" type="button">
                             <input id="CancelContract" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
@@ -282,6 +288,7 @@
             require('./src/js/refreshInfo.js')
             require('./src/js/contract.js')
             const fs = require('fs');
+            const {shell} = require('electron')
             client = new seeleclient;
             // seeleClient = new seeleclient;
             var json = JSON.parse(fs.readFileSync(client.configpath).toString());

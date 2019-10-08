@@ -40,6 +40,7 @@ function seeleClient() {
     this.langPath = `${__dirname}`+`/../json/lang.json`
     this.configpath = os.homedir()+"/.SeeleWallet/viewconfig_1.0.json";
     this.accountPath = os.homedir() + "/.SeeleWallet/account/";
+    this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
@@ -378,7 +379,7 @@ function seeleClient() {
 
     this.compileContract = function (input) {
         // if (input != '') {
-        console.log(__dirname);
+        // console.log(__dirname);
 
 
             return new Q((resolve, reject) => {
@@ -864,7 +865,6 @@ function seeleClient() {
             console.error("invalid shardnum estimateGas", shard);
         } else {
             this.client[shard].estimateGas(tx, callBack);
-            console.log("why");
         }  
     }
     

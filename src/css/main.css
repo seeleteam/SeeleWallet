@@ -30,6 +30,23 @@ display for the main page
     /* padding-bottom: 40px; */
     margin: auto;
     height: 100%;
+    overflow: visible;
+}
+#txEmpty,
+#accountEmpty {
+  height: 200px;
+  width: calc(100%-40px);
+  margin: 20px;
+  text-align: center;
+  line-height: 200px;
+  opacity: 0.5;
+}
+
+#txrecordtitle,{
+  margin-top: 20px;
+}
+#accountlisttitle{
+  margin-top: 60px;
 }
 
 html{

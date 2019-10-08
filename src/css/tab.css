@@ -24,13 +24,14 @@ a:focus {
     position: absolute;
     height : 100%;
     overflow : auto;
-    overflow-x: hidden;
+    overflow-x: visible;
     margin: auto;
 }
 
 #tab {
     width: 100%;
     margin: 0 auto;
+    overflow: visible;
 }
 #tab ul{
     padding: 0;
@@ -83,7 +84,7 @@ a:focus {
     /* height: 100; */
     padding: 20px;
     min-height: 1000px;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     background: #fff;
 }

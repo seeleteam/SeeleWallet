@@ -62,6 +62,7 @@ function loadRecords() {
   recordHTML = ``
   
   var lang = document.getElementById("lang").value
+  
   for (var item of seeleClient.txRecords) {
       // updating items: time, hash, status
       // console.log(item);
@@ -111,10 +112,14 @@ function loadAccount() {
     // tabs1.innerHTML = "";
 
     var tabs1HTML = `<div id="main-container"><div><h1 class="" id="titleWallets"></h1></div></div>`
+    tabs1HTML += `<div class="" id="accountlisttitle" style="display: block"><h1 class="lit" id="accountlisttitle"></h1> </div>`
+    tabs1HTML += `<div class="lit" id="accountEmpty" style="display: none; background-color: lightblue;"> </div>`
     tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
     // tabs1HTML += `<div class="reminder" id="" style="display: block">`
     // tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
+    tabs1HTML += `<div class="" id="txrecordtitle" style="display: block; clear: both;"><h1 class="lit" id="txrecordtitle"></h1> </div>`
     tabs1HTML += `<div class="txrecord title" id="txrecord-title">   <div class="tx-side lit" id="txBroadcastTime"> Broadcast Time </div>   <div class="from tx-mid">     <div class="content lit" id="rcFrom"> From </div>   </div>   <div class="to tx-mid">     <div class="content lit" id="rcTo">To</div>   </div>   <div class="amount tx-mid">     <div class="content lit" id="rcAmount">Amount</div>   </div>   <div class="txhash tx-mid">     <div class="content lit" id="rcTxhash">Transaction Hash</div>   </div>   <div class="status tx-side lit" id="rcStatus">Status</div> </div>`
+    tabs1HTML += `<div class="lit" id="txEmpty" style="display: none; background-color: lightblue;"></div>`
     tabs1HTML += `<div id="txRecordList" style="display:block; height: 300px; overflow-y: scroll;"></div>`
 
     // tabs1HTML += `</div>`
@@ -154,10 +159,10 @@ function loadAccount() {
         accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext lit" id="copyPubkey">copy publickey</span></div>`
         accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext lit" id="more">more options</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid' onclick=call("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/call.png'><span class="tooltiptext lit" id="callContract">call contract</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployContract">deploy or query</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext lit" id="deployEmploy">deploy or query</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid' onclick=receipt("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext lit" id="viewReceipt">view receipt</span></div>`
         accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext lit" id="sendTx">send tx</span></div></div><div class='account-info'>`
-        accountHTML += `<div class='account-shard'> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
+        accountHTML += `<div class='account-shard' style="visibility:visible"> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
         accountHTML += `<div class='account-file'>`+filename+`</div></div></div></div>`
         
         document.getElementById("accountlist").innerHTML += accountHTML;
@@ -165,6 +170,16 @@ function loadAccount() {
     loadRecords();
     switchLanguage();
     loadingBalances = false;
+    
+    if (seeleClient.accountArray.length == 0) {
+      // document.getElementById()
+      document.getElementById("accountlist").style.display = "none"
+      document.getElementById("accountEmpty").style.display = "block"
+    } 
+    if (seeleClient.txRecords.length == 0) {
+      // document.getElementById()
+      document.getElementById("txEmpty").style.display = "block"
+    }
 }
 
 function toclip(text) {
@@ -299,5 +314,8 @@ function updateRecords(){
   }
 }
 
+function cleartx(){
+  
+}
 
 module.exports = loadAccount;

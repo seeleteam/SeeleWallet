@@ -126,6 +126,9 @@ function switchLanguage() {
         ignore: [],
         rules: {
             contractPublicKey: "required",
+            contractAddress: {
+              rangelength:[42,42]
+            },
             contractAccountpassWord: {
                 required:true
             },
@@ -137,6 +140,7 @@ function switchLanguage() {
         },
         messages: {
             contractPublicKey:json[lang]["warning_txpublicKey"],
+            contractAddress: json[lang]["warning_ContractAddress"],
             contractAccountpassWord:{
                 required:json[lang]["warning_accountpassword_required"]
             },

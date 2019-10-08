@@ -19,12 +19,14 @@ function addLoadEvent(func) {
 var ctxvalidator;
 addLoadEvent(function () {
     //TODO need to check the button
-    document.getElementById("contractSourceCode").innerText = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
+    document.getElementById("contractSourceCode").innerText = 'pragma solidity ^0.4.24; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
     document.getElementById("compileContract").addEventListener("click", compileContract);
-    document.getElementById("deployContract").addEventListener("click", depolyContract);
-    document.getElementById("searchImg").addEventListener("click", queryContract);
+    document.getElementById("fdeployContract").addEventListener("click", deployContract);
+    document.getElementById("femployContract").addEventListener("click", employContract);
+    // document.getElementById("fdeployContract").addEventListener("click", function(){console.log("sh!");});
+    document.getElementById("searchImg").addEventListener("click", viewReceipt);
     document.getElementById("callImg").addEventListener("click", callContract);
-    // document.getElementById("QueryContract").addEventListener("click", queryContract);
+    // document.getElementById("QueryContract").addEventListener("click", viewReceipt);
     
     $('#contractAmount').on('input',function(e){
         if(ctxvalidator.element("#contractAmount")){
@@ -47,10 +49,13 @@ addLoadEvent(function () {
         document.getElementById("ctx-totalamount").innerText=total;
     } );
 
-    ctxvalidator =   $('form[id="contractForm"]').validate({
+    ctxvalidator = $('form[id="contractForm"]').validate({
         ignore: [],
         rules: {
             contractPublicKey: "required",
+            contractAddress: {
+              rangelength:[42,42]
+            },
             contractAccountpassWord: {
                 required:true
             },
@@ -62,6 +67,7 @@ addLoadEvent(function () {
         },
         messages: {
             contractPublicKey: "Please enter your account address",
+            contractAddress: "Please enter contract address",
             contractAccountpassWord:{
                 required:"Please enter your account password"
             },
@@ -77,105 +83,203 @@ addLoadEvent(function () {
         // }
       });
       // add search contract event 
-    $('#searchImg').on('click',function(){queryContract();});
+    $('#searchImg').on('click',function(){viewReceipt();});
     $('#callImg').on('click',function(){callContract();});
 })
 
-function compileContract() {
-    var input = document.getElementById("contractSourceCode").innerText;
-    seeleClient.compileContract(input).then((outdata) => {
-        var getPayload = document.getElementById("getPayload");
-        getPayload.innerText = outdata
-        var output = document.getElementById("compileSuccess")
-        output.innerText = "Success"
-        output.style.display = 'block'
-        if($('.cur')[0].id == 'contractByte'){
-            $('#contractInput').val(outdata)
-            // $('#contractInput').innerText(outdata)
-            // $('#contractInput').innerHTML(outda/ta)
-            // $('#contractSourceCode').val(outdata)
-        }
-        // update estimated gas and total fee 
-        var publicKey = document.getElementById("contractPublicKey");
-        seeleClient.estimateGas(publicKey.value,contractToAddress,"0x" + outdata,function(result,err){
-            if(err){
-                alert("Get estimated gas error:" + err);
-            }else{
-                document.getElementById("ctx-estimatedgas").innerText=result;
-                //update total fee
-                if(ctxvalidator.element("#contractAmount")){
-                    amount = document.getElementById("contractAmount").value;
-                }else{
-                    amount= "0.0";
-                } 
-                var gasPrice = $('#contractGasPrice').slider("value");
-                var total = BigNumber(gasPrice).times(parseFloat(result)).div(100000000).plus(parseFloat(amount));
-                document.getElementById("ctx-totalamount").innerText=total;
-            }
-        });
-    }).catch((err) => {
-        var output = document.getElementById("compileSuccess");
-        output.innerText = err.toString();
-        output.style.display = 'block'
+// function 
+const Q = require('bluebird');
+function promiseEstimateGas( from, to, load) {
+  return new Q((resolve, reject) => {
+    seeleClient.estimateGas(from, to, load, function(result, err){
+      console.log("result : ", result, "\nerror : ", JSON.stringify(err));
+      if (err == undefined) {
+        resolve(result)
+      } else {
+        reject(err)
+      }
     });
+    // if( true ){
+    //   resolve(load)
+    // } else {
+    //   reject("hi")
+    // }
+  });
 }
 
-function depolyContract() {
+function deployContract() {
     if(!ctxvalidator.form()){
         return;
     }
     let payload = $('#getPayload').text()
-    console.log(payload)
+    // console.log(payload)
     if (payload != null && payload != "" && payload != undefined) {
         var publicKey = document.getElementById("contractPublicKey");
-        var account = document.getElementById("ctAccount")
+        var account = document.getElementById("contractAddress")
         var amount = document.getElementById("contractAmount");
         //var price = document.getElementById("price");
         var accountpassWord = document.getElementById("contractAccountpassWord")
         var gasPrice = $('.progress').slider("value");
         //get estimate gas
         var estimateGas=-1;
-        // seeleClient.estimateGas("0x00asdf",contractToAddress,"0x" + payload,function(result,err){
-        seeleClient.estimateGas(publicKey.value,contractToAddress,"0x" + payload,function(result,err){
-            console.log("result : ", result, "\nerror : ", JSON.stringify(err));
-            if(err){
-                // alert(err)
-                console.error(err);
-                
-            } else {
-                estimateGas = result;
-                layer.load(0, {
-                    shade: false
-                });
-                
-                seeleClient.sendtx(account.value, accountpassWord.value,"0x0000000000000000000000000000000000000000", amount.value,gasPrice,estimateGas, "0x" + payload, function (resultt, errt, hash, txRecord) {
-                    console.log(txRecord);
-                    layer.closeAll();
-                    if (err) {
-                        layer.alert(err.message)
-                    } else {
-                        var QueryHash = document.getElementById("QueryHash")
-                        alert("Deploy contract transaction Hash:"+ hash)
-                        QueryHash.innerText = hash
-                        // seeleClient.txArray.push(hash)
-                        seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
-                        // seeleClient.saveFile(false, hash)
-                        seeleClient.saveRecord(txRecord);
-                        // location.reload()
-                    }
-                });
-            }
-            console.log("end");
-        });       
+        var from = publicKey.value;
+        var load = "0x"+payload
+        // if (document.getElementById("contractAddress").value == "") {
+        var to = "0x0000000000000000000000000000000000000000";
+        // } else {
+          // var to = document.getElementById("contractAddress").value
+        // }
 
+        promiseEstimateGas(from, to, load).then(
+          (estimatedgas)=>{
+            console.log("returned",estimatedgas)
+            var requested = false;
 
-        
+            setTimeout(function(){
+              console.log(requested.toString());
+              if (!requested) {
+                const fs = require('fs');
+                var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+                const lang = document.getElementById("lang").value
+                alert(json[lang]["broadcastError"])
+              }
+            }, 5000);
+
+            layer.load(0, { shade: false });
+            console.log(from, accountpassWord.value, to, amount.value, gasPrice, estimatedgas, load);
+            // console.log(seeleClient.address);
+            var fromAccount = document.getElementById("ctAccount").value
+            console.log(fromAccount);
+            seeleClient.sendtx(fromAccount, accountpassWord.value, to, amount.value, gasPrice, estimatedgas, load, function(result, err, hash, txRecord) {
+                layer.closeAll();
+                requested = true;
+                console.log(requested)
+                if (err) {
+                    layer.alert(err.message);
+                } else {
+                    const fs = require('fs');
+                    var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+                    const lang = document.getElementById("lang").value
+                    const createwarning0 = json[lang]["saveWarning0"];
+                    const message = json[lang]["transactionSent"]+createwarning0+hash;
+                    // seeleClient.txArray.push(hash)
+                    alert(message)
+                    navigator.permissions.query({name: "clipboard-write"}).then(result => {
+                      if (result.state == "granted" || result.state == "prompt") {
+                        navigator.clipboard.writeText(hash).then(
+                          function() {
+                          console.log("copied!")
+                        }, function() {
+                          console.log("failed, but still permitted")
+                        });
+                      }
+                    });
+                    seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
+                    // seeleClient.saveFile(false, hash)
+                    seeleClient.saveRecord(txRecord);
+                    location.reload()
+                }
+            });
+        }).catch((e)=>{console.error(e);})
+
     } else {
-        alert("please compile the contract first!")
+        const fs = require('fs');
+        var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+        var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+        const lang = settings.lang;
+
+        alert(json[lang]["lack binaries"])
     }
 }
 
-function queryContract() {
+function employContract(){
+  const fs = require('fs');
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+  const lang = settings.lang;
+  
+  if(!ctxvalidator.form()){
+      return;
+  }
+  let payload = $('#getPayload').text()
+  // console.log(payload)
+  if (payload != null && payload != "" && payload != undefined) {
+      var publicKey = document.getElementById("contractPublicKey");
+      var account = document.getElementById("contractAddress")
+      var amount = document.getElementById("contractAmount");
+      //var price = document.getElementById("price");
+      var accountpassWord = document.getElementById("contractAccountpassWord")
+      var gasPrice = $('.progress').slider("value");
+      //get estimate gas
+      var estimateGas=-1;
+      var from = publicKey.value;
+      var load = "0x"+payload
+      if (document.getElementById("contractAddress").value == "") {
+        alert(json[lang]["EmployRequire"])
+        return false;
+      } else {
+        var to = document.getElementById("contractAddress").value
+      }
+
+      promiseEstimateGas(from, to, load).then(
+        (estimatedgas)=>{
+          console.log("returned",estimatedgas)
+          var requested = false;
+
+          setTimeout(function(){
+            console.log(requested.toString());
+            if (!requested) {
+              const fs = require('fs');
+              var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+              const lang = document.getElementById("lang").value
+              alert(json[lang]["broadcastError"])
+            }
+          }, 5000);
+
+          layer.load(0, { shade: false });
+          console.log(from, accountpassWord.value, to, amount.value, gasPrice, estimatedgas, load);
+          // console.log(seeleClient.address);
+          var fromAccount = document.getElementById("ctAccount").value
+          console.log(fromAccount);
+          seeleClient.sendtx(fromAccount, accountpassWord.value, to, amount.value, gasPrice, estimatedgas, load, function(result, err, hash, txRecord) {
+              layer.closeAll();
+              requested = true;
+              console.log(requested)
+              if (err) {
+                  layer.alert(err.message);
+              } else {
+                  const fs = require('fs');
+                  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+                  const lang = document.getElementById("lang").value
+                  const createwarning0 = json[lang]["saveWarning0"];
+                  const message = json[lang]["transactionSent"]+createwarning0+hash;
+                  // seeleClient.txArray.push(hash)
+                  alert(message)
+                  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+                    if (result.state == "granted" || result.state == "prompt") {
+                      navigator.clipboard.writeText(hash).then(
+                        function() {
+                        console.log("copied!")
+                      }, function() {
+                        console.log("failed, but still permitted")
+                      });
+                    }
+                  });
+                  seeleClient.txArray.push({"name":hash,"time":new Date().getTime()})
+                  // seeleClient.saveFile(false, hash)
+                  seeleClient.saveRecord(txRecord);
+                  location.reload()
+              }
+          });
+      }).catch((e)=>{console.error(e);})
+
+  } else {
+
+      alert(json[lang]["lack binaries"])
+  }
+}
+
+function viewReceipt() {
     // if (hash == "") {
     //   hash = $('#QueryHash').text();
     // }
@@ -211,7 +315,6 @@ function queryContract() {
     })
 }
 
-
 function callContract() {
   address = document.getElementById("contractAddress").value
   payload = document.getElementById("contractPayload").value
@@ -245,4 +348,76 @@ function callContract() {
       contractUsedGas.innerText = "usedGas:" + result.usedGas
     }  
   })
+}
+
+function compileContract(){
+  var code = document.getElementById("contractSourceCode").innerText;
+  // console.log(code);
+  var input = {
+    language: 'Solidity',
+    sources: {
+      'test.sol': {
+        content: code
+      }
+    },
+    settings: {
+      outputSelection: {
+        '*': {
+          '*': ['*']
+        }
+      }
+    }
+  };
+  const { ipcRenderer } = require('electron');
+  ipcRenderer.send('compileContract', input); 
+  // const { ipcRenderer } = require('electron');
+  ipcRenderer.on('compiledContract', (event, byt, err ) => {
+    
+    if (err == null) {
+      var output = document.getElementById("compileSuccess")
+      output.innerText = "Success"
+      output.style.display = 'block'
+      // console.log(byt);
+      
+      var getPayload = document.getElementById("getPayload");
+      getPayload.innerText = byt
+      
+      if($('.cur')[0].id == 'contractByte'){
+          $('#contractInput').val(byt)
+          // $('#contractInput').innerText(outdata)
+          // $('#contractInput').innerHTML(outda/ta)
+          // $('#contractSourceCode').val(outdata)
+      }
+      var from = document.getElementById("contractPublicKey");
+      // console.log(document.getElementById("contractAddress").value);
+      if (document.getElementById("contractAddress").value == "") {
+        var to = "0x0000000000000000000000000000000000000000";
+      } else {
+        var to = document.getElementById("contractAddress").value
+      }
+      
+      seeleClient.estimateGas(from.value, to, "0x" + byt, function(result,err){
+          if(err){
+              alert("Get estimated gas error:" + err);
+          }else{
+              document.getElementById("ctx-estimatedgas").innerText=result;
+              //update total fee
+              if(ctxvalidator.element("#contractAmount")){
+                  amount = document.getElementById("contractAmount").value;
+              }else{
+                  amount= "0.0";
+              } 
+              var gasPrice = $('#contractGasPrice').slider("value");
+              var total = BigNumber(gasPrice).times(parseFloat(result)).div(100000000).plus(parseFloat(amount));
+              document.getElementById("ctx-totalamount").innerText=total;
+          }
+      });
+      
+    } else {
+      var output = document.getElementById("compileSuccess")
+      output.innerText = JSON.stringify(err)
+      output.style.display = 'block'
+      console.error(JSON.stringify(err));
+    }
+  });
 }

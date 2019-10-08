@@ -55,13 +55,6 @@ function createMenu (mainWindow) {
             // mainWindow.webContents.executeJavaScript('importAccounts()')
         }
       },
-      // {
-      //   label: i18n.__("Manage Keyfile(s)"),
-      //   accelerator: "CmdOrCtrl+M",
-      //   click: () => {
-      //     shell.openItem(sc.accountPath);  
-      //   }
-      // },
       {
         label: i18n.__("Import Keyfile(s)"),
         accelerator: "CmdOrCtrl+I",
@@ -70,6 +63,21 @@ function createMenu (mainWindow) {
             mainWindow.webContents.executeJavaScript('importAccounts()')
             // importKey();
             // console.log("really")
+        }
+      },
+      {
+        label: i18n.__("Manage Keyfile(s)"),
+        accelerator: "CmdOrCtrl+K",
+        enabled:true,
+        click: () => {
+          mainWindow.webContents.executeJavaScript("shell.openItem(client.accountPath)");  
+        }
+      },
+      {
+        label: i18n.__("Manage Trasaction(s)"),
+        enabled:true,
+        click: () => {
+          mainWindow.webContents.executeJavaScript("shell.openItem(client.rcPath)");  
         }
       }
     ]
