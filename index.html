@@ -102,10 +102,8 @@
                 <th class="lit" id="tb-shard">shard</th>
                 <th class="lit" id="tb-connected">connected</th>
                 <th class="lit" id="tb-address">address</th>
-                <!-- <th class="lit" id="tb-genesis">genesis</th> -->
                 <th class="lit" id="tb-height">height</th>
               </tr>
-          <!--<tr> <th>shard</th> <th>connected</th> <th>address</th>                 <th>genesis</th> <th>height</th> </tr>-->
               <tr> <td>1</td>     <td></td>          <td></td>                                <td></td>       </tr>
               <tr> <td>2</td>     <td></td>          <td></td>                                <td></td>       </tr>
               <tr> <td>3</td>     <td></td>          <td></td>                                <td></td>       </tr>
@@ -114,11 +112,6 @@
         </div>
         <div class="main">
             <div id="tab">
-                <!-- <ul> -->
-                    <!-- <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
-                    <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
-                    <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li> -->
-                <!-- </ul> -->
                 <div id="tabs_container">
                     <div id="tabs-1">
                         <h1>Accounts Overview</h1>
@@ -176,6 +169,7 @@
                                         <li class="code-after lit" id="contractByte">CONTRACT BYTE CODE</li>
                                     </ul>
                                     <div id="getPayload" name="getPayload" style="display:none"></div>
+                                    <div id="contractMethodArgs" style="display:none"></div>
                                     <div id="contractSourceCode" style="display:none"></div>
                                     <div class="code_container">
                                         <textarea id="contractInput">pragma solidity ^0.4.24;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
@@ -186,13 +180,6 @@
                                 <div id="compileSuccess" class="success-result">
                                     <span class="success"></span>
                                 </div>
-                                <!--<div id="compileFail" class="fail-result">
-                                    <span class="fail">Could not compile cource code.</span>
-                                    <input type="button" class="compile" id="compileAgain" value="Compile Again"/>
-                                    <div class="code_container">
-                                        <textarea></textarea>
-                                    </div>
-                                </div>-->
                             </div>
                             <h2 class="progress-title lit" id="contract-seeleFee">Seele Fee</h2>
                             <div class="progress" id="contractGasPrice">
@@ -217,25 +204,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="search-hash" id="search-hash">
-            <h3 class="lit" id="viewReceipt"></h3>
-            <div id="receiptShard" style="display:none;"></div>
-            <div class="search">
-                <input type="text" placeholder="Trasaction Hash:" id="ctxHash">
-                <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
-            </div>
-            <ul>
-                <li id="contractHash">contract: ”0x”</li>
-                <li id="contractDeployFailedOrNo">failed: false</li>
-                <li id="contractPoststate">poststate: “0x”</li>
-                <li id="contractResult">result: “0x”</li>
-                <li id="contractTota1Fee">tota1Fee: 210000</li>
-                <li id="contractTxhash">txhash: “0x”</li>
-                <li id="contractUsedGas">usedGas: 210000</li>
-            </ul>
-            <button class="ok-search lit" id="querydone"></button>
-        </div> -->
-        
         <div class="search-hash" id="search-hash">
             <h3 class="lit" id="viewReceipt"></h3>
             <div style="text-align:center;"> <span id="receiptShardword"></span><span id="receiptShard"></span></div>
@@ -260,8 +228,8 @@
             <h3 class="lit" id="callContract"></h3>
             <div style="text-align:center;"><span id="callShardword"></span><span id="callShard"></span></div>
             <div class="search">
-                <input type="text" class="lit" placeholder="Contract Address: 0x..." id="contractAddress">
-                <input type="text" class="lit" placeholder="Payload:0x..." id="contractPayload">
+                <input type="text" class="lit" placeholder="Contract Address: 0x..." id="callcontractAddress">
+                <input type="text" class="lit" placeholder="Payload:0x..." id="callcontractPayload">
                 <button><span><img src="./src/img/search.png" id="callImg"></span></button>
             </div>
             <ul>
@@ -314,6 +282,5 @@
 <script src="./src/js/layer.js"></script>
 <script src="./src/js/popup.js"></script>
 <script src="./src/js/qrcode.js"></script>
-<!-- <script type="text/javascript" src="qrcode.js"></script> -->
 
 </html>

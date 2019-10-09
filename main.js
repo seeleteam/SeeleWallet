@@ -20,10 +20,11 @@ ipcMain.on( 'compileContract', ( event, input ) => {
     if (e == 0) {
       byt = output.contracts['test.sol'][contractName].evm.bytecode.object;
       // console.log(contractName + ': ' + byt);
+      abi = output.contracts['test.sol'][contractName].abi;
       e = 1;
     }
   }
-  event.sender.send('compiledContract', byt, err);
+  event.sender.send('compiledContract', byt, abi, err);
     
   // event.sender.send('compiledContract', bytecode);
 } );

@@ -97,6 +97,11 @@ function createMenu (mainWindow) {
         selector: "paste:"
       },
       {
+        label: i18n.__("Select All"),
+        accelerator: "CmdOrCtrl+A",
+        selector: "selectAll:"
+      },
+      {
         label: i18n.__("Refresh"),
         accelerator: "CmdOrCtrl+R",
         click: function () {

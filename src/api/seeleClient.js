@@ -836,6 +836,8 @@ function seeleClient() {
         
             // var send = document.getElementById("contractPublicKey").value
             // var shard = this.getshardnum(send)
+        console.log(to);
+        console.log(shard);
         if (/^0x[0-9a-zA-Z]{40,40}$/.test(to)){
             if (!/^[1-4]{1,1}$/.test( shard )) {
                 console.error("invalid shardnum getReceiptByTxHash", shard)
@@ -843,7 +845,8 @@ function seeleClient() {
                 this.client[shard].call(to, payload, -1, callBack);
             } 
         } else {
-          console.error("invalid contract address", to)
+          // console.error("invalid contract address", to)
+          alert("invalid contract address", to)
         }
         
     };
@@ -854,7 +857,7 @@ function seeleClient() {
         txData.To = to;
         txData.Amount = 0;
         txData.GasPrice = 0;
-        txData.GasLimit = 63000;
+        txData.GasLimit = 100000000;
         txData.AccountNonce = 9999999999;
         txData.Payload = payload;
         var tx = {};

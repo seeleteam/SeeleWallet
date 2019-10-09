@@ -23,6 +23,7 @@ addLoadEvent(function () {
     document.getElementById("compileContract").addEventListener("click", compileContract);
     document.getElementById("fdeployContract").addEventListener("click", deployContract);
     document.getElementById("femployContract").addEventListener("click", employContract);
+    document.getElementById("contractInput").addEventListener("blur", estimateGas);
     // document.getElementById("fdeployContract").addEventListener("click", function(){console.log("sh!");});
     document.getElementById("searchImg").addEventListener("click", viewReceipt);
     document.getElementById("callImg").addEventListener("click", callContract);
@@ -90,6 +91,7 @@ addLoadEvent(function () {
 // function 
 const Q = require('bluebird');
 function promiseEstimateGas( from, to, load) {
+  // console.log("from: ", from, "\nto: ", to, "\nload: ", load);
   return new Q((resolve, reject) => {
     seeleClient.estimateGas(from, to, load, function(result, err){
       console.log("result : ", result, "\nerror : ", JSON.stringify(err));
@@ -107,7 +109,7 @@ function promiseEstimateGas( from, to, load) {
   });
 }
 
-function deployContract() {
+function deployContract(){
     if(!ctxvalidator.form()){
         return;
     }
@@ -316,8 +318,8 @@ function viewReceipt() {
 }
 
 function callContract() {
-  address = document.getElementById("contractAddress").value
-  payload = document.getElementById("contractPayload").value
+  address = document.getElementById("callcontractAddress").value
+  payload = document.getElementById("callcontractPayload").value
   shard = document.getElementById("callShard").innerText
   console.log( shard, payload, address );
 
@@ -371,11 +373,11 @@ function compileContract(){
   const { ipcRenderer } = require('electron');
   ipcRenderer.send('compileContract', input); 
   // const { ipcRenderer } = require('electron');
-  ipcRenderer.on('compiledContract', (event, byt, err ) => {
+  ipcRenderer.on('compiledContract', (event, byt, abi, err ) => {
     
     if (err == null) {
       var output = document.getElementById("compileSuccess")
-      output.innerText = "Success"
+      output.innerText = "Success, ABI:\n"+JSON.stringify(abi)
       output.style.display = 'block'
       // console.log(byt);
       
@@ -397,6 +399,7 @@ function compileContract(){
       }
       
       seeleClient.estimateGas(from.value, to, "0x" + byt, function(result,err){
+          console.log(result);
           if(err){
               alert("Get estimated gas error:" + err);
           }else{
@@ -420,4 +423,36 @@ function compileContract(){
       console.error(JSON.stringify(err));
     }
   });
+  
+  // alert("done!")
+}
+
+
+function estimateGas(){
+  console.log("triggered?");
+  var from = document.getElementById("contractPublicKey").value;
+  if (document.getElementById("contractAddress").value == "") {
+    var to = "0x0000000000000000000000000000000000000000";
+  } else {
+    var to = document.getElementById("contractAddress").value;
+  }
+  var load = "0x" + document.getElementById("contractInput").value;
+  
+  console.log(from, to, load);
+  promiseEstimateGas(from, to, load).then(
+    (result)=>{
+      console.log("returned",result)
+      document.getElementById("ctx-estimatedgas").innerText=result;
+      //update total fee
+      if(ctxvalidator.element("#contractAmount")){
+          amount = document.getElementById("contractAmount").value;
+      }else{
+          amount= "0.0";
+      } 
+      var gasPrice = $('#contractGasPrice').slider("value");
+      var total = BigNumber(gasPrice).times(parseFloat(result)).div(100000000).plus(parseFloat(amount));
+      document.getElementById("ctx-totalamount").innerText=total;
+    }
+  ).catch((e)=>{alert(e);})
+
 }
