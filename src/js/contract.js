@@ -27,6 +27,7 @@ addLoadEvent(function () {
     // document.getElementById("fdeployContract").addEventListener("click", function(){console.log("sh!");});
     document.getElementById("searchImg").addEventListener("click", viewReceipt);
     document.getElementById("callImg").addEventListener("click", callContract);
+    document.getElementById("compileSuccess").addEventListener("click",copyABI);
     // document.getElementById("QueryContract").addEventListener("click", viewReceipt);
     
     $('#contractAmount').on('input',function(e){
@@ -90,6 +91,12 @@ addLoadEvent(function () {
 
 // function 
 const Q = require('bluebird');
+
+function copyABI(){
+  console.log(document.getElementById("compileSuccess").innerText);
+  toclip(document.getElementById("compileSuccess").innerText)
+}
+
 function promiseEstimateGas( from, to, load) {
   // console.log("from: ", from, "\nto: ", to, "\nload: ", load);
   return new Q((resolve, reject) => {
@@ -125,7 +132,7 @@ function deployContract(){
         //get estimate gas
         var estimateGas=-1;
         var from = publicKey.value;
-        var load = "0x"+payload
+        var load = payload
         // if (document.getElementById("contractAddress").value == "") {
         var to = "0x0000000000000000000000000000000000000000";
         // } else {
@@ -215,7 +222,7 @@ function employContract(){
       //get estimate gas
       var estimateGas=-1;
       var from = publicKey.value;
-      var load = "0x"+payload
+      var load = payload
       if (document.getElementById("contractAddress").value == "") {
         alert(json[lang]["EmployRequire"])
         return false;
@@ -281,7 +288,7 @@ function employContract(){
   }
 }
 
-function viewReceipt() {
+function viewReceipt(){
     // if (hash == "") {
     //   hash = $('#QueryHash').text();
     // }
@@ -294,30 +301,30 @@ function viewReceipt() {
             alert(err.message)
         }else {
             var contractHash = document.getElementById("receipt-contractHash")
-            contractHash.innerText = "contract:" + result.contract
+            contractHash.innerText = "contract: \n" + result.contract
 
             var contractDeployFailedOrNo = document.getElementById("receipt-contractDeployFailedOrNo")
-            contractDeployFailedOrNo.innerText = "failed:" + result.failed
+            contractDeployFailedOrNo.innerText = "failed: \n" + result.failed
 
             var contractPoststate = document.getElementById("receipt-contractPoststate")
-            contractPoststate.innerText = "poststate:" + result.poststate
+            contractPoststate.innerText = "poststate: \n" + result.poststate
 
             var contractResult = document.getElementById("receipt-contractResult")
-            contractResult.innerText = "result:" + result.result
+            contractResult.innerText = "result: \n" + result.result
 
             var contractTota1Fee = document.getElementById("receipt-contractTota1Fee")
-            contractTota1Fee.innerText = "totalFee:" + result.totalFee
+            contractTota1Fee.innerText = "totalFee: \n" + result.totalFee
 
             var contractTxhash = document.getElementById("receipt-contractTxhash")
-            contractTxhash.innerText = "txhash:" + result.txhash
+            contractTxhash.innerText = "txhash: \n" + result.txhash
 
             var contractUsedGas = document.getElementById("receipt-contractUsedGas")
-            contractUsedGas.innerText = "usedGas:" + result.usedGas
+            contractUsedGas.innerText = "usedGas: \n" + result.usedGas
         }
     })
 }
 
-function callContract() {
+function callContract(){
   address = document.getElementById("callcontractAddress").value
   payload = document.getElementById("callcontractPayload").value
   shard = document.getElementById("callShard").innerText
@@ -377,12 +384,12 @@ function compileContract(){
     
     if (err == null) {
       var output = document.getElementById("compileSuccess")
-      output.innerText = "Success, ABI:\n"+JSON.stringify(abi)
+      output.innerText = "Success, ABI:\n"+JSON.stringify(abi)+"\n"
       output.style.display = 'block'
       // console.log(byt);
       
       var getPayload = document.getElementById("getPayload");
-      getPayload.innerText = byt
+      getPayload.innerText = "0x" + byt
       
       if($('.cur')[0].id == 'contractByte'){
           $('#contractInput').val(byt)
@@ -427,8 +434,10 @@ function compileContract(){
   // alert("done!")
 }
 
-
 function estimateGas(){
+  if($('.cur')[0].id != 'contractByte'){
+      return;
+  }
   console.log("triggered?");
   var from = document.getElementById("contractPublicKey").value;
   if (document.getElementById("contractAddress").value == "") {
@@ -436,7 +445,7 @@ function estimateGas(){
   } else {
     var to = document.getElementById("contractAddress").value;
   }
-  var load = "0x" + document.getElementById("contractInput").value;
+  var load = document.getElementById("contractInput").value;
   
   console.log(from, to, load);
   promiseEstimateGas(from, to, load).then(

@@ -540,7 +540,7 @@ function call( shard, word ) {
   $(".dask").show()
   $(".dask").click(function(){clearCall();})
   // $('#callImg').on('click',function(){callContract();});
-  // 地址和负载
+  // 地址和字节码
   // 
   // document.getElementById("")
 }
