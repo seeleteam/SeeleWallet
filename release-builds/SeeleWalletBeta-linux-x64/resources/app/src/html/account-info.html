@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Seele Mist!</title>
+    <link href="../css/pulic.css" rel="stylesheet" />
+    <link href="../css/tab.css" rel="stylesheet" />
+    <link href="../css/account-info.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="head-main">
+                <div class="logo"><img src="../img/logo-head.png"></div>
+                <div class="get-balance"><span>BALANCE</span><span>0.00</span><span>Seele</span></div>
+            </div>
+        </div>
+        <div class="main">
+            <div id="tab">
+                <ul>
+                    <li><a href="#tabs-1" title="WALLETS">WALLETS</a></li>
+                    <li><a href="#tabs-2" title="SEND">SEND</a></li>
+                </ul>
+                <div id="tabs_container">
+                    <div id="tabs-1">
+                        <div id="accountlist">
+                            <div class="accountFor">
+                                <span class="accountImg"><img src="../img/Headportrait.png"></span>
+                                <ul>
+                                    <li>Account</li>
+                                    <li><span>info.Balance</span> Seele</li>
+                                    <li>seeleClient.accountArray[item]seeleClient.accountArray[item]seeleClient.accountArray[item]</li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="icon-list">
+                            <dl>
+                                <dt><img src="../img/mine.png"></dt>
+                                <dd>Start Mining</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="../img/Transfer.png"></dt>
+                                <dd>Transfer Seele & Tokens</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="../img/ViewonSeelescan.png"></dt>
+                                <dd>View On Seelescan</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="../img/copy.png"></dt>
+                                <dd>Copy Address</dd>
+                            </dl>
+                            <dl>
+                                <dt><img src="../img/ShowQRCode.png"></dt>
+                                <dd>Show QR Code</dd>
+                            </dl>
+                        </div>
+                        <h1 class="note">Note</h1>
+                        <p class="info">Accounts are password protected keys that can hold seele. They can control
+                            contracts, but can't display incoming <span>transactions</span>.</p>
+                    </div>
+                    <div id="tabs-2">
+                        <h1 class="send-title">Send funds</h1>
+                        <form>
+                            <ul class="send-list">
+                                <li>From<input type="text" placeholder=""></li>
+                                <li>To<input type="text" placeholder=""></li>
+                                <li>Password<input type="password" placeholder=""></li>
+                                <li>Amount<input type="text" placeholder=""></li>
+                                <li><img src="../img/sendIcon.png"><span>0.00</span>SEELE</li>
+                                <li>You want to send <span>0 SEELE</span></li>
+                            </ul>
+                            <h2 class="progress-title">Seele Fee</h2>
+                            <div class="progress">
+                                <ul>
+                                    <li>Slower</li>
+                                    <li>Faster</li>
+                                </ul>
+                            </div>
+                            <p class="progress-info">This is the most amount of money that might be used to process
+                                this transaction. Your transaction will be mined <span>probably within 30
+                                    seconds</span></p>
+                            <dl class="total">
+                                <dt>TOTAL</dt>
+                                <dd>0.006 SEELE</dd>
+                            </dl>
+                            <button class="send">SEND</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="../js/jQuery.js"></script>
+<script src="../js/jquery-plus-ui.min.js"></script>
+<script src="../js/jquery-ui-slider-pips.js"></script>
+<script src="../js/hidePassword.js"></script>
+<script src="../js/tab.js"></script>
+<script src="../js/index.js"></script>
+
+</html>

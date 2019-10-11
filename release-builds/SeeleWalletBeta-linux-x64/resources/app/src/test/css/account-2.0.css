@@ -1,0 +1,183 @@
+/* 
+__________________________________________________________________
+account
+  account-up
+    img-cryptologo
+    account-balance
+  account-down
+    account-publicKey
+    account-copy {img-copy}
+    account-shard {shardword, shardnum}
+    account-transaction
+    account-contract
+    account-file
+ */
+
+.account {
+  float: left;
+  padding: 2px;
+  width: 30%;
+  overflow: auto;
+  user-select: none;
+}
+
+.account-up {
+  overflow: auto;
+}
+
+.account-down {
+  color: #808080;
+  padding: 10px 10px 10px 10px;
+  overflow: auto;
+  background-image: linear-gradient(-150deg, white, lightblue);
+}
+
+.account-balance {
+  float: right;
+  padding: 12px 5px 10px 10px;
+  font-size: 20px;
+  font-family: monospace;
+  font-weight: 900;
+}
+
+.img-cryptologo {
+  float: left;
+  width: 30px;
+  height: 30px;
+  padding: 10px 10px 10px 10px;
+}
+
+.account-shard {
+  float: left;
+  clear: left;
+}
+
+.shardword {
+  float: left;
+  padding: 13px 5px 0px 0px;
+  font-weight: 900;
+}
+.shardnum {
+  color: black;
+  font-size: 40px;
+  font-family: monospace;
+  font-weight: 900;
+}
+
+.account-publicKey {
+  padding: 5px 0px 0px 0px;
+  font-size: 14px;
+  float: left;
+}
+
+.account-copy {
+  float: right;
+}
+
+.img-copy {
+  float: right;
+  padding: 5px 5px 5px 5px;
+  width: 15px;
+  height: 15px;
+}
+
+.img-solidity{
+  float: right;
+  padding: 5px 3px 5px 3px;
+  width: 19px;
+  height: 20px;
+}
+
+.img-more {
+  float: right;
+  clear: right;
+  padding: 5px 3px 5px 3px;
+  width: 19px;
+  height: 20px;
+}
+
+.account-contract {
+  float: right;
+  clear: right;
+  text-align: center;
+  padding: 5px 0px 10px 10px;
+  width: 15px;
+  font-weight: 900;
+}
+
+.account-contract2 {
+  float: right;
+  /* clear: right; */
+  text-align: center;
+  padding: 5px 0px 10px 10px;
+  width: 15px;
+  font-weight: 900;
+}
+
+.account-transaction {
+  float: right;
+  text-align: center;
+  width: 50px;
+  padding: 10px 10px 10px 10px;
+  font-weight: 900;
+}
+
+.account-file {
+  clear: left;
+  color: black;
+  font-family: monospace;
+  font-weight: 900;
+  font-size: 30px;
+  text-align: right;
+  float: right;
+}
+
+
+
+
+/* 
+__________________________________________________________________
+  inner hover activity
+*/
+.account-controls {
+  opacity: 1;
+}
+
+
+.account-publicKey, .img-copy, .account-transaction{
+  opacity: 1;
+}
+
+.account-down:hover, .account-controls:hover{
+  opacity: 1;
+}
+
+/* 
+__________________________________________________________________
+  inner hover activity
+*/
+
+.img-copy:hover, .img-solidity:hover, .img-more:hover{
+  background-color: #66ccff;
+  border-radius: 5px;
+}
+
+/* .account-contract:hover {
+  float: right;
+  clear: right;
+  padding: 10px 10px 10px 10px;
+  width: 50px;
+  font-weight: 900;
+  background-color: #66ccff;
+  border-radius: 10px;
+} */
+
+.account-transaction:hover {
+  float: right;
+  text-align: center;
+  width: 50px;
+  padding: 10px 10px 10px 10px;
+  font-weight: 900;
+  background-color: #66ccff;
+  border-radius: 10px;
+}
