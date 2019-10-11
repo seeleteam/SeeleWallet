@@ -13,7 +13,7 @@ const rlp = require('rlp')
 
 class Wallet{
     constructor(){
-        this.shardnum = 2
+        this.shardnum = 4
         this.accounts = new Array(this.shardnum)
         for (let index = 0; index < this.accounts.length; index++) {
             this.accounts[index] = new Array();
@@ -32,6 +32,7 @@ class Wallet{
         do{
             keypair = generateKeypair()
             console.log(this.getshardnum(keypair.publickey));
+            console.log(keypair.publickey);
         } while (this.getshardnum(keypair.publickey) != shard)
 
         this.accounts[shard-1].push(JSON.stringify(keypair))

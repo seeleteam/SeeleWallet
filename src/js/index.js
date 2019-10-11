@@ -192,31 +192,33 @@ function addKeyfile(){
     if( !/^[1-4]{1,1}$/.test( shard ) ){
       error.push(json[lang]["createKeyfileWarning"]["shardInvalid"])
     } else {
-      // var wallet = require("./src/js/wallet.js");
-      // gen = new wallet;
+      var wallet = require("./src/js/wallet.js");
+      gen = new wallet;
       // console.log(shard);
-      // const key = gen.createbyshard(shard)
-      // prikey = key.privatekey
+      const key = gen.createbyshard(shard)
+      prikey = key.privatekey
       // console.log(key.publickey);
-      seeleClient.generateKey(shard).then((pair)=>{
-        let prikey=pair.privatekey; 
-        console.log(prikey);
-        
-        if ( error.length != 0 ) {
-          console.log(error);
-          layer.msg(error.join("\n"))
-          $('.addpopup').addClass("smh")
-          setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
-        } else {
-          console.log(name, prikey, pass);//!@#123qweQWE
-          seeleClient.keyStore(name, prikey, pass).then(
-            (res)=>{ clearAddKeyfile(); layer.msg(json[lang]["createKeyfileWarning"]["createSuccess"]); console.log("resolved");},
-            (rej)=>{ console.log("rejected: why:");}
-          )
-        }
-        setTimeout(function(){ refreshAccount(); }, 4000);
-        return;
-      }).catch((e)=>{console.log(e);})
+      
+      
+      // seeleClient.generateKey(shard).then((pair)=>{
+      //   let prikey=pair.privatekey; 
+      //   console.log(prikey);
+      // 
+      //   if ( error.length != 0 ) {
+      //     console.log(error);
+      //     layer.msg(error.join("\n"))
+      //     $('.addpopup').addClass("smh")
+      //     setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+      //   } else {
+      //     console.log(name, prikey, pass);
+      //     seeleClient.keyStore(name, prikey, pass).then(
+      //       (res)=>{ clearAddKeyfile(); layer.msg(json[lang]["createKeyfileWarning"]["createSuccess"]); console.log("resolved");},
+      //       (rej)=>{ console.log("rejected: why:");}
+      //     )
+      //   }
+      //   setTimeout(function(){ refreshAccount(); }, 4000);
+      //   return;
+      // }).catch((e)=>{console.log(e);})
     }
   } else if ( prikey != "" ) {
     if( !/^0x[0-9a-z]{64,64}$/.test( prikey ) ){
