@@ -59,8 +59,8 @@ account
 
 .account-publicKey {
   padding: 5px 0px 0px 0px;
-  font-size: 14px;
-  /* font-family: serif; */
+  font-size: 12px;
+  font-family: monospace;
   float: left;
 }
 
