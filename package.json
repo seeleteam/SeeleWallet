@@ -11,7 +11,7 @@
         "build": "electron-packager .",
         "pac-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icon.icns --prune=true --out=release-builds",
         "pac-lin": "electron-packager . SeeleWalletBeta --overwrite --platform=linux --arch=x64 --icon=build/icon.png --prune=true --out=release-builds",
-        "win": "electron-packager . SeeleWallet --platform win32 --arch x64 --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=SeeleWallet_48.ico"
+        "pac-win": "electron-packager . SeeleWalletBeta --overwrite --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds"
     },
     "build": {
         "appId": "SeeleWallet",
@@ -29,7 +29,7 @@
                 "nsis",
                 "zip"
             ],
-            "icon": "build/icon.icns"
+            "icon": "build/icon.ico"
         },
         "extraResources": {
             "from": "./cmd/",
