@@ -46,28 +46,28 @@ npm run pac-win
     └── viewconfig.json
 ```
 **Feature Workflow**
-
-- [ ] Manage Account
-  - [ ] Generate by shard number 1-4 
-  - [ ] Generate by private-key 1-4 
-  - [ ] Import account 
-  - [ ] Move Out 
-- [ ] Export Account Info
-  - [ ] Unlock & Copy private-key
-  - [ ] Copy account
-  - [ ] Copy publickey
-- [ ] Transactions
-  - [ ] Shard [1,4]x[1,4] 
-  - [ ] Record Display
-- [ ] Contracts
-  - [ ] Shard 1-1, 2-2, 3-3, 4-4 
-  - [ ] Deploy & Results
-  - [ ] Employ & Results
-- [ ] View
-  - [ ] Fullscreen, minimize, developer
-  - [ ] Language
-  - [ ] Network
-
+```
+  Manage Account
+   Generate by shard number 1-4 
+   Generate by private-key 1-4 
+   Import account 
+   Move Out 
+ Export Account Info
+   Unlock & Copy private-key
+   Copy account
+   Copy publickey
+ Transactions
+   Shard [1,4]x[1,4] 
+   Record Display
+ Contracts
+   Shard 1-1, 2-2, 3-3, 4-4 
+   Deploy & Results
+   Employ & Results
+ View
+   Fullscreen, minimize, developer
+   Language
+   Network
+```
 
 
 # License 
