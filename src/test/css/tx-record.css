@@ -1,0 +1,90 @@
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.tx-table {
+  overflow: scroll;
+  height: 500px;
+  width:auto;
+}
+
+.txrecord {
+  width: 1140px;
+  height: 40px;
+  /* background-color: #666; */
+  /* border: 1px solid #666; */
+  overflow: hidden;
+  text-align: center;
+  font-family: STHeiTi;
+  user-select: none;
+  font-weight: 900;
+}
+
+
+.tx-wait .status{
+  background-color: #fff29c;
+}
+
+.tx-done .status {
+  background-color: #94ff94;
+}
+
+.tx-fail .status{
+  background-color: #ff7a7a;
+}
+
+.tx-table .txrecord .status{
+  color: #666;
+}
+
+
+
+.tx-side, .tx-mid{
+  line-height: 40px;
+  box-sizing: border-box;
+  float: left;
+  /* border-left: 1px solid #666; */
+  overflow: auto;
+}
+
+.tx-side {
+  width: 20%;
+}
+
+.tx-mid {
+  width: 15%;
+  padding: 0px 25px 0px 25px;
+}
+
+.tx-mid:hover{
+  background: #dae4e9;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+.tx-mid .content{
+  /* width: calc(100%-40px); */
+  /* background: #dae4e9; */
+  overflow-y: auto;
+}
+
+.txrecord .time{
+  background: #dae4e9;
+  color: #55788a;
+}
+
+
+.txrecord .from,
+.txrecord .to,
+.txrecord .amount {
+  
+} 
+
+.txrecord .time{
+  
+}
+
+.title .status{
+  
+}
+
+

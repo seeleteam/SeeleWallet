@@ -1,3 +1,14 @@
+/* .reminder {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 200px; 
+    /* background-color: lightblue; */
+    /* padding: 30px 10px 0px 20px; */
+
+.Cancel {
+    margin-left: 40px;
+}
 
 .add-account{
     width: 190px;
@@ -32,29 +43,6 @@ p.info {
     text-align: left;
 }
 
-.header{
-    width: 100%;
-    height: 80px;
-    background: #fff;
-}
-.head-main,.main{
-    width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-}
-.logo{
-    width: 110px;
-    height: 28px;
-    float: left;
-    margin: 26px 0 0 0;
-}
-.get-balance{
-    width: auto;
-    float: right;
-    font-size: 16px;
-    color: #666;
-    margin: 26px 0 0 0;
-}
 
 .balanceClaim{
     width: auto;
@@ -70,24 +58,8 @@ p.info {
 input,select{
     outline: none;
 }
-.dask{
-    width: 100%;
-    height: 130%;
-    display: none;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    background: rgb(0,0,0,.4)
-}
-.minedask{
-    width: 100%;
-    height: 130%;
-    display: none;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    background: rgb(0,0,0,.4)
-  }
+
+
 .create-account{
     width: 340px;
     height: 184px;
@@ -174,10 +146,10 @@ input,select{
 
 .search-hash{
     width: 517px;
-    height: 655px;
+    height: 780px;
     position: absolute;
     z-index: 2;
-    top: 300px;
+    top: 200px;
     right: 0;
     bottom: 0;
     left: calc(50% - 300px);
@@ -186,6 +158,7 @@ input,select{
     padding: 20px 30px 20px 30px;
     font-size: 14px;
     font-family: 'SourceHansansCN-regular';
+    /* overflow: show; */
 }
 .search-hash h3{
     font-size: 24px;
@@ -196,14 +169,16 @@ input,select{
 .search{
     width: 100%;
     margin-top: 28px;
-    height: 42px;
+    /* height: 42px; */
+    /* overflow: auto; */
 }
 .search input{
-    width: calc(100% - 2px);
+    width: calc(100% - 18px);
     border: 1px solid #999;
     border-radius: 2px;
     height: 40px;
     padding-left:15px; 
+    margin-top: 10px;
 }
 .search button{
     width: 23px;

@@ -1,4 +1,5 @@
 
+
 addLoadEvent(firstLoad);
 // document.getElementById("refreshInfo").addEventListener("click", refreshInfo);
 // document.getElementById("infoTime").addEventListener("click", showInfo);
@@ -37,28 +38,11 @@ function refreshInfo(){
 
 
   for (let i = 1; i<=4; i++){
-
-    // document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "N/A";
-    // document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = seeleClient.address[i];
-    document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = "default remote";
-
-    // seeleClient.getblock(i, "", 0, false, function (block,err) {
-    //   if (err) {
-    //     console.log(err);
-    //     document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✕";
-    //     document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'red';
-    //   } else {
-    //     document.getElementById("netInfoTable").rows[i].cells[1].innerHTML = "✓";
-    //     document.getElementById("netInfoTable").rows[i].cells[1].style.color = 'green';
-    //     // if(block.hash == gensisHashes[i]){
-    //     //   document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✓";
-    //     //   document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'green';
-    //     // } else {
-    //     //   document.getElementById("netInfoTable").rows[i].cells[3].innerHTML = "✕";
-    //     //   document.getElementById("netInfoTable").rows[i].cells[3].style.color = 'red';
-    //     // }
-    //   }
-    // });
+    seeleClient.getInfo(i, function(info, err) {
+        addressMessage = "default remote (" + info.Version + ")"
+        document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = addressMessage;
+    });
+    
     seeleClient.getblock(i, "", -1, false, function (block,err) {
       if (err) {
         console.log(err);

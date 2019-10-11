@@ -26,7 +26,7 @@ function firstLoad() {
     $('#shard').change(function() {
         connect();
     });
-    connect();
+    // connect();
 }
 
 // get the shard from GUI
@@ -90,6 +90,7 @@ function getBlockHeight() {
 function isListening() {
     setInterval(function(){
         var isListening = document.getElementById("isListening");
+        
         seeleClient.isListening(shard, function (isListen,err) {
             const lang = document.getElementById("lang").value
             if (err) {

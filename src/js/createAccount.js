@@ -23,30 +23,8 @@ function addLoadEvent(func) {
     }
 }
 
-function passwordStrengthTest(password){
-  const fs = require('fs');
-
-  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
-  const lang = document.getElementById("lang").value
-  // length, case, number, specialchar
-  var err = []
-  const len = password.length
-
-  if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
-  if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
-  if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
-  if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
-  if (/^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
-  var errmsg = []
-  if (err.length != 0) {
-    errmsg = [json[lang]["passwordWarning"]["fail"]].concat(err);
-    console.log(errmsg)
-  }
-  return errmsg
-}
-
 addLoadEvent(function() {
-    document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
+    // document.getElementById("createKey").addEventListener("click", generateKey, {once : true});
 })
 
 function generateKey() {
@@ -104,4 +82,28 @@ function generateKey() {
     }).catch(err => {
         alert(err)
     });
+}
+
+function importAccounts(){
+  const { dialog } = require('electron').remote
+  const fs = require('fs')
+  const srcpath = dialog.showOpenDialog(
+    { properties: ['openFile', 'multiSelections'],
+    // { properties: ['multiSelections'],
+      buttonLabel: 'Import from'}
+  )
+  dstpath = seeleClient.accountPath
+  const path = require('path')
+  for (var item in srcpath) {
+    //console.log(srcpath[item])
+    var tempfilename = srcpath[item].split(path.sep)
+    //console.log(dstpath+tempfilename[tempfilename.length-1])
+    fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
+      if (err) throw err;
+      //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
+    });
+  }
+  var refreshAccount = require('./getBalance.js');
+  refreshAccount();
+  // window.location.reload();
 }

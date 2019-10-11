@@ -1,0 +1,98 @@
+.popuplocationwrap{
+  /* text-align: center; */
+}
+.popup {
+  font-family: STHeiTi;
+  font-weight: 900;
+  display: block;
+  background-color: rgba(255, 255, 255);
+  border-radius: 30px;
+  width: 525px;
+  height: auto;
+  margin: auto;
+  margin-top: 100px;
+  overflow: auto;
+}
+
+.controls {
+  padding: 40px 20px 40px 20px;
+}
+.delete {
+  padding: 10px 0px 10px 0px;
+}
+.warning {
+  width: 200px;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 200, 200)
+}
+.warning:hover {
+  background-color: rgba(255, 0, 0)
+}
+
+.option {
+  padding: 15px;
+  height: auto;
+  margin:auto;
+  border-bottom: 1px solid rgba(195, 195, 195, 0.3);  
+  overflow: auto;
+}
+
+.option:hover {
+  background-color: rgba(195, 195, 195, 0.3);
+}
+
+.option-text {
+  float: left;
+  display: block;
+  height:auto;
+  padding: auto;
+  font-size: 15px;
+}
+
+.option-icon {
+  float: right;
+  width: 15px;
+  height: 15px;
+  display: inherit;
+}
+
+.password {
+  padding: 0px 0px 40px 40px;
+  float: left;
+  width: 60%;
+}
+
+.passwordfield{
+  height: 25px;
+  width: 100%;
+  font-size: 15px;
+}
+
+.passwordfield:focus{
+  outline: none;
+}
+
+.action {
+  padding: 0px 20px 40px 0px;
+  float: right;
+  width: 20%;
+}
+
+.actionbutton{
+  /* padding: 8px 10px 2px 10px; */
+  width: 100%;
+  font-size: 15px;
+  background-color: rgba(163, 163, 240, 0.5);
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+}
+
+.actionbutton:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

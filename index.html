@@ -4,41 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
-    <link href="./src/css/jquery-ui-slider-pips.min.css" rel="stylesheet" />
-    <link href="./src/css/jqueryui.min.css" rel="stylesheet" />
+    <link href="./src/css/main.css" rel="stylesheet" />  
+    <link href="./src/css/more.css" rel="stylesheet" />  
+    <link href="./src/css/call.css" rel="stylesheet" />  
+    <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
+    <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
+    <link href="./src/css/account0.css" rel="stylesheet" />
     <link href="./src/css/pulic.css" rel="stylesheet" />
     <link href="./src/css/index.css" rel="stylesheet" />
+    <link href="./src/css/tx-record.css" rel="stylesheet" />
     <link href="./src/css/account-info.css" rel="stylesheet" />
-    <script type="text/javascript" src="qrcode.js"></script>
+    <!-- <script type="text/javascript" src="qrcode.js"></script> -->
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="head-main">
-                <div class="logo" onclick="location.reload()"><img src="./src/img/logo-head.png"></div>
-                <ul class="quick-link">
-                  <!-- <li><div><img id="refreshInfo" src="./src/img/refresh.png" width="14px" height="14px"></div></li> -->
-                  <li><div id="infoTime"> 3/31/2019 11:20:18 PM</div></li>
-                  <li><div><select id="lang" onInput="switchLanguage();location.reload()">
-                          <option value="EN">EN</option>
-                          <option value="中文">中文</option>
-                  </select></div></li>
-                </ul>
-                <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
-            </div>
+    <div class="header">
+        <div class="head-main">
+            <div class="logo"><img src="./src/img/logo-head.png"></div>
+            <ul class="quick-link" >
+              <li><div id="infoTime" style: "margin-left: 50%"> 3/31/2019 11:20:18 PM</div></li>
+              <li style="display: none" style="display: none"><div><select id="lang" onInput="switchLanguage();location.reload()" style="display: none">
+                      <option value="CN">CN</option>
+                      <option value="EN">EN</option>
+              </select></div></li>
+            </ul>
+            <div class="get-balance"><span class="lit" id="balance">BALANCE</span><span id="span_balance">0.00</span><span>SEELE</span></div>
         </div>
-        <div id="netinfo" style="display: none">
+    </div>
+    <div class="container">
+        <div class="popuplocationwrap morepopup">
+          <div class="popup">
+            <div class="moreinfo">
+              <div class="more-filename"></div>
+              <div class="more-shard"></div>
+              <div class="more-publickey"></div>
+              <div class="prikey" style="display:none;"></div>
+            </div>
+            <div class="controls">
+              <div class="option enabledOption copy-pub">
+                <span class="option-text lit" id="copy-pub"></span>
+                <img class="option-icon" src="./src/img/pubkey.png" alt="">
+              </div>
+              <div class="option disabledOption copy-pri">
+                <span class="option-text lit" id="copy-pri"></span>
+                <img class="option-icon" src="./src/img/prikey.png" alt="">
+              </div>
+              <div class="option enabledOption copy-key">
+                <span class="option-text lit" id="copy-key"></span>
+                <img class="option-icon" src="./src/img/keyfile.png" alt="">
+              </div>
+              <div class="option enabledOption move-key">
+                <span class="option-text lit" id="move-key"></span>
+                <img class="option-icon" src="./src/img/move.png" alt="">
+              </div>
+            </div>
+            <div class="password">
+              <input type="password" class="passwordfield-more lit" id="unlock-keyfile-password" placeholder="">
+            </div>
+            <div class="action">
+              <div class="actionbutton lit" onclick="unlockmore()" id="unlock"></div>
+            </div>
+          </div>
+        </div>
+        <div class="popuplocationwrap addpopup">
+          <div class="popup">
+            <div class="moreinfo">
+              <div class="lit popuptitle" id="createKeyfile"></div>
+              <div class="lit popupTip" id="createKeyfileTip"></div>
+            </div>
+            <div class="controls">
+              <div class="option">
+                <span class="option-title add-filename lit" id="keyfileName*"></span>
+                <input class="option-string file-add" type="text">
+              </div>
+              <div class="option">
+                <span class="option-title add-prikey lit" id="createtByPri"></span>
+                <input class="add-choices option-string prikey-add" type="text">
+              </div>
+              <div class="option">
+                <span class="option-title add-shard lit" id="createByShard"></span>
+                <input class="add-choices option-string shard-add" type="text">
+              </div>
+
+            </div>
+            <div class="password">
+              <input type="password" class="passwordfield-add lit" id="create-keyfile-password">
+            </div>
+            <div class="action">
+              <div class="actionbutton lit" onclick="addKeyfile()" id="createKeyfile"></div>
+            </div>
+          </div>
+        </div>
+        <div id="netinfo" style="display: none; margin: 100px 0px 30px 0px;">
           <table id="netInfoTable" style="width:60%;margin-left:20%;margin-right:20%;text-align:center;margin-top:10px">
               <tr>
                 <th class="lit" id="tb-shard">shard</th>
                 <th class="lit" id="tb-connected">connected</th>
                 <th class="lit" id="tb-address">address</th>
-                <!-- <th class="lit" id="tb-genesis">genesis</th> -->
                 <th class="lit" id="tb-height">height</th>
               </tr>
-          <!--<tr> <th>shard</th> <th>connected</th> <th>address</th>                 <th>genesis</th> <th>height</th> </tr>-->
               <tr> <td>1</td>     <td></td>          <td></td>                                <td></td>       </tr>
               <tr> <td>2</td>     <td></td>          <td></td>                                <td></td>       </tr>
               <tr> <td>3</td>     <td></td>          <td></td>                                <td></td>       </tr>
@@ -47,67 +112,23 @@
         </div>
         <div class="main">
             <div id="tab">
-                <ul>
-                    <li><a href="#tabs-1" class="lit" id="tabWallets" title="WALLETS">WALLETS</a></li>
-                    <li><a href="#tabs-2" class="lit" id="tabSend" title="SEND">SEND</a></li>
-                    <!-- <li><a href="#tabs-3" class="lit" id="tabContract" title="CONTRACT">CONTRACT</a></li> -->
-                </ul>
                 <div id="tabs_container">
                     <div id="tabs-1">
                         <h1>Accounts Overview</h1>
-                        <div id="accountlist">
-                            <div class="accountFor">
-                                <span class="accountImg"><img src="./src/img/Headportrait.png"></span>
-                                <ul>
-                                    <li>Account</li>
-                                    <li><span>info.Balance</span> seele</li>
-                                    <li>seeleClient.accountArray[item]seeleClient.accountArray[item]seeleClient.accountArray[item]</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <button class="add-account">
-                            <span><img src="./src/img/add.png"></span>
-                            <span>MAKE ACCOUNT</span>
-                        </button>
-                        <p class="info">Accounts are password protected keys that can hold seele. They can control
-                            contracts, but can't display incoming transactions.</p>
-
-                        <!--<h3 class="latest-title">Latest Transactions</h3>-->
-                        <!--<div class="overflow">-->
-                            <!--<div class="account-contact">-->
-                                <!--<p class="contact-left">-->
-                                    <!--<span>Nov.</span>-->
-                                    <!--<span>13</span>-->
-                                <!--</p>-->
-                                <!--<ul class="contact-right">-->
-                                    <!--<li>Created Contact</li>-->
-                                    <!--<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                            <!--<div class="account-contact">-->
-                                <!--<p class="contact-left">-->
-                                    <!--<span>Nov.</span>-->
-                                    <!--<span>13</span>-->
-                                <!--</p>-->
-                                <!--<ul class="contact-right">-->
-                                    <!--<li>Transfer Between Accounts</li>-->
-                                    <!--<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-
+                        <div id="accountlist"></div>
                     </div>
                     <div id="tabs-2">
-                        <h1 id="titleSend" class="send-title lit">Send funds</h1>
+                        <!-- <h1 id="titleSend" class="send-title lit">Send funds</h1> -->
                         <form id="txform">
+                            <div style="display:none" id="txAccount"> </div>
                             <ul class="send-list">
-                                <li id="shardfrom"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
+                                <li id="shardfrom"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="txPublicKey" name="txpublickey" readonly="readonly"></li>
                                 <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="0x000..." id="to" name="to" ></li>
                                 <li><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="accountpassWord" name="accountpassword"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
                                 <li><img src="./src/img/sendIcon.png"><span id="txamount1">0.00</span>SEELE</li>
-                                <li><span class="lit" id="youWantToSend">You want to send </span> <span id="txamount2">0</span> SEELE </li>
+                                <li><span class="" id="youWantToSend"></span></li>
+                                <!-- <li><span class="lit" id="youWantToSend">You want to send </span> <span id="txamount2">0</span> SEELE </li> -->
                             </ul>
                             <h2 class="progress-title lit" id="seeleFee">Seele Fee</h2>
                             <div class="progress" id="gasPrice">
@@ -116,26 +137,29 @@
                                     <li class="lit" id="max"></li>
                                 </ul>
                             </div>
-                            <p class="progress-info lit" id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
+                            <p class="progress-info lit" style="visibility: hidden;"  id="txInfo">Your <span>same-shard</span> transaction will be mined <span>probably within 30 seconds</span>, while <span>cross-shard</span> transaction may take longer time.</p>
                                 <div class="gas-limit"> Estimated gas:<span id="estimatedgas">21000</span> </div>
                                 <dl class="total">
                                 <dt class="lit" id="totalCost">TOTAL</dt>
                                 <dd><span id="totalamount">0.00021000</span> SEELE</dd>
                             </dl>
                             <input id="sendtx" class="send lit" value="SEND" type="button">
+                            <input id="CancelTransaction" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
                     <div id="tabs-3">
-                        <h1 class="send-title lit" id="titleContract">Deploy contract</h1>
+                        <!-- <h1 class="send-title lit" id="titleContract">Deploy contract</h1> -->
                         <form id="contractForm">
+                            <div style="display:none" id="ctAccount"> </div>
                             <ul class="send-list">
-                                <li><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
-                                <li><p class="lit" id="password">Password</p><input type="password" placeholder="press key file password" id="contractAccountpassWord" name="contractAccountpassWord"></li>
+                                <li style="clear:right;"><p class="lit" id="shardFrom">From</p><input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
+                                <li id="shardto"><p class="lit" id="shardTo">To</p><input type="text" placeholder="defualt: 0x000..." id="contractAddress" name="contractAddress" value = ""></li>
+                                <li style="clear:left;margin-right:80px;margin-bottom:15px"><p class="lit" id="password">Password</p><input type="password" placeholder="***" id="contractAccountpassWord" name="contractAccountpassWord"></li>
                                 <li><p class="lit" id="sendAmount">Amount</p><input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
-                                <li><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
+                                <li ><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>SEELE</li>
                                 <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
                                     <label for="sendEvery">Send everything</label></li> -->
-                                <li><span class="lit" id="youWantToSend">You want to send</span><pre> </pre><span id="ctxamount2"> 0.0 </span>SEELE</li>
+                                <li><span class="" id="youWantToSend"></span></li>
                             </ul>
                             <div class="solc">
                                 <div class="tab-code">
@@ -144,31 +168,26 @@
                                         <li class="code-after lit" id="contractByte">CONTRACT BYTE CODE</li>
                                     </ul>
                                     <div id="getPayload" name="getPayload" style="display:none"></div>
+                                    <div id="contractMethodArgs" style="display:none"></div>
                                     <div id="contractSourceCode" style="display:none"></div>
                                     <div class="code_container">
-                                        <textarea id="contractInput">pragma solidity ^0.5.0;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
+                                        <textarea id="contractInput">pragma solidity ^0.4.24;&#13;&#10;contract validUintContractTest {&#13;&#10;    function test() public pure {&#13;&#10;    }&#13;&#10;}</textarea>
                                     </div>
                                 </div>
                                 <input type="button" class="compile lit" id="compileContract" value="Compile" />
+                                <div style="opacity:1;line-height:34px;float:left;height:34px;" value=""><pre>  using solidity v0.4.24</pre></div>
                                 <div id="compileSuccess" class="success-result">
                                     <span class="success"></span>
                                 </div>
-                                <!--<div id="compileFail" class="fail-result">
-                                    <span class="fail">Could not compile cource code.</span>
-                                    <input type="button" class="compile" id="compileAgain" value="Compile Again"/>
-                                    <div class="code_container">
-                                        <textarea></textarea>
-                                    </div>
-                                </div>-->
                             </div>
-                            <h2 class="progress-title">Seele Fee</h2>
+                            <h2 class="progress-title lit" id="contract-seeleFee">Seele Fee</h2>
                             <div class="progress" id="contractGasPrice">
                                 <ul>
-                                    <li class="lit" id="cheaper">Cheaper</li>
-                                    <li class="lit" id="faster">Faster</li>
+                                    <li class="lit" id="cheaper">cheaper</li>
+                                    <li class="lit" id="faster">faster</li>
                                 </ul>
                             </div>
-                            <p class="progress-info lit" id="contractInfo">This is the most amount of money that might be used to process
+                            <p class="progress-info lit" style="visibility: hidden;"  id="contractInfo">This is the most amount of money that might be used to process
                                 this transaction. Your transaction will be mined <span>probably within 30 seconds</span></p>
                                 <div class="gas-limit"> Estimated gas:<span id="ctx-estimatedgas">21000</span> </div>
                             <dl class="total">
@@ -176,50 +195,56 @@
                                 <dd><span id="ctx-totalamount">0.0</span> SEELE</dd>
                             </dl>
                             <div id="QueryHash" style="display:none"></div>
-                            <input id="deployContract" class="send lit" value="Deploy" type="button">
-                            <input id="QueryContract" class="send Query lit" value="Query" type="button">
+                            <input id="fdeployContract" class="send lit" value="Deploy" type="button">
+                            <input id="femployContract" class="send lit Cancel" value="Employ" type="button">
+                            <input id="CancelContract" class="send lit Cancel" value="Cancel" type="button" onclick="wallet()">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="dask"></div>
-        <div class="minedask"></div>
-        <div class="create-account">
-            <span class="name lit" id="createWarning">KEEP PASSWORD and KEYS somewhere safe</span>
-            <input type="password" class="login-field login-field-password" id="passWord" placeholder="set password">
-            <div class="hideShowPassword-toggle">Show</div>
-            <select id="shardnum">
-                <option class="lit" value='' id="any">Any</option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-            </select>
-            <span class="name lit" id="shard">Shard</span>
-            <input class="name lit" type="button" value="Cancel" id="cancel">
-            <input class="name lit" type="button" value="OK" id="createKey">
-            <span id="address"></span>
-            <span id="filepath"></span>
-        </div>
-        <div class="search-hash" >
-            <h3>Query Contract</h3>
+        <div class="search-hash" id="search-hash">
+            <h3 class="lit" id="viewReceipt"></h3>
+            <div style="text-align:center;"> <span id="receiptShardword"></span><span id="receiptShard"></span></div>
             <div class="search">
-                <input type="text" placeholder="Hash:" id="ctxHash">
+                <input type="text" class="lit" placeholder="Hash:" id="ctxHash">
+                <!-- <input type="text" placeholder="Trasaction Hash:" id="ctxHash"> -->
                 <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
             </div>
             <ul>
-                <li id="contractHash">contract: ”0x”</li>
-                <li id="contractDeployFailedOrNo">failed: false</li>
-                <li id="contractPoststate">poststate: “0x”</li>
-                <li id="contractResult">result: “0x”</li>
-                <li id="contractTota1Fee">tota1Fee: 210000</li>
-                <li id="contractTxhash">txhash: “0x”</li>
-                <li id="contractUsedGas">usedGas: 210000</li>
+                <li> RECEIPT </li>
+                <li id="receipt-contractHash">contract:</li>
+                <li id="receipt-contractDeployFailedOrNo">failed:</li>
+                <li id="receipt-contractPoststate">poststate:</li>
+                <li id="receipt-contractResult">result:</li>
+                <li id="receipt-contractTota1Fee">tota1Fee:</li>
+                <li id="receipt-contractTxhash">txhash:</li>
+                <li id="receipt-contractUsedGas">usedGas:</li>
             </ul>
-            <button class="ok-search">OK</button>
+            <button class="ok-search lit" id="querydone"></button>
         </div>
-        <!--<script src="bundle.js"></script>-->
+        <div class="search-hash" id="call-contract">
+          <div class="">
+            <h3 class="lit" id="callContract"></h3>
+            <div style="text-align:center;"><span id="callShardword"></span><span id="callShard"></span></div>
+            <div class="search">
+                <input type="text" class="lit" placeholder="Contract Address: 0x..." id="callcontractAddress">
+                <input type="text" class="lit" placeholder="Payload:0x..." id="callcontractPayload">
+                <button><span><img src="./src/img/search.png" id="callImg"></span></button>
+            </div>
+            <ul>
+                <li> RECEIPT </li>
+                <li id="call-contractHash">contract:</li>
+                <li id="call-contractDeployFailedOrNo">failed:</li>
+                <li id="call-contractPoststate">poststate:</li>
+                <li id="call-contractResult">result:</li>
+                <li id="call-contractTota1Fee">tota1Fee:</li>
+                <li id="call-contractTxhash">txhash:</li>
+                <li id="call-contractUsedGas">usedGas:</li>
+            </ul>
+            <button class="ok-search lit" id="querydone"></button>
+          </div>
+        </div>
         <script>
             // You can also require other files to run in this process
             // require('./renderer.js')
@@ -227,21 +252,28 @@
             var seeleclient = require('./src/api/seeleClient.js')
             require('./src/js/getBalance.js')
             require('./src/js/createAccount.js')
-            // require('./src/js/sendtx.js')
+            // require('./src/js/index.js')
             require('./src/js/walletConnect.js')
             require('./src/js/refreshInfo.js')
             require('./src/js/contract.js')
             const fs = require('fs');
+            const {shell} = require('electron')
             client = new seeleclient;
+            // seeleClient = new seeleclient;
             var json = JSON.parse(fs.readFileSync(client.configpath).toString());
             document.getElementById("lang").value=json["lang"]
+            
+            
         </script>
+        </div>
+        <div class="dask"></div>
 </body>
 <script src="./src/js/jQuery.js"></script>
 <script src="./src/js/jquery-plus-ui.min.js"></script>
 <script src="./src/js/jquery-ui-slider-pips.js"></script>
 <script src="./src/js/jquery.validate.js"></script>
 <script src="./src/js/sendtx.js"></script>
+<script src="./src/js/refreshInfo.js"></script>
 <script src="./src/js/language.js"></script>
 <script src="./src/js/hidePassword.js"></script>
 <script src="./src/js/clipboard.min.js"></script>
@@ -249,4 +281,7 @@
 <script src="./src/js/progress.js"></script>
 <script src="./src/js/index.js"></script>
 <script src="./src/js/layer.js"></script>
+<script src="./src/js/popup.js"></script>
+<script src="./src/js/qrcode.js"></script>
+
 </html>

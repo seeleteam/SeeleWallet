@@ -1,33 +1,5 @@
-body {
-    font-family: Helvetica;
-    background: #ebf1f5;
-    margin: 0;
-}
 
-/* header */
-.header{
-    width: 100%;
-    height: 80px;
-    background: #fff;
-}
-.head-main,.main{
-    width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-}
-.logo{
-    width: 110px;
-    height: 28px;
-    float: left;
-    margin: 26px 0 0 0;
-}
-.get-balance{
-    width: auto;
-    float: right;
-    font-size: 16px;
-    color: #666;
-    margin: 26px 0 0 0;
-}
+
 
 .balanceClaim{
     width: auto;
@@ -44,10 +16,13 @@ body {
 
 /* account */
 #accountlist {
-    width: 100%;
+    overflow: visible;  
+    width: calc(100%-40px);
     float: left;
-    margin: 0px 0 0 20px;
+    margin: 0px 0px 30px 0px;
+    padding: 0 20px 0 20px;
 }
+
 #tabs-1 h1,#tabs-1 h1{
     font-size: 30px;
     color: #666;
@@ -119,7 +94,7 @@ body {
 
 /* send */
 #tabs-2{
-    padding: 20px 0px 0 20px;
+    padding: 60px 0px 0 20px;
     color: #666;
 }
 form{
@@ -127,10 +102,17 @@ form{
     float: left;
     padding: 0 0 50px 0;
 }
-#tab ul.send-list li:nth-child(1),#tab ul.send-list li:nth-child(2){
+#tab ul.send-list li:nth-child(1), #tab ul.send-list li:nth-child(2){
     margin-left: unset;
     background: unset;
 }
+
+#tab ul.send-list li:nth-child(1){
+    margin-right: 80px;
+    margin-bottom: 15px;
+    background: unset;
+}
+
 .send-title{
     font-size: 30px;
     margin: 0;
@@ -145,10 +127,15 @@ form{
     float: left;
     display: inline-table;
 }
-#tabs-2 .send-list li:nth-child(odd){
+/* #tabs-2 .send-list li:nth-child(1){
     margin-right: 80px;
+} */
+
+#tabs-2 .send-list li:nth-child(odd){
     margin-bottom: 15px;
+    margin-right: 80px;
 }
+
 #tabs-2 .send-list li input{
     width: 498px;
     height: 30px;
@@ -158,14 +145,34 @@ form{
     border-radius: 2px;
     margin-top: 10px;
 }
+#tabs-3 .send-list li:nth-child(5),
 #tabs-2 .send-list li:nth-child(5){
     width: 100%;
     margin: 0;
     height: 21px;
     line-height: 21px;
+    display: block;
+    vertical-align: top;
 }
-#tabs-2 .send-list li:nth-child(5) span,#tabs-2 .send-list li:nth-child(5) img{
+
+#contractForm > ul > li:nth-child(5) > img{
+  display: block;
+  float: left;
+}
+#tabs-2 .send-list li:nth-child(5) span,
+#tabs-2 .send-list li:nth-child(5) img{
     float: left;
+}
+#tabs-3 .send-list li:nth-child(5) span{
+  float: left;
+  width: 348px;
+  height: 21px;
+  display: block;
+  padding: 0 10px 15px 10px;
+  line-height: 21px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;  
 }
 #tabs-2 .send-list li:nth-child(5) span{
     width: 348px;

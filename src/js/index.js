@@ -2,8 +2,10 @@
 author: Miya_yang
 date:2018.10.30
 */
-$(function ($) {
 
+var refreshAccount = require('./src/js/getBalance.js');
+
+$(function ($) {
 
     // tab
     $('#tab').tabulous({
@@ -30,10 +32,21 @@ $(function ($) {
     // })
 
     // search-hash
-    $('.Query').click(function () {
-        $('.search-hash').show()
+    $('#QueryContract').click(function () {
+        $('#search-hash').show()
         $('.dask').show()
     })
+    
+    // $('#callContract').click(function () {
+    //     $('#call-contract').show()
+    //     $('.dask').show()
+    //     $('.dask').click(function(){
+    //       $('#call-contract').hide();
+    //       $('#search-hash').hide();
+    //       $('.dask').hide();
+    //     })
+    // })
+    
     // ok  cancel
     $('.ok-search').click(function () {
         $('.search-hash').hide()
@@ -51,7 +64,7 @@ $(function ($) {
     $('.tab-code ul li').click(function () {
         let getPayload = $('#getPayload').text()
         $(this).addClass('cur').siblings().removeClass('cur')
-        if ($(this).text() == 'CONTRACT BYTE CODE') {
+        if ($(this)[0].id == 'contractByte') {
             $('#contractInput').val(getPayload)
         } else {
             // var str = 'pragma solidity ^0.5.0; \n contract validUintContractTest { \n    function test() public pure { \n    } \n }';
@@ -62,9 +75,9 @@ $(function ($) {
     })
     //save contractInput content
     $('#contractInput').on('input',function(e){
-        if($('.cur').text() == 'SOLIDITY CONTRACT SOURCE CODE'){
+        if($('.cur')[0].id == 'contractSource'){
             document.getElementById("contractSourceCode").innerText = this.value;
-        }else if($('.cur').text() == 'CONTRACT BYTE CODE'){
+        }else if($('.cur')[0].id == 'contractByte'){
             document.getElementById("getPayload").innerText = this.value;
         }
     });
@@ -81,21 +94,188 @@ $(function ($) {
       }, "Please specify the correct precision for your value");
 })
 
+
+function addKeyfilePopup(){
+  console.log($('.addpopup').css("display"))
+  // bring up display and give dask specific cleaning action listener
+  if ( $('.addpopup').css("display") == "none" ) {
+    $('.addpopup').show()
+    $('.dask').show()
+    $('.dask').click ( function () { clearAddKeyfile(); } )
+    
+    // add logic to text files:
+    // loop: use class to significy choice
+    //
+    $('.prikey-add').focus ( function () {
+        $('.add-choices').removeClass("add-type")
+        $('.add-choices').val('')
+        $('.prikey-add').addClass("add-type")
+    })
+    
+    $('.shard-add').focus ( function () {
+      $('.add-choices').removeClass("add-type")
+      $('.add-choices').val('')
+      $('.shard-add').addClass("add-type")
+    })
+  } else {
+    clearAddKeyfile();
+  }
+}
+
+function clearAddKeyfile(){
+  $('.addpopup').hide()
+  $('.dask').hide()
+  $('.dask').off()
+
+  $('.option-string').val('')
+  $('.passwordfield-add').val('')
+  refreshAccount()
+}
+
+function isDuplicateBy(value, field, arrayOfJsonObj) {
+  if (arrayOfJsonObj.length==0){
+    return false;
+  }
+
+  if ((field in arrayOfJsonObj[0])==false) {
+    console.log("FIELD NOT EXIST")
+  }
+
+  for ( jsonObj of arrayOfJsonObj) {
+      if (jsonObj[field] == value) {
+        console.log(value, "is found in", jsonObj)
+        return true
+      }
+  }
+  return false
+}
+
+function shakeAddpopWithEr(msg){
+  layer.msg(msg)
+  $('.addpopup').addClass("smh")
+  setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+}
+
+function addKeyfile(){
+  // if file name is full and valid
+  // if password is full and valid
+  // There must be a choice, defaulted
+    // shard is valid
+    // prikey is valid
+    // btw its better that you give a default 1, and the add-type
+  const fs = require('fs');
+
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  const lang = document.getElementById("lang").value
+  error = []
+
+  var name = $('.file-add').val() // fam it can't be empty!
+  if ( name == "" ) {
+    error.push(json[lang]["createKeyfileWarning"]["stringEmpty"])
+  } else {
+    seeleClient.accountListPromise().then(a=>{
+        if ( isDuplicateBy(name,"filename",a) ) {
+          shakeAddpopWithEr(json[lang]["createKeyfileWarning"]["stringExist"])
+          return;
+        }
+    }).catch(e=>{console.log(e);})
+  }
+
+  var pass = $('.passwordfield-add').val()
+  // concat only returns a copy
+  error = error.concat(passwordStrengthTest(pass));
+
+  var prikey = $('.prikey-add').val()
+  var shard = $('.shard-add').val()
+
+  if (shard != "") {
+    if( !/^[1-4]{1,1}$/.test( shard ) ){
+      error.push(json[lang]["createKeyfileWarning"]["shardInvalid"])
+    } else {
+      var wallet = require("./src/js/wallet.js");
+      gen = new wallet;
+      // console.log(shard);
+      const key = gen.createbyshard(shard)
+      prikey = key.privatekey
+      // console.log(key.publickey);
+      
+      
+      // seeleClient.generateKey(shard).then((pair)=>{
+      //   let prikey=pair.privatekey; 
+      //   console.log(prikey);
+      // 
+      //   if ( error.length != 0 ) {
+      //     console.log(error);
+      //     layer.msg(error.join("\n"))
+      //     $('.addpopup').addClass("smh")
+      //     setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+      //   } else {
+      //     console.log(name, prikey, pass);
+      //     seeleClient.keyStore(name, prikey, pass).then(
+      //       (res)=>{ clearAddKeyfile(); layer.msg(json[lang]["createKeyfileWarning"]["createSuccess"]); console.log("resolved");},
+      //       (rej)=>{ console.log("rejected: why:");}
+      //     )
+      //   }
+      //   setTimeout(function(){ refreshAccount(); }, 4000);
+      //   return;
+      // }).catch((e)=>{console.log(e);})
+    }
+  } else if ( prikey != "" ) {
+    if( !/^0x[0-9a-z]{64,64}$/.test( prikey ) ){
+      error.push(json[lang]["createKeyfileWarning"]["keyInvalid"])
+    }
+  }
+  
+  if ( error.length != 0 ) {
+    console.log(error);
+    layer.msg(error.join("\n"))
+    $('.addpopup').addClass("smh")
+    setTimeout(function(){ $('.addpopup').removeClass("smh"); }, 200);
+  } else {
+    // console.log(name, prikey, pass);
+    seeleClient.keyStore(name, prikey, pass).then(
+      (res)=>{ clearAddKeyfile(); layer.msg(json[lang]["createKeyfileWarning"]["createSuccess"]); console.log("resolved");},
+      (rej)=>{ console.log("rejected: why:");}
+    )
+  }
+  setTimeout(function(){ refreshAccount(); }, 4000);
+}
+
+function passwordStrengthTest(password){
+  const fs = require('fs');
+
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  const lang = document.getElementById("lang").value
+  // length, case, number, specialchar
+  var err = []
+  const len = password.length
+
+  if (len < 10) { err.push(json[lang]["passwordWarning"]["length"]);}
+  if (password.toLowerCase()==password) { err.push(json[lang]["passwordWarning"]["uppercase"]) }
+  if (!/[a-zA-Z]/.test(password)) { err.push(json[lang]["passwordWarning"]["letter"]) }
+  if (!/\d/.test(password)) { err.push(json[lang]["passwordWarning"]["number"]) }
+  if (!/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/.test(password)) { err.push(json[lang]["passwordWarning"]["specialChar"]) }
+  var errmsg = []
+  if (err.length != 0) {
+    errmsg = [json[lang]["passwordWarning"]["fail"]].concat(err);
+    // console.log(errmsg)
+  }
+  return errmsg
+}
+
 function addAccount() {
     $('.create-account').show()
     $('.dask').show()
-}
-
-function showAccountDir(){
-  const { shell } = require('electron')
-  console.log("triggerd")
-  shell.openItem(seeleClient.accountPath);
 }
 
 function importAccounts(){
   const { dialog } = require('electron').remote
 
   const fs = require('fs')
+  var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+  var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+  const lang = settings.lang;
+  
   const srcpath = dialog.showOpenDialog(
     { properties: ['openFile', 'multiSelections'],
     // { properties: ['multiSelections'],
@@ -107,12 +287,29 @@ function importAccounts(){
     //console.log(srcpath[item])
     var tempfilename = srcpath[item].split(path.sep)
     //console.log(dstpath+tempfilename[tempfilename.length-1])
-    fs.copyFile(srcpath[item], dstpath+tempfilename[tempfilename.length-1], (err) => {
-      if (err) throw err;
-      //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
-    });
+    if ( seeleClient.keyfileisvalid(srcpath[item]) ) {
+      var name = tempfilename[tempfilename.length-1];
+      seeleClient.accountListPromise().then(a=>{
+          if ( isDuplicateBy(name,"filename",a) ) {
+            alert(json[lang]["createKeyfileWarning"]["stringExist"]);
+          } else {
+            fs.copyFileSync(srcpath[item], dstpath+name, (err) => {
+              console.log(err);
+              if (err) alert(err);
+              //console.log('import sucess for ' + item + srcpath[item] + "to" + dstpath);
+            }); 
+            var refreshAccount = require('./src/js/getBalance.js');
+            setTimeout(function(){ refreshAccount(); }, 1000);
+            // refreshAccount();
+          }
+      }).catch(e=>{console.log(e);})
+    } else {
+      // console.log(seeleClient.keyfileisvalid(srcpath[item]));
+      alert(json[lang]["importfail1"] +name+ json[lang]["importfail2"])
+    }
   }
-  window.location.reload();
+  
+  // window.location.reload();
 }
 
 function exportAccounts() {
@@ -178,12 +375,12 @@ function ToAccountInfo(publickey, balance, shard) {
     divhtml += `<dt id="minePic"><img src="./src/img/copy.png"></dt>`;
     divhtml += `<dd class="lit" id="toCopy">Copy Address</dd>`;
     divhtml += `</dl>`;
-    divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
-    divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
-    divhtml += `<dd class="lit" id="qr_request">Show QR Code</dd></br>`;
-    divhtml += `</dl>`;
-    divhtml += `<dl id="qr_result" class="qr_result" align="left">`
-    divhtml += `</dl>`
+    // divhtml += `<dl id="qr" class="qr_request" style="cursor: pointer;" onclick="showQR('` + publickey + `')">`;
+    // divhtml += `<dt><img src="./src/img/ShowQRCode.png"></dt>`;
+    // divhtml += `<dd class="lit" id="qr_request">Show QR Code</dd></br>`;
+    // divhtml += `</dl>`;
+    // divhtml += `<dl id="qr_result" class="qr_result" align="left">`
+    // divhtml += `</dl>`
     divhtml += `</div>`;
     divhtml += `<h1 class="note lit" id="note">Note</h1>`;
     divhtml += `<p class="info lit" id="createInfo">Accounts are password protected keys that can hold seele. They can control contracts, but can't display incoming <span>transactions</span>.</p>`;
@@ -244,26 +441,158 @@ function showQR (publickey) {
     }
 }
 
-function transfer(publickey) {
+function wallet(){
+  $("#tab ul li:nth-child(1)").removeClass('tabli_active')
+  $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
+  $("#tab ul li:nth-child(3)").removeClass('tabli_active')
+  $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
+
+  $("#tab ul li:nth-child(1)").addClass('tabli_active')
+  $("#tab ul li:nth-child(1)").find('a').addClass('tabulous_active')
+
+  // $("#tabs_container").height(627)
+  $("#tabs-2").addClass('make_transist')
+  $("#tabs-2").addClass('hideleft')
+  $("#tabs-2").removeClass('showleft')
+  $("#tabs-3").addClass('make_transist')
+  $("#tabs-3").addClass('hideleft')
+  $("#tabs-3").removeClass('showleft')
+
+  $("#tabs-1").addClass('hideleft')
+  $("#tabs-1").addClass('make_transist')
+  $("#tabs-1").addClass('showleft')
+  
+  $("#contractAccountpassWord").val('')
+  $("#accountpassWord").val('')
+}
+
+function contract(account) {
     // var lis = $("#tab ul li")
     $("#tab ul li:nth-child(1)").removeClass('tabli_active')
     $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
-    $("#tab ul li:nth-child(2)").addClass('tabli_active')
-    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active')
+    $("#tab ul li:nth-child(2)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(2)").find('a').removeClass('tabulous_active')
+
+    $("#tab ul li:nth-child(3)").addClass('tabli_active')
+    $("#tab ul li:nth-child(3)").find('a').addClass('tabulous_active')
+
+    // $("#tabs_container").height(627)
+    $("#tabs-1").addClass('make_transist')
+    $("#tabs-1").addClass('hideleft')
+    $("#tabs-1").removeClass('showleft')
+
+    $("#tabs-3").addClass('hideleft')
+    $("#tabs-3").addClass('make_transist')
+    $("#tabs-3").addClass('showleft')
+
+    $("#contractPublicKey").val(account.pubkey)
+    $("#ctAccount").val(JSON.stringify(account))
+    // console.log(account);
+}
+
+function transaction(account) {
+    //disable tab 1, 3
+    $("#tab ul li:nth-child(1)").removeClass('tabli_active')
+    $("#tab ul li:nth-child(1)").find('a').removeClass('tabulous_active')
     $("#tab ul li:nth-child(3)").removeClass('tabli_active')
     $("#tab ul li:nth-child(3)").find('a').removeClass('tabulous_active')
+    //show tab 2
+    $("#tab ul li:nth-child(2)").addClass('tabli_active')
+    $("#tab ul li:nth-child(2)").find('a').addClass('tabulous_active')
 
+    //hiding tab1
     $("#tabs_container").height(627)
     $("#tabs-1").addClass('make_transist')
     $("#tabs-1").addClass('hideleft')
     $("#tabs-1").removeClass('showleft')
 
+    //showing tab2
     $("#tabs-2").addClass('hideleft')
     $("#tabs-2").addClass('make_transist')
     $("#tabs-2").addClass('showleft')
 
-    $("#txpublicKey").val(publickey)
-    $("#contractPublicKey").val(publickey)
+    //filling tab2
+    $("#txPublicKey").val(account.pubkey)
+    $("#txAccount").val(JSON.stringify(account))
+}
+
+function receipt( shard, word ) {
+    document.getElementById("receiptShardword").innerText = word;
+    document.getElementById("receiptShard").innerText = shard;
+    console.log(document.getElementById("receiptShard").innerText);
+    $('#search-hash').show()
+    $('.dask').show()
+    $('.dask').click(function(){clearReceipt();})
+    // $('#searchImg').on('click',function(){queryContract();});
+    // $('.okay-viewReceipt').on('click',function(){queryContract();console.log("clicked");});
+}
+
+function clearReceipt(){
+  $('#search-hash').hide()
+  $('.dask').hide()
+  document.getElementById("receiptShard").innerText = "";
+  document.getElementById("ctxHash").value = ""
+  // console.log(document.getElementById("receiptShard").innerText);
+  // console.log(document.getElementById("ctxHash").value);
+  var contractHash = document.getElementById("receipt-contractHash")
+  contractHash.innerText = "contract:" + ""
+
+  var contractDeployFailedOrNo = document.getElementById("receipt-contractDeployFailedOrNo")
+  contractDeployFailedOrNo.innerText = "failed:" + ""
+
+  var contractPoststate = document.getElementById("receipt-contractPoststate")
+  contractPoststate.innerText = "poststate:" + ""
+
+  var contractResult = document.getElementById("receipt-contractResult")
+  contractResult.innerText = "result:" + ""
+
+  var contractTota1Fee = document.getElementById("receipt-contractTota1Fee")
+  contractTota1Fee.innerText = "totalFee:" + ""
+
+  var contractTxhash = document.getElementById("receipt-contractTxhash")
+  contractTxhash.innerText = "txhash:" + ""
+
+  var contractUsedGas = document.getElementById("receipt-contractUsedGas")
+  contractUsedGas.innerText = "usedGas:" + ""
+}
+
+function call( shard, word ) {
+  document.getElementById("callShardword").innerText = word;
+  document.getElementById("callShard").innerText = shard 
+  console.log(document.getElementById("callShard").innerText);
+  $("#call-contract").show()
+  $(".dask").show()
+  $(".dask").click(function(){clearCall();})
+  // $('#callImg').on('click',function(){callContract();});
+  // 地址和字节码
+  // 
+  // document.getElementById("")
+}
+
+function clearCall(){
+  $("#call-contract").hide()
+  $(".dask").hide()
+  // document.getElementById("contractAddress").value = ""
+  // document.getElementById("contractPayload").value = ""
+  document.getElementById("callShard").innerText = ""
+  
+  var contractDeployFailedOrNo = document.getElementById("call-contractDeployFailedOrNo")
+  contractDeployFailedOrNo.innerText = "failed:" + ""
+
+  var contractPoststate = document.getElementById("call-contractPoststate")
+  contractPoststate.innerText = "poststate:" + ""
+
+  var contractResult = document.getElementById("call-contractResult")
+  contractResult.innerText = "result:" + ""
+
+  var contractTota1Fee = document.getElementById("call-contractTota1Fee")
+  contractTota1Fee.innerText = "totalFee:" + ""
+
+  var contractTxhash = document.getElementById("call-contractTxhash")
+  contractTxhash.innerText = "txhash:" + ""
+
+  var contractUsedGas = document.getElementById("call-contractUsedGas")
+  contractUsedGas.innerText = "usedGas:" + ""
 }
 
 function mineConfig(){
@@ -272,7 +601,7 @@ function mineConfig(){
     $('.minedask').show()
   }
 
-  function hidemineconfig(){
+function hidemineconfig(){
     $('.mine-config').hide()
     $('.minedask').hide()
   }
@@ -293,6 +622,24 @@ function copy() {
     const lang = document.getElementById("lang").value
     const copyMsg=json[lang]["copySucess"]
     layer.msg(copyMsg)
+}
+
+function toclip(text) {
+  navigator.permissions.query({name: "clipboard-write"}).then(result => {
+    if (result.state == "granted" || result.state == "prompt") {
+      navigator.clipboard.writeText(text).then(
+        function() {
+        console.log("copied!")
+        const fs = require('fs');
+        var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
+        const lang = document.getElementById("lang").value
+        const copyMsg=json[lang]["copySucess"]
+        layer.msg(copyMsg)
+      }, function() {
+        console.log("failed, but still permitted")
+      });
+    }
+  });
 }
 
 function viewOnSeelescan(publickey) {
@@ -349,3 +696,15 @@ function changeMingingStatus(publickey) {
 function saveMineStatus (publickey) {
 
 }
+
+function toggleTooltip () {
+  var list = document.getElementsByClassName("tooltiptext")
+  for ( var item of list ) {
+    if ( item.classList.contains("enable")) {
+      item.classList.remove("enable")
+    } else {
+      item.classList.add("enable")
+    }
+  }
+}
+// module.exports = importAccounts;
