@@ -64,22 +64,22 @@ function createMenu (mainWindow) {
             // importKey();
             // console.log("really")
         }
-      },
-      {
-        label: i18n.__("Manage Keyfile(s)"),
-        accelerator: "CmdOrCtrl+K",
-        enabled:true,
-        click: () => {
-          mainWindow.webContents.executeJavaScript("shell.openItem(client.accountPath)");  
-        }
-      },
-      {
-        label: i18n.__("Manage Trasaction(s)"),
-        enabled:true,
-        click: () => {
-          mainWindow.webContents.executeJavaScript("shell.openItem(client.rcPath)");  
-        }
       }
+      // {
+      //   label: i18n.__("Manage Keyfile(s)"),
+      //   accelerator: "CmdOrCtrl+K",
+      //   enabled:true,
+      //   click: () => {
+      //     mainWindow.webContents.executeJavaScript("shell.openItem(client.accountPath)");  
+      //   }
+      // },
+      // {
+      //   label: i18n.__("Manage Trasaction(s)"),
+      //   enabled:true,
+      //   click: () => {
+      //     mainWindow.webContents.executeJavaScript("shell.openItem(client.rcPath)");  
+      //   }
+      // }
     ]
   }
   

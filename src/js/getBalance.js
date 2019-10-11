@@ -114,7 +114,7 @@ function loadAccount() {
     var tabs1HTML = `<div id="main-container"><div><h1 class="" id="titleWallets"></h1></div></div>`
     tabs1HTML += `<div class="" id="accountlisttitle" style="display: block"><h1 class="lit" id="accountlisttitle"></h1> </div>`
     tabs1HTML += `<div class="lit" id="accountEmpty" style="display: none; background-color: lightblue;"> </div>`
-    tabs1HTML += `<div id="accountlist" style="display: block"> </div>`
+    tabs1HTML += `<div id="accountlist" style="display: block"></div>`
     // tabs1HTML += `<div class="reminder" id="" style="display: block">`
     // tabs1HTML += `<div style="display: block"><h3 class="latest-title lit" id="latestTransactions">Latest Transactions</h3></div>`
     tabs1HTML += `<div class="" id="txrecordtitle" style="display: block; clear: both;"><h1 class="lit" id="txrecordtitle"></h1> </div>`

@@ -346,37 +346,6 @@ function seeleClient() {
         }
     };
 
-    // this.compileContract = function (input) {
-      // return new Q((resolve, reject)) => {
-        // var input = {
-        //   language: 'Solidity',
-        //   sources: {
-        //     'test.sol': {
-        //       content: 'pragma solidity ^0.4.24; contract validUintContractTest {function test() public pure {}}'
-        //     }
-        //   },
-        //   settings: {
-        //     outputSelection: {
-        //       '*': {
-        //         '*': ['*']
-        //       }
-        //     }
-        //   }
-        // };
-        // console.log(__dirname);
-        // var solc = require('solc');
-        // var solc = solc.setupMethods(require("./solidity.js"))
-        // var output = JSON.parse(solc.compile(JSON.stringify(input)))
-        // for (var contractName in output.contracts['test.sol']) {
-        //   console.log(
-        //     contractName +
-        //     ': ' +
-        //     output.contracts['test.sol'][contractName].evm.bytecode.object
-        //   );
-        // }
-      // }
-    // }
-
     this.compileContract = function (input) {
         // if (input != '') {
         // console.log(__dirname);
@@ -460,7 +429,7 @@ function seeleClient() {
         }
     };
     
-    this.generateKey = function (shardnum, passWord) {
+    this.generateKey = function (shardnum) {
         this.init();
         return new Q((resolve, reject) => {
             try {
@@ -561,22 +530,6 @@ function seeleClient() {
             });
         });
     };
-
-    // this.accountList = function () {
-    //     this.accountArray=[]
-    //     if (fs.existsSync(this.accountPath)) {
-    //         filelist = fs.readdirSync(this.accountPath)
-    //         for(i = 0; i < filelist.length; i ++){
-    //           //starts with "0x" and followed by 40alphanumeric
-    //           if(/^0x[0-9a-zA-Z]{40,40}$/.test(filelist[i])){
-    //             this.accountArray.push(filelist[i])
-    //           }
-    //         }
-    //     } else {
-    //         console.log(this.accountPath + "  Not Found!");
-    //     }
-    // };
-    
     
     this.keyfileisvalid = function (keyfilepath) {
       var fsize = fs.statSync(keyfilepath).size;
@@ -889,15 +842,24 @@ function seeleClient() {
       // this.txReccords = [];
       if (fs.existsSync(this.rcPath)) {
           var dir = this.rcPath;
-          this.txRecords = fs.readdirSync(dir).map( x => JSON.parse(x) ).sort((a, b) => (a.t > b.t) ? -1 : 1)
+          this.txRecords = fs.readdirSync(dir).map(
+             function(x){
+               try { 
+                 var y = JSON.parse(x)
+                 return y;
+               } catch (err){}
+             }
+          ).sort((a, b) => (a.t > b.t) ? -1 : 1)
              // .sort(function(a, b) { return b.time - a.time; })
              // .map(function(v) { return v; });
       } else {
           console.log(this.rcPath + "  Not Found!");
       }
+      
+      console.log(this.txRecords);
     }
     
-    //returns wait, done/debt, fail,
+    //returns wait, done/debt, fail,0x354f0905c557462999ca965775a991c529530032，
     this.verify = function(tx, callBack){
       var status = "wait"
       nonce = this.client[tx.fs].sendSync("getAccountNonce", tx.fa, "", -1);
@@ -908,7 +870,7 @@ function seeleClient() {
           callBack(tx,status)
       } else {
           this.client[tx.fs].getTransactionByHash(tx.s, function(data){
-              console.log(data);
+              console.log(data.status);
               if(data.status=="pool"){
                 console.log(tx.t,status);
                 callBack(tx,status)

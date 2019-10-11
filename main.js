@@ -39,7 +39,7 @@ global.languageSetting = "cn";
 
 function createWindow() {
     // Browser window
-    mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: './build/SeeleWallet_48.ico', resizable: true})
+    mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: __dirname + '/build/icon.icns', resizable: true})
     
     // Window content
     mainWindow.loadFile('index.html')

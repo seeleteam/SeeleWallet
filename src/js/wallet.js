@@ -31,6 +31,7 @@ class Wallet{
         let keypair
         do{
             keypair = generateKeypair()
+            console.log(this.getshardnum(keypair.publickey));
         } while (this.getshardnum(keypair.publickey) != shard)
 
         this.accounts[shard-1].push(JSON.stringify(keypair))
