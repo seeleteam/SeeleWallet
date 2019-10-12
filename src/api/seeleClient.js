@@ -663,17 +663,23 @@ function seeleClient() {
             // console.log(tx);
             //files are structured shorter because 256 limit of file writing limit
             //2 for pending, 3 for contract, 1 for success, 0 for nonce fail
+            if ( rawTx.To == "0x0000000000000000000000000000000000000000") {
+              var ts = this.getShardNum(rawTx.From)
+            } else {
+              var ts = this.getShardNum(rawTx.To)
+            }
             let txRecord = {
               "t":new Date().getTime(),
               "fa":rawTx.From,
               "fs":this.getShardNum(rawTx.From),
               "ta":rawTx.To,
-              "ts":this.getShardNum(rawTx.To),
+              "ts":ts,
               "m":rawTx.Amount,
               "s":tx.Hash,
               "n":nonce,
               "u":2
             }
+            console.log(txRecord);
             client.addTx(tx, function (info, err) {
                 callBack(info, err, tx.Hash, JSON.stringify(txRecord));
             });
