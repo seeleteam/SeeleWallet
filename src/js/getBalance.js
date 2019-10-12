@@ -261,7 +261,9 @@ function changeStatusTo(tx, status){
     tx2.u = 1;
   } else if (status == "fail") {
     var tx2 = JSON.parse(JSON.stringify(tx))
-    tx2.u = 0;
+    // tx2.u = 0;
+    // Contract nonce needs more investigation
+    tx2.u = 2;
   } else {
     console.error("unknown status", status);
   }

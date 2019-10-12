@@ -198,6 +198,7 @@ input,select{
     height: 437px;
     margin-top: 24px;
     padding: 5px 15px 15px 15px;
+    overflow-y: scroll;
 }
 .search-hash ul li{
     list-style: none;
