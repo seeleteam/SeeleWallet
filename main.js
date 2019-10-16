@@ -46,10 +46,10 @@ function createWindow() {
     
     // Connect to four nodes
     sc = new SeeleClient();
-    sc.initateNodeConfig(1);
-    sc.initateNodeConfig(2);
-    sc.initateNodeConfig(3);
-    sc.initateNodeConfig(4);
+    // sc.initateNodeConfig(1);
+    // sc.initateNodeConfig(2);
+    // sc.initateNodeConfig(3);
+    // sc.initateNodeConfig(4);
     
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
