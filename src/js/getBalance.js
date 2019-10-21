@@ -60,9 +60,9 @@ function loadRecords() {
   seeleClient.getRecords();
 
   recordHTML = ``
-  
+
   var lang = document.getElementById("lang").value
-  
+
   for (var item of seeleClient.txRecords) {
       // updating items: time, hash, status
       // console.log(item);
@@ -139,7 +139,7 @@ function loadAccount() {
         balance = 0
 
         var accountHTML = ``
-        
+
         // accountHTML += `<div class='account'><div class='account-up'>`
         // accountHTML += `<div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
         // accountHTML += `<div class='account-balance'><span id='`+ publicKey +`'>` + balance + `</span><span> SEELE</span>`
@@ -147,12 +147,12 @@ function loadAccount() {
         // accountHTML += `<div class='account-down'><div class='account-controls'>`
         // accountHTML += `<div class='account-publicKey'>` + publicKey + `</div><div class='account-copy'><img class='img-copy' onclick=toclip("`+publicKey+`") src='./src/img/square-copy.png'> </div>`
         // accountHTML += `<div class='account-shard'><div class='shardword'>`+shardWord+`</div><span class='shardnum'>`+shardNum+`</span></div> `
-        // accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>` 
+        // accountHTML += `<div class='account-contract'><img class='img-solidity' onclick=contract(`+JSON.stringify(account)+`) src='./src/img/solidity.png'></div>`
         // accountHTML += `<div class='account-transaction sendword' onclick=transaction(`+ JSON.stringify(account) +`) >`+ send +`</div></div>`
         // accountHTML += `<div class='more' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img-more' src='./src/img/more.png'> </div>`
         // accountHTML += `<div class='account-file'>`+ filename + `</div>`
         // accountHTML += `</div></div>`
-        
+
         accountHTML += `<div class='account'><div class='account-up'> <div class='account-logo'> <img class='img-cryptologo' src='./src/img/cryptologo-seele.png'> </div>`
         accountHTML += `<div class='account-balance'> <span class='acc-bal' id='`+ publicKey +`'>` + balance + `</span> <span class='acc-unit'> SEELE</span> </div></div><div class='account-down'><div class='account-controls'>`
         accountHTML += `<div class='account-publicKey'>` + publicKey + `</div>`
@@ -164,18 +164,18 @@ function loadAccount() {
         accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext enable lit" id="sendTx">send tx</span></div></div><div class='account-info'>`
         accountHTML += `<div class='account-shard' style="visibility:visible"> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
         accountHTML += `<div class='account-file'>`+filename+`</div></div></div></div>`
-        
+
         document.getElementById("accountlist").innerHTML += accountHTML;
     }
     loadRecords();
     switchLanguage();
     loadingBalances = false;
-    
+
     if (seeleClient.accountArray.length == 0) {
       // document.getElementById()
       document.getElementById("accountlist").style.display = "none"
       document.getElementById("accountEmpty").style.display = "block"
-    } 
+    }
     if (seeleClient.txRecords.length == 0) {
       // document.getElementById()
       document.getElementById("txRecordList").style.display = "none"
@@ -255,7 +255,10 @@ function refreshBalances(){
 //expect an object and a string
 function changeStatusTo(tx, status){
   console.log(tx);
-  var oldPath = seeleClient.rcPath + JSON.stringify(tx);
+  tx1 = JSON.stringify(tx)
+  tx1 = tx1.replace(/\"/g, "-")
+  tx1 = tx1.replace(/\:/g, ";")
+  var oldPath = seeleClient.rcPath + tx1;
   if (status == "done") {
     var tx2 = JSON.parse(JSON.stringify(tx))
     tx2.u = 1;
@@ -267,7 +270,10 @@ function changeStatusTo(tx, status){
   } else {
     console.error("unknown status", status);
   }
-  var newPath = seeleClient.rcPath + JSON.stringify(tx2);
+  tx2 = JSON.stringify(tx2)
+  tx2 = tx2.replace(/\"/g, "-")
+  tx2 = tx2.replace(/\:/g, ";")
+  var newPath = seeleClient.rcPath + tx2;
   console.log(oldPath, newPath);
   var err = fs.renameSync(oldPath, newPath);
   if (err) {
@@ -318,7 +324,7 @@ function updateRecords(){
 }
 
 function cleartx(){
-  
+
 }
 
 module.exports = loadAccount;
