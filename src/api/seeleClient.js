@@ -26,7 +26,7 @@ function seeleClient() {
       "http://107.150.102.94:8039",
       "http://117.50.97.136:8036"
     ];
-    
+
     this.client = [
       0,
       new seelejs(this.address[1]),
@@ -44,7 +44,7 @@ function seeleClient() {
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
-    
+
     this.txRecords = [];
 
     this.getOS = function () {
@@ -60,7 +60,7 @@ function seeleClient() {
         // console.log(osName);
         return osName;
     };
-  
+
     this.binPath = function () {
         var clientpath = `${__dirname}`;
         // app.asar : An asar archive is a simple tar-like format that concatenates files into a single file.
@@ -144,7 +144,7 @@ function seeleClient() {
             }
         });
     };
-    
+
     this.reStart = function(shardNum) {
         return new Q((resolve, reject) => {
             try {
@@ -264,7 +264,7 @@ function seeleClient() {
         args.push('stop')
         return args
     };
-    
+
     this.miningArgs = function(shard){
         // var shard = this.getShardNum(account)
         var thread = 16;
@@ -277,7 +277,7 @@ function seeleClient() {
         args.push(thread);
         return args;
     };
-    
+
     this.killnode = function (shardNum) {
 
         if (shardNum === '1'){
@@ -405,7 +405,7 @@ function seeleClient() {
             fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
         }
-        
+
         if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
           fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
         }
@@ -428,7 +428,7 @@ function seeleClient() {
           // console.log(err)
         }
     };
-    
+
     this.generateKey = function (shardnum) {
         this.init();
         return new Q((resolve, reject) => {
@@ -530,7 +530,7 @@ function seeleClient() {
             });
         });
     };
-    
+
     this.keyfileisvalid = function (keyfilepath) {
       var fsize = fs.statSync(keyfilepath).size;
       if ( fsize <= 376 ) {
@@ -552,7 +552,7 @@ function seeleClient() {
       }
       return false;
     }
-    
+
     this.accountList = function () {
         this.accountArray=[]
         if (fs.existsSync(this.accountPath)) {
@@ -573,7 +573,7 @@ function seeleClient() {
         this.accountArray.sort(function(a,b){return a.shard - b.shard })
         // console.log(this.accountArray)
     };
-    
+
     this.accountListPromise = function () {
         var accountArray=[]
         if (fs.existsSync(this.accountPath)) {
@@ -603,7 +603,7 @@ function seeleClient() {
           } finally {}
         });
     };
-    
+
     this.getInfo = function (shard, callBack) {
       try {
           if (!/^[1-4]{1,1}$/.test( shard )) {
@@ -615,7 +615,7 @@ function seeleClient() {
           console.error(e)
       }
     }
-    
+
     this.getBalance = function (account, callBack) {
         publicKey = account.pubkey;
         shard = account.shard;
@@ -655,7 +655,7 @@ function seeleClient() {
             "Timestamp": 0,
             "Payload": payload
         }
-        
+
 
         this.decKeyFile(account.filename, passWord).then((data) => {
             // console.log(data);
@@ -696,7 +696,7 @@ function seeleClient() {
         } else {
             client = this.client[shard];
         }
-        
+
         client.getTransactionByHash(hash, callBack);
     }
 
@@ -722,14 +722,14 @@ function seeleClient() {
     };
 
     this.getblock = function (shard, hash, height, fulltx, callBack) {
-      
+
         if (!/^[1-4]{1,1}$/.test( shard )) {
             console.error("invalid shardnum getBlock", shard)
         } else {
             this.client[shard].getBlock(hash, height, fulltx, callBack)
         }
     };
-    
+
     this.getblockheight = function (shard, callBack) {
       if (!/^[1-4]{1,1}$/.test( shard )) {
           console.error("invalid shardnum getBlockHeight", shard)
@@ -744,7 +744,7 @@ function seeleClient() {
           console.error("invalid shardnum isListening", shard)
       } else {
           this.client[shard].isListening(callBack);
-      }  
+      }
     };
 
     this.saveFile = function (isTx, hash) {
@@ -764,7 +764,7 @@ function seeleClient() {
             var dir = this.txPath;
             this.txArray = fs.readdirSync(dir)
               .map(function(v) {
-                  return { 
+                  return {
                     name:v,
                     time:fs.statSync(dir + v).mtime.getTime()
                   };
@@ -785,14 +785,14 @@ function seeleClient() {
                 console.error("invalid shardnum getReceiptByTxHash", shard)
             } else {
                 this.client[shard].getReceiptByTxHash(hash, "", callBack);
-            } 
+            }
         }
     };
-    
+
     this.callContract = function (shard, payload, to, callBack) {
         // curl -H "Content-Type: application/json" -X POST --data '{"jsonrpc":"2.0","method":"seele_call","params":["0x47a99059219055cf8277d5d7dff933446edb0012","0x6d4ce63c",-1],"id":1}' 117.50.97.136:8036
         // let hash = $('#QueryHash').text()
-        
+
             // var send = document.getElementById("contractPublicKey").value
             // var shard = this.getshardnum(send)
         console.log(to);
@@ -802,12 +802,12 @@ function seeleClient() {
                 console.error("invalid shardnum getReceiptByTxHash", shard)
             } else {
                 this.client[shard].call(to, payload, -1, callBack);
-            } 
+            }
         } else {
           // console.error("invalid contract address", to)
           alert("invalid contract address", to)
         }
-        
+
     };
 
     this.estimateGas = function(from,to,payload,callBack) {
@@ -822,35 +822,45 @@ function seeleClient() {
         var tx = {};
         tx.Data = txData;
         var shard = this.getshardnum(from);
-        
+
         if (!/^[1-4]{1,1}$/.test( shard )) {
             console.error("invalid shardnum estimateGas", shard);
         } else {
             this.client[shard].estimateGas(tx, callBack);
-        }  
+        }
     }
-    
-    this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
-    
+
+    // this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
+    this.rcPath = os.homedir() + path.sep + '.SeeleWallet' + path.sep + 'rc' + path.sep;
+
     this.saveRecord = function(r){
       if (!fs.existsSync(this.rcPath)) {
           fs.mkdirSync(this.rcPath)
       }
+      r = r.replace(/\"/g, "-")
+      r = r.replace(/\:/g, ";")
+      console.log(r);
       var _path = this.rcPath + r
       console.log("I'm about to write!", _path);
       fs.writeFile(_path, "", function (err) {
-          if (err)
+          console.log("huh?");
+          if (err){
+            console.log("oh!");
             console.log(err.message)
+          }
       })
     }
-    
+
     this.getRecords = function(){
       // this.txReccords = [];
+
       if (fs.existsSync(this.rcPath)) {
           var dir = this.rcPath;
           this.txRecords = fs.readdirSync(dir).map(
              function(x){
-               try { 
+               try {
+                 x = x.replace(/-/g,"\"")
+                 x = x.replace(/;/g,"\:")
                  var y = JSON.parse(x)
                  return y;
                } catch (err){}
@@ -861,16 +871,16 @@ function seeleClient() {
       } else {
           console.log(this.rcPath + "  Not Found!");
       }
-      
+
       console.log(this.txRecords);
     }
-    
+
     //returns wait, done/debt, fail,0x354f0905c557462999ca965775a991c529530032，
     this.verify = function(tx, callBack){
       var status = "wait"
       nonce = this.client[tx.fs].sendSync("getAccountNonce", tx.fa, "", -1);
-      
-      console.log("account nonce:",nonce,"\ntx nonce:",tx.n);      
+
+      console.log("account nonce:",nonce,"\ntx nonce:",tx.n);
       if (nonce < tx.n) {
           console.log(tx.t,status);
           callBack(tx,status)
@@ -903,9 +913,9 @@ function seeleClient() {
                 } else {
                   console.log("unthought of");
                 }
-                // 
+                //
                 // }
-              } else if(data == [tx.s]) { 
+              } else if(data == [tx.s]) {
                 console.log("isarray");
                 callBack(tx,status)
               } else {
@@ -923,7 +933,7 @@ function seeleClient() {
           console.error("getDebtByHash", shard);
       } else {
           this.client[shard].getDebtByHash(hash, callBack);
-      } 
+      }
     }
 }
 
