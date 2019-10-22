@@ -108,8 +108,10 @@ function sendtx() {
     var estimatedgas = document.getElementById("estimatedgas").innerText;
     var gasPrice = $('.progress').slider("value");
     var requested = false;
+    console.log("request value:", requested.toString());
+    
     setTimeout(function(){
-      console.log(requested.toString());
+      console.log("timeout request value:", requested.toString());
       if (!requested) {
         const fs = require('fs');
         var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
@@ -119,15 +121,17 @@ function sendtx() {
     }, 5000);
 
     layer.load(0, { shade: false });
-
+    console.log(account.value, to.value, amount.value, gasPrice, estimatedgas);
     seeleClient.sendtx(account.value, accountpassWord.value, to.value, amount.value, gasPrice, estimatedgas, "", function(result, err, hash, txRecord) {
         layer.closeAll();
+        console.log("try: ", result, err, hash, txRecord);
         requested = true;
-        console.log(requested)
+        console.log("sendtx request value", requested)
         if (err) {
+            console.log("if: ", result, err, hash, txRecord);
             layer.alert(err.message);
         } else {
-
+            console.log("else: ", result, err, hash, txRecord);
             const fs = require('fs');
             var json = JSON.parse(fs.readFileSync(seeleClient.langPath.toString()).toString());
             const lang = document.getElementById("lang").value
@@ -150,9 +154,11 @@ function sendtx() {
             seeleClient.saveRecord(txRecord);
             location.reload()
         }
+        console.log("end: ", result, err, hash, txRecord);
     });
 
     // reset everything
+    console.log("resetting");
     document.getElementById("accountpassWord").value='';
     document.getElementById("amount").value='';
     document.getElementById("to").value='';
