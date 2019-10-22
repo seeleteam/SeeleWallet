@@ -1,6 +1,6 @@
 {
     "name": "SeeleWallet",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "build/icon.icns",
     "productName": "SeeleWalletBeta",
     "description": "Wallet for Seele",
