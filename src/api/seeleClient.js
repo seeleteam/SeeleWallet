@@ -634,15 +634,15 @@ function seeleClient() {
         var account = JSON.parse(accountstr)
         publicKey = account.pubkey;
         shard = account.shard;
-        console.log(publicKey, shard);
+        console.log("in send:", publicKey, shard);
         if (!/^[1-4]{1,1}$/.test( shard )) {
             console.error("invalid shardnum sendtx", shard)
         } else {
             client = this.client[shard];
         }
-
+        
         var nonce = client.sendSync("getAccountNonce", publicKey, "", -1);
-        console.log("returned nonce: "+nonce)
+        console.log("in send returned nonce: "+nonce)
         nonce+=1
         var rawTx = {
             "Type":0,
@@ -681,9 +681,11 @@ function seeleClient() {
             }
             console.log(txRecord);
             client.addTx(tx, function (info, err) {
+                console.log("in send returns:", info, err, tx.Hash, JSON.stringify(txRecord));
                 callBack(info, err, tx.Hash, JSON.stringify(txRecord));
             });
         }).catch((data) => {
+            console.log("in send returns:", data.toString());
             callBack("", new Error(data.toString()), "");
         });
     };

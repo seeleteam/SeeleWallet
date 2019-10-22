@@ -1,6 +1,6 @@
 {
     "name": "SeeleWallet",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "build/icon.icns",
     "productName": "SeeleWalletBeta",
     "description": "Wallet for Seele",
@@ -9,9 +9,9 @@
         "start": "electron .",
         "package": "electron-packager . SeeleWallet --all --out=../dist/ --overwrite=true --ignore=node_modules/electron-* --ignore=node_modules/.bin --ignore=.git --ignore=dist --icon=/build/SeeleWallet_48.ico",
         "build": "electron-packager .",
-        "pac-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icon.icns --prune=true --out=release-builds",
-        "pac-lin": "electron-packager . SeeleWalletBeta --overwrite --platform=linux --arch=x64 --icon=build/icon.png --prune=true --out=release-builds",
-        "pac-win": "electron-packager . SeeleWalletBeta --overwrite --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds"
+        "pac-mac": "electron-packager . --overwrite --ignore=cmd/linux --ignore=cmd/win32 --platform=darwin --arch=x64 --icon=build/icon.icns --prune=true --out=release-builds",
+        "pac-lin": "electron-packager . SeeleWalletBeta --overwrite --ignore=cmd/mac --ignore=cmd/win32 --platform=linux --arch=x64 --icon=build/icon.png --prune=true --out=release-builds",
+        "pac-win": "electron-packager . SeeleWalletBeta --overwrite --ignore=cmd/mac --ignore=cmd/linux --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds"
     },
     "build": {
         "appId": "SeeleWallet",

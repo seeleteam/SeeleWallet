@@ -16,6 +16,10 @@ function createMenu (mainWindow) {
         role: 'toggledevtools'
       },
       {
+        label: i18n.__("Version")+" v1.0.1",
+        enabled: false
+      },
+      {
         type: "separator"
       },
       {
