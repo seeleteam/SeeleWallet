@@ -29,6 +29,36 @@ function seeleClient() {
     this.txArray = [];
     this.txRecords = [];
     
+    this.init = function () {
+        console.log("initiate");
+        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
+            fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
+            fs.mkdirSync(this.accountPath)
+        }
+
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/rc')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/rc', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.1.json')) {
+          console.log('not found, copy');
+          var err = shell.cp('-f', `${__dirname}/../json/viewconfig_1.1.json`, os.homedir()+'/.SeeleWallet/')
+          console.log(err)
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
+          var err = shell.cp('-f', `${__dirname}/../json/lang.json`, os.homedir()+'/.SeeleWallet/')
+          console.log(err)
+        }
+    };
+    this.init()
     
     var configJson = JSON.parse(fs.readFileSync(this.configpath.toString()).toString());
     // console.log(configJson.connect);
@@ -406,36 +436,6 @@ function seeleClient() {
             return contract ;
         } catch (e) {
             return e.toString
-        }
-    };
-
-    this.init = function () {
-        console.log("initiate");
-        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
-            fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
-            fs.mkdirSync(this.accountPath)
-        }
-
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/rc')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/rc', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.1.json')) {
-          console.log('not found, copy');
-          var err = shell.cp('-f', `${__dirname}/../json/viewconfig_1.1.json`, os.homedir()+'/.SeeleWallet/')
-          console.log(err)
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
-          var err = shell.cp('-f', `${__dirname}/../json/lang.json`, os.homedir()+'/.SeeleWallet/')
-          console.log(err)
         }
     };
 
