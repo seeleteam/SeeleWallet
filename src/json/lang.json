@@ -304,7 +304,7 @@
     "Shard":"片",
     "Address":"地址",
     "Version":"版本",
-    "Peers":"对等节点",
+    "Peers":"连接节点",
     "height":"高度",
     "importfail1":"导入账户: ",
     "importfail2":" 失败, 格式错误"
