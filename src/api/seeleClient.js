@@ -17,24 +17,7 @@ const spawnSync = require('child_process').spawnSync;
 const editJsonFile = require("edit-json-file");
 
 function seeleClient() {
-
-    var shardCount = 4;
-
-    this.address = [0,
-      "http://117.50.97.136:18037",
-      "http://117.50.97.136:8038",
-      "http://107.150.102.94:8039",
-      "http://117.50.97.136:8036"
-    ];
-
-    this.client = [
-      0,
-      new seelejs(this.address[1]),
-      new seelejs(this.address[2]),
-      new seelejs(this.address[3]),
-      new seelejs(this.address[4])
-    ]
-
+  
     this.accountArray = [];
     this.accountArray2= [];
     this.langPath = `${__dirname}`+`/../json/lang.json`
@@ -44,8 +27,34 @@ function seeleClient() {
     this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
     this.txPath = os.homedir() + "/.SeeleWallet/tx/";
     this.txArray = [];
-
     this.txRecords = [];
+    
+    
+    var configJson = JSON.parse(fs.readFileSync(this.configpath.toString()).toString());
+    // console.log(configJson.connect);
+    this.address = [0,
+      configJson.connect[1],
+      configJson.connect[2],
+      configJson.connect[3],
+      configJson.connect[4]
+    ];
+    
+    var shardCount = 4;
+
+    // this.address = [0,
+    //   "http://117.50.97.136:18037",
+    //   "http://117.50.97.136:8038",
+    //   "http://107.150.102.94:8039",
+    //   "http://117.50.97.136:8036"
+    // ];
+
+    this.client = [
+      0,
+      new seelejs(this.address[1]),
+      new seelejs(this.address[2]),
+      new seelejs(this.address[3]),
+      new seelejs(this.address[4])
+    ]
 
     this.getOS = function () {
         var  osName="Unknown OS";
@@ -874,7 +883,7 @@ function seeleClient() {
           console.log(this.rcPath + "  Not Found!");
       }
 
-      console.log(this.txRecords);
+      console.log(this.txRecords.length, "local tx records");
     }
 
     //returns wait, done/debt, fail,0x354f0905c557462999ca965775a991c529530032，

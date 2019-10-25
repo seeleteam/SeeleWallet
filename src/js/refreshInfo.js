@@ -1,4 +1,4 @@
-
+// const fs = require('fs'); declared already?
 
 addLoadEvent(firstLoad);
 // document.getElementById("refreshInfo").addEventListener("click", refreshInfo);
@@ -39,7 +39,7 @@ function refreshInfo(){
 
   for (let i = 1; i<=4; i++){
     seeleClient.getInfo(i, function(info, err) {
-        addressMessage = "default remote (" + info.Version + ")"
+        addressMessage = `${seeleClient.address[i]}(` + info.Version + ")"
         document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = addressMessage;
     });
     
@@ -65,4 +65,51 @@ function showInfo(){
   } else {
     document.getElementById("netinfo").style.display = "none";
   }
+}
+
+function closeNodePop(){
+  document.getElementById("nodepopup-panel").style.display = "none";
+  document.getElementById("dask").style.display = "none";
+}
+
+function toggleEditNetwork(){
+  if (document.getElementById("nodepopup-panel").style.display == "none") {
+    document.getElementById("nodepopup-panel").style.display = "block";
+    document.getElementById("dask").style.display = "block";
+    document.getElementById("dask").onclick = closeNodePop
+  } else {
+    closeNodePop()
+    document.getElementById("dask").onclick = null
+  }
+}
+
+function saveNodeInfo(){
+  var nodeinputs = document.getElementsByClassName("nodeInput")
+  for ( var i = 0 ; i < nodeinputs.length ; i++ ) {
+    ipport = nodeinputs[i].value
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?:(0|[1-9][0-9]?[0-9]?[0-9]?[0-9]?))$/.test(ipport)) {  
+      console.log("change address shard ", i+1, " to ", ipport );
+      if ( true ) {
+        document.getElementById(`shard${parseInt(i)+1}address`).innerHTML = ipport;
+      }
+      // save it to the config file, when user refreshest the whole app, this will complete with 
+      var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+      // console.log(settings.connect[i+1]);
+      settings.connect[i+1] = `http://${ipport}`;
+      // console.log(settings.connect[i+1]);
+      // console.log(settings);
+      fs.writeFileSync(seeleClient.configpath, JSON.stringify(settings))
+      
+    } else if (ipport.toString()=="") {
+      console.log("empty entry for shard", i+1);
+    } else {
+      console.log("Invalid ip:port:", ipport);
+      $('.nodepopup').addClass("smh")
+      setTimeout(function(){ $('.nodepopup').removeClass("smh"); }, 200);
+    }
+  }
+}
+
+function refreshNodeInfo(){
+  alert("refresh!")
 }

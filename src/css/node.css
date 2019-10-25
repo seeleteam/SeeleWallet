@@ -1,0 +1,53 @@
+.nodepopup .popup{
+  width: 800px;
+  max-height: 600px;
+  margin: auto;
+}
+
+.popuplocationwrap.nodepopup {
+  /* text-align: center; */
+  z-index: 2;
+  position: fixed;
+  top: 200px;
+  left: calc(50% - 400px);
+}
+
+.option-node {
+  padding: 15px;
+  margin:auto;
+  border-bottom: 1px solid rgba(195, 195, 195, 0.3);  
+  overflow: auto;
+}
+
+.option-node .option-title{
+  clear: left;
+}
+
+/* .otion-node table td, .otion-node table tr{ */
+.option-node table th{
+    text-align: left;
+}
+
+.nodepopup .popup .controls .option:hover{
+  background-color: rgba(195, 195, 195, 0.3);
+}
+
+#nodepopup-panel{
+  display: none;
+}
+
+
+.address{
+  float:left;
+  opacity: 0.3;
+  line-height: 25px;
+  font-size: 15px;
+}
+
+.option .option-text{
+  user-select: none;
+}
+
+.option-button{
+  
+}

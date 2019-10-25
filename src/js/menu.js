@@ -160,6 +160,13 @@ function createMenu (mainWindow) {
         click: () => {
           mainWindow.webContents.executeJavaScript('showInfo()')
         }
+      },
+      {
+        label: i18n.__("Edit NetWork Info"),
+        accelerator: "CmdOrCtrl+shift+N",
+        click: () => {
+          mainWindow.webContents.executeJavaScript('toggleEditNetwork()')
+        }
       }
     ]
   }
