@@ -39,7 +39,7 @@ function refreshInfo(){
 
   for (let i = 1; i<=4; i++){
     seeleClient.getInfo(i, function(info, err) {
-        addressMessage = `${seeleClient.address[i]}(` + info.Version + ")"
+        addressMessage = `${seeleClient.address[i].replace("http://","")}(` + info.Version + ")"
         document.getElementById("netInfoTable").rows[i].cells[2].innerHTML = addressMessage;
     });
     
@@ -74,6 +74,7 @@ function closeNodePop(){
 
 function toggleEditNetwork(){
   if (document.getElementById("nodepopup-panel").style.display == "none") {
+    showNetWorkinfo()
     document.getElementById("nodepopup-panel").style.display = "block";
     document.getElementById("dask").style.display = "block";
     document.getElementById("dask").onclick = closeNodePop
@@ -83,23 +84,50 @@ function toggleEditNetwork(){
   }
 }
 
+function removeThisRow(node){
+  var element = document.getElementById(node);
+  console.log("remove : ", element.toString());
+  // element.parentNode.removeChild(element);
+  var tbl = document.getElementById("nodeinfotable")
+  tbl.removeChild(element)
+}
+
+function showNetWorkinfo(){
+  var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+  document.getElementById(`shard1address`).innerHTML = settings.connect[1].replace("http://","")
+  document.getElementById(`shard2address`).innerHTML = settings.connect[2].replace("http://","")
+  document.getElementById(`shard3address`).innerHTML = settings.connect[3].replace("http://","")
+  document.getElementById(`shard4address`).innerHTML = settings.connect[4].replace("http://","")
+  
+  console.log(document.getElementById("nodeinfotable").children);
+  var tbl = document.getElementById("nodeinfotable")
+  //how to remove a child
+  tbl.innerHTML = ""
+  
+  console.log("monitor: ", settings.monitor);
+  for ( var i = 0 ; i < settings.monitor.length ; i++ ) {
+    var row = document.createElement("tr");
+    var ts = Math.round((new Date()).getTime()).toString()+tbl.children.length
+    // console.log(ts);
+    row.innerHTML = `<tr><td></td><td>${settings.monitor[i].replace("http://","")}</td><td></td><td></td><td></td><td onclick="removeThisRow(${ts})">x</td></tr>`
+    row.id=ts
+    tbl.appendChild(row)
+  }
+  
+  // console.log(document.getElementById("nodeinfotable").children);
+}
+
 function saveNodeInfo(){
   var nodeinputs = document.getElementsByClassName("nodeInput")
+  var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
+  
   for ( var i = 0 ; i < nodeinputs.length ; i++ ) {
     ipport = nodeinputs[i].value
-    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?:(0|[1-9][0-9]?[0-9]?[0-9]?[0-9]?))$/.test(ipport)) {  
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):(0|[1-9][0-9]?[0-9]?[0-9]?[0-9]?)$/.test(ipport)) {  
       console.log("change address shard ", i+1, " to ", ipport );
-      if ( true ) {
-        document.getElementById(`shard${parseInt(i)+1}address`).innerHTML = ipport;
-      }
-      // save it to the config file, when user refreshest the whole app, this will complete with 
-      var settings = JSON.parse(fs.readFileSync(seeleClient.configpath), 'utf8')
-      // console.log(settings.connect[i+1]);
+      document.getElementById(`shard${parseInt(i)+1}address`).innerHTML = ipport;
       settings.connect[i+1] = `http://${ipport}`;
-      // console.log(settings.connect[i+1]);
-      // console.log(settings);
       fs.writeFileSync(seeleClient.configpath, JSON.stringify(settings))
-      
     } else if (ipport.toString()=="") {
       console.log("empty entry for shard", i+1);
     } else {
@@ -108,8 +136,71 @@ function saveNodeInfo(){
       setTimeout(function(){ $('.nodepopup').removeClass("smh"); }, 200);
     }
   }
+  
+  var nodemonitor = document.getElementById("addMonitor")
+  var tbl = document.getElementById("nodeinfotable")
+  if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):(0|[1-9][0-9]?[0-9]?[0-9]?[0-9]?)$/.test(nodemonitor.value)){
+    
+    // var tbl = document.getElementById("nodeinfotable")
+    var row = document.createElement("tr");
+    var ts = Math.round((new Date()).getTime()).toString()+tbl.children.length
+    row.innerHTML = `<tr><td></td><td>${nodemonitor.value}</td><td></td><td></td><td></td><td onclick="removeThisRow(${ts})">x</td></tr>`
+    row.id=ts
+    tbl.appendChild(row)
+    nodemonitor.value=""
+    //save this update to local config file    
+    
+    // console.log(tbl);
+    var newMonitor=[]
+    for ( var i = 0 ; i < tbl.children.length ; i++ ) {
+      newMonitor.push(`http://${tbl.rows[i].cells[1].innerHTML}`)
+    }
+    
+    settings.monitor = newMonitor;
+    console.log(settings.monitor);
+    fs.writeFileSync(seeleClient.configpath, JSON.stringify(settings))
+  } else if (nodemonitor.value.toString()=="") {
+    console.log("empty entry for node");
+    var newMonitor=[]
+    for ( var i = 0 ; i < tbl.children.length ; i++ ) {
+      newMonitor.push(`http://${tbl.rows[i].cells[1].innerHTML}`)
+    }
+    settings.monitor = newMonitor;
+    console.log(settings.monitor);
+    fs.writeFileSync(seeleClient.configpath, JSON.stringify(settings))
+  } else {
+    console.log("Invalid ip:port:", ipport);
+    $('.nodepopup').addClass("smh")
+    setTimeout(function(){ $('.nodepopup').removeClass("smh"); }, 200);
+  }
 }
 
 function refreshNodeInfo(){
-  alert("refresh!")
+  console.log("refresh!")
+  var tbl = document.getElementById("nodeinfotable")
+  
+  var client = []
+  for ( var i = 0 ; i < tbl.children.length ; i++ ) {
+    getinfo(tbl.rows[i].cells[1].innerHTML,i)
+  }
+  
 }
+
+
+
+const seelejs = require('seeleteam.js');
+
+function getinfo(address, i){
+  var tbl = document.getElementById("nodeinfotable")
+  client = new seelejs(`http://${address}`)
+  client.getInfo(
+    function (info) {
+      tbl.rows[i].cells[0].innerHTML = info.Shard
+      tbl.rows[i].cells[2].innerHTML = info.Version
+      tbl.rows[i].cells[3].innerHTML = info.PeerCnt
+      tbl.rows[i].cells[4].innerHTML = `${info.CurrentBlockHeight} (${info.BlockAge}s ago)`
+    }
+  )
+}
+
+

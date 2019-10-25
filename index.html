@@ -101,58 +101,43 @@
           <div class="popup">
               <div class="controls">
                 <div class="option-node">
-                  <span class="option-title">Shard1: </span>
-                  <span class="address" id="shard1address">117.50.97.136:8037</span>
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>1: </span>
+                  <span class="address" id="shard1address"></span>
                   <input class="option-string nodeInput" type="text">
-                  <span class="option-title">Shard2: </span>
-                  <span class="address" id="shard2address">117.50.97.136:8038</span>
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>2: </span>
+                  <span class="address" id="shard2address"></span>
                   <input class="option-string nodeInput" type="text">
-                  <span class="option-title">Shard3: </span>
-                  <span class="address" id="shard3address">117.50.97.136:8039</span>
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>3: </span>
+                  <span class="address" id="shard3address"></span>
                   <input class="option-string nodeInput" type="text">
-                  <span class="option-title">Shard4: </span>
-                  <span class="address" id="shard4address">117.50.97.136:8036</span>
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>4: </span>
+                  <span class="address" id="shard4address"></span>
                   <input class="option-string nodeInput" type="text">
-                  <span class="option-title">Add to monitor</span>
-                  <input class="option-string" type="text">
+                  <span class="option-title lit" id="addtomonitor">Add to monitor</span>
+                  <input class="option-string" id="addMonitor" type="text">
                 </div>
                 
                 <div class="option" onclick="saveNodeInfo()">
-                  <span class="option-text">Save node changes</span>
+                  <span class="option-text lit" id="savenodechanges">Save node changes</span>
                   <img class="option-icon" src="./src/img/save.png" alt="">
                 </div>
                 <div class="option" onclick="refreshNodeInfo()">
-                  <span class="option-text">Refresh node list</span>
+                  <span class="option-text lit" id="refreshnodelist">Refresh node list</span>
                   <img class="option-icon" src="./src/img/refresh.png" alt="">
                 </div>
                 
                 <div class="option-node">
                   <span class="option-title"> </span>
                     <table style="width:100%">
-                    <tr>
-                    <th>Shard</th>
-                    <th>Address</th>
-                    <th>Version</th>
-                    <th>Peers</th>
-                    <th>height</th>
-                    </tr>
-                    <tr><td>1</td><td>117.50.97.136:8037</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>107.150.102.94:8038</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>104.218.164.77:8039</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>106.75.85.9:8037</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>106.75.90.237:8038</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>117.50.11.129:8036</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>117.50.38.63:8036</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>107.150.96.231:8037</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>107.150.105.10:8038</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>107.150.103.125:8039</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>104.218.164.169:8037</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>104.218.164.124:8039</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>104.218.164.193:8036</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>104.218.164.27:8037</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr><td>1</td><td>107.150.112.186:8038</td> <td>v1.2.2</td><td>10 (1 2 3 4)</td><td>1111111(123)</td><td>x</td></tr>
-                    <tr>  
-                    </tr>
+                    <thead>
+                      <tr>
+                        <th class="lit" id="Shard">Shard</th>
+                        <th class="lit" id="Address">Address</th>
+                        <th class="lit" id="Version">Version</th>
+                        <th class="lit" id="Peers">Peers</th>
+                        <th class="lit" id="height">height</th>
+                      </tr></thead>
+                    <tbody id="nodeinfotable"></tbody>
                     </table>
                 </div>
               </div>    
