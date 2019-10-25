@@ -30,7 +30,6 @@ function seeleClient() {
     this.txRecords = [];
     
     this.init = function () {
-        console.log("initiate");
         if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
             fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
             fs.mkdirSync(this.accountPath)
