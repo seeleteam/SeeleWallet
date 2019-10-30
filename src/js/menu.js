@@ -16,7 +16,7 @@ function createMenu (mainWindow) {
         role: 'toggledevtools'
       },
       {
-        label: i18n.__("Version")+" v1.0.1",
+        label: i18n.__("Version")+" v1.1.0",
         enabled: false
       },
       {
