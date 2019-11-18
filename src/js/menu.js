@@ -3,7 +3,7 @@ const { Menu, app } = require('electron')
 function createMenu (mainWindow) {
   //reinitiate i18 to reload language from settings
   var i18n = new(require('./../../translations/i18n'))
-
+  
   const application = {
     label: i18n.__("SeeleWallet"),
     submenu: [
@@ -16,7 +16,7 @@ function createMenu (mainWindow) {
         role: 'toggledevtools'
       },
       {
-        label: i18n.__("Version")+" v1.1.0",
+        label: i18n.__("Version") + app.getVersion(),
         enabled: false
       },
       {
