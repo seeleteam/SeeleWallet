@@ -570,9 +570,10 @@ function seeleClient() {
             for(i = 0; i < filelist.length; i ++){
               publickey = this.keyfileisvalid(this.accountPath+filelist[i]);
               // if ( publickey ) { this.accountArray.push(publickey); }
+              console.log(`${filelist[i].split(/\ /).join('\ ')}`);
               if ( publickey ) { this.accountArray.push({
                 "pubkey": publickey,
-                "filename": filelist[i],
+                "filename": filelist[i].split(/\ /).join('\ '),
                 "shard": this.getShardNum(publickey)
               });}
             }
@@ -665,8 +666,9 @@ function seeleClient() {
             "Payload": payload
         }
 
-
-        this.decKeyFile(account.filename, passWord).then((data) => {
+        var filename = account.filename.replace(/\[sPaCe\]/g, "\ ")
+        console.log(filename);
+        this.decKeyFile(filename, passWord).then((data) => {
             // console.log(data);
             var tx = client.generateTx(data, rawTx);
             // console.log(tx);

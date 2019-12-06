@@ -58,6 +58,7 @@
         "seeleteam.js": "^1.6.8",
         "shelljs": "^0.8.3",
         "solc": "^0.5.12",
+        "sqlite3": "^4.1.0",
         "tree-kill": "^1.2.1"
     }
 }
