@@ -130,14 +130,20 @@ function loadAccount() {
         publicKey = account.pubkey;
         shardNum = account.shard;
         filename = account.filename;
+        
         if (account.filename.length > 12 ) {
           filename  = '…'+account.filename.slice(-12);
         }
-
+        console.log(filename);
         shardWord = json[lang]['tb-shard'];
         send = json[lang]['tabSend'];
         balance = 0
-
+        var clickerAcc = {
+          pubkey: publicKey,
+          shard: shardNum,
+          filename: filename.split(/\ /).join('[sPaCe]')
+        }
+        console.log(clickerAcc);
         var accountHTML = ``
 
         // accountHTML += `<div class='account'><div class='account-up'>`
@@ -157,11 +163,13 @@ function loadAccount() {
         accountHTML += `<div class='account-balance'> <span class='acc-bal' id='`+ publicKey +`'>` + balance + `</span> <span class='acc-unit'> SEELE</span> </div></div><div class='account-down'><div class='account-controls'>`
         accountHTML += `<div class='account-publicKey'>` + publicKey + `</div>`
         accountHTML += `<div class='tooltip account-copy' onclick=toclip("`+publicKey+`")> <img class='img-copy' src='./src/img/square-copy.png'><span class="tooltiptext enable lit" id="copyPubkey">copy publickey</span></div>`
-        accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(` + JSON.stringify(account)+`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext enable lit" id="more">more options</span></div>`
+        accountHTML += `<div class='tooltip account-controls-right' onclick=moreAbout(\`` + JSON.stringify(clickerAcc)+`\`,"`+ shardWord + `")> <img class='img' src='./src/img/more.png'><span class="tooltiptext enable lit" id="more">more options</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid' onclick=call("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/call.png'><span class="tooltiptext enable lit" id="callContract">call contract</span></div>`
-        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(`+JSON.stringify(account)+`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext enable lit" id="deployEmploy">deploy or query</span></div>`
+        accountHTML += `<div class='tooltip account-controls-mid' onclick=contract(\`` + JSON.stringify(clickerAcc)+`\`)> <img class='img' src='./src/img/contract.png'><span class="tooltiptext enable lit" id="deployEmploy">deploy or query</span></div>`
         accountHTML += `<div class='tooltip account-controls-mid' onclick=receipt("`+shardNum+`","`+ shardWord + `")> <img class='img' src='./src/img/receipt.png'><span class="tooltiptext enable lit" id="viewReceipt">view receipt</span></div>`
-        accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(`+ JSON.stringify(account) +`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext enable lit" id="sendTx">send tx</span></div></div><div class='account-info'>`
+        
+        console.log(`<div class='tooltip account-controls-left' onclick=transaction(\``+ `${JSON.stringify(account)}` +`\`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext enable lit" id="sendTx">send tx</span></div></div><div class='account-info'>`);
+        accountHTML += `<div class='tooltip account-controls-left' onclick=transaction(\``+ JSON.stringify(clickerAcc) +`\`) ><img class='img' src='./src/img/transaction.png'><span class="tooltiptext enable lit" id="sendTx">send tx</span></div></div><div class='account-info'>`
         accountHTML += `<div class='account-shard' style="visibility:visible"> <span class='shardword'>`+shardWord+`</span><span class='shardnum'>`+shardNum+`</span></div> `
         accountHTML += `<div class='account-file'>`+filename+`</div></div></div></div>`
 

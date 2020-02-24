@@ -27,6 +27,12 @@ a:focus {
     overflow-x: hidden;
     margin: auto;
 }
+body::-webkit-scrollbar,
+#tabs-1::-webkit-scrollbar,
+#tabs-2::-webkit-scrollbar,
+#tabs-3::-webkit-scrollbar { 
+    display: none;  
+}
 
 #tab {
     width: 100%;

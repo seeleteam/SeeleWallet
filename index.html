@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
     <link href="./src/css/main.css" rel="stylesheet" />  
-    <link href="./src/css/more.css" rel="stylesheet" />  
+    <link href="./src/css/more.css" rel="stylesheet" /> 
+    <link href="./src/css/node.css" rel="stylesheet" />  
     <link href="./src/css/call.css" rel="stylesheet" />  
     <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
     <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
@@ -95,6 +96,52 @@
               <div class="actionbutton lit" onclick="addKeyfile()" id="createKeyfile"></div>
             </div>
           </div>
+        </div>
+        <div class="popuplocationwrap nodepopup" id="nodepopup-panel">
+          <div class="popup">
+              <div class="controls">
+                <div class="option-node">
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>1: </span>
+                  <span class="address" id="shard1address"></span>
+                  <input class="option-string nodeInput" type="text">
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>2: </span>
+                  <span class="address" id="shard2address"></span>
+                  <input class="option-string nodeInput" type="text">
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>3: </span>
+                  <span class="address" id="shard3address"></span>
+                  <input class="option-string nodeInput" type="text">
+                  <span class="option-title"><span class="lit" id="shard">Shard</span>4: </span>
+                  <span class="address" id="shard4address"></span>
+                  <input class="option-string nodeInput" type="text">
+                  <span class="option-title lit" id="addtomonitor">Add to monitor</span>
+                  <input class="option-string" id="addMonitor" type="text">
+                </div>
+                
+                <div class="option" onclick="saveNodeInfo()">
+                  <span class="option-text lit" id="savenodechanges">Save node changes</span>
+                  <img class="option-icon" src="./src/img/save.png" alt="">
+                </div>
+                <div class="option" onclick="refreshNodeInfo()">
+                  <span class="option-text lit" id="refreshnodelist">Refresh node list</span>
+                  <img class="option-icon" src="./src/img/refresh.png" alt="">
+                </div>
+                
+                <div class="option-node">
+                  <span class="option-title"> </span>
+                    <table style="width:100%">
+                    <thead>
+                      <tr>
+                        <th class="lit" id="Shard">Shard</th>
+                        <th class="lit" id="Address">Address</th>
+                        <th class="lit" id="Version">Version</th>
+                        <th class="lit" id="Peers">Peers</th>
+                        <th class="lit" id="height">height</th>
+                      </tr></thead>
+                    <tbody id="nodeinfotable"></tbody>
+                    </table>
+                </div>
+              </div>    
+              </div>
         </div>
         <div id="netinfo" style="display: none; margin: 100px 0px 30px 0px;">
           <table id="netInfoTable" style="width:60%;margin-left:20%;margin-right:20%;text-align:center;margin-top:10px">
@@ -266,8 +313,9 @@
             
         </script>
         </div>
-        <div class="dask"></div>
+        <div class="dask" id="dask"></div>
 </body>
+<script src="./index.js"></script>
 <script src="./src/js/jQuery.js"></script>
 <script src="./src/js/jquery-plus-ui.min.js"></script>
 <script src="./src/js/jquery-ui-slider-pips.js"></script>

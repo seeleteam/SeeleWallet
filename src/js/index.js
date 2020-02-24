@@ -183,7 +183,7 @@ function addKeyfile(){
 
   var pass = $('.passwordfield-add').val()
   // concat only returns a copy
-  error = error.concat(passwordStrengthTest(pass));
+  // error = error.concat(passwordStrengthTest(pass));
 
   var prikey = $('.prikey-add').val()
   var shard = $('.shard-add').val()
@@ -485,8 +485,8 @@ function contract(account) {
     $("#tabs-3").addClass('make_transist')
     $("#tabs-3").addClass('showleft')
 
-    $("#contractPublicKey").val(account.pubkey)
-    $("#ctAccount").val(JSON.stringify(account))
+    $("#contractPublicKey").val(JSON.parse(account).pubkey)
+    $("#ctAccount").val(JSON.stringify(JSON.parse(account)))
     // console.log(account);
 }
 
@@ -512,8 +512,11 @@ function transaction(account) {
     $("#tabs-2").addClass('showleft')
 
     //filling tab2
-    $("#txPublicKey").val(account.pubkey)
-    $("#txAccount").val(JSON.stringify(account))
+    // console.log(JSON.parse(account));
+    console.log(account);
+    console.log(JSON.parse(account));
+    $("#txPublicKey").val(JSON.parse(account).pubkey)
+    $("#txAccount").val(JSON.stringify(JSON.parse(account)))
 }
 
 function receipt( shard, word ) {

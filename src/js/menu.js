@@ -3,7 +3,7 @@ const { Menu, app } = require('electron')
 function createMenu (mainWindow) {
   //reinitiate i18 to reload language from settings
   var i18n = new(require('./../../translations/i18n'))
-
+  
   const application = {
     label: i18n.__("SeeleWallet"),
     submenu: [
@@ -16,7 +16,7 @@ function createMenu (mainWindow) {
         role: 'toggledevtools'
       },
       {
-        label: i18n.__("Version")+" v1.0.1",
+        label: i18n.__("Version") + app.getVersion(),
         enabled: false
       },
       {
@@ -159,6 +159,13 @@ function createMenu (mainWindow) {
         accelerator: "CmdOrCtrl+E",
         click: () => {
           mainWindow.webContents.executeJavaScript('showInfo()')
+        }
+      },
+      {
+        label: i18n.__("Edit NetWork Info"),
+        accelerator: "CmdOrCtrl+shift+N",
+        click: () => {
+          mainWindow.webContents.executeJavaScript('toggleEditNetwork()')
         }
       }
     ]

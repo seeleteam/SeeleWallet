@@ -38,18 +38,14 @@ let mainWindow;
 global.languageSetting = "cn";
 
 function createWindow() {
+    sc = new SeeleClient();
+    sc.init(); 
+    
     // Browser window
     mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: __dirname + '/build/icon.png', resizable: true})
     
     // Window content
     mainWindow.loadFile('index.html')
-    
-    // Connect to four nodes
-    sc = new SeeleClient();
-    // sc.initateNodeConfig(1);
-    // sc.initateNodeConfig(2);
-    // sc.initateNodeConfig(3);
-    // sc.initateNodeConfig(4);
     
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
@@ -57,9 +53,6 @@ function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null
     })
-    
-    sc.init();
-
 }
 
 

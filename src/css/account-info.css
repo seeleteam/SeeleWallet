@@ -23,6 +23,10 @@
     padding: 0 20px 0 20px;
 }
 
+#accountlist::-webkit-scrollbar{
+  display: none;
+}
+
 #tabs-1 h1,#tabs-1 h1{
     font-size: 30px;
     color: #666;

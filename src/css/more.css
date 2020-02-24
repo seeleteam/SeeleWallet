@@ -5,7 +5,7 @@ display for all the popups
 
  */
 
-.popuplocationwrap{
+.popuplocationwrap.morepopup, .popuplocationwrap.addpopup {
   /* text-align: center; */
   z-index: 2;
   position: fixed;

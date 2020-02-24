@@ -3,6 +3,9 @@
     float: left;
     margin: 0px 0px 0px 0px;
 }
+#txRecordList::-webkit-scrollbar{
+  display: none;
+}
 
 #txrecord-title{
   padding-left: 20px;

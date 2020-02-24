@@ -17,15 +17,65 @@ const spawnSync = require('child_process').spawnSync;
 const editJsonFile = require("edit-json-file");
 
 function seeleClient() {
+  
+    this.accountArray = [];
+    this.accountArray2= [];
+    this.langPath = `${__dirname}`+`/../json/lang.json`
+    this.configpath = os.homedir()+"/.SeeleWallet/viewconfig_1.1.json";
+    this.accountPath = os.homedir() + "/.SeeleWallet/account/";
+    this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
+    this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
+    this.txPath = os.homedir() + "/.SeeleWallet/tx/";
+    this.txArray = [];
+    this.txRecords = [];
+    
+    this.init = function () {
+        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
+            fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
+            fs.mkdirSync(this.accountPath)
+        }
 
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/rc')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/rc', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
+          fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.1.json')) {
+          console.log('not found, copy');
+          var err = shell.cp('-f', `${__dirname}/../json/viewconfig_1.1.json`, os.homedir()+'/.SeeleWallet/')
+          console.log(err)
+        }
+        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
+          var err = shell.cp('-f', `${__dirname}/../json/lang.json`, os.homedir()+'/.SeeleWallet/')
+          console.log(err)
+        }
+    };
+    this.init()
+    
+    var configJson = JSON.parse(fs.readFileSync(this.configpath.toString()).toString());
+    // console.log(configJson.connect);
+    this.address = [0,
+      configJson.connect[1],
+      configJson.connect[2],
+      configJson.connect[3],
+      configJson.connect[4]
+    ];
+    
     var shardCount = 4;
 
-    this.address = [0,
-      "http://117.50.97.136:18037",
-      "http://117.50.97.136:8038",
-      "http://107.150.102.94:8039",
-      "http://117.50.97.136:8036"
-    ];
+    // this.address = [0,
+    //   "http://117.50.97.136:18037",
+    //   "http://117.50.97.136:8038",
+    //   "http://107.150.102.94:8039",
+    //   "http://117.50.97.136:8036"
+    // ];
 
     this.client = [
       0,
@@ -34,18 +84,6 @@ function seeleClient() {
       new seelejs(this.address[3]),
       new seelejs(this.address[4])
     ]
-
-    this.accountArray = [];
-    this.accountArray2= [];
-    this.langPath = `${__dirname}`+`/../json/lang.json`
-    this.configpath = os.homedir()+"/.SeeleWallet/viewconfig_1.0.json";
-    this.accountPath = os.homedir() + "/.SeeleWallet/account/";
-    this.rcPath = os.homedir() + "/.SeeleWallet/rc/";
-    this.nodeConfigPath = os.homedir() + "/.SeeleWallet/node/";
-    this.txPath = os.homedir() + "/.SeeleWallet/tx/";
-    this.txArray = [];
-
-    this.txRecords = [];
 
     this.getOS = function () {
         var  osName="Unknown OS";
@@ -400,35 +438,6 @@ function seeleClient() {
         }
     };
 
-    this.init = function () {
-        if (!fs.existsSync(os.homedir() + "/.SeeleWallet/")) {
-            fs.mkdirSync(os.homedir() + "/.SeeleWallet/")
-            fs.mkdirSync(this.accountPath)
-        }
-
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet')){
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/tx')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/tx', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/rc')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/rc', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/account')) {
-          fs.mkdirSync(os.homedir()+'/.SeeleWallet/account', { recursive: true }, (err) => {if (err) throw err;})
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/viewconfig_1.0.json')) {
-          var err = shell.cp('-f', `${__dirname}/../json/viewconfig_1.0.json`, os.homedir()+'/.SeeleWallet/')
-          // console.log(err)
-        }
-        if (!fs.existsSync(os.homedir()+'/.SeeleWallet/lang.json')) {
-
-          var err = shell.cp('-f', `${__dirname}/../json/lang.json`, os.homedir()+'/.SeeleWallet/')
-          // console.log(err)
-        }
-    };
-
     this.generateKey = function (shardnum) {
         this.init();
         return new Q((resolve, reject) => {
@@ -561,9 +570,10 @@ function seeleClient() {
             for(i = 0; i < filelist.length; i ++){
               publickey = this.keyfileisvalid(this.accountPath+filelist[i]);
               // if ( publickey ) { this.accountArray.push(publickey); }
+              console.log(`${filelist[i].split(/\ /).join('\ ')}`);
               if ( publickey ) { this.accountArray.push({
                 "pubkey": publickey,
-                "filename": filelist[i],
+                "filename": filelist[i].split(/\ /).join('\ '),
                 "shard": this.getShardNum(publickey)
               });}
             }
@@ -656,8 +666,9 @@ function seeleClient() {
             "Payload": payload
         }
 
-
-        this.decKeyFile(account.filename, passWord).then((data) => {
+        var filename = account.filename.replace(/\[sPaCe\]/g, "\ ")
+        console.log(filename);
+        this.decKeyFile(filename, passWord).then((data) => {
             // console.log(data);
             var tx = client.generateTx(data, rawTx);
             // console.log(tx);
@@ -874,7 +885,7 @@ function seeleClient() {
           console.log(this.rcPath + "  Not Found!");
       }
 
-      console.log(this.txRecords);
+      console.log(this.txRecords.length, "local tx records");
     }
 
     //returns wait, done/debt, fail,0x354f0905c557462999ca965775a991c529530032，

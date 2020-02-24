@@ -6,17 +6,18 @@ function moreAbout(account, phrase){
     // console.log(account);
     //place your filename, shard and publickey on the top
     //which you can then use to 
-    $('.more-filename').html(account.filename)
-    $('.more-shard').html(phrase + account.shard)
-    $('.more-publickey').html(account.pubkey)
+    var acc = JSON.parse(account)
+    $('.more-filename').html(acc.filename.replace(/\[sPaCe\]/g, "\ "))
+    $('.more-shard').html(phrase + acc.shard)
+    $('.more-publickey').html(acc.pubkey)
     
     $('.morepopup').show()  
     $('.dask').show()
     
     $('.dask').click ( function () { clearMoreAbout(); } )
     $('.copy-pub').click( function(){ toclip($('.more-publickey').html()); } )
-    $('.copy-key').click( function(){ toclip(account.pubkey); } )
-    $('.move-key').click( function(){ moveKeyfileTo(account.filename); } )
+    $('.copy-key').click( function(){ toclip(acc.pubkey); } )
+    $('.move-key').click( function(){ moveKeyfileTo(acc.filename); } )
 }
 
 function clearMoreAbout() {
@@ -57,9 +58,10 @@ function unlockmore() {
       })
 }
 
-function moveKeyfileTo( file ) {
+function moveKeyfileTo( f ) {
     var { dialog } = require('electron').remote
     // var fsPromises = require('fs').promises
+    var file    = f.replace(/\[sPaCe\]/g, "\ ")
     var dstpath = dialog.showOpenDialog(
       { properties: ['openDirectory'],
         buttonLabel: 'Export To'})

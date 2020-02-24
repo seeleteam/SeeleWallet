@@ -14,9 +14,10 @@ display for the main page
     /* overflow: auto; */
 }
 .head-main {
-      /* width: 1180px; */
+      min-width: 900px;
       /* margin-top: 80px; */
       width: 100%;
+      z-index: 3;
       /* margin: 0; */
       /* padding-bottom: 40px; */
       margin: auto;

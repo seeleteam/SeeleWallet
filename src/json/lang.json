@@ -143,8 +143,16 @@
     "callcontractPayload":"Contract Payload: 0x...",
     "createKeyfile":"Create Keyfile",
     "createKeyfileTip":"*Enter keyfile name and password, then choose create option by entering shard number (1-4) OR 66 character long privatekey (0x...)",
-    "importfail1":"导入账户: ",
-    "importfail2":" 失败, 格式错误"
+    "addtomonitor":"Add to monitor",
+    "savenodechanges":"Save node changes",
+    "refreshnodelist":"Refresh node info",
+    "Shard":"Shard",
+    "Address":"Address",
+    "Version":"Version",
+    "Peers":"Peers",
+    "height":"height",
+    "importfail1":"import account: ",
+    "importfail2":"fail, wrong format"
   },
   "CN":{
     "accountlisttitle":"账户列表",
@@ -290,6 +298,14 @@
     "callcontractPayload":"合约字节码: 0x...",
     "createKeyfile":"创建账户",
     "createKeyfileTip":"*请填写账户名称和账户密码\n 并用填写方式选择用片数(1-4)\n或用66位私钥(0x...)创建账户",
+    "savenodechanges":"保存节点变化",
+    "refreshnodelist":"刷新节点信息",
+    "addtomonitor":"增加观测节点",
+    "Shard":"片",
+    "Address":"地址",
+    "Version":"版本",
+    "Peers":"连接节点",
+    "height":"高度",
     "importfail1":"导入账户: ",
     "importfail2":" 失败, 格式错误"
   }

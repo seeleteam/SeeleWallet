@@ -1,0 +1,29 @@
+.option-node {
+  padding: 15px;
+  height: auto;
+  margin:auto;
+  border-bottom: 1px solid rgba(195, 195, 195, 0.3);  
+  overflow: auto;
+}
+
+.option-node .option-title{
+  clear: left;
+}
+
+/* .otion-node table td, .otion-node table tr{ */
+.option-node table th{
+    text-align: left;
+}
+
+
+.nodepopup .popup{
+  width: 800px;
+}
+
+.option-button, .option-title{
+  user-select: none;
+}
+
+.option-button{
+  
+}
