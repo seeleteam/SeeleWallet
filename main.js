@@ -25,7 +25,7 @@ ipcMain.on( 'compileContract', ( event, input ) => {
     }
   }
   event.sender.send('compiledContract', byt, abi, err);
-    
+
   // event.sender.send('compiledContract', bytecode);
 } );
 
@@ -40,13 +40,13 @@ global.languageSetting = "cn";
 function createWindow() {
     sc = new SeeleClient();
     sc.init(); 
-    
+
     // Browser window
-    mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: __dirname + '/build/icon.png', resizable: true})
-    
+    mainWindow = new BrowserWindow({width: 1200, height: 1050, icon: __dirname + '/build/icon.png', resizable: true, webPreferences: {nodeIntegration: true}})
+
     // Window content
     mainWindow.loadFile('index.html')
-    
+
     mainWindow.on('closed', function() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -78,4 +78,3 @@ app.on('activate', function() {
         createMenu(mainWindow);
     }
 })
-

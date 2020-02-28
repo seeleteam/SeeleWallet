@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Seele Wallet</title>
-    <link href="./src/css/main.css" rel="stylesheet" />  
-    <link href="./src/css/more.css" rel="stylesheet" /> 
-    <link href="./src/css/node.css" rel="stylesheet" />  
-    <link href="./src/css/call.css" rel="stylesheet" />  
+    <link href="./src/css/main.css" rel="stylesheet" />
+    <link href="./src/css/more.css" rel="stylesheet" />
+    <link href="./src/css/node.css" rel="stylesheet" />
+    <link href="./src/css/call.css" rel="stylesheet" />
     <link href="./src/css/imported/jquery-ui-slider-pips.min.css" rel="stylesheet" />
     <link href="./src/css/imported/jqueryui.min.css" rel="stylesheet" />
     <link href="./src/css/tab.css" rel="stylesheet" />
@@ -116,7 +116,7 @@
                   <span class="option-title lit" id="addtomonitor">Add to monitor</span>
                   <input class="option-string" id="addMonitor" type="text">
                 </div>
-                
+
                 <div class="option" onclick="saveNodeInfo()">
                   <span class="option-text lit" id="savenodechanges">Save node changes</span>
                   <img class="option-icon" src="./src/img/save.png" alt="">
@@ -125,7 +125,7 @@
                   <span class="option-text lit" id="refreshnodelist">Refresh node list</span>
                   <img class="option-icon" src="./src/img/refresh.png" alt="">
                 </div>
-                
+
                 <div class="option-node">
                   <span class="option-title"> </span>
                     <table style="width:100%">
@@ -140,7 +140,7 @@
                     <tbody id="nodeinfotable"></tbody>
                     </table>
                 </div>
-              </div>    
+              </div>
               </div>
         </div>
         <div id="netinfo" style="display: none; margin: 100px 0px 30px 0px;">
@@ -309,13 +309,13 @@
             // seeleClient = new seeleclient;
             var json = JSON.parse(fs.readFileSync(client.configpath).toString());
             document.getElementById("lang").value=json["lang"]
-            
-            
+
+
         </script>
         </div>
         <div class="dask" id="dask"></div>
 </body>
-<script src="./index.js"></script>
+<!-- <script src="./index.js"></script> -->
 <script src="./src/js/jQuery.js"></script>
 <script src="./src/js/jquery-plus-ui.min.js"></script>
 <script src="./src/js/jquery-ui-slider-pips.js"></script>
