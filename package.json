@@ -57,7 +57,7 @@
         "edit-json-file": "^1.2.1",
         "ps-node": "^0.1.6",
         "seeleteam.js": "^2.0.0",
-        "shelljs": "^0.8.3",
+        "shelljs": "^0.8.5",
         "solc": "^0.5.12",
         "tree-kill": "^1.2.1"
     }
